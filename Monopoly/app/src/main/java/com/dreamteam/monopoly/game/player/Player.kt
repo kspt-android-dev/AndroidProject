@@ -1,16 +1,32 @@
 package com.dreamteam.monopoly.game.player
 
 import com.dreamteam.monopoly.game.board.Board
+import com.dreamteam.monopoly.game.board.cell.GameCell
 
-class Player(val name: String, private val startMoney: Int, val board: Board) {
+class Player(val name: String, startMoney: Int, private val board: Board) {
+
+    var currentPosition: Int = 0
 
     private var money: Int = startMoney
-    private var currentPosition: Int = 0
-    private var currentCell = board.gameWay[0]
 
 
     fun Go(steps: Int) {
-        currentCell = board.MovePlayer(currentPosition + steps, this)
+        board.movePlayer(currentPosition + steps, this)
+    }
+
+    fun decision(action: PlayerActions) {
+        when (action) {
+            PlayerActions.BUY -> if(board.gameWay[currentPosition] is GameCell &&
+                    (board.gameWay[currentPosition] as GameCell).buy(this)){
+                return
+            }
+            else TODO()
+            PlayerActions.PAY -> if(board.gameWay[currentPosition] is GameCell &&
+                    (board.gameWay[currentPosition] as GameCell).pay(this))
+                return
+            else TODO()
+            PlayerActions.STAY -> TODO()
+        }
     }
 
     //-----Money-----

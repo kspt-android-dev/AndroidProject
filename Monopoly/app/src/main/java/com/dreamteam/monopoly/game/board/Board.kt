@@ -9,10 +9,14 @@ class Board(var gameWay: ArrayList<Cell>) {
 
     private val gameWayLength: Int = gameWay.size
 
-    fun MovePlayer(newPositionIndex: Int, player: Player): Cell {
+    fun movePlayer(newPositionIndex: Int, player: Player): Cell {
         return if (newPositionIndex > gameWayLength - 1) {
+            player.currentPosition = newPositionIndex - gameWayLength
             player.earnMoney(GameData.loopMoney)
             gameWay[newPositionIndex - gameWayLength]
-        } else return gameWay[newPositionIndex]
+        } else {
+            player.currentPosition = newPositionIndex
+            return gameWay[newPositionIndex]
+        }
     }
 }
