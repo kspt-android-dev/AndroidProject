@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Monopoly</string>
+    <string name="buttonPlay">Play</string>
 </resources>
