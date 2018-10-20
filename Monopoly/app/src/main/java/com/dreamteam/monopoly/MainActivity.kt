@@ -6,12 +6,13 @@ import android.content.Intent
 import android.widget.ImageButton
 import android.content.pm.ActivityInfo
 import android.view.View
+import android.widget.Button
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     //image button
-    private var buttonPlay: ImageButton? = null
+    private var buttonPlay: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +30,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     @Override
     override fun onClick(v: View) {
-
         //starting game activity
-        //startActivity(Intent(this, GameActivity.))
+        intent = Intent(this, GameActivity::class.java)
+        startActivity(intent)
     }
 }
