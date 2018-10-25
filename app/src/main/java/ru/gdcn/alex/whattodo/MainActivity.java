@@ -96,49 +96,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickCreate(View v){
-        Toast.makeText(this, "Click create notes!", Toast.LENGTH_SHORT).show();
-//        FrameLayout frameLayout = findViewById(R.id.main_space);
-//        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-//                ViewGroup.LayoutParams.WRAP_CONTENT,
-//                ViewGroup.LayoutParams.WRAP_CONTENT);
-//        layoutParams.setMargins(0, 0, 0, 100);
-//        layoutParams.gravity = Gravity.BOTTOM|Gravity.CENTER;
-//        Button n = new Button(this),
-//                t = new Button(this),
-//                l = new Button(this);
-//        Button c = findViewById(R.id.create_button);
-//
-//
-//        Animation n_a = AnimationUtils.loadAnimation(this, R.anim.n_trans),
-//                t_a = AnimationUtils.loadAnimation(this, R.anim.t_trans);
-//        Animation c_a = AnimationUtils.loadAnimation(this, R.anim.c_scale);
-//
-//        frameLayout.addView(n);
-//        frameLayout.addView(t);
-//        frameLayout.addView(l);
-//
-////        n.setGravity(Gravity.BOTTOM & Gravity.CENTER);
-//        n.setLayoutParams(layoutParams);
-//        n.setBackground(getDrawable(R.drawable.ring_button));
-//        n.setText("n");
-//        n.setTextSize(10);
-//        n.setGravity(Gravity.CENTER);
-//        n.startAnimation(n_a);
-//
-////        t.setGravity(Gravity.BOTTOM & Gravity.CENTER);
-//        t.setLayoutParams(layoutParams);
-//        t.setBackground(getDrawable(R.drawable.ring_button));
-//        t.setText("t");
-//        t.setTextSize(10);
-//        t.setGravity(Gravity.CENTER);
-//        t.startAnimation(t_a);
-//
-////        l.setGravity(Gravity.BOTTOM & Gravity.CENTER);
-//        l.setLayoutParams(layoutParams);
-//        l.setBackground(getDrawable(R.drawable.ring_button));
-//        l.setText("l");
-//        l.setTextSize(10);
-//        t.setGravity(Gravity.CENTER);
-//        c.startAnimation(c_a);
+//        Toast.makeText(this, "Click create notes!", Toast.LENGTH_SHORT).show();
+        FrameLayout frameLayout = findViewById(R.id.main_space);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                100,
+                100);
+        layoutParams.setMargins(0, 0, 0, (int) (140 / getApplicationContext().getResources().getDisplayMetrics().density));
+        layoutParams.gravity = Gravity.BOTTOM|Gravity.CENTER;
+        Button n = new Button(this),
+                t = new Button(this),
+                l = new Button(this);
+        Button c = findViewById(R.id.create_button);
+
+
+        Animation n_a = AnimationUtils.loadAnimation(this, R.anim.n_trans),
+                t_a = AnimationUtils.loadAnimation(this, R.anim.t_trans);
+        Animation c_a = AnimationUtils.loadAnimation(this, R.anim.c_scale);
+
+        frameLayout.addView(n);
+        frameLayout.addView(t);
+        frameLayout.addView(l);
+
+//        n.setGravity(Gravity.BOTTOM & Gravity.CENTER);
+        n.setLayoutParams(layoutParams);
+        n.setBackground(getDrawable(R.drawable.ic_button));
+        n.setText("n");
+        n.setTextSize(10);
+        n.setGravity(Gravity.CENTER);
+        n.startAnimation(n_a);
+
+//        t.setGravity(Gravity.BOTTOM & Gravity.CENTER);
+        t.setLayoutParams(layoutParams);
+        t.setBackground(getDrawable(R.drawable.ic_button));
+        t.setText("t");
+        t.setTextSize(10);
+        t.setGravity(Gravity.CENTER);
+        t.startAnimation(t_a);
+
+//        l.setGravity(Gravity.BOTTOM & Gravity.CENTER);
+        l.setLayoutParams(layoutParams);
+        l.setBackground(getDrawable(R.drawable.ic_button));
+        l.setText("l");
+        l.setTextSize(10);
+        t.setGravity(Gravity.CENTER);
+        c.startAnimation(c_a);
     }
 }
