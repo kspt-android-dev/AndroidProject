@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/main_space"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <Button
+            android:id="@+id/create_button"
+            android:layout_width="180dp"
+            android:layout_height="36dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="60dp"
+            android:background="@drawable/fab_extended"
+            android:clickable="true"
+            android:elevation="10dp"
+            android:focusable="true"
+            android:onClick="clickCreate"
+            android:text="Create notes"
+            android:textColor="@android:color/white"
+            android:textSize="10pt" />
+    </FrameLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@color/bottom_navigation_item_background_colors"
+        app:itemTextColor="@color/bottom_navigation_item_background_colors"
+        app:menu="@menu/nav_menu" />
+
+</RelativeLayout>

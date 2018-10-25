@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="back">
+        <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <item
+                android:color="@android:color/darker_gray"
+                android:state_checked="false"/>
+            <item
+                android:color="@android:color/white"
+                android:state_checked="true"/>
+
+        </selector>
+    </color>
+</resources>
