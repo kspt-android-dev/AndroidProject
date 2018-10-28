@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
@@ -22,6 +23,7 @@ import java.util.Objects;
 import ru.gdcn.alex.whattodo.adapter.CardAdapter;
 import ru.gdcn.alex.whattodo.customviews.Card;
 import ru.gdcn.alex.whattodo.customviews.NotesView;
+import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class NotesFragment extends Fragment {
@@ -31,6 +33,7 @@ public class NotesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private CardAdapter cardAdapter;
+    private Collection<Card> cards;
 
     @Nullable
     @Override
@@ -43,12 +46,8 @@ public class NotesFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.e(TAG, TextFormer.getStartText(className) + "Инициализация NotesFragment...");
         initRecyclerView();
-        cardAdapter.setItems(getCards());
 
-//        LinearLayout mainl = getActivity().findViewById(R.id.notes_fragment_id);
-//        NotesView notesView = new NotesView(getContext());
-//        notesView.setData("Header", "Main text");
-//        mainl.addView(notesView);
+        cardAdapter.setItems(getCards());
 
         super.onActivityCreated(savedInstanceState);
         Log.e(TAG, TextFormer.getStartText(className) + "Инициализация NotesFragment закончена!");
@@ -64,10 +63,11 @@ public class NotesFragment extends Fragment {
     }
 
     private Collection<Card> getCards(){
-        return Arrays.asList(
-                new Card("Test",R.drawable.ic_description_black_24dp),
-                new Card("Alo", R.drawable.ic_description_black_24dp),
-                new Card("Your notes",R.drawable.ic_description_black_24dp)
-        );
+        return DBConnector.getData(getContext(), 0);
+//        return Arrays.asList(
+//                new Card("Test",R.drawable.ic_description_black_24dp),
+//                new Card("Alo", R.drawable.ic_description_black_24dp),
+//                new Card("Your notes",R.drawable.ic_description_black_24dp)
+//        );
     }
 }

@@ -26,7 +26,7 @@
             android:layout_marginBottom="5dp"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            android:textSize="24dp"/>
+            android:textSize="24dp" />
 
         <EditText
             android:id="@+id/creation_note_text"

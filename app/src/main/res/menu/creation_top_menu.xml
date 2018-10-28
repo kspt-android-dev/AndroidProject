@@ -11,4 +11,9 @@
         android:icon="@drawable/ic_lock_black_24dp"
         android:title="@string/creation_top_fixed"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/creation_top_alarm"
+        android:icon="@drawable/ic_alarm_black_24dp"
+        android:title="@string/creation_top_alarm"
+        app:showAsAction="ifRoom"/>
 </menu>

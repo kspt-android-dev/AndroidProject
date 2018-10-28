@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, TextFormer.getStartText(className) + "Создание MainActivity...");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        DBConnector.initDB(this);
 
         fragmentManager = getSupportFragmentManager();
 
