@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -21,23 +22,23 @@
             android:paddingStart="12dp"
             android:paddingEnd="20dp"
             android:background="@drawable/fab_extended"
-            android:drawableLeft="@drawable/ic_add_black_24dp"
+            android:drawableStart="@drawable/ic_add_black_24dp"
             android:drawablePadding="12dp"
             android:clickable="true"
             android:elevation="6dp"
             android:focusable="true"
             android:onClick="clickCreate"
-            android:text="Create"
+            android:text="@string/button_create"
             android:textColor="@android:color/white"
             android:textSize="14dp"/>
         
-        <!--<Button-->
+        <!--<android.support.design.widget.FloatingActionButton-->
             <!--android:layout_width="40dp"-->
             <!--android:layout_height="40dp"-->
             <!--android:layout_gravity="bottom|center"-->
             <!--android:layout_marginBottom="70dp"-->
-            <!--android:background="@drawable/ic_circle_button"-->
-            <!--android:foreground="@drawable/ic_note_add_black_24dp"/>-->
+            <!--android:src="@drawable/ic_description_black_24dp"-->
+            <!--app:backgroundTint="@color/colorPrimary"/>-->
 
         <!--<Button-->
             <!--android:layout_width="40dp"-->

@@ -41,13 +41,12 @@ public class DBConnector {
 
         String sql = "CREATE TABLE IF NOT EXISTS Notes (\n"
                 + " id INTEGER PRIMARY KEY,\n"
-                + " parent_id TINYTEXT NOT NULL,\n"
+                + " parent_id INTEGER NOT NULL,\n"
                 + " header TINYTEXT,\n"
                 + " text TEXT,\n"
-                + " check_box BOOL NOT NULL,\n"
-                + " notify BOOL NOT NULL,\n"
+                + " type TINYTEXT NOT NULL,\n"
                 + " date DATETIME,\n"
-                + " fix BOOL,\n"
+                + " fixed BOOL NOT NULL,\n"
                 + ");";
 
         try (Statement statement = connection.createStatement()) {
@@ -62,18 +61,17 @@ public class DBConnector {
     }
 
     public static void insertData(int parentId, String header, String text,
-                                  boolean checkBox, boolean notify, String date, boolean fix){
+                                  String type, String date, boolean fixed){
         Log.d(TAG, TextFormer.getStartText(className) + "Добавляем запись в таблицу...");
-        String sql = "INSERT INTO Notes (parent_id, header, text, check_box, notify, date, fix) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Notes (parent_id, header, text, type, date, fixed) VALUES(?,?,?,?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, parentId);
             preparedStatement.setString(2, header);
             preparedStatement.setString(3, text);
-            preparedStatement.setBoolean(4, checkBox);
-            preparedStatement.setBoolean(5, notify);
+            preparedStatement.setString(4, type);
             preparedStatement.setString(6, date);
-            preparedStatement.setBoolean(7, fix);
+            preparedStatement.setBoolean(7, fixed);
             preparedStatement.executeUpdate();
             Log.d(TAG, TextFormer.getStartText(className) + "Запись добавлена!");
         } catch (SQLException e) {
