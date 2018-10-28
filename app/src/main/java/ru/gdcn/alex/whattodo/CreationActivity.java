@@ -20,9 +20,9 @@ public class CreationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation);
-//        setupActionBar();
-    bottomAppBar = findViewById(R.id.creation_bottom_bar);
-    setSupportActionBar(bottomAppBar);
+        setupActionBar();
+//    bottomAppBar = findViewById(R.id.creation_bottom_bar);
+//    setSupportActionBar(bottomAppBar);
     }
 
 

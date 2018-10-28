@@ -42,12 +42,12 @@
             android:inputType="textMultiLine" />
     </LinearLayout>
 
-    <android.support.design.bottomappbar.BottomAppBar
-        android:id="@+id/creation_bottom_bar"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_gravity="bottom"
-        android:backgroundTint="@color/colorPrimary"
-        android:paddingTop="16dp"/>
+    <!--<android.support.design.bottomappbar.BottomAppBar-->
+        <!--android:id="@+id/creation_bottom_bar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="56dp"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:backgroundTint="@color/colorPrimary"-->
+        <!--android:paddingTop="16dp"/>-->
 
 </android.support.design.widget.CoordinatorLayout>

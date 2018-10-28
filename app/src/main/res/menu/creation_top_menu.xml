@@ -10,5 +10,5 @@
         android:id="@+id/creation_top_fixed"
         android:icon="@drawable/ic_lock_black_24dp"
         android:title="@string/creation_top_fixed"
-        app:showAsAction="never|withText"/>
+        app:showAsAction="ifRoom"/>
 </menu>

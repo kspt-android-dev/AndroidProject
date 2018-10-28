@@ -31,32 +31,6 @@
             android:text="@string/button_create"
             android:textColor="@android:color/white"
             android:textSize="14dp"/>
-        
-        <!--<android.support.design.widget.FloatingActionButton-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_gravity="bottom|center"-->
-            <!--android:layout_marginBottom="70dp"-->
-            <!--android:src="@drawable/ic_description_black_24dp"-->
-            <!--app:backgroundTint="@color/colorPrimary"/>-->
-
-        <!--<Button-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_marginStart="84dp"-->
-            <!--android:layout_gravity="bottom|center"-->
-            <!--android:layout_marginBottom="70dp"-->
-            <!--android:background="@drawable/ic_circle_button"-->
-            <!--android:foreground="@drawable/ic_add_box_black_24dp"/>-->
-
-        <!--<Button-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_gravity="bottom|center"-->
-            <!--android:layout_marginEnd="84dp"-->
-            <!--android:layout_marginBottom="70dp"-->
-            <!--android:background="@drawable/ic_circle_button"-->
-            <!--android:foreground="@drawable/ic_list_black_24dp"/>-->
 
     </FrameLayout>
 
