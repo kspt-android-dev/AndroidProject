@@ -56,10 +56,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
         public void bind(Card card) {
             cardView.setText(card.getHeader());
-//            cardView.setCompoundDrawables(itemView.getContext().getDrawable(card.getIcon()),
-//                    itemView.getContext().getDrawable(card.getIcon()),
-//                    itemView.getContext().getDrawable(card.getIcon()),
-//                    itemView.getContext().getDrawable(card.getIcon()));
+            cardView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    itemView.getContext().getDrawable(card.getIcon()),
+                    null, null, null);
         }
     }
 }
