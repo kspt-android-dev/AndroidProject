@@ -4,6 +4,7 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +16,20 @@ import java.util.List;
 
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.customviews.Card;
-
-import static ru.gdcn.alex.whattodo.R.color.colorPrimary;
+import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
+
+    private static final String TAG = "ToDO_Logger";
+    private static final String className = "CardAdapter";
 
     private List<Card> cardList = new ArrayList<>();
 
     public void setItems(Collection<Card> cards){
+        Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточек в список...");
         cardList.addAll(cards);
         notifyDataSetChanged();
+        Log.d(TAG, TextFormer.getStartText(className) + "Карточки добавлены!");
     }
 
     @NonNull
@@ -49,12 +54,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
         private TextView cardView;
 
-        public CardViewHolder(@NonNull View itemView) {
+        CardViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.card_header);
         }
 
-        public void bind(Card card) {
+        void bind(Card card) {
             cardView.setText(card.getHeader());
             cardView.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     itemView.getContext().getDrawable(card.getIcon()),

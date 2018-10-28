@@ -7,28 +7,26 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "ToDO_Logger";
     public static final String className = "MainActivity";
 
     FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, TextFormer.getStartText(className) + "Создание MainActivity...");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tabs_layout);
+        setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
 
@@ -44,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        //TODO создавать фрагменты один раз!!! Убрать создание из кейсов!!!
                         switch (item.getItemId()){
                             case R.id.nav_notes:
                                 NotesFragment notes = new NotesFragment();
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         return false;
                     }
                 });
-
+        Log.d(TAG, TextFormer.getStartText(className) + "Создание MainActivity завершено!");
     }
 
     @Override
@@ -79,24 +78,30 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия на элемент выпадающего меню...");
         int id = item.getItemId();
         switch (id) {
             case R.id.top_right_menu_settings:
                 Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
+                Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"Настройки\"!");
                 return true;
             case R.id.top_right_menu_about:
                 Toast.makeText(getApplicationContext(), "Нажали О программе.", Toast.LENGTH_LONG).show();
+                Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"О программе\"!");
                 return true;
             default:
+                Log.e(TAG, TextFormer.getStartText(className) + "Не найдено такой кнопки!");
                 return super.onOptionsItemSelected(item);
         }
     }
 
     public void clickCreate(View v){
-        Toast.makeText(this, "Click create!", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия кнопки \"Создать\"...");
         Intent intent = new Intent(this, CreationActivity.class);
         startActivity(intent);
 //        FrameLayout frameLayout = findViewById(R.id.main_space);
@@ -105,5 +110,6 @@ public class MainActivity extends AppCompatActivity {
 //                100);
 //        layoutParams.setMargins(0, 0, 0, (int) (140 / getApplicationContext().getResources().getDisplayMetrics().density));
 //        layoutParams.gravity = Gravity.BOTTOM|Gravity.CENTER;
+        Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия кнопки \"Создать\" завершено!");
     }
 }

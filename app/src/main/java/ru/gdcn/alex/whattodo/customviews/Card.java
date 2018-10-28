@@ -1,23 +1,29 @@
 package ru.gdcn.alex.whattodo.customviews;
 
-import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
+import android.util.Log;
+
+import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class Card {
 
-    private String header;
-    private @DrawableRes int icon;
+    private static final String TAG = "ToDO_Logger";
+    private static final String className = "Card";
 
-    public Card(String header, @DrawableRes int icon) {
+    private String header;
+    private int icon;
+
+    public Card(String header, int icon) {
+        Log.e(TAG, TextFormer.getStartText(className) + "Создание карточки...");
         this.header = header;
         this.icon = icon;
+        Log.e(TAG, TextFormer.getStartText(className) + "Карточка создана!");
     }
 
     public String getHeader() {
         return header;
     }
 
-    public @DrawableRes int getIcon() {
+    public int getIcon() {
         return icon;
     }
 }
