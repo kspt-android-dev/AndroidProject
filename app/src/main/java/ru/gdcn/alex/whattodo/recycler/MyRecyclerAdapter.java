@@ -1,9 +1,8 @@
-package ru.gdcn.alex.whattodo.adapter;
+package ru.gdcn.alex.whattodo.recycler;
 
-import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +11,18 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.customviews.Card;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
+public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.CardViewHolder>
+                                implements SwipeDragHelperCallback.ActionCompletionContract {
 
     private static final String TAG = "ToDO_Logger";
-    private static final String className = "CardAdapter";
+    private static final String className = "MyRecyclerAdapter";
 
     private List<Card> cardList = new ArrayList<>();
 
@@ -52,11 +53,23 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         cardViewHolder.bind(cardList.get(i));
     }
 
-
-
     @Override
     public int getItemCount() {
         return cardList.size();
+    }
+
+    @Override
+    public void onViewMoved(int oldPosition, int newPosition) {
+        //TODO теперь надо чтоб в бд тоже местами поменялись
+        Log.d(TAG, TextFormer.getStartText(className) + "Словил перемещение...");
+//        Collections.swap(cardList, oldPosition, newPosition);
+        notifyItemMoved(oldPosition, newPosition);
+    }
+
+    @Override
+    public void onViewSwiped(int position) {
+        Log.d(TAG, TextFormer.getStartText(className) + "Словил свайп...");
+        //TODO порабоать со свайпом, чтоб элемент не удалялся, а выполнял действие
     }
 
     class CardViewHolder extends RecyclerView.ViewHolder {

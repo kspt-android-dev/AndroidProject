@@ -122,7 +122,7 @@ public class DBConnector {
 
     public static void deleteData(Context activity, int id, int parentId, String header, String text,
                                   String type, String dateString, int fixed){
-        //TODO
+        //TODO удаление записи из БД и всего, что лежит внутри нее
     }
 
     public static void clearTable(Context activity){
