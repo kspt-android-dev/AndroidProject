@@ -10,6 +10,7 @@ public class Card {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "Card";
 
+    private int id;
     private int parentId;
     private String header;
     private String content;
@@ -25,7 +26,8 @@ public class Card {
         Log.e(TAG, TextFormer.getStartText(className) + "Карточка создана!");
     }
 
-    public Card(int parentId, String header, String content, String type, String date, int fixed) {
+    public Card(int id, int parentId, String header, String content, String type, String date, int fixed) {
+        this.id = id;
         this.parentId = parentId;
         this.header = header;
         this.content = content;
@@ -33,6 +35,10 @@ public class Card {
         this.date = date;
         this.fixed = fixed;
         this.icon = R.drawable.ic_description_black_24dp;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getHeader() {

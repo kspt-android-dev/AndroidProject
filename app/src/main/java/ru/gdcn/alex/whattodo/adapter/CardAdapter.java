@@ -32,6 +32,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         Log.d(TAG, TextFormer.getStartText(className) + "Карточки добавлены!");
     }
 
+    public void clearItems(){
+        Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточек из списка...");
+        cardList.clear();
+        notifyDataSetChanged();
+        Log.d(TAG, TextFormer.getStartText(className) + "Карточки удалены!");
+    }
+
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -44,6 +51,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     public void onBindViewHolder(@NonNull CardViewHolder cardViewHolder, int i) {
         cardViewHolder.bind(cardList.get(i));
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -65,5 +74,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
                     itemView.getContext().getDrawable(card.getIcon()),
                     null, null, null);
         }
+
+
     }
 }

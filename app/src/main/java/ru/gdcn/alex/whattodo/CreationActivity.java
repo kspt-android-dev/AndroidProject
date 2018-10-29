@@ -39,10 +39,11 @@ public class CreationActivity extends AppCompatActivity implements TextView.OnEd
     private void initData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализирую данные...");
         note = new Card(
+                getIntent().getIntExtra("id", 0),
                 getIntent().getIntExtra("parentId", 0),
                 getIntent().getStringExtra("header"),
                 getIntent().getStringExtra("content"),
-                "test",
+                "note",
                 getIntent().getStringExtra("date"),
                 getIntent().getIntExtra("fixed", 0)
         );
@@ -98,6 +99,7 @@ public class CreationActivity extends AppCompatActivity implements TextView.OnEd
     protected void onPause() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сработала пауза!");
         note.setHeader(String.valueOf(header.getText()));
+        note.setContent(String.valueOf(content.getText()));
         saveData();
         super.onPause();
     }
@@ -105,6 +107,11 @@ public class CreationActivity extends AppCompatActivity implements TextView.OnEd
     private void saveData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сохраняю данные...");
         if (clickCreate) {
+//            Log.d(TAG, TextFormer.getStartText(className) + "Пустые поля. Такую запись не добавляю! " + header.getText() + "-" + content.getText());
+            if (String.valueOf(header.getText()).equals("") && String.valueOf(content.getText()).equals("")){
+                Log.d(TAG, TextFormer.getStartText(className) + "Пустые поля. Такую запись не добавляю!");
+                return;
+            }
             DBConnector.insertData(
                     getApplicationContext(),
                     note.getParentId(),
@@ -116,15 +123,16 @@ public class CreationActivity extends AppCompatActivity implements TextView.OnEd
             );
             Log.d(TAG, TextFormer.getStartText(className) + "Данные добавлены!");
         } else {
-//            DBConnector.updateData(
-//                    getApplicationContext(),
-//                    note.getParentId(),
-//                    note.getHeader(),
-//                    note.getContent(),
-//                    note.getType(),
-//                    note.getDate(),
-//                    note.isFixed()
-//            );
+            DBConnector.updateData(
+                    getApplicationContext(),
+                    note.getId(),
+                    note.getParentId(),
+                    note.getHeader(),
+                    note.getContent(),
+                    note.getType(),
+                    note.getDate(),
+                    note.isFixed()
+            );
             Log.d(TAG, TextFormer.getStartText(className) + "Данные обновлены!");
         }
 

@@ -38,36 +38,44 @@ public class NotesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.e(TAG, TextFormer.getStartText(className) + "Дизайн NotesFragment загружен!");
+        Log.d(TAG, TextFormer.getStartText(className) + "Дизайн NotesFragment загружен!");
         return inflater.inflate(R.layout.notes_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.e(TAG, TextFormer.getStartText(className) + "Инициализация NotesFragment...");
+        Log.d(TAG, TextFormer.getStartText(className) + "Инициализация NotesFragment...");
         initRecyclerView();
 
-        cardAdapter.setItems(getCards());
+        //TODO попробовать так обработать нажатие
+//        recyclerView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         super.onActivityCreated(savedInstanceState);
-        Log.e(TAG, TextFormer.getStartText(className) + "Инициализация NotesFragment закончена!");
+        Log.d(TAG, TextFormer.getStartText(className) + "Инициализация NotesFragment закончена!");
+    }
+
+    @Override
+    public void onStart() {
+        cardAdapter.clearItems();
+        cardAdapter.setItems(getCards());
+        super.onStart();
     }
 
     private void initRecyclerView(){
-        Log.e(TAG, TextFormer.getStartText(className) + "Инициализация списка...");
+        Log.d(TAG, TextFormer.getStartText(className) + "Инициализация списка...");
         recyclerView = getActivity().findViewById(R.id.notes_fragment_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         cardAdapter = new CardAdapter();
         recyclerView.setAdapter(cardAdapter);
-        Log.e(TAG, TextFormer.getStartText(className) + "Список инициализирован!");
+        Log.d(TAG, TextFormer.getStartText(className) + "Список инициализирован!");
     }
 
     private Collection<Card> getCards(){
         return DBConnector.getData(getContext(), 0);
-//        return Arrays.asList(
-//                new Card("Test",R.drawable.ic_description_black_24dp),
-//                new Card("Alo", R.drawable.ic_description_black_24dp),
-//                new Card("Your notes",R.drawable.ic_description_black_24dp)
-//        );
     }
 }

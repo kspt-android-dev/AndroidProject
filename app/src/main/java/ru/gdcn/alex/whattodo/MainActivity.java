@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                                         .replace(R.id.main_space, tasks)
                                         .commit();
                                 item.setChecked(true);
+                                DBConnector.clearTable(getApplicationContext());
                                 break;
                             case R.id.nav_calendar:
                                 CalendarFragment calendarFragment = new CalendarFragment();
@@ -79,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.top_right_menu, menu);
         return true;
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
