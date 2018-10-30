@@ -1,5 +1,6 @@
 package ru.gdcn.alex.whattodo.recycler;
 
+import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -44,7 +45,12 @@ public class SwipeDragHelperCallback extends ItemTouchHelper.Callback {
         Log.d(TAG, TextFormer.getStartText(className) + "Свайп отслежен!");
     }
 
+    @Override
+    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+        //TODO переделать чтоб при свайпе элемент не исчезал
 
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+    }
 
     public interface ActionCompletionContract {
         void onViewMoved(int oldPosition, int newPosition);

@@ -44,7 +44,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.recycler_view_card, viewGroup, false);
+                .inflate(R.layout.notes_recyclerview_card, viewGroup, false);
         return new CardViewHolder(view);
     }
 
@@ -69,23 +69,19 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
     @Override
     public void onViewSwiped(int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Словил свайп...");
-        //TODO порабоать со свайпом, чтоб элемент не удалялся, а выполнял действие
     }
 
     class CardViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView cardView;
+        private TextView headerView;
 
         CardViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.card_header);
+            headerView = itemView.findViewById(R.id.notes_recyclerview_header);
         }
 
         void bind(Card card) {
-            cardView.setText(card.getHeader());
-            cardView.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    itemView.getContext().getDrawable(card.getIcon()),
-                    null, null, null);
+            headerView.setText(card.getHeader());
         }
 
 
