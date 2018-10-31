@@ -27,14 +27,16 @@
                 android:id="@+id/notes_recyclerview_header_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:divider="@drawable/divider"
+                android:showDividers="middle">
 
                 <TextView
                     android:id="@+id/notes_recyclerview_header"
                     tools:text="Notes header"
                     tools:textSize="24dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="56dp"
                     android:layout_weight="1"
                     android:padding="12dp"
                     android:gravity="center_vertical"

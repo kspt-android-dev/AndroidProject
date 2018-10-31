@@ -23,9 +23,6 @@ public class SwipeDragHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         Log.d(TAG, TextFormer.getStartText(className) + "Получаю направление действия...");
-//        if (viewHolder instanceof MyRecyclerAdapter.CardViewHolder) {
-//            return 0;
-//        }
         int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
         int swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
         Log.d(TAG, TextFormer.getStartText(className) + "Направление действия определено!");
@@ -34,9 +31,15 @@ public class SwipeDragHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+        //TODO добавив выделение перестали перемещаться карточки. Надо исправить
         contract.onViewMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         Log.d(TAG, TextFormer.getStartText(className) + "Перемещение отслежено!");
         return true;
+    }
+
+    @Override
+    public boolean isItemViewSwipeEnabled() {
+        return false;
     }
 
     @Override
@@ -48,7 +51,6 @@ public class SwipeDragHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
         //TODO переделать чтоб при свайпе элемент не исчезал
-
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
 

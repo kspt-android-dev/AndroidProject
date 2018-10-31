@@ -1,6 +1,10 @@
 package ru.gdcn.alex.whattodo.recycler;
 
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
@@ -25,6 +29,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
     private static final String className = "MyRecyclerAdapter";
 
     private List<Card> cardList = new ArrayList<>();
+    private List<Integer> selectedId = new ArrayList<>();
 
     public void setItems(Collection<Card> cards){
         Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточек в список...");
@@ -33,11 +38,25 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
         Log.d(TAG, TextFormer.getStartText(className) + "Карточки добавлены!");
     }
 
+    public void setSelectedIds(Collection<Integer> setectedCards){
+        selectedId.addAll(setectedCards);
+        notifyDataSetChanged();
+    }
+
     public void clearItems(){
         Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточек из списка...");
         cardList.clear();
         notifyDataSetChanged();
         Log.d(TAG, TextFormer.getStartText(className) + "Карточки удалены!");
+    }
+
+    public Card getItem(int index){
+        return cardList.get(index);
+    }
+
+    @Override
+    public int getItemCount() {
+        return cardList.size();
     }
 
     @NonNull
@@ -51,11 +70,19 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder cardViewHolder, int i) {
         cardViewHolder.bind(cardList.get(i));
-    }
 
-    @Override
-    public int getItemCount() {
-        return cardList.size();
+//        holder.title.setText(list.get(position).getTitle());
+        int id = cardList.get(i).getId();
+
+        if (selectedId.contains(id)){
+            //if item is selected then,set foreground color of FrameLayout.
+            cardViewHolder.selectBack();
+
+        }
+        else {
+            //else remove selected item color.
+            cardViewHolder.removeSelect();
+        }
     }
 
     @Override
@@ -74,14 +101,25 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
     class CardViewHolder extends RecyclerView.ViewHolder {
 
         private TextView headerView;
+        private CardView cardView;
 
         CardViewHolder(@NonNull View itemView) {
             super(itemView);
             headerView = itemView.findViewById(R.id.notes_recyclerview_header);
+            cardView = itemView.findViewById(R.id.notes_recyclerview_card);
         }
 
         void bind(Card card) {
             headerView.setText(card.getHeader());
+        }
+
+        void selectBack(){
+            cardView.setBackgroundColor(cardView.getContext().getResources().getColor(R.color.colorPrimaryDark));
+//            cardView.setCardBackgroundColor(cardView.getContext().getResources().getColor(R.color.colorPrimaryDark));
+        }
+
+        void removeSelect(){
+            cardView.setCardBackgroundColor(cardView.getContext().getResources().getColor(R.color.colorPrimary));
         }
 
 
