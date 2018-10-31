@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ru.polytech.course.pashnik.lines.Graphics.Painter
+        android:id="@+id/game_view"
+        android:layout_width="405dp"
+        android:layout_height="405dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="#C0C0C0" />
+</LinearLayout>
