@@ -1,57 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/notes_recyclerview_card"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        app:cardCornerRadius="3dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:elevation="10dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/notes_recyclerview_card"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginRight="6dp"
+    android:backgroundTint="@color/colorPrimary"
+    android:elevation="10dp"
+    app:cardCornerRadius="3dp">
 
         <LinearLayout
-            android:id="@+id/notes_recyclerview_main_container"
+            android:id="@+id/notes_recyclerview_header_container"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:divider="@drawable/divider"
+            android:dividerPadding="7dp"
+            android:showDividers="middle">
 
-            <LinearLayout
-                android:id="@+id/notes_recyclerview_header_container"
+            <TextView
+                android:id="@+id/notes_recyclerview_header"
+                android:layout_width="280dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textSize="20dp"
+                tools:text="Notes header"
+                tools:textSize="20dp" />
+
+            <ImageButton
+                android:id="@+id/notes_recyclerview_arrow_down"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:divider="@drawable/divider"
-                android:showDividers="middle">
-
-                <TextView
-                    android:id="@+id/notes_recyclerview_header"
-                    tools:text="Notes header"
-                    tools:textSize="24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_weight="1"
-                    android:padding="12dp"
-                    android:gravity="center_vertical"
-                    android:textSize="32dp"/>
-
-                <ImageButton
-                    android:id="@+id/notes_recyclerview_arrow_down"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_keyboard_arrow_down_black_24dp" />
-            </LinearLayout>
-
-
+                android:layout_gravity="center"
+                android:backgroundTint="@color/colorPrimary"
+                android:foreground="@drawable/ic_keyboard_arrow_down_black_24dp"
+                android:foregroundGravity="center"
+                android:tag="ib"/>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+</android.support.v7.widget.CardView>

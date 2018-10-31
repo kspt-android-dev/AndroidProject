@@ -31,7 +31,6 @@ public class SwipeDragHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-        //TODO добавив выделение перестали перемещаться карточки. Надо исправить
         contract.onViewMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         Log.d(TAG, TextFormer.getStartText(className) + "Перемещение отслежено!");
         return true;
@@ -39,6 +38,11 @@ public class SwipeDragHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public boolean isItemViewSwipeEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isLongPressDragEnabled() {
         return false;
     }
 

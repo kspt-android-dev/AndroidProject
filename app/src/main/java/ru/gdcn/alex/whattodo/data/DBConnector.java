@@ -24,54 +24,6 @@ public class DBConnector {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "DBConnector";
 
-
-    private static Connection connection = null;
-
-    public static boolean initDB(AppCompatActivity activity) {
-        Log.d(TAG, TextFormer.getStartText(className) + "Инициализирую БД...");
-//        dbHelper = new DBHelper(activity);
-//        database = dbHelper.getWritableDatabase();
-        return true;
-    }
-
-    private static boolean connect() {
-        String url = "jdbc:sqlite:WhatToDO.db";
-        try {
-            Log.d(TAG, TextFormer.getStartText(className) + "Попытка установить соединение с БД...");
-            connection = DriverManager.getConnection(url);
-            Log.d(TAG, TextFormer.getStartText(className) + "Соединение с БД установленно!");
-            return true;
-        } catch (SQLException e) {
-            Log.e(TAG, TextFormer.getStartText(className) + "Соединение с БД не установленно!");
-            Log.e(TAG, TextFormer.getStartText(className) + e.toString());
-            return false;
-        }
-    }
-
-    private static boolean checkTables() {
-        Log.d(TAG, TextFormer.getStartText(className) + "Проверка наличия таблицы...");
-
-        String sql = "CREATE TABLE IF NOT EXISTS Notes (\n"
-                + " id INTEGER PRIMARY KEY,\n"
-                + " parent_id INTEGER NOT NULL,\n"
-                + " header TINYTEXT,\n"
-                + " text TEXT,\n"
-                + " type TINYTEXT NOT NULL,\n"
-                + " date DATETIME,\n"
-                + " fixed BOOL NOT NULL,\n"
-                + ");";
-
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(sql);
-            Log.d(TAG, TextFormer.getStartText(className) + "Таблица существует и работает!");
-        } catch (SQLException e) {
-            Log.e(TAG, TextFormer.getStartText(className) + "Проблема доступа к таблице!");
-            Log.e(TAG, TextFormer.getStartText(className) + e.toString());
-            return false;
-        }
-        return true;
-    }
-
     public static void insertData(Context activity, int parentId, String header, String text,
                                   String type, String dateString, int fixed) {
         Log.d(TAG, TextFormer.getStartText(className) + "Добавляем запись в таблицу...");
@@ -86,6 +38,7 @@ public class DBConnector {
         contentValues.put(KEY_DATE, stringToDate(dateString));
         contentValues.put(KEY_FIXED, fixed);
         long c = database.insert(TABLE_NOTES, null, contentValues);
+        Log.d(TAG, TextFormer.getStartText(className) + "Размер таблицы: " + database.getPageSize() + " байт!");
         contentValues.clear();
         database.close();
         dbHelper.close();
@@ -114,6 +67,7 @@ public class DBConnector {
         contentValues.put(KEY_DATE, stringToDate(dateString));
         contentValues.put(KEY_FIXED, fixed);
         long c = database.update(TABLE_NOTES, contentValues, KEY_ID + " = " + id, null);
+        Log.d(TAG, TextFormer.getStartText(className) + "Размер таблицы: " + database.getPageSize() + " байт!");
         contentValues.clear();
         database.close();
         dbHelper.close();
@@ -131,6 +85,7 @@ public class DBConnector {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         database.delete(TABLE_NOTES, null, null);
         database.execSQL("VACUUM;");
+        Log.d(TAG, TextFormer.getStartText(className) + "Размер таблицы: " + database.getPageSize() + " байт!");
         database.close();
         dbHelper.close();
         Log.d(TAG, TextFormer.getStartText(className) + "Таблица отчищена!");

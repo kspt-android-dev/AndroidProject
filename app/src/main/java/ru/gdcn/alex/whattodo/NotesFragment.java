@@ -1,9 +1,11 @@
 package ru.gdcn.alex.whattodo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -12,9 +14,10 @@ import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,8 +41,6 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
     private RecyclerView recyclerView;
     private MyRecyclerAdapter myRecyclerAdapter;
 
-    private List<Integer> selectedIds = new ArrayList<>();
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,46 +59,47 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
 
     @Override
     public void onStart() {
-        //TODO изменить логику обнолвения списка
+        Log.d(TAG, TextFormer.getStartText(className) + "Сработал onStart");
+        //TODO изменить логику обнолвения списка. Возвращать данные из пред. активити
         myRecyclerAdapter.clearItems();
-        myRecyclerAdapter.setItems(getCards());
+        myRecyclerAdapter.addItems(getCards());
         super.onStart();
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация списка...");
         recyclerView = getActivity().findViewById(R.id.notes_fragment_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         myRecyclerAdapter = new MyRecyclerAdapter();
         SwipeDragHelperCallback swipeDragHelperCallback = new SwipeDragHelperCallback(myRecyclerAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(swipeDragHelperCallback);
         recyclerView.setAdapter(myRecyclerAdapter);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), recyclerView, this));
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerView, this));
         touchHelper.attachToRecyclerView(recyclerView);
         Log.d(TAG, TextFormer.getStartText(className) + "Список инициализирован!");
     }
 
-    private Collection<Card> getCards(){
+    private Collection<Card> getCards() {
         return DBConnector.getData(getContext(), 0);
     }
 
+
     private void multiSelect(int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Обрабатываю выдиление...");
-        Card data = myRecyclerAdapter.getItem(position);
-        if (data != null) {
+        Card card = myRecyclerAdapter.getItem(position);
+        if (card != null) {
             if (actionMode != null) {
-                if (selectedIds.contains(data.getId()))
-                    selectedIds.remove(Integer.valueOf(data.getId()));
+                if (myRecyclerAdapter.getSelectedItems().contains(card.getId()))
+                    myRecyclerAdapter.removeSelectedItem(card.getId());
                 else
-                    selectedIds.add(data.getId());
+                    myRecyclerAdapter.addSelectedItem(card.getId());
 
-                if (selectedIds.size() > 0)
-                    actionMode.setTitle(String.valueOf(selectedIds.size())); //show selected item count on action mode.
+                if (myRecyclerAdapter.getSelectedItems().size() > 0)
+                    actionMode.setTitle(String.valueOf(myRecyclerAdapter.getSelectedItems().size())); //show selected item count on action mode.
                 else {
                     actionMode.setTitle(""); //remove item count from action mode.
                     actionMode.finish(); //hide action mode.
                 }
-                myRecyclerAdapter.setSelectedIds(selectedIds);
             }
         }
         Log.d(TAG, TextFormer.getStartText(className) + "Выдиление обработано!");
@@ -106,6 +108,7 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
     @Override
     public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
         actionMode.getMenuInflater().inflate(R.menu.menu_selecet, menu);
+        Log.d(TAG, TextFormer.getStartText(className) + "ActionMode создано!");
         return true;
     }
 
@@ -116,6 +119,7 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
 
     @Override
     public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+        Log.d(TAG, TextFormer.getStartText(className) + "Словил клик на элемент ActionMode...");
 //        switch (menuItem.getItemId()){
 //            case R.id.action_delete:
 //                //just to show selected items.
@@ -132,33 +136,47 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
 
     @Override
     public void onDestroyActionMode(ActionMode actionMode) {
+        Log.d(TAG, TextFormer.getStartText(className) + "Уничтожение ActionMode...");
         isMultiSelect = false;
-
-        //TODO проверить правильность действий
-        actionMode = null;
-        selectedIds = new ArrayList<>();
-        myRecyclerAdapter.setSelectedIds(new ArrayList<Integer>());
+        this.actionMode = null;
+        myRecyclerAdapter.clearSelectedItems();
+        Log.d(TAG, TextFormer.getStartText(className) + "ActionMode уничтожено!");
     }
 
     @Override
     public void onItemClick(View view, int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Словил клик на элемент!");
-        if (isMultiSelect){
-            //if multiple selection is enabled then select item on single click else perform normal click on item.
+        if (isMultiSelect) {
             multiSelect(position);
+        } else {
+//            int iL = ((CardView) view).indexOfChild(getActivity().findViewById(R.id.notes_recyclerview_header_container));
+//            int iB = ((LinearLayout)((CardView) view).getChildAt(iL)).indexOfChild(getActivity().findViewById(R.id.notes_recyclerview_arrow_down));
+//            if (iB == -1) return;
+//            if (!(((String)(((ImageButton)((LinearLayout)((CardView) view).getChildAt(iL)).getChildAt(iB)).getTag())).equals(new String("ib")))) {
+                Card card = myRecyclerAdapter.getItem(position);
+                Intent intent = new Intent(getContext(), CreationActivity.class);
+                intent.putExtra("id", card.getId());
+                intent.putExtra("parentId", card.getParentId());
+                intent.putExtra("header", card.getHeader());
+                intent.putExtra("content", card.getContent());
+                intent.putExtra("type", card.getType());
+                intent.putExtra("date", card.getDate());
+                intent.putExtra("fixed", card.isFixed());
+                intent.putExtra("clickCreate", false);
+                startActivity(intent);
+//            }
         }
     }
 
     @Override
     public void onItemLongClick(View view, int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Словил долгий клик на элемент!");
-        if (!isMultiSelect){
-            selectedIds = new ArrayList<>(); //TODO проверить правильность создания списка
+        if (!isMultiSelect) {
             isMultiSelect = true;
-            if (actionMode == null){
+            if (actionMode == null) {
                 actionMode = getActivity().startActionMode(NotesFragment.this); //show ActionMode.
             }
+            multiSelect(position);
         }
-        multiSelect(position);
     }
 }

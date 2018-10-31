@@ -43,7 +43,7 @@ public class CreationActivity extends AppCompatActivity implements TextView.OnEd
                 getIntent().getIntExtra("parentId", 0),
                 getIntent().getStringExtra("header"),
                 getIntent().getStringExtra("content"),
-                "note",
+                getIntent().getStringExtra("type"),
                 getIntent().getStringExtra("date"),
                 getIntent().getIntExtra("fixed", 0)
         );

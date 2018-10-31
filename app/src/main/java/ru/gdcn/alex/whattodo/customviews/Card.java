@@ -31,7 +31,10 @@ public class Card {
         this.parentId = parentId;
         this.header = header;
         this.content = content;
-        this.type = type;
+        if (type == null)
+            this.type = "";
+        else
+            this.type = type;
         this.date = date;
         this.fixed = fixed;
         this.icon = R.drawable.ic_description_black_24dp;
