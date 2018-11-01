@@ -1,7 +1,7 @@
 package com.dreamteam.monopoly.game.player
 
 import com.dreamteam.monopoly.game.board.Board
-import com.dreamteam.monopoly.game.board.cell.GameCell
+import com.dreamteam.monopoly.game.board.cell.GameCellType
 
 class Player(val name: String, startMoney: Int, private val board: Board) {
 
@@ -16,13 +16,12 @@ class Player(val name: String, startMoney: Int, private val board: Board) {
 
     fun decision(action: PlayerActions) {
         when (action) {
-            PlayerActions.BUY -> if(board.gameWay[currentPosition] is GameCell &&
-                    (board.gameWay[currentPosition] as GameCell).buy(this)){
+            PlayerActions.BUY -> if (board.gameWay[currentPosition].type == GameCellType.COMPANY &&
+                    board.gameWay[currentPosition].buy(this)) {
                 return
-            }
-            else TODO()
-            PlayerActions.PAY -> if(board.gameWay[currentPosition] is GameCell &&
-                    (board.gameWay[currentPosition] as GameCell).pay(this))
+            } else TODO()
+            PlayerActions.PAY -> if (board.gameWay[currentPosition].type == GameCellType.COMPANY &&
+                    board.gameWay[currentPosition].pay(this))
                 return
             else TODO()
             PlayerActions.STAY -> TODO()
