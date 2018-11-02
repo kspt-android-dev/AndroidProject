@@ -19,7 +19,7 @@ public class DBConnector {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "DBConnector";
 
-
+    //TODO ORM посмтреть. Автоматизирует добавление объектов в БД
     public static void insertData(Context activity, Card card) {
         Log.d(TAG, TextFormer.getStartText(className) + "Добавляем запись в таблицу...");
         DBHelper dbHelper = new DBHelper(activity);
