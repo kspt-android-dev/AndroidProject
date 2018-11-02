@@ -42,12 +42,31 @@
             android:inputType="textMultiLine" />
     </LinearLayout>
 
-    <!--<android.support.design.bottomappbar.BottomAppBar-->
-        <!--android:id="@+id/creation_bottom_bar"-->
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:foreground="@drawable/ic_add_black_24dp"
+        android:foregroundGravity="center"/>
+
+    <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="56dp"-->
+        <!--android:orientation="horizontal"-->
         <!--android:layout_gravity="bottom"-->
-        <!--android:backgroundTint="@color/colorPrimary"-->
-        <!--android:paddingTop="16dp"/>-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:elevation="6dp">-->
+        <!---->
+        <!--<ImageButton-->
+            <!--android:layout_width="56dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:foreground="@drawable/ic_add_black_24dp"-->
+            <!--android:foregroundTint="@android:color/black"-->
+            <!--android:foregroundGravity="center"-->
+            <!--android:backgroundTint="@color/colorPrimary"/>-->
+        <!---->
+    <!--</LinearLayout>-->
 
 </android.support.design.widget.CoordinatorLayout>

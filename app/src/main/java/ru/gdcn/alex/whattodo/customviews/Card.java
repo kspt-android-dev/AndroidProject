@@ -13,14 +13,16 @@ public class Card implements Serializable {
     private static final String className = "Card";
 
     private int id;
-    private int parentId;
-    private int position;
+    private int parentId = 0;
+    private int position = 1;
     private String header;
     private String content;
-    private String type;
+    private String type = "note";
     private String date;
-    private int fixed;
-    private int icon;
+    private int fixed = 0;
+    private int icon = R.drawable.ic_description_black_24dp;
+
+    public Card(){}
 
     public Card(String header, int icon) {
         Log.e(TAG, TextFormer.getStartText(className) + "Создание карточки...");
@@ -34,24 +36,20 @@ public class Card implements Serializable {
         this.parentId = parentId;
         this.header = header;
         this.content = content;
-        if (type == null)
-            this.type = "";
-        else
+        if (type != null)
             this.type = type;
         this.date = date;
         this.fixed = fixed;
         this.icon = R.drawable.ic_description_black_24dp;
     }
 
-    public Card(int id, int position, int parentId, String header, String content, String type, String date, int fixed) {
+    public Card(int id, int parentId, int position, String header, String content, String type, String date, int fixed) {
         this.id = id;
         this.parentId = parentId;
         this.position = position;
         this.header = header;
         this.content = content;
-        if (type == null)
-            this.type = "";
-        else
+        if (type != null)
             this.type = type;
         this.date = date;
         this.fixed = fixed;
@@ -86,7 +84,7 @@ public class Card implements Serializable {
         return date;
     }
 
-    public int isFixed() {
+    public int getFixed() {
         return fixed;
     }
 

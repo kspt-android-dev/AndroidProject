@@ -13,7 +13,7 @@ import ru.gdcn.alex.whattodo.customviews.Card;
 import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class CreationActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
+public class CreationActivity extends AppCompatActivity {
 
     private static final String TAG = "ToDO_Logger";
     private static final String className = "CreationActivity";
@@ -30,8 +30,8 @@ public class CreationActivity extends AppCompatActivity implements TextView.OnEd
         setContentView(R.layout.activity_creation);
         header = findViewById(R.id.creation_note_header);
         content = findViewById(R.id.creation_note_text);
-        setupActionBar();
         initData();
+        setupActionBar();
         header.setText(note.getHeader());
         content.setText(note.getContent());
     }
@@ -39,6 +39,8 @@ public class CreationActivity extends AppCompatActivity implements TextView.OnEd
     private void initData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализирую данные...");
         note = (Card) getIntent().getSerializableExtra("card");
+        if (note == null)
+            note = new Card();
         clickCreate = getIntent().getBooleanExtra("clickCreate", true);
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация данных завершена!");
     }
@@ -96,54 +98,20 @@ public class CreationActivity extends AppCompatActivity implements TextView.OnEd
         super.onPause();
     }
 
+    //TODO понять как задавать posotion
     private void saveData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сохраняю данные...");
         if (clickCreate) {
-            if (String.valueOf(header.getText()).equals("") && String.valueOf(content.getText()).equals("")){
+            if (String.valueOf(header.getText()).equals("") && String.valueOf(content.getText()).equals("")) {
                 Log.d(TAG, TextFormer.getStartText(className) + "Пустые поля. Такую запись не добавляю!");
                 return;
             }
-            DBConnector.insertData(
-                    getApplicationContext(),
-                    note.getParentId(),
-                    note.getHeader(),
-                    note.getContent(),
-                    note.getType(),
-                    note.getDate(),
-                    note.isFixed()
-            );
+            DBConnector.insertData(getApplicationContext(), note);
             Log.d(TAG, TextFormer.getStartText(className) + "Данные добавлены!");
         } else {
-            DBConnector.updateData(
-                    getApplicationContext(),
-                    note.getId(),
-                    note.getParentId(),
-                    note.getHeader(),
-                    note.getContent(),
-                    note.getType(),
-                    note.getDate(),
-                    note.isFixed()
-            );
+            DBConnector.updateData(getApplicationContext(), note);
             Log.d(TAG, TextFormer.getStartText(className) + "Данные обновлены!");
         }
 
-    }
-
-    //TODO это не рабоатет. Оно и не нужно наверное)
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        Log.d(TAG, TextFormer.getStartText(className) + "Обрабатываю изменение в текстовых полях...");
-        int id = v.getId();
-        switch (id) {
-            case R.id.creation_note_header:
-                note.setHeader(String.valueOf(header.getText()));
-                Log.d(TAG, TextFormer.getStartText(className) + "Обновлено поле заголовка!");
-                break;
-            case R.id.creation_note_text:
-                note.setContent(String.valueOf(content.getText()));
-                Log.d(TAG, TextFormer.getStartText(className) + "Обновлено поле основного контента!");
-                break;
-        }
-        return false;
     }
 }

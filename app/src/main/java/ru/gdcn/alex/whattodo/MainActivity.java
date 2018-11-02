@@ -23,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
 
+    NotesFragment notes;
+    TasksFragment tasks;
+    CalendarFragment calendarFragment;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, TextFormer.getStartText(className) + "Создание MainActivity...");
@@ -31,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
 
-        NotesFragment notes = new NotesFragment();
+        notes = new NotesFragment();
+        tasks = new TasksFragment();
+        calendarFragment = new CalendarFragment();
+
         fragmentManager.beginTransaction()
                 .replace(R.id.main_space, notes)
                 .commit();
@@ -42,17 +49,14 @@ public class MainActivity extends AppCompatActivity {
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        //TODO создавать фрагменты один раз!!! Убрать создание из кейсов!!!
                         switch (item.getItemId()){
                             case R.id.nav_notes:
-                                NotesFragment notes = new NotesFragment();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.main_space, notes)
                                         .commit();
                                 item.setChecked(true);
                                 break;
                             case R.id.nav_tasks:
-                                TasksFragment tasks = new TasksFragment();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.main_space, tasks)
                                         .commit();
@@ -60,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
                                 DBConnector.clearTable(getApplicationContext());
                                 break;
                             case R.id.nav_calendar:
-                                CalendarFragment calendarFragment = new CalendarFragment();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.main_space, calendarFragment)
                                         .commit();

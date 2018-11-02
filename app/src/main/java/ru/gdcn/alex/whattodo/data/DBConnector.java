@@ -4,13 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,21 +20,26 @@ public class DBConnector {
     private static final String className = "DBConnector";
 
 
-    //TODO передавать Card
-    public static void insertData(Context activity, int parentId, String header, String text,
-                                  String type, String dateString, int fixed) {
+    public static void insertData(Context activity, Card card) {
         Log.d(TAG, TextFormer.getStartText(className) + "Добавляем запись в таблицу...");
         DBHelper dbHelper = new DBHelper(activity);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        //TODO добавить position
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_PARENT_ID, parentId);
-        contentValues.put(KEY_HEADER, header);
-        contentValues.put(KEY_CONTENT, text);
-        contentValues.put(KEY_TYPE, type);
-        contentValues.put(KEY_DATE, stringToDate(dateString));
-        contentValues.put(KEY_FIXED, fixed);
+        Log.d(TAG, TextFormer.getStartText(className) + "ParentID: " + card.getParentId());
+        contentValues.put(KEY_PARENT_ID, card.getParentId());
+        Log.d(TAG, TextFormer.getStartText(className) + "Position: " + card.getPosition());
+        contentValues.put(KEY_POSITION, card.getPosition());
+        Log.d(TAG, TextFormer.getStartText(className) + "Header: " + card.getHeader());
+        contentValues.put(KEY_HEADER, card.getHeader());
+        Log.d(TAG, TextFormer.getStartText(className) + "Content: " + card.getContent());
+        contentValues.put(KEY_CONTENT, card.getContent());
+        Log.d(TAG, TextFormer.getStartText(className) + "Type: " + card.getType());
+        contentValues.put(KEY_TYPE, card.getType());
+        Log.d(TAG, TextFormer.getStartText(className) + "Date: " + card.getDate());
+        contentValues.put(KEY_DATE, stringToDate(card.getDate()));
+        Log.d(TAG, TextFormer.getStartText(className) + "Fixed: " + card.getFixed());
+        contentValues.put(KEY_FIXED, card.getFixed());
         long c = database.insert(TABLE_NOTES, null, contentValues);
         Log.d(TAG, TextFormer.getStartText(className) + "Размер таблицы: " + database.getPageSize() + " байт!");
         contentValues.clear();
@@ -56,22 +56,20 @@ public class DBConnector {
         return null;
     }
 
-    //TODO передавать Card
-    public static void updateData(Context activity, int id, int parentId, String header, String text,
-                                  String type, String dateString, int fixed) {
+    public static void updateData(Context activity, Card card) {
         Log.d(TAG, TextFormer.getStartText(className) + "Обновляю запись в таблице...");
         DBHelper dbHelper = new DBHelper(activity);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        //TODO добавить position
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_PARENT_ID, parentId);
-        contentValues.put(KEY_HEADER, header);
-        contentValues.put(KEY_CONTENT, text);
-        contentValues.put(KEY_TYPE, type);
-        contentValues.put(KEY_DATE, stringToDate(dateString));
-        contentValues.put(KEY_FIXED, fixed);
-        long c = database.update(TABLE_NOTES, contentValues, KEY_ID + " = " + id, null);
+        contentValues.put(KEY_PARENT_ID, card.getParentId());
+        contentValues.put(KEY_POSITION, card.getPosition());
+        contentValues.put(KEY_HEADER, card.getHeader());
+        contentValues.put(KEY_CONTENT, card.getContent());
+        contentValues.put(KEY_TYPE, card.getType());
+        contentValues.put(KEY_DATE, stringToDate(card.getDate()));
+        contentValues.put(KEY_FIXED, card.getFixed());
+        long c = database.update(TABLE_NOTES, contentValues, KEY_ID + " = " + card.getId(), null);
         Log.d(TAG, TextFormer.getStartText(className) + "Размер таблицы: " + database.getPageSize() + " байт!");
         contentValues.clear();
         database.close();
@@ -79,9 +77,7 @@ public class DBConnector {
         Log.d(TAG, TextFormer.getStartText(className) + "Запись обновлена! " + c);
     }
 
-    //TODO передавать Card
-    public static void deleteData(Context activity, int id, int parentId, String header, String text,
-                                  String type, String dateString, int fixed){
+    public static void deleteData(Context activity, Card card){
         //TODO удаление записи из БД и всего, что лежит внутри нее
     }
 
@@ -109,6 +105,7 @@ public class DBConnector {
         Log.d(TAG, TextFormer.getStartText(className) + "Достал записей: " + cursor.getCount());
         int indexId = cursor.getColumnIndex(KEY_ID);
         int indexParent = cursor.getColumnIndex(KEY_PARENT_ID);
+        int indexPosition = cursor.getColumnIndex(KEY_POSITION);
         int indexHeader = cursor.getColumnIndex(KEY_HEADER);
         int indexContent = cursor.getColumnIndex(KEY_CONTENT);
         int indexType = cursor.getColumnIndex(KEY_TYPE);
@@ -116,10 +113,10 @@ public class DBConnector {
         int indexFixed = cursor.getColumnIndex(KEY_FIXED);
         if (cursor.moveToFirst()) {
             do {
-                //TODO добавить position
                 cards.add(new Card(
                         cursor.getInt(indexId),
                         cursor.getInt(indexParent),
+                        cursor.getInt(indexPosition),
                         cursor.getString(indexHeader),
                         cursor.getString(indexContent),
                         cursor.getString(indexType),
