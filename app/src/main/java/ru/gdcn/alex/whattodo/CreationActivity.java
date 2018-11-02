@@ -38,15 +38,7 @@ public class CreationActivity extends AppCompatActivity implements TextView.OnEd
 
     private void initData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализирую данные...");
-        note = new Card(
-                getIntent().getIntExtra("id", 0),
-                getIntent().getIntExtra("parentId", 0),
-                getIntent().getStringExtra("header"),
-                getIntent().getStringExtra("content"),
-                getIntent().getStringExtra("type"),
-                getIntent().getStringExtra("date"),
-                getIntent().getIntExtra("fixed", 0)
-        );
+        note = (Card) getIntent().getSerializableExtra("card");
         clickCreate = getIntent().getBooleanExtra("clickCreate", true);
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация данных завершена!");
     }
@@ -107,7 +99,6 @@ public class CreationActivity extends AppCompatActivity implements TextView.OnEd
     private void saveData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сохраняю данные...");
         if (clickCreate) {
-//            Log.d(TAG, TextFormer.getStartText(className) + "Пустые поля. Такую запись не добавляю! " + header.getText() + "-" + content.getText());
             if (String.valueOf(header.getText()).equals("") && String.valueOf(content.getText()).equals("")){
                 Log.d(TAG, TextFormer.getStartText(className) + "Пустые поля. Такую запись не добавляю!");
                 return;
@@ -138,6 +129,7 @@ public class CreationActivity extends AppCompatActivity implements TextView.OnEd
 
     }
 
+    //TODO это не рабоатет. Оно и не нужно наверное)
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         Log.d(TAG, TextFormer.getStartText(className) + "Обрабатываю изменение в текстовых полях...");

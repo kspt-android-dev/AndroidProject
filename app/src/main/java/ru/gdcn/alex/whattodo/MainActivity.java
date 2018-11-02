@@ -28,10 +28,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, TextFormer.getStartText(className) + "Создание MainActivity...");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        DBConnector.initDB(this);
 
         fragmentManager = getSupportFragmentManager();
-
 
         NotesFragment notes = new NotesFragment();
         fragmentManager.beginTransaction()

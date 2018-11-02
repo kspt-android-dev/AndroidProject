@@ -2,16 +2,19 @@ package ru.gdcn.alex.whattodo.customviews;
 
 import android.util.Log;
 
+import java.io.Serializable;
+
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class Card {
+public class Card implements Serializable {
 
     private static final String TAG = "ToDO_Logger";
     private static final String className = "Card";
 
     private int id;
     private int parentId;
+    private int position;
     private String header;
     private String content;
     private String type;
@@ -29,6 +32,21 @@ public class Card {
     public Card(int id, int parentId, String header, String content, String type, String date, int fixed) {
         this.id = id;
         this.parentId = parentId;
+        this.header = header;
+        this.content = content;
+        if (type == null)
+            this.type = "";
+        else
+            this.type = type;
+        this.date = date;
+        this.fixed = fixed;
+        this.icon = R.drawable.ic_description_black_24dp;
+    }
+
+    public Card(int id, int position, int parentId, String header, String content, String type, String date, int fixed) {
+        this.id = id;
+        this.parentId = parentId;
+        this.position = position;
         this.header = header;
         this.content = content;
         if (type == null)
@@ -94,5 +112,13 @@ public class Card {
 
     public void setFixed(int fixed) {
         this.fixed = fixed;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

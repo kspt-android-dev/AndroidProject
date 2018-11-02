@@ -24,12 +24,15 @@ public class DBConnector {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "DBConnector";
 
+
+    //TODO передавать Card
     public static void insertData(Context activity, int parentId, String header, String text,
                                   String type, String dateString, int fixed) {
         Log.d(TAG, TextFormer.getStartText(className) + "Добавляем запись в таблицу...");
         DBHelper dbHelper = new DBHelper(activity);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
+        //TODO добавить position
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_PARENT_ID, parentId);
         contentValues.put(KEY_HEADER, header);
@@ -53,12 +56,14 @@ public class DBConnector {
         return null;
     }
 
+    //TODO передавать Card
     public static void updateData(Context activity, int id, int parentId, String header, String text,
                                   String type, String dateString, int fixed) {
         Log.d(TAG, TextFormer.getStartText(className) + "Обновляю запись в таблице...");
         DBHelper dbHelper = new DBHelper(activity);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
+        //TODO добавить position
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_PARENT_ID, parentId);
         contentValues.put(KEY_HEADER, header);
@@ -74,6 +79,7 @@ public class DBConnector {
         Log.d(TAG, TextFormer.getStartText(className) + "Запись обновлена! " + c);
     }
 
+    //TODO передавать Card
     public static void deleteData(Context activity, int id, int parentId, String header, String text,
                                   String type, String dateString, int fixed){
         //TODO удаление записи из БД и всего, что лежит внутри нее
@@ -91,13 +97,14 @@ public class DBConnector {
         Log.d(TAG, TextFormer.getStartText(className) + "Таблица отчищена!");
     }
 
-    public static Collection<Card> getData(Context activity, int parentId) {
+    public static Collection<Card> loadData(Context activity, int parentId) {
         Log.d(TAG, TextFormer.getStartText(className) + "Пытаюсь достать данные из таблицы...");
         List<Card> cards = new ArrayList<>();
 
         DBHelper dbHelper = new DBHelper(activity);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
+        //TODO добавить условие выбора по parent_id и соритровка по position
         Cursor cursor = database.query(TABLE_NOTES, null, null, null, null, null, null);
         Log.d(TAG, TextFormer.getStartText(className) + "Достал записей: " + cursor.getCount());
         int indexId = cursor.getColumnIndex(KEY_ID);
@@ -109,6 +116,7 @@ public class DBConnector {
         int indexFixed = cursor.getColumnIndex(KEY_FIXED);
         if (cursor.moveToFirst()) {
             do {
+                //TODO добавить position
                 cards.add(new Card(
                         cursor.getInt(indexId),
                         cursor.getInt(indexParent),
