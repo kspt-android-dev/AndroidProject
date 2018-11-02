@@ -4,15 +4,20 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 
+import ru.polytech.course.pashnik.lines.Core.Cell;
+import ru.polytech.course.pashnik.lines.Core.ColorTypes;
+import ru.polytech.course.pashnik.lines.Core.Intellect;
+
 public class Painter extends View {
 
     public static final int VIEW_SIZE = 405;
+    public static final int CELL_SIZE = 45;
+    public static final int CELL_NUMBER = 9;
 
     private Bitmap bitmap;
     private Paint bitmapPaint;
@@ -28,14 +33,19 @@ public class Painter extends View {
         Canvas canvas = new Canvas(bitmap);
         bitmapPaint = new Paint();
 
-        // test for drawing a board
+        //drawing a board
         GameView gameView = new GameView(context, canvas);
         gameView.draw();
 
-        // test for drawing a ball with coordinates (4,5);
-        Ball ball = new Ball(context, 3, 5, Color.GREEN);
-        ball.drawBall(canvas);
-        ball.clearBall(canvas);
+        // test for drawing balls with dummy intellect
+        Intellect intellect = new Intellect();
+
+        for (int i = 0; i < 3; i++) {
+            Cell nextCell = intellect.nextCell();
+            ColorTypes nextColor = ColorTypes.getColorType(intellect.nextColor());
+            Ball ball = new Ball(context, nextCell, nextColor);
+            ball.drawBall(canvas);
+        }
     }
 
     public static float convertDpToPixel(float dp, Context context) {

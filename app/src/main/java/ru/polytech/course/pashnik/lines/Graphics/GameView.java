@@ -9,15 +9,12 @@ import static ru.polytech.course.pashnik.lines.Graphics.Painter.convertDpToPixel
 
 public class GameView {
 
-    public static final int CELL_SIZE = 45;
-    public static final int CELL_NUMBER = 9;
-
     private Canvas canvas;
     private final float pixelCellSize;
 
     public GameView(Context context, Canvas canvas) {
         this.canvas = canvas;
-        pixelCellSize = convertDpToPixel(CELL_SIZE, context);
+        pixelCellSize = convertDpToPixel(Painter.CELL_SIZE, context);
     }
 
     public void draw() {
@@ -25,9 +22,9 @@ public class GameView {
         Paint paint = new Paint();
         setPaintSettings(paint);
         // drawing a board
-        for (int i = 0; i <= CELL_NUMBER; i++) {
-            drawLine(canvas, i, 0, i, CELL_NUMBER, paint); // vertical line
-            drawLine(canvas, 0, i, CELL_NUMBER, i, paint); // horizontal line
+        for (int i = 0; i <= Painter.CELL_NUMBER; i++) {
+            drawLine(canvas, i, 0, i, Painter.CELL_NUMBER, paint); // vertical line
+            drawLine(canvas, 0, i, Painter.CELL_NUMBER, i, paint); // horizontal line
         }
     }
 
