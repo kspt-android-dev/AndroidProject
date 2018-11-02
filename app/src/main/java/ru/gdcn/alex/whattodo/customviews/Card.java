@@ -33,18 +33,6 @@ public class Card implements Serializable {
         Log.e(TAG, TextFormer.getStartText(className) + "Карточка создана!");
     }
 
-    public Card(int id, int parentId, String header, String content, String type, String date, int fixed) {
-        this.id = id;
-        this.parentId = parentId;
-        this.header = header;
-        this.content = content;
-        if (type != null)
-            this.type = type;
-        this.date = date;
-        this.fixed = fixed;
-        this.icon = R.drawable.ic_description_black_24dp;
-    }
-
     public Card(int id, int parentId, int position, String header, String content, String type, String date, int fixed) {
         this.id = id;
         this.parentId = parentId;

@@ -4,7 +4,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -21,6 +20,7 @@ public class CreationActivity extends AppCompatActivity {
     private TextView header, content;
 
     private Card note;
+    private int countCards;
 
     private boolean clickCreate;
 
@@ -41,6 +41,7 @@ public class CreationActivity extends AppCompatActivity {
         note = (Card) getIntent().getSerializableExtra("card");
         if (note == null)
             note = new Card();
+        countCards = getIntent().getIntExtra("count_cards", 0);
         clickCreate = getIntent().getBooleanExtra("clickCreate", true);
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация данных завершена!");
     }
@@ -98,7 +99,6 @@ public class CreationActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    //TODO понять как задавать posotion
     private void saveData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сохраняю данные...");
         if (clickCreate) {
@@ -106,6 +106,7 @@ public class CreationActivity extends AppCompatActivity {
                 Log.d(TAG, TextFormer.getStartText(className) + "Пустые поля. Такую запись не добавляю!");
                 return;
             }
+            note.setPosition(countCards + 1);
             DBConnector.insertData(getApplicationContext(), note);
             Log.d(TAG, TextFormer.getStartText(className) + "Данные добавлены!");
         } else {

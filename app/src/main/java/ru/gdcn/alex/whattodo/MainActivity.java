@@ -105,8 +105,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickCreate(View v){
         Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия кнопки \"Создать\"...");
-        FloatingActionButton fab = findViewById(R.id.main_fab_create);
+//        FloatingActionButton fab = findViewById(R.id.main_fab_create);
         Intent intent = new Intent(this, CreationActivity.class);
+        intent.putExtra("count_cards",
+                DBConnector.loadData(getApplicationContext(), 0).size());
         startActivity(intent);
         Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия кнопки \"Создать\" завершено!");
     }

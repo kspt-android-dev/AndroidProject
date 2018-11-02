@@ -64,7 +64,7 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация списка...");
         RecyclerView recyclerView = getActivity().findViewById(R.id.notes_fragment_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        myRecyclerAdapter = new MyRecyclerAdapter();
+        myRecyclerAdapter = new MyRecyclerAdapter(getContext());
         SwipeDragHelperCallback swipeDragHelperCallback = new SwipeDragHelperCallback(myRecyclerAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(swipeDragHelperCallback);
         recyclerView.setAdapter(myRecyclerAdapter);

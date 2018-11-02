@@ -19,7 +19,6 @@ public class DBConnector {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "DBConnector";
 
-    //TODO ORM посмтреть. Автоматизирует добавление объектов в БД
     public static void insertData(Context activity, Card card) {
         Log.d(TAG, TextFormer.getStartText(className) + "Добавляем запись в таблицу...");
         DBHelper dbHelper = new DBHelper(activity);
@@ -100,8 +99,15 @@ public class DBConnector {
         DBHelper dbHelper = new DBHelper(activity);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        //TODO добавить условие выбора по parent_id и соритровка по position
-        Cursor cursor = database.query(TABLE_NOTES, null, null, null, null, null, null);
+        String selection = KEY_PARENT_ID + "=?";
+        String[] sArgs = {String.valueOf(parentId)};
+        Cursor cursor = database.query(TABLE_NOTES,
+                null,
+                selection,
+                sArgs,
+                null,
+                null,
+                KEY_POSITION + " ASC");
         Log.d(TAG, TextFormer.getStartText(className) + "Достал записей: " + cursor.getCount());
         int indexId = cursor.getColumnIndex(KEY_ID);
         int indexParent = cursor.getColumnIndex(KEY_PARENT_ID);

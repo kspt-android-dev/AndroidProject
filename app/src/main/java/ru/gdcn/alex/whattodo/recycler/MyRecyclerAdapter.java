@@ -1,5 +1,6 @@
 package ru.gdcn.alex.whattodo.recycler;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
 
     private List<Card> cardList = new ArrayList<>();
     private List<Integer> selectedCardList = new ArrayList<>();
+    private Context context;
+
+    public MyRecyclerAdapter(Context context) {
+        this.context = context;
+    }
 
     public void addItem(Card card){
         Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточки в список...");
@@ -148,8 +154,14 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
     }
 
     private void swapCard(int oldPosition, int newPosition){
-//        Card card = cardList.get(oldPosition);
-//        Collections.swap(cardList, oldPosition, newPosition);
+        Card o = cardList.get(oldPosition);
+        Card n = cardList.get(newPosition);
+        int temp = o.getPosition();
+        o.setPosition(n.getPosition());
+        n.setPosition(temp);
+        Collections.swap(cardList, oldPosition, newPosition);
+        DBConnector.updateData(context, o);
+        DBConnector.updateData(context, n);
     }
 
     class CardViewHolder extends RecyclerView.ViewHolder {
