@@ -2,6 +2,8 @@ package ru.gdcn.alex.whattodo.customviews;
 
 import android.util.Log;
 
+import com.orm.SugarRecord;
+
 import java.io.Serializable;
 
 import ru.gdcn.alex.whattodo.R;

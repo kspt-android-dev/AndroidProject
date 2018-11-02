@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -104,14 +105,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickCreate(View v){
         Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия кнопки \"Создать\"...");
+        FloatingActionButton fab = findViewById(R.id.main_fab_create);
         Intent intent = new Intent(this, CreationActivity.class);
         startActivity(intent);
-//        FrameLayout frameLayout = findViewById(R.id.main_space);
-//        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-//                100,
-//                100);
-//        layoutParams.setMargins(0, 0, 0, (int) (140 / getApplicationContext().getResources().getDisplayMetrics().density));
-//        layoutParams.gravity = Gravity.BOTTOM|Gravity.CENTER;
         Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия кнопки \"Создать\" завершено!");
     }
 }
