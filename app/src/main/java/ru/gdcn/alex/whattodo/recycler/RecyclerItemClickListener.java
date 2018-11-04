@@ -22,7 +22,11 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
         this.itemClickListener = listener;
         this.gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
 
-
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                itemClickListener.onScroll(e1.getY(), e2.getY());
+                return super.onScroll(e1, e2, distanceX, distanceY);
+            }
 
             @Override
             public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -45,7 +49,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
 
     @Override
     public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent event) {
-        Log.d(TAG, TextFormer.getStartText(className) + "Словил Intercept!");
+//        Log.d(TAG, TextFormer.getStartText(className) + "Словил Intercept!");
         gestureDetector.onTouchEvent(event);
         return false;
     }
@@ -63,5 +67,6 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
         void onItemLongClick(View view, int position);
+        void onScroll(float startY, float endY);
     }
 }

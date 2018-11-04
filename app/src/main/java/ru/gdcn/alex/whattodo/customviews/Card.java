@@ -26,10 +26,9 @@ public class Card implements Serializable {
 
     public Card(){}
 
-    public Card(String header, int icon) {
+    public Card(String header) {
         Log.e(TAG, TextFormer.getStartText(className) + "Создание карточки...");
         this.header = header;
-        this.icon = icon;
         Log.e(TAG, TextFormer.getStartText(className) + "Карточка создана!");
     }
 

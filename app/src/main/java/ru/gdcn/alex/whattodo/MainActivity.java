@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
@@ -25,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
 
     NotesFragment notes;
-    TasksFragment tasks;
+    TrashFragment tasks;
     CalendarFragment calendarFragment;
 
     @Override
@@ -37,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
 
         notes = new NotesFragment();
-        tasks = new TasksFragment();
+        tasks = new TrashFragment();
         calendarFragment = new CalendarFragment();
 
         fragmentManager.beginTransaction()
@@ -51,20 +49,20 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()){
-                            case R.id.nav_notes:
+                            case R.id.main_bottom_menu_notes:
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.main_space, notes)
                                         .commit();
                                 item.setChecked(true);
                                 break;
-                            case R.id.nav_tasks:
+                            case R.id.main_bottom_menu_trash:
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.main_space, tasks)
                                         .commit();
                                 item.setChecked(true);
                                 DBConnector.clearTable(getApplicationContext());
                                 break;
-                            case R.id.nav_calendar:
+                            case R.id.main_bottom_menu_calendar:
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.main_space, calendarFragment)
                                         .commit();
@@ -79,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.top_right_menu, menu);
+        getMenuInflater().inflate(R.menu.main_top_menu, menu);
         return true;
     }
 
@@ -94,8 +92,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"Настройки\"!");
                 return true;
             case R.id.top_right_menu_about:
-                Toast.makeText(getApplicationContext(), "Нажали О программе.", Toast.LENGTH_LONG).show();
                 Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"О программе\"!");
+                return true;
+            case R.id.main_top_menu_search:
+                Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"Поиск\"!");
                 return true;
             default:
                 Log.e(TAG, TextFormer.getStartText(className) + "Не найдено такой кнопки!");
@@ -108,8 +108,9 @@ public class MainActivity extends AppCompatActivity {
 //        FloatingActionButton fab = findViewById(R.id.main_fab_create);
         Intent intent = new Intent(this, CreationActivity.class);
         intent.putExtra("count_cards",
-                DBConnector.loadData(getApplicationContext(), 0).size());
+                DBConnector.loadData(getApplicationContext(), 0).size()); //TODO ну и костыль
         startActivity(intent);
         Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия кнопки \"Создать\" завершено!");
     }
+
 }

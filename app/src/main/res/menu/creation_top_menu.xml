@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/creation_top_checkable"
-        android:icon="@drawable/ic_check_box_black_24dp"
-        android:title="@string/creation_top_checkable"
-        app:showAsAction="ifRoom"/>
-    <item
         android:id="@+id/creation_top_fixed"
         android:icon="@drawable/ic_lock_black_24dp"
         android:title="@string/creation_top_fixed"

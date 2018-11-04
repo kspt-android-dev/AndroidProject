@@ -15,4 +15,8 @@
     <string name="creation_top_fixed">Fixed</string>
     <string name="creation_top_alarm">Alarm</string>
     <string name="menu_select_delete">Удалить</string>
+    <string name="strings_main_top_menu_search">Поиск</string>
+    <string name="strings_main_bottom_menu_trash">Корзина</string>
+    <string name="strings_main_bottom_menu_calendar">Каленадрь</string>
+    <string name="strings_main_bottom_menu_notes">Записи</string>
 </resources>

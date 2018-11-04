@@ -78,6 +78,7 @@ public class DBConnector {
 
     public static void deleteData(Context activity, Card card){
         //TODO удаление записи из БД и всего, что лежит внутри нее
+
     }
 
     public static void clearTable(Context activity){

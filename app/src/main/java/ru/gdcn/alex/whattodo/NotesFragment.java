@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -15,7 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import ru.gdcn.alex.whattodo.recycler.MyRecyclerAdapter;
@@ -34,6 +39,8 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
     private ActionMode actionMode;
     private boolean isMultiSelect = false;
     private MyRecyclerAdapter myRecyclerAdapter;
+    private FloatingActionButton fab;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
@@ -46,6 +53,7 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация NotesFragment...");
         initRecyclerView();
+        fab = getActivity().findViewById(R.id.main_fab_create);
 
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация NotesFragment закончена!");
@@ -62,7 +70,7 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
 
     private void initRecyclerView() {
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация списка...");
-        RecyclerView recyclerView = getActivity().findViewById(R.id.notes_fragment_recycler_view);
+        recyclerView = getActivity().findViewById(R.id.notes_fragment_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         myRecyclerAdapter = new MyRecyclerAdapter(getContext());
         SwipeDragHelperCallback swipeDragHelperCallback = new SwipeDragHelperCallback(myRecyclerAdapter);
@@ -77,22 +85,35 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
         return DBConnector.loadData(getContext(), 0);
     }
 
+    private Collection<Card> loadStaticCards() {
+        return Arrays.asList(
+                new Card("Test scroll!"),
+                new Card("Test scroll!"),
+                new Card("Test scroll!"),
+                new Card("Test scroll!"),
+                new Card("Test scroll!"),
+                new Card("Test scroll!"),
+                new Card("Test scroll!"),
+                new Card("Test scroll!"),
+                new Card("Test scroll!"),
+                new Card("Test scroll!"),
+                new Card("Test scroll!"),
+                new Card("Test scroll!"),
+                new Card("Test scroll!")
+        );
+    }
+
     @Override
     public void onItemClick(View view, int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Словил клик на элемент!");
         if (isMultiSelect) {
             multiSelect(position);
         } else {
-//            int iL = ((CardView) view).indexOfChild(getActivity().findViewById(R.id.notes_recyclerview_header_container));
-//            int iB = ((LinearLayout)((CardView) view).getChildAt(iL)).indexOfChild(getActivity().findViewById(R.id.notes_recyclerview_arrow_down));
-//            if (iB == -1) return;
-//            if (!(((String)(((ImageButton)((LinearLayout)((CardView) view).getChildAt(iL)).getChildAt(iB)).getTag())).equals(new String("ib")))) {
             Card card = myRecyclerAdapter.getItem(position);
             Intent intent = new Intent(getContext(), CreationActivity.class);
             intent.putExtra("card", card);
             intent.putExtra("clickCreate", false);
             startActivity(intent);
-//            }
         }
     }
 
@@ -105,6 +126,17 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
                 actionMode = getActivity().startActionMode(NotesFragment.this); //show ActionMode.
             }
             multiSelect(position);
+        }
+    }
+
+    @Override
+    public void onScroll(float startY, float endY) {
+        Log.d(TAG, TextFormer.getStartText(className) + "Словил прокрутку!");
+        if (recyclerView.getItemDecorationCount() < myRecyclerAdapter.getItemCount()) {
+            if (startY > endY)
+                fab.hide();
+            if (startY < endY)
+                fab.show();
         }
     }
 

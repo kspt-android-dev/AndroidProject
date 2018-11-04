@@ -6,31 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
+    <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_space"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="56dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
-
-        <!--<Button-->
-        <!--android:id="@+id/create_button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="48dp"-->
-        <!--android:layout_gravity="bottom|center"-->
-        <!--android:layout_marginBottom="70dp"-->
-        <!--android:paddingStart="12dp"-->
-        <!--android:paddingEnd="20dp"-->
-        <!--android:background="@drawable/fab_extended"-->
-        <!--android:drawableStart="@drawable/ic_add_black_24dp"-->
-        <!--android:drawablePadding="12dp"-->
-        <!--android:clickable="true"-->
-        <!--android:elevation="6dp"-->
-        <!--android:focusable="true"-->
-        <!--android:onClick="clickCreate"-->
-        <!--android:text="@string/button_create"-->
-        <!--android:textColor="@android:color/white"-->
-        <!--android:textSize="14dp"/>-->
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/main_fab_create"
@@ -38,13 +20,12 @@
             android:layout_height="56dp"
             android:layout_gravity="bottom|right"
             android:layout_marginEnd="14dp"
-            android:layout_marginBottom="70dp"
+            android:layout_marginBottom="14dp"
             android:foreground="@drawable/ic_add_black_24dp"
             android:foregroundGravity="center"
             app:backgroundTint="@color/colorPrimary"
             android:onClick="clickCreate"/>
-
-    </FrameLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/nav_view"
@@ -55,6 +36,6 @@
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@color/bottom_navigation_item_background_colors"
         app:itemTextColor="@color/bottom_navigation_item_background_colors"
-        app:menu="@menu/nav_menu" />
+        app:menu="@menu/main_bottom_menu" />
 
 </RelativeLayout>

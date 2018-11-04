@@ -151,6 +151,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
     @Override
     public void onViewSwiped(int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Словил свайп...");
+//        removeItem(getItem(position));
+//        notifyItemRemoved(position);
     }
 
     private void swapCard(int oldPosition, int newPosition){

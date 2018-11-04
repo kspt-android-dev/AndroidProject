@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/main_bottom_menu_notes"
+            android:icon="@drawable/ic_description_black_24dp"
+            android:title="@string/strings_main_bottom_menu_notes" />
+        <item
+            android:id="@+id/main_bottom_menu_calendar"
+            android:icon="@drawable/ic_date_range_black_24dp"
+            android:title="@string/strings_main_bottom_menu_calendar" />
+        <item
+            android:id="@+id/main_bottom_menu_trash"
+            android:icon="@drawable/ic_delete_black_24dp"
+            android:title="@string/strings_main_bottom_menu_trash" />
+    </group>
+</menu>

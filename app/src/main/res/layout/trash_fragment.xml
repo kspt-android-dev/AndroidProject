@@ -12,6 +12,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textSize="25pt"
-        android:text="@string/tasks_fragment_text_view" />
+        android:text="Trash" />
 
 </LinearLayout>

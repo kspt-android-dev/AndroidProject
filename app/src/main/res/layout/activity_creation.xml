@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:clickable="true"
     tools:context=".CreationActivity">
 
     <LinearLayout
@@ -42,38 +43,54 @@
             android:inputType="textMultiLine" />
     </LinearLayout>
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:layout_width="56dp"-->
-        <!--android:layout_height="56dp"-->
-        <!--android:layout_gravity="bottom|right"-->
-        <!--android:layout_margin="10dp"-->
-        <!--app:backgroundTint="@color/colorPrimary"-->
-        <!--android:foreground="@drawable/ic_add_black_24dp"-->
-        <!--android:foregroundGravity="center"/>-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="56dp"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:background="@color/colorPrimary"-->
-        <!--android:elevation="6dp">-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
+        android:elevation="10dp">
 
         <!--<ImageButton-->
+            <!--android:id="@+id/creation_bottom_menu_add"-->
             <!--android:layout_width="56dp"-->
             <!--android:layout_height="56dp"-->
-            <!--android:foreground="@drawable/ic_check_box_black_24dp"-->
-            <!--android:foregroundTint="@android:color/black"-->
-            <!--android:foregroundGravity="center"-->
-            <!--android:backgroundTint="@color/colorPrimary"/>-->
-
+            <!--android:onClick="onClick"-->
+            <!--android:background="@drawable/background_button"-->
+            <!--android:foreground="@drawable/ic_add_box_black_24dp"-->
+            <!--android:foregroundGravity="center"/>-->
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <ImageButton
+            android:id="@+id/creation_bottom_menu_note"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:onClick="onClick"
+            android:background="@drawable/background_button"
+            android:foreground="@drawable/ic_description_black_24dp"
+            android:foregroundGravity="center"/>
+        <ImageButton
+            android:id="@+id/creation_bottom_menu_list"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:onClick="onClick"
+            android:background="@drawable/background_button"
+            android:foreground="@drawable/ic_view_list_black_24dp"
+            android:foregroundGravity="center"/>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
         <!--<ImageButton-->
+            <!--android:id="@+id/creation_bottom_menu_other"-->
             <!--android:layout_width="56dp"-->
             <!--android:layout_height="56dp"-->
-            <!--android:foreground="@drawable/ic_description_black_24dp"-->
-            <!--android:foregroundTint="@android:color/black"-->
-            <!--android:foregroundGravity="center"-->
-            <!--android:backgroundTint="@color/colorPrimary"/>-->
-    <!--</LinearLayout>-->
+            <!--android:onClick="onClick"-->
+            <!--android:background="@drawable/background_button"-->
+            <!--android:foreground="@drawable/ic_more_vert_black_24dp"-->
+            <!--android:foregroundGravity="center"/>-->
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
