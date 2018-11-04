@@ -166,17 +166,17 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
                 Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"Заметка\"!");
                 if (!v.isSelected()) {
                     v.setSelected(true);
+                    findViewById(R.id.creation_bottom_menu_list).setSelected(false);
+                    setType("note");
                 }
-                findViewById(R.id.creation_bottom_menu_list).setSelected(false);
-                setType("note");
                 break;
             case R.id.creation_bottom_menu_list:
                 Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"Список\"!");
                 if (!v.isSelected()) {
                     v.setSelected(true);
+                    findViewById(R.id.creation_bottom_menu_note).setSelected(false);
+                    setType("list");
                 }
-                findViewById(R.id.creation_bottom_menu_note).setSelected(false);
-                setType("list");
                 break;
             case R.id.creation_bottom_menu_other:
                 Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"Другое\"!");
@@ -196,7 +196,7 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
     private void setType(String type) {
         note.setType(type);
         if (type.equals("note") && findViewById(R.id.creation_bottom_menu_list).isSelected()){
-
+            
         }
         if (type.equals("list") && findViewById(R.id.creation_bottom_menu_note).isSelected()){
 

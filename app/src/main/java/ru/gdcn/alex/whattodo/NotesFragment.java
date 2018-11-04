@@ -54,7 +54,6 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация NotesFragment...");
         initRecyclerView();
         fab = getActivity().findViewById(R.id.main_fab_create);
-
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация NotesFragment закончена!");
     }
