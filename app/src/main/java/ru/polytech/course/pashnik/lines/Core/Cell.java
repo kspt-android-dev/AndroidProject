@@ -23,6 +23,11 @@ public class Cell {
         return new Cell(this.x + x, this.y + y);
     }
 
+    public Cell plus(Cell cell) {
+        return plus(cell.getX(), cell.getY());
+    }
+
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;

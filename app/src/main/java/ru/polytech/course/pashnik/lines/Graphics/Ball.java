@@ -5,8 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import java.util.Objects;
-
 import ru.polytech.course.pashnik.lines.Core.Cell;
 import ru.polytech.course.pashnik.lines.Core.ColorTypes;
 
