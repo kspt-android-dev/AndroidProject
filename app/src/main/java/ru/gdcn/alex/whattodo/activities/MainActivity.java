@@ -1,4 +1,4 @@
-package ru.gdcn.alex.whattodo;
+package ru.gdcn.alex.whattodo.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import ru.gdcn.alex.whattodo.fragments.CalendarFragment;
+import ru.gdcn.alex.whattodo.fragments.NotesFragment;
+import ru.gdcn.alex.whattodo.R;
+import ru.gdcn.alex.whattodo.fragments.TrashFragment;
 import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 

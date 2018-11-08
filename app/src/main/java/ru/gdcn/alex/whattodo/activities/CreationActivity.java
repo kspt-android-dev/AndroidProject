@@ -1,6 +1,7 @@
-package ru.gdcn.alex.whattodo;
+package ru.gdcn.alex.whattodo.activities;
 
 import android.graphics.Color;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,11 +9,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
-import ru.gdcn.alex.whattodo.customviews.Card;
+import ru.gdcn.alex.whattodo.R;
+import ru.gdcn.alex.whattodo.Card;
 import ru.gdcn.alex.whattodo.data.DBConnector;
+import ru.gdcn.alex.whattodo.fragments.ListFragment;
+import ru.gdcn.alex.whattodo.fragments.NoteFragment;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class CreationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -20,7 +23,10 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
     private static final String TAG = "ToDO_Logger";
     private static final String className = "CreationActivity";
 
-    private TextView header, content;
+    private TextView header;
+    private ListFragment listFragment;
+    private NoteFragment noteFragment;
+    private FragmentManager fragmentManager;
 
     private Card note;
     private int countCards;
@@ -32,8 +38,13 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation);
         header = findViewById(R.id.creation_note_header);
-        content = findViewById(R.id.creation_note_text);
         findViewById(R.id.creation_bottom_menu_note).setSelected(true);
+        listFragment = new ListFragment();
+        noteFragment = new NoteFragment();
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.creation_main_space, noteFragment)
+                .commit();
 
         initData();
         setupActionBar();
@@ -46,8 +57,16 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
             note = new Card();
         countCards = getIntent().getIntExtra("count_cards", 0);
         clickCreate = getIntent().getBooleanExtra("clickCreate", true);
-        header.setText(note.getHeader());
-        content.setText(note.getContent());
+        header.setText(note.getHeader()); //TODO пренести наверное в другое место
+        if (note.getType().equals("note")){
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("card", note);
+            noteFragment.setArguments(bundle);
+//            noteFragment.setContent(note.getContent());
+        }
+        if (note.getType().equals("list")){
+
+        }
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация данных завершена!");
     }
 
@@ -130,6 +149,7 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         super.onPause();
     }
 
+    //TODO фиксить СРОЧНО! НАверное теперь это надо прописать в фрагментах??
     private void saveData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сохраняю данные...");
         note.setHeader(String.valueOf(header.getText()));
@@ -195,13 +215,21 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
 
     private void setType(String type) {
         note.setType(type);
-        if (type.equals("note") && findViewById(R.id.creation_bottom_menu_list).isSelected()){
-            
+        if (type.equals("note") && !findViewById(R.id.creation_bottom_menu_note).isSelected()){
+            //TODO передача информации
+            fragmentManager.beginTransaction()
+                    .replace(R.id.creation_main_space, noteFragment)
+                    .commit();
         }
-        if (type.equals("list") && findViewById(R.id.creation_bottom_menu_note).isSelected()){
-
+        if (type.equals("list") && !findViewById(R.id.creation_bottom_menu_list).isSelected()){
+            //TODO передача информации
+            fragmentManager.beginTransaction()
+                    .replace(R.id.creation_main_space, listFragment)
+                    .commit();
         }
     }
 
-
+    public Card getNote() {
+        return note;
+    }
 }

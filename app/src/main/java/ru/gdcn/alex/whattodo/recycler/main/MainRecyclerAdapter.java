@@ -1,8 +1,7 @@
-package ru.gdcn.alex.whattodo.recycler;
+package ru.gdcn.alex.whattodo.recycler.main;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,21 +15,22 @@ import java.util.Collections;
 import java.util.List;
 
 import ru.gdcn.alex.whattodo.R;
-import ru.gdcn.alex.whattodo.customviews.Card;
+import ru.gdcn.alex.whattodo.Card;
 import ru.gdcn.alex.whattodo.data.DBConnector;
+import ru.gdcn.alex.whattodo.recycler.SwipeDragHelperCallback;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.CardViewHolder>
+public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.CardViewHolder>
                                 implements SwipeDragHelperCallback.ActionCompletionContract {
 
     private static final String TAG = "ToDO_Logger";
-    private static final String className = "MyRecyclerAdapter";
+    private static final String className = "MainRecyclerAdapter";
 
     private List<Card> cardList = new ArrayList<>();
     private List<Integer> selectedCardList = new ArrayList<>();
     private Context context;
 
-    public MyRecyclerAdapter(Context context) {
+    public MainRecyclerAdapter(Context context) {
         this.context = context;
     }
 
@@ -113,6 +113,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
     public int getItemCount() {
         return cardList.size();
     }
+
+
 
     @NonNull
     @Override
