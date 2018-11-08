@@ -30,6 +30,10 @@ public class Ball {
         this(context, cell.getX(), cell.getY(), color);
     }
 
+    public Ball(Context context, Cell cell) {
+        this(context, cell.getX(), cell.getY(), ColorTypes.BLUE);
+    }
+
     public void drawBall(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(chooseColor(color));
@@ -58,7 +62,6 @@ public class Ball {
                 return Color.parseColor("#800080");
             case YELLOW:
                 return Color.parseColor("#FFFF00");
-
         }
         return -1;
     }

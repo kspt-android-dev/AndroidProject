@@ -5,8 +5,10 @@ import java.util.HashMap;
 public class Board {
 
     private final HashMap<Cell, ColorTypes> map = new HashMap<>();
+
     private int totalLength;
     private Cell currentDirection;
+    private Cell startCell;
 
     private final Cell[] DIRECTIONS = {
             new Cell(1, 0), new Cell(-1, 0), // x-axis
@@ -34,18 +36,20 @@ public class Board {
         return map;
     }
 
-    public boolean isWin() { // !have to test win method!
+    public boolean isWin() {
         for (Cell cell : map.keySet()) {
             for (Cell directionCell : DIRECTIONS) {
                 int currentLength = 0;
-                while (true) {
-                    if (map.get(cell.plus(directionCell)) == null) continue;
+                Cell mapCell = cell;
+                while (map.get(mapCell) != null) {
+                    currentLength++;
                     if (isWinLength(currentLength)) { // fix max length only with 5 balls
                         totalLength = currentLength;
                         currentDirection = directionCell;
+                        startCell = cell;
                         return true;
                     }
-                    currentLength++;
+                    mapCell = mapCell.plus(directionCell);
                 }
             }
         }
@@ -53,7 +57,7 @@ public class Board {
     }
 
     private boolean isWinLength(int currentLength) {
-        return currentLength >= 5;
+        return currentLength > 4;
     }
 
     public int getTotalLength() {
@@ -62,5 +66,9 @@ public class Board {
 
     public Cell getCurrentDirection() {
         return currentDirection;
+    }
+
+    public Cell getStartCell() {
+        return startCell;
     }
 }

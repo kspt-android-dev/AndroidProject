@@ -62,9 +62,9 @@ public class Painter extends View implements View.OnTouchListener {
             case MotionEvent.ACTION_DOWN: // one-touch event handling
                 new Ball(getContext(), whichCell(x, y), ColorTypes.RED).drawBall(canvas);
                 board.addCell(whichCell(x, y), ColorTypes.RED);
-                if (board.isWin()) {
-                    clearDirection(board.getTotalLength(), board.getCurrentDirection());
-                }
+                if (board.isWin())
+                    clearDirection(board.getTotalLength(), board.getCurrentDirection(),
+                            board.getStartCell());
                 invalidate();
                 break;
         }
@@ -77,7 +77,10 @@ public class Painter extends View implements View.OnTouchListener {
         return new Cell((int) x / gestureCell, (int) y / gestureCell);
     }
 
-    private void clearDirection(int totalLength, Cell direction) {
-
+    private void clearDirection(int totalLength, Cell direction, Cell startCell) {
+        for (int i = 0; i < totalLength; i++) {
+            new Ball(getContext(), startCell).clearBall(canvas);
+            startCell = startCell.plus(direction);
+        }
     }
 }
