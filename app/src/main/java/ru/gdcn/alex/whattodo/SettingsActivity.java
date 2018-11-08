@@ -1,4 +1,4 @@
-package ru.gdcn.alex.whattodo.activities;
+package ru.gdcn.alex.whattodo;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
-import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class SettingsActivity extends AppCompatActivity {

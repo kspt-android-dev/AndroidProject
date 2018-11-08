@@ -1,12 +1,10 @@
-package ru.gdcn.alex.whattodo;
+package ru.gdcn.alex.whattodo.customviews;
 
 import android.util.Log;
 
 import com.orm.SugarRecord;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
@@ -25,8 +23,6 @@ public class Card implements Serializable {
     private String date;
     private int fixed = 0;
     private int icon = R.drawable.ic_description_black_24dp;
-
-    private List<CheckBoxLine> lines = new ArrayList<>();
 
     public Card(){}
 
@@ -111,13 +107,5 @@ public class Card implements Serializable {
 
     public void setPosition(int position) {
         this.position = position;
-    }
-
-    public List<CheckBoxLine> getLines() {
-        return lines;
-    }
-
-    public void setLines(List<CheckBoxLine> lines) {
-        this.lines = lines;
     }
 }

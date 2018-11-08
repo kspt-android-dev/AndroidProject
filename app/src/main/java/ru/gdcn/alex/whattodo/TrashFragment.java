@@ -1,4 +1,4 @@
-package ru.gdcn.alex.whattodo.fragments;
+package ru.gdcn.alex.whattodo;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.recycler.RecyclerItemClickListener;
 
 public class TrashFragment extends Fragment implements ActionMode.Callback,

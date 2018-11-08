@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import ru.gdcn.alex.whattodo.Card;
+import ru.gdcn.alex.whattodo.customviews.Card;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 import static ru.gdcn.alex.whattodo.data.DBHelper.*;
@@ -25,12 +25,19 @@ public class DBConnector {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
+        Log.d(TAG, TextFormer.getStartText(className) + "ParentID: " + card.getParentId());
         contentValues.put(KEY_PARENT_ID, card.getParentId());
+        Log.d(TAG, TextFormer.getStartText(className) + "Position: " + card.getPosition());
         contentValues.put(KEY_POSITION, card.getPosition());
+        Log.d(TAG, TextFormer.getStartText(className) + "Header: " + card.getHeader());
         contentValues.put(KEY_HEADER, card.getHeader());
+        Log.d(TAG, TextFormer.getStartText(className) + "Content: " + card.getContent());
         contentValues.put(KEY_CONTENT, card.getContent());
+        Log.d(TAG, TextFormer.getStartText(className) + "Type: " + card.getType());
         contentValues.put(KEY_TYPE, card.getType());
+        Log.d(TAG, TextFormer.getStartText(className) + "Date: " + card.getDate());
         contentValues.put(KEY_DATE, stringToDate(card.getDate()));
+        Log.d(TAG, TextFormer.getStartText(className) + "Fixed: " + card.getFixed());
         contentValues.put(KEY_FIXED, card.getFixed());
         long c = database.insert(TABLE_NOTES, null, contentValues);
         Log.d(TAG, TextFormer.getStartText(className) + "Размер таблицы: " + database.getPageSize() + " байт!");
