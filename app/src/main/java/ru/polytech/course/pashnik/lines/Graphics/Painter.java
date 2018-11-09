@@ -12,7 +12,8 @@ import android.view.View;
 
 import ru.polytech.course.pashnik.lines.Core.Board;
 import ru.polytech.course.pashnik.lines.Core.Cell;
-import ru.polytech.course.pashnik.lines.Core.ColorTypes;
+import ru.polytech.course.pashnik.lines.Core.ColorType;
+import ru.polytech.course.pashnik.lines.Core.WinLine;
 
 public class Painter extends View implements View.OnTouchListener {
 
@@ -60,26 +61,30 @@ public class Painter extends View implements View.OnTouchListener {
         float y = event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: // one-touch event handling
-                new Ball(getContext(), whichCell(x, y), ColorTypes.RED).drawBall(canvas);
-                board.addCell(whichCell(x, y), ColorTypes.RED);
-                if (board.isWin())
-                    clearDirection(board.getTotalLength(), board.getCurrentDirection(),
-                            board.getStartCell());
+                Cell definedCell = defineCell(x, y);
+                new Ball(getContext(), definedCell, ColorType.RED).drawBall(canvas);
+                board.addCell(definedCell, ColorType.RED);
+                if (board.isWin()) {
+                    WinLine winLine = board.getWinLine();
+                    clearWinLine(winLine.getLength(), winLine.getDirection(),
+                            winLine.getStartCell());
+                }
                 invalidate();
                 break;
         }
         return false;
     }
 
-    private Cell whichCell(float x, float y) {
-        // when you get x and y appear new coordinate system, in which the cell has a size 120
+    private Cell defineCell(float x, float y) {
+        // when you get x and y, appear new coordinate system, in which the cell has a size 120
         int gestureCell = 120;
         return new Cell((int) x / gestureCell, (int) y / gestureCell);
     }
 
-    private void clearDirection(int totalLength, Cell direction, Cell startCell) {
+    private void clearWinLine(int totalLength, Cell direction, Cell startCell) {
         for (int i = 0; i < totalLength; i++) {
             new Ball(getContext(), startCell).clearBall(canvas);
+            board.removeCell(startCell);
             startCell = startCell.plus(direction);
         }
     }
