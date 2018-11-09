@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">MyHorseMove</string>
+    <string name="start">Start</string>
+    <string name="about">About</string>
+    <string name="reset">Reset</string>
+    <string name="exit">Exit</string>
+    <string name="aboutMes">
+                Добро пожаловать! \n \n
+                Для победы Вам необходимо обойти всё поле через Г - то есть ходом шахматного
+                коня (а не тем, что вы подумали). Для того, чтобы начать эту игру, вам нужно нажать на клетку, с которой
+                коняшка потопает в обход. \n Чтобы начать новую игру, нажмите на кнопку Start \n
+                Ваш лучший результат сохраняется, поэтому в главном меню предусмотрена кнопка Reset для его сброса в 0 \n \n
+                Приятной игры! :) </string>
+    <string name="rulesMes">Правила</string>
+    <string name="understoodMes">Понял</string>
+    <string name="menuRecordMes">Рекорд был сброшен!</string>
+    <string name="noMoreMes">К сожалению, ходов больше нет :с</string>
+    <string name="winMes">Ура! Вы победили! :D </string>
+    <string name="currentRecordMes">Текущий рекорд: </string>
+    <string name="yourResMes">Результат: </string>
+    <string name="newRecordMes"> Это рекорд!</string>
+</resources>
