@@ -1,4 +1,4 @@
-package ru.gdcn.alex.whattodo;
+package ru.gdcn.alex.whattodo.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import ru.gdcn.alex.whattodo.AboutActivity;
+import ru.gdcn.alex.whattodo.R;
+import ru.gdcn.alex.whattodo.SettingsActivity;
+import ru.gdcn.alex.whattodo.creation.CreationActivity;
 import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
@@ -85,13 +89,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия на элемент выпадающего меню...");
         int id = item.getItemId();
+        Intent intent = new Intent();
         switch (id) {
             case R.id.top_right_menu_settings:
-                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                intent.setClass(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
                 Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"Настройки\"!");
                 return true;
             case R.id.top_right_menu_about:
+                intent.setClass(getApplicationContext(), AboutActivity.class);
+                startActivity(intent);
                 Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"О программе\"!");
                 return true;
             case R.id.main_top_menu_search:
@@ -105,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickCreate(View v){
         Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия кнопки \"Создать\"...");
-//        FloatingActionButton fab = findViewById(R.id.main_fab_create);
         Intent intent = new Intent(this, CreationActivity.class);
         intent.putExtra("count_cards",
                 DBConnector.loadNotes(getApplicationContext()).size()); //TODO ну и костыль

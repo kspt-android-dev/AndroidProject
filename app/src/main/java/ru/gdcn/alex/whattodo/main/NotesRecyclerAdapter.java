@@ -1,4 +1,4 @@
-package ru.gdcn.alex.whattodo.recycler;
+package ru.gdcn.alex.whattodo.main;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -17,19 +17,20 @@ import java.util.List;
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.objects.Note;
 import ru.gdcn.alex.whattodo.data.DBConnector;
+import ru.gdcn.alex.whattodo.recycler.SwipeDragHelperCallback;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.CardViewHolder>
+public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdapter.CardViewHolder>
                                 implements SwipeDragHelperCallback.ActionCompletionContract {
 
     private static final String TAG = "ToDO_Logger";
-    private static final String className = "MyRecyclerAdapter";
+    private static final String className = "NotesRecyclerAdapter";
 
     private List<Note> noteList = new ArrayList<>();
     private List<Integer> selectedCardList = new ArrayList<>();
     private Context context;
 
-    public MyRecyclerAdapter(Context context) {
+    public NotesRecyclerAdapter(Context context) {
         this.context = context;
     }
 

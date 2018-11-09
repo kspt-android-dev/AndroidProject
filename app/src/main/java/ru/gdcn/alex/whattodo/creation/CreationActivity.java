@@ -1,4 +1,4 @@
-package ru.gdcn.alex.whattodo;
+package ru.gdcn.alex.whattodo.creation;
 
 import android.graphics.Color;
 import android.support.v7.app.ActionBar;
@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.objects.Note;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;

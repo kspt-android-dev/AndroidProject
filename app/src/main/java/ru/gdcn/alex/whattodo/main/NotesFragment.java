@@ -1,4 +1,4 @@
-package ru.gdcn.alex.whattodo;
+package ru.gdcn.alex.whattodo.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,11 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Arrays;
 import java.util.Collection;
 
+import ru.gdcn.alex.whattodo.R;
+import ru.gdcn.alex.whattodo.creation.CreationActivity;
 import ru.gdcn.alex.whattodo.objects.Note;
-import ru.gdcn.alex.whattodo.recycler.MyRecyclerAdapter;
 import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.recycler.RecyclerItemClickListener;
 import ru.gdcn.alex.whattodo.recycler.SwipeDragHelperCallback;
@@ -35,7 +35,7 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
 
     private ActionMode actionMode;
     private boolean isMultiSelect = false;
-    private MyRecyclerAdapter myRecyclerAdapter;
+    private NotesRecyclerAdapter notesRecyclerAdapter;
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
 
@@ -59,8 +59,8 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
     public void onStart() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сработал onStart");
         //TODO изменить логику обнолвения списка. Возвращать данные из пред. активити
-        myRecyclerAdapter.clearItems();
-        myRecyclerAdapter.addItems(loadCards());
+        notesRecyclerAdapter.clearItems();
+        notesRecyclerAdapter.addItems(loadCards());
         super.onStart();
     }
 
@@ -68,10 +68,10 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация списка...");
         recyclerView = getActivity().findViewById(R.id.notes_fragment_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        myRecyclerAdapter = new MyRecyclerAdapter(getContext());
-        SwipeDragHelperCallback swipeDragHelperCallback = new SwipeDragHelperCallback(myRecyclerAdapter);
+        notesRecyclerAdapter = new NotesRecyclerAdapter(getContext());
+        SwipeDragHelperCallback swipeDragHelperCallback = new SwipeDragHelperCallback(notesRecyclerAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(swipeDragHelperCallback);
-        recyclerView.setAdapter(myRecyclerAdapter);
+        recyclerView.setAdapter(notesRecyclerAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerView, this));
         touchHelper.attachToRecyclerView(recyclerView);
         Log.d(TAG, TextFormer.getStartText(className) + "Список инициализирован!");
@@ -87,7 +87,7 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
         if (isMultiSelect) {
             multiSelect(position);
         } else {
-            Note note = myRecyclerAdapter.getItem(position);
+            Note note = notesRecyclerAdapter.getItem(position);
             Intent intent = new Intent(getContext(), CreationActivity.class);
             intent.putExtra("note", note);
             intent.putExtra("clickCreate", false);
@@ -110,7 +110,7 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
     @Override
     public void onScroll(float startY, float endY) {
         Log.d(TAG, TextFormer.getStartText(className) + "Словил прокрутку!");
-        if (recyclerView.getItemDecorationCount() < myRecyclerAdapter.getItemCount()) {
+        if (recyclerView.getItemDecorationCount() < notesRecyclerAdapter.getItemCount()) {
             if (startY > endY)
                 fab.hide();
             if (startY < endY)
@@ -121,16 +121,16 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
     //Дальше пока не используется. Нужно для выделения нескольких элементов
     private void multiSelect(int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Обрабатываю выдиление...");
-        Note note = myRecyclerAdapter.getItem(position);
+        Note note = notesRecyclerAdapter.getItem(position);
         if (note != null) {
             if (actionMode != null) {
-                if (myRecyclerAdapter.getSelectedItems().contains(note.getId()))
-                    myRecyclerAdapter.removeSelectedItem(note.getId());
+                if (notesRecyclerAdapter.getSelectedItems().contains(note.getId()))
+                    notesRecyclerAdapter.removeSelectedItem(note.getId());
                 else
-                    myRecyclerAdapter.addSelectedItem(note.getId());
+                    notesRecyclerAdapter.addSelectedItem(note.getId());
 
-                if (myRecyclerAdapter.getSelectedItems().size() > 0)
-                    actionMode.setTitle(String.valueOf(myRecyclerAdapter.getSelectedItems().size())); //show selected item count on action mode.
+                if (notesRecyclerAdapter.getSelectedItems().size() > 0)
+                    actionMode.setTitle(String.valueOf(notesRecyclerAdapter.getSelectedItems().size())); //show selected item count on action mode.
                 else {
                     actionMode.setTitle(""); //remove item count from action mode.
                     actionMode.finish(); //hide action mode.
@@ -174,7 +174,7 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
         Log.d(TAG, TextFormer.getStartText(className) + "Уничтожение ActionMode...");
         isMultiSelect = false;
         this.actionMode = null;
-        myRecyclerAdapter.clearSelectedItems();
+        notesRecyclerAdapter.clearSelectedItems();
         Log.d(TAG, TextFormer.getStartText(className) + "ActionMode уничтожено!");
     }
 }
