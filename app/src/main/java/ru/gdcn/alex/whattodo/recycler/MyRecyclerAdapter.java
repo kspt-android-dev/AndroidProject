@@ -2,7 +2,6 @@ package ru.gdcn.alex.whattodo.recycler;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ru.gdcn.alex.whattodo.R;
-import ru.gdcn.alex.whattodo.customviews.Card;
+import ru.gdcn.alex.whattodo.objects.Note;
 import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
@@ -26,7 +25,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
     private static final String TAG = "ToDO_Logger";
     private static final String className = "MyRecyclerAdapter";
 
-    private List<Card> cardList = new ArrayList<>();
+    private List<Note> noteList = new ArrayList<>();
     private List<Integer> selectedCardList = new ArrayList<>();
     private Context context;
 
@@ -34,45 +33,45 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
         this.context = context;
     }
 
-    public void addItem(Card card){
+    public void addItem(Note note){
         Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточки в список...");
-        cardList.add(card);
-        notifyItemInserted(cardList.size() - 1);
+        noteList.add(note);
+        notifyItemInserted(noteList.size() - 1);
         Log.d(TAG, TextFormer.getStartText(className) + "Карточка добавлена!");
     }
 
-    public void addItem(Card card, int position){
+    public void addItem(Note note, int position){
         Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточки в список...");
-        cardList.add(position, card);
+        noteList.add(position, note);
         notifyItemInserted(position);
         Log.d(TAG, TextFormer.getStartText(className) + "Карточка добавлена!");
     }
 
-    public void addItems(Collection<Card> cards){
+    public void addItems(Collection<Note> notes){
         Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточек в список...");
-        cardList.addAll(cards);
+        noteList.addAll(notes);
         notifyDataSetChanged();
         Log.d(TAG, TextFormer.getStartText(className) + "Карточки добавлены!");
     }
 
-    public void removeItem(Card card){
+    public void removeItem(Note note){
         Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточки из списка...");
-        int i = cardList.indexOf(card);
-        cardList.remove(card);
-//        selectedCardList.remove((Object) card.getId());
+        int i = noteList.indexOf(note);
+        noteList.remove(note);
+//        selectedCardList.remove((Object) note.getId());
         notifyItemRemoved(i);
         Log.d(TAG, TextFormer.getStartText(className) + "Карточка удалена из списка!");
     }
 
     public void clearItems(){
         Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточек из списка...");
-        cardList.clear();
+        noteList.clear();
         notifyDataSetChanged();
         Log.d(TAG, TextFormer.getStartText(className) + "Карточки удалены!");
     }
 
-    public Collection<Card> getItems(){
-        return cardList;
+    public Collection<Note> getItems(){
+        return noteList;
     }
 
     public void addSelectedItem(int id){
@@ -105,13 +104,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
         Log.d(TAG, TextFormer.getStartText(className) + "Карточки удалены из списка выделенных!");
     }
 
-    public Card getItem(int index){
-        return cardList.get(index);
+    public Note getItem(int index){
+        return noteList.get(index);
     }
 
     @Override
     public int getItemCount() {
-        return cardList.size();
+        return noteList.size();
     }
 
     @NonNull
@@ -124,10 +123,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
 
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder cardViewHolder, int i) {
-        cardViewHolder.bind(cardList.get(i));
+        cardViewHolder.bind(noteList.get(i));
 
 //        holder.title.setText(list.get(position).getTitle());
-//        int id = cardList.get(i).getId();
+//        int id = noteList.get(i).getId();
 
 //        if (selectedCardList.contains(id)){
 //            //if item is selected then,set foreground color of FrameLayout.
@@ -156,14 +155,14 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
     }
 
     private void swapCard(int oldPosition, int newPosition){
-        Card o = cardList.get(oldPosition);
-        Card n = cardList.get(newPosition);
+        Note o = noteList.get(oldPosition);
+        Note n = noteList.get(newPosition);
         int temp = o.getPosition();
         o.setPosition(n.getPosition());
         n.setPosition(temp);
-        Collections.swap(cardList, oldPosition, newPosition);
-        DBConnector.updateData(context, o);
-        DBConnector.updateData(context, n);
+        Collections.swap(noteList, oldPosition, newPosition);
+        DBConnector.updateNote(context, o);
+        DBConnector.updateNote(context, n);
     }
 
     class CardViewHolder extends RecyclerView.ViewHolder {
@@ -177,8 +176,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Ca
 //            cardView = itemView.findViewById(R.id.notes_recyclerview_card);
         }
 
-        void bind(Card card) {
-            headerView.setText(card.getHeader());
+        void bind(Note note) {
+            headerView.setText(note.getHeader());
         }
 
 //        void selectBack(){

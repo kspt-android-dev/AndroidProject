@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -17,14 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import java.util.Arrays;
 import java.util.Collection;
 
+import ru.gdcn.alex.whattodo.objects.Note;
 import ru.gdcn.alex.whattodo.recycler.MyRecyclerAdapter;
-import ru.gdcn.alex.whattodo.customviews.Card;
 import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.recycler.RecyclerItemClickListener;
 import ru.gdcn.alex.whattodo.recycler.SwipeDragHelperCallback;
@@ -80,26 +77,8 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
         Log.d(TAG, TextFormer.getStartText(className) + "Список инициализирован!");
     }
 
-    private Collection<Card> loadCards() {
-        return DBConnector.loadData(getContext(), 0);
-    }
-
-    private Collection<Card> loadStaticCards() {
-        return Arrays.asList(
-                new Card("Test scroll!"),
-                new Card("Test scroll!"),
-                new Card("Test scroll!"),
-                new Card("Test scroll!"),
-                new Card("Test scroll!"),
-                new Card("Test scroll!"),
-                new Card("Test scroll!"),
-                new Card("Test scroll!"),
-                new Card("Test scroll!"),
-                new Card("Test scroll!"),
-                new Card("Test scroll!"),
-                new Card("Test scroll!"),
-                new Card("Test scroll!")
-        );
+    private Collection<Note> loadCards() {
+        return DBConnector.loadNotes(getContext());
     }
 
     @Override
@@ -108,9 +87,9 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
         if (isMultiSelect) {
             multiSelect(position);
         } else {
-            Card card = myRecyclerAdapter.getItem(position);
+            Note note = myRecyclerAdapter.getItem(position);
             Intent intent = new Intent(getContext(), CreationActivity.class);
-            intent.putExtra("card", card);
+            intent.putExtra("note", note);
             intent.putExtra("clickCreate", false);
             startActivity(intent);
         }
@@ -142,13 +121,13 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
     //Дальше пока не используется. Нужно для выделения нескольких элементов
     private void multiSelect(int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Обрабатываю выдиление...");
-        Card card = myRecyclerAdapter.getItem(position);
-        if (card != null) {
+        Note note = myRecyclerAdapter.getItem(position);
+        if (note != null) {
             if (actionMode != null) {
-                if (myRecyclerAdapter.getSelectedItems().contains(card.getId()))
-                    myRecyclerAdapter.removeSelectedItem(card.getId());
+                if (myRecyclerAdapter.getSelectedItems().contains(note.getId()))
+                    myRecyclerAdapter.removeSelectedItem(note.getId());
                 else
-                    myRecyclerAdapter.addSelectedItem(card.getId());
+                    myRecyclerAdapter.addSelectedItem(note.getId());
 
                 if (myRecyclerAdapter.getSelectedItems().size() > 0)
                     actionMode.setTitle(String.valueOf(myRecyclerAdapter.getSelectedItems().size())); //show selected item count on action mode.

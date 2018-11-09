@@ -8,11 +8,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
-import ru.gdcn.alex.whattodo.customviews.Card;
 import ru.gdcn.alex.whattodo.data.DBConnector;
+import ru.gdcn.alex.whattodo.objects.Note;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class CreationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -22,7 +21,7 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
 
     private TextView header, content;
 
-    private Card note;
+    private Note note;
     private int countCards;
 
     private boolean clickCreate;
@@ -41,9 +40,9 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
 
     private void initData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализирую данные...");
-        note = (Card) getIntent().getSerializableExtra("card");
+        note = (Note) getIntent().getSerializableExtra("card");
         if (note == null)
-            note = new Card();
+            note = new Note();
         countCards = getIntent().getIntExtra("count_cards", 0);
         clickCreate = getIntent().getBooleanExtra("clickCreate", true);
         header.setText(note.getHeader());
@@ -140,10 +139,10 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
                 Log.d(TAG, TextFormer.getStartText(className) + "Пустые поля. Такую запись не добавляю!");
                 return;
             }
-            DBConnector.insertData(getApplicationContext(), note);
+            DBConnector.insertNote(getApplicationContext(), note);
             Log.d(TAG, TextFormer.getStartText(className) + "Данные добавлены!");
         } else {
-            DBConnector.updateData(getApplicationContext(), note);
+            DBConnector.updateNote(getApplicationContext(), note);
             Log.d(TAG, TextFormer.getStartText(className) + "Данные обновлены!");
         }
 

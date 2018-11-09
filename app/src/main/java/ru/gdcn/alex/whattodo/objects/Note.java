@@ -1,4 +1,4 @@
-package ru.gdcn.alex.whattodo.customviews;
+package ru.gdcn.alex.whattodo.objects;
 
 import android.util.Log;
 
@@ -9,40 +9,41 @@ import java.io.Serializable;
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class Card implements Serializable {
+public class Note implements Serializable {
 
     private static final String TAG = "ToDO_Logger";
-    private static final String className = "Card";
+    private static final String className = "Note";
 
     private int id;
-    private int parentId = 0;
     private int position = 1;
     private String header;
     private String content;
     private String type = "note";
     private String date;
     private int fixed = 0;
-    private int icon = R.drawable.ic_description_black_24dp;
+    private int deleted = 0;
 
-    public Card(){}
+    public Note(){}
 
-    public Card(String header) {
-        Log.e(TAG, TextFormer.getStartText(className) + "Создание карточки...");
-        this.header = header;
-        Log.e(TAG, TextFormer.getStartText(className) + "Карточка создана!");
-    }
-
-    public Card(int id, int parentId, int position, String header, String content, String type, String date, int fixed) {
-        this.id = id;
-        this.parentId = parentId;
+    public Note(int position, String header, String content, String type, String date, int fixed, int deleted) {
         this.position = position;
         this.header = header;
         this.content = content;
-        if (type != null)
-            this.type = type;
+        this.type = type;
         this.date = date;
         this.fixed = fixed;
-        this.icon = R.drawable.ic_description_black_24dp;
+        this.deleted = deleted;
+    }
+
+    public Note(int id, int position, String header, String content, String type, String date, int fixed, int deleted) {
+        this.id = id;
+        this.position = position;
+        this.header = header;
+        this.content = content;
+        this.type = type;
+        this.date = date;
+        this.fixed = fixed;
+        this.deleted = deleted;
     }
 
     public int getId() {
@@ -51,14 +52,6 @@ public class Card implements Serializable {
 
     public String getHeader() {
         return header;
-    }
-
-    public int getIcon() {
-        return icon;
-    }
-
-    public int getParentId() {
-        return parentId;
     }
 
     public String getContent() {
@@ -75,10 +68,6 @@ public class Card implements Serializable {
 
     public int getFixed() {
         return fixed;
-    }
-
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
     }
 
     public void setHeader(String header) {
@@ -107,5 +96,13 @@ public class Card implements Serializable {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public int getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(int deleted) {
+        this.deleted = deleted;
     }
 }

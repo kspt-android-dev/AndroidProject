@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                                         .replace(R.id.main_space, tasks)
                                         .commit();
                                 item.setChecked(true);
-                                DBConnector.clearTable(getApplicationContext());
+                                DBConnector.clearTables(getApplicationContext());
                                 break;
                             case R.id.main_bottom_menu_calendar:
                                 fragmentManager.beginTransaction()
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 //        FloatingActionButton fab = findViewById(R.id.main_fab_create);
         Intent intent = new Intent(this, CreationActivity.class);
         intent.putExtra("count_cards",
-                DBConnector.loadData(getApplicationContext(), 0).size()); //TODO ну и костыль
+                DBConnector.loadNotes(getApplicationContext()).size()); //TODO ну и костыль
         startActivity(intent);
         Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия кнопки \"Создать\" завершено!");
     }
