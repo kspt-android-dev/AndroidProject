@@ -5,15 +5,9 @@ public class WinLine {
     private Cell startCell;
     private Cell direction;
 
-    public void setLength(int length) {
+    public WinLine(int length, Cell startCell, Cell direction) {
         this.length = length;
-    }
-
-    public void setStartCell(Cell startCell) {
         this.startCell = startCell;
-    }
-
-    public void setDirection(Cell direction) {
         this.direction = direction;
     }
 
@@ -29,3 +23,4 @@ public class WinLine {
         return direction;
     }
 }
+

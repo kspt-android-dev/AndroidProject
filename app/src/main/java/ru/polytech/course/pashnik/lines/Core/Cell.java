@@ -11,6 +11,10 @@ public class Cell {
         this.y = y;
     }
 
+    public boolean isCorrect() {
+        return x >= 0 && y <= 9;
+    }
+
     public int getX() {
         return x;
     }
@@ -19,14 +23,13 @@ public class Cell {
         return y;
     }
 
-    public Cell plus(int x, int y) {
-        return new Cell(this.x + x, this.y + y);
-    }
-
     public Cell plus(Cell cell) {
-        return plus(cell.getX(), cell.getY());
+        return new Cell(x + cell.getX(), y + cell.getY());
     }
 
+    public Cell minus(Cell cell) {
+        return new Cell(x - cell.getX(), y - cell.getY());
+    }
 
     @Override
     public boolean equals(Object other) {
