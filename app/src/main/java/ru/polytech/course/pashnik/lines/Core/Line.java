@@ -1,11 +1,12 @@
 package ru.polytech.course.pashnik.lines.Core;
 
-public class WinLine {
+public class Line {
+
     private int length;
     private Cell startCell;
     private Cell direction;
 
-    public WinLine(int length, Cell startCell, Cell direction) {
+    public Line(int length, Cell startCell, Cell direction) {
         this.length = length;
         this.startCell = startCell;
         this.direction = direction;
@@ -23,4 +24,5 @@ public class WinLine {
         return direction;
     }
 }
+
 

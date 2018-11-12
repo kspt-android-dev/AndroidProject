@@ -1,4 +1,4 @@
-package ru.polytech.course.pashnik.lines.Graphics;
+package ru.polytech.course.pashnik.lines;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -10,14 +10,15 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.List;
-
 import ru.polytech.course.pashnik.lines.Core.Board;
 import ru.polytech.course.pashnik.lines.Core.Cell;
 import ru.polytech.course.pashnik.lines.Core.ColorType;
-import ru.polytech.course.pashnik.lines.Core.WinLine;
+import ru.polytech.course.pashnik.lines.Core.Line;
+import ru.polytech.course.pashnik.lines.Core.WinLines;
+import ru.polytech.course.pashnik.lines.Graphics.Ball;
+import ru.polytech.course.pashnik.lines.Graphics.GameView;
 
-public class Painter extends View implements View.OnTouchListener {
+public class Scene extends View implements View.OnTouchListener {
 
     public static final int VIEW_SIZE = 405;
     public static final int CELL_SIZE = 45;
@@ -29,7 +30,7 @@ public class Painter extends View implements View.OnTouchListener {
 
     private Board board = new Board();
 
-    public Painter(Context context, AttributeSet attrs) {
+    public Scene(Context context, AttributeSet attrs) {
         super(context, attrs);
         setOnTouchListener(this);
         // converting view size from dp to pixels for painting
@@ -66,7 +67,7 @@ public class Painter extends View implements View.OnTouchListener {
                 Cell definedCell = defineCell(x, y);
                 new Ball(getContext(), definedCell, ColorType.RED).drawBall(canvas);
                 board.addCell(definedCell, ColorType.RED);
-                if (board.isWin(definedCell)) clearWinLine(board.getWinLines());
+                if (board.isWin(definedCell)) clearWinLines(board.getWinLines());
                 invalidate();
                 break;
         }
@@ -79,14 +80,16 @@ public class Painter extends View implements View.OnTouchListener {
         return new Cell((int) x / gestureCell, (int) y / gestureCell);
     }
 
-    private void clearWinLine(List<WinLine> winLines) {
-        for (int i = 0; i < winLines.size(); i++) {
-            Cell startCell = winLines.get(i).getStartCell();
-            for (int j = 0; j <= winLines.get(i).getLength(); j++) {
+    private void clearWinLines(WinLines winLines) {
+        for (int i = 0; i < winLines.getSize(); i++) {
+            Line currentWinLine = winLines.getWinLine(i);
+            Cell startCell = currentWinLine.getStartCell();
+            for (int j = 0; j < currentWinLine.getLength(); j++) {
                 new Ball(getContext(), startCell).clearBall(canvas);
                 board.removeCell(startCell);
-                startCell = startCell.plus(winLines.get(i).getDirection());
+                startCell = startCell.plus(currentWinLine.getDirection());
             }
         }
+        winLines.removeAllWinLines();
     }
 }

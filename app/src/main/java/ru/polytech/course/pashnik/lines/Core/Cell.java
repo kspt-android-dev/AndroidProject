@@ -11,10 +11,6 @@ public class Cell {
         this.y = y;
     }
 
-    public boolean isCorrect() {
-        return x >= 0 && y <= 9;
-    }
-
     public int getX() {
         return x;
     }

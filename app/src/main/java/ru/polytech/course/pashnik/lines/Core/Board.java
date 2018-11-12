@@ -1,13 +1,11 @@
 package ru.polytech.course.pashnik.lines.Core;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class Board {
 
     private final HashMap<Cell, ColorType> map = new HashMap<>();
-    private final List<WinLine> winLines = new ArrayList<>();
+    private final WinLines winLines = new WinLines();
 
     private final Cell[] DIRECTIONS = {
             new Cell(1, 0), // x-axis
@@ -15,39 +13,42 @@ public class Board {
             new Cell(-1, 1), // main diagonal
             new Cell(1, 1)}; // secondary diagonal
 
-    public ColorType getColor(int x, int y) {
-        return getColor(new Cell(x, y));
+    private ColorType getColor(Cell cell) {
+        return map.get(cell);
     }
 
-    public ColorType getColor(Cell cell) {
-        return map.get(cell);
+    private boolean haveCell(Cell cell) {
+        return map.get(cell) != null;
     }
 
     public void addCell(Cell cell, ColorType color) {
         map.put(cell, color);
     }
 
-    public void addCell(int x, int y, ColorType color) {
-        addCell(new Cell(x, y), color);
-    }
+    /*
+    Added ball in the sequence divides it into two parts called positive and negative parts.
+    It is necessary to check the number of balls in each part of direction. That's why i need
+    posDirection and negDirection.
+     */
 
     public boolean isWin(Cell currentCell) {
-        ColorType currentColor = map.get(currentCell);
+        ColorType color = getColor(currentCell);
         for (Cell directionCell : DIRECTIONS) {
             int currentLength = 0;
-            Cell positiveDir = currentCell;
-            Cell negativeDir = currentCell;
-            while (map.get(positiveDir) != null && map.get(positiveDir) == currentColor) {
-                positiveDir = positiveDir.plus(directionCell);
+            Cell posDirection = currentCell;
+            Cell negDirection = currentCell;
+            while (haveCell(posDirection.plus(directionCell))
+                    && getColor(posDirection.plus(directionCell)) == color) {
+                posDirection = posDirection.plus(directionCell);
                 currentLength++;
             }
-            while (map.get(negativeDir) != null && map.get(negativeDir) == currentColor) {
-                negativeDir = negativeDir.minus(directionCell);
+            while (haveCell(negDirection.minus(directionCell))
+                    && getColor(negDirection.minus(directionCell)) == color) {
+                negDirection = negDirection.minus(directionCell);
                 currentLength++;
             }
-            if (isWinLength(currentLength - 1)) {
-                winLines.add(new WinLine(currentLength - 1, negativeDir, directionCell));
-            }
+            if (isWinLength(currentLength + 1))
+                winLines.addWinLine(currentLength + 1, negDirection, directionCell);
         }
         return !winLines.isEmpty();
     }
@@ -56,11 +57,11 @@ public class Board {
         return currentLength > 4;
     }
 
-    public void removeCell(Cell cell) {
-        map.remove(cell);
+    public WinLines getWinLines() {
+        return winLines;
     }
 
-    public List<WinLine> getWinLines() {
-        return winLines;
+    public void removeCell(Cell cell) {
+        map.remove(cell);
     }
 }

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.MotionEvent;
-import android.view.View;
 
-import static ru.polytech.course.pashnik.lines.Graphics.Painter.convertDpToPixel;
+import ru.polytech.course.pashnik.lines.Scene;
+
+import static ru.polytech.course.pashnik.lines.Scene.convertDpToPixel;
 
 public class GameView {
 
@@ -16,7 +16,7 @@ public class GameView {
 
     public GameView(Context context, Canvas canvas) {
         this.canvas = canvas;
-        pixelCellSize = convertDpToPixel(Painter.CELL_SIZE, context);
+        pixelCellSize = convertDpToPixel(Scene.CELL_SIZE, context);
     }
 
     public void draw() {
@@ -24,9 +24,9 @@ public class GameView {
         Paint paint = new Paint();
         setPaintSettings(paint);
         // drawing a board
-        for (int i = 0; i <= Painter.CELL_NUMBER; i++) {
-            drawLine(canvas, i, 0, i, Painter.CELL_NUMBER, paint); // vertical line
-            drawLine(canvas, 0, i, Painter.CELL_NUMBER, i, paint); // horizontal line
+        for (int i = 0; i <= Scene.CELL_NUMBER; i++) {
+            drawLine(canvas, i, 0, i, Scene.CELL_NUMBER, paint); // vertical line
+            drawLine(canvas, 0, i, Scene.CELL_NUMBER, i, paint); // horizontal line
         }
     }
 

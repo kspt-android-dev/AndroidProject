@@ -6,7 +6,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <ru.polytech.course.pashnik.lines.Graphics.Painter
+    <ru.polytech.course.pashnik.lines.Scene
         android:id="@+id/game_view"
         android:layout_width="405dp"
         android:layout_height="405dp"
