@@ -1,6 +1,7 @@
 package ru.gdcn.alex.whattodo.creation;
 
 import android.graphics.Color;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,27 +28,55 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
 
     private boolean clickCreate;
 
+    private FragmentManager fragmentManager;
+    private ListFragment listFragment;
+    private NoteFragment noteFragment;
+    //TODO
+    /*
+    1. Хранить экзмепляры обоих фрагментов, для обращения к их методам получения данных из них.
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation);
         header = findViewById(R.id.creation_note_header);
-        content = findViewById(R.id.creation_note_text);
-        findViewById(R.id.creation_bottom_menu_note).setSelected(true);
+        fragmentManager = getSupportFragmentManager();
 
-        initData();
+        initObjects();
+
         setupActionBar();
+        setupData();
     }
 
-    private void initData() {
+    private void setupData() {
+        header.setText(note.getHeader());
+        if (note.getType().equals("note")) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.creation_main_space, noteFragment)
+                    .commit();
+            findViewById(R.id.creation_bottom_menu_note).setSelected(true);
+            noteFragment.setText(note.getContent());
+        }
+        if (note.getType().equals("list")){
+            fragmentManager.beginTransaction()
+                    .replace(R.id.creation_main_space, listFragment)
+                    .commit();
+            findViewById(R.id.creation_bottom_menu_list).setSelected(true);
+            //TODO утсанавилвать данные
+        }
+    }
+
+    //TODO переделать
+    private void initObjects() {
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализирую данные...");
         note = (Note) getIntent().getSerializableExtra("card");
         if (note == null)
             note = new Note();
         countCards = getIntent().getIntExtra("count_cards", 0);
         clickCreate = getIntent().getBooleanExtra("clickCreate", true);
-        header.setText(note.getHeader());
-        content.setText(note.getContent());
+        noteFragment = new NoteFragment();
+        listFragment = new ListFragment();
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация данных завершена!");
     }
 
@@ -130,6 +159,7 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         super.onPause();
     }
 
+    //TODO переделать сохранение
     private void saveData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сохраняю данные...");
         note.setHeader(String.valueOf(header.getText()));
@@ -149,6 +179,7 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    //TODO обрабатывать выбранный тип записи
     @Override
     public void onClick(View v) {
         Log.d(TAG, TextFormer.getStartText(className) + "Обрабатываю нажатием кнопки нижнего меню...");
@@ -193,12 +224,13 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
     private void setType(String type) {
         note.setType(type);
-        if (type.equals("note") && findViewById(R.id.creation_bottom_menu_list).isSelected()){
-            
+        if (type.equals("note") && findViewById(R.id.creation_bottom_menu_list).isSelected()) {
+
         }
-        if (type.equals("list") && findViewById(R.id.creation_bottom_menu_note).isSelected()){
+        if (type.equals("list") && findViewById(R.id.creation_bottom_menu_note).isSelected()) {
 
         }
     }

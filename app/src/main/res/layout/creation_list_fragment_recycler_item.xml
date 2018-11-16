@@ -6,33 +6,14 @@
     android:orientation="horizontal"
     android:layout_margin="12dp">
 
-    <ImageSwitcher
-        android:id="@+id/creation_list_fragment_recycler_item_check_box"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="top|left"
-        android:background="@drawable/background_button">
-
-        <ImageView
-            android:id="@+id/creation_list_fragment_recycler_item_check_box_unchecked"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/ic_check_box_outline_blank_black_24dp"/>
-
-        <ImageView
-            android:id="@+id/creation_list_fragment_recycler_item_check_box_checked"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/ic_check_box_black2_24dp"/>
-    </ImageSwitcher>
-
-    <TextView
-        android:id="@+id/creation_list_fragment_recycler_item_text"
+    <CheckBox
+        android:id="@+id/creation_list_fragment_recycler_item_checkbox"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp"
-        android:textSize="20sp"
         android:inputType="textMultiLine"
+        android:textSize="20sp"
+        android:hint="Test"
+        android:padding="12dp"
         android:background="@drawable/edit_text_background"/>
 
 </LinearLayout>

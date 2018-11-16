@@ -7,10 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import ru.gdcn.alex.whattodo.R;
 
 public class NoteFragment extends Fragment {
+
+    private EditText contentView;
+
+    private String text;
 
     @Nullable
     @Override
@@ -21,5 +26,24 @@ public class NoteFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        contentView = getActivity().findViewById(R.id.creation_note_fragment_text);
+        setupData();
     }
+
+    private void setupData() {
+        if (text != null)
+            contentView.setText(text);
+    }
+
+    public String getText() {
+        text = contentView.getText().toString();
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+        if (contentView != null)
+            contentView.setText(text);
+    }
+
 }
