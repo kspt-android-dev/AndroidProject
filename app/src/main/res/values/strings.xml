@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">WhatToDO</string>
+    <string name="textview">Notes</string>
+    <string name="nav_menu_item_notes">Заметки</string>
+    <string name="nav_menu_item_tasks">Дела</string>
+    <string name="nav_menu_item_calendar">Календарь</string>
+    <string name="tasks_fragment_text_view">Tasks</string>
+    <string name="top_right_menu_item_about">О программе</string>
+    <string name="top_right_menu_item_settings">Настройки</string>
+    <string name="button_create">Создать</string>
+    <string name="creation_note_hint_header">Название</string>
+    <string name="creation_note_hint_text">Текст</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="creation_top_checkable">Checkable</string>
+    <string name="creation_top_fixed">Fixed</string>
+    <string name="creation_top_alarm">Alarm</string>
+    <string name="menu_select_delete">Удалить</string>
+    <string name="strings_main_top_menu_search">Поиск</string>
+    <string name="strings_main_bottom_menu_trash">Корзина</string>
+    <string name="strings_main_bottom_menu_calendar">Каленадрь</string>
+    <string name="strings_main_bottom_menu_notes">Записи</string>
+</resources>
