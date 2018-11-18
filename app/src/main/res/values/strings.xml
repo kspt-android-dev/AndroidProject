@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name" translatable="false">S&amp;HMinesweeper</string>
+
+    <string name="settings">settings</string>
+    <string name="flag">flag</string>
+    <string name="question">question</string>
+    <string name="touch">touch</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="number_of_mines">Number of mines</string>
+    <string name="height">Height</string>
+    <string name="width">Width</string>
+    <string name="mode">Mode</string>
+    <string name="hexagonal">Hexagonal</string>
+    <string name="square">Square</string>
+    <string name="insturcion">Instruction</string>
+    <string name="back">Back</string>
+    <string name="watch_instruction">Watch instruction</string>
+    <string name="html">
+        <![CDATA[
+        <p> «<b>Minesweeper</b>» – simple game that, nevertheless, develops attention, memory and logic.
+        <p><b>Its main goal</b> — find and flag mines.
+            You need to be very careful: as soon as you open the cage under which the mine is hidden, the game is over.
+            Minesweeper makes a mistake only once. </p>
+        <p><h2>Field</h2></p>
+        <p>The game has two types of playing field: <u>hex</u> and <u>square</u>.
+        <br>The field is divided into adjacent cells, some of which are "mined".
+        <br>The player must open the cells, trying not to open the cell with a mine (by opening the cell with a mine, he loses).
+        <br>Mines are placed after the first move, so it’s impossible to lose on the first move..
+        <p><h2>Cells</h2>
+        <p>If there is no mine under the open cell, then a number appears in it indicating how many mines are hidden around this cell (this number will help you understand where the safe cells are and where the bombs are).
+        <br>If there are no mines under the neighboring cells too, then a certain “non-mined” area opens up to cells that contain numbers.
+        <p><h2>Flag</h2></p>
+        <p>To mark a closed cell with a bomb, you need to put a "flag" on it (if you accidentally click on a cell with a flag, it will not open).
+        <p><h2>Question</h2></p>
+        <p>If a player doubts the presence of mines in this cell, then he can put in it a "question".
+        ]]>
+    </string>
+
+
+    <!-- Dialogs strings-->
+    <string name="overview">Overview</string>
+    <string name="you_lose">You lose.</string>
+    <string name="you_won">You won!</string>
+    <string name="new_game">New game</string>
+</resources>
