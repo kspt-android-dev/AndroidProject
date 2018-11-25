@@ -1,22 +1,21 @@
 package ru.polytech.course.pashnik.lines.Graphics;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
 import ru.polytech.course.pashnik.lines.Scene;
 
-import static ru.polytech.course.pashnik.lines.Scene.convertDpToPixel;
-
 public class GameView {
 
     private Canvas canvas;
-    private final float pixelCellSize;
+    private final float cellSize;
+    private final int cellNumber;
 
-    public GameView(Context context, Canvas canvas) {
+    public GameView(Canvas canvas) {
         this.canvas = canvas;
-        pixelCellSize = convertDpToPixel(Scene.CELL_SIZE, context);
+        cellSize = Scene.getCellSize();
+        cellNumber = Scene.getCellNumber();
     }
 
     public void draw() {
@@ -24,16 +23,16 @@ public class GameView {
         Paint paint = new Paint();
         setPaintSettings(paint);
         // drawing a board
-        for (int i = 0; i <= Scene.CELL_NUMBER; i++) {
-            drawLine(canvas, i, 0, i, Scene.CELL_NUMBER, paint); // vertical line
-            drawLine(canvas, 0, i, Scene.CELL_NUMBER, i, paint); // horizontal line
+        for (int i = 0; i <= cellNumber; i++) {
+            drawLine(canvas, i, 0, i, cellNumber, paint); // vertical line
+            drawLine(canvas, 0, i, cellNumber, i, paint); // horizontal line
         }
     }
 
     private void drawLine(Canvas canvas, int startX, int startY,
                           int endX, int endY, Paint paint) {
-        canvas.drawLine(startX * pixelCellSize, startY * pixelCellSize,
-                endX * pixelCellSize, endY * pixelCellSize, paint);
+        canvas.drawLine(startX * cellSize, startY * cellSize,
+                endX * cellSize, endY * cellSize, paint);
     }
 
     private void setPaintSettings(Paint paint) {

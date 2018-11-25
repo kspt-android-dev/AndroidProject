@@ -8,8 +8,8 @@
 
     <ru.polytech.course.pashnik.lines.Scene
         android:id="@+id/game_view"
-        android:layout_width="405dp"
-        android:layout_height="405dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:background="#C0C0C0" />

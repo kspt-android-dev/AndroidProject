@@ -9,8 +9,9 @@ public class Intellect {
     private Random random = new Random();
 
     public Cell nextCell() {
-        int x = random.nextInt(Scene.CELL_NUMBER);
-        int y = random.nextInt(Scene.CELL_NUMBER);
+        int cellSize = Scene.getCellSize();
+        int x = random.nextInt(cellSize);
+        int y = random.nextInt(cellSize);
         return new Cell(x, y);
     }
 
