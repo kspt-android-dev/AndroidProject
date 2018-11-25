@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Puzzle Game</string>
+    <string name="puzzle">PUZZLE</string>
+    <string name="game">GAME</string>
+    <string name="how_to_play">How to play</string>
+    <string name="exit_game">Exit game</string>
+    <string name="play_game">Play game</string>
+    <string name="move">MOVE</string>
+    <string name="moveNumb">0</string>
+    <string name="time_text">TIME</string>
+    <string name="time_value">5:00</string>
+    <string name="reset">Reset</string>
+    <string name="guideText">Move tiles in grid to order them from 1 to 15.
+        Click on a tile to move on it</string>
+    <string name="end_game">END GAME</string>
+    <string name="score_lable">Score</string>
+    <string name="high_score">HIGH SCORE!!!</string>
+    <string name="time_score">Time: 5:00</string>
+    <string name="move_score">Move: 50</string>
+    <string name="new_game">New Game</string>
+</resources>

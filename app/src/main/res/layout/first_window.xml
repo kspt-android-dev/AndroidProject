@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_launcher_background">
+
+    <TextView
+        android:id="@+id/puzzle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:gravity="center_horizontal"
+        android:paddingTop="30dp"
+        android:text="@string/puzzle"
+        android:textColor="@color/lightYellow"
+        android:textSize="60sp"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/puzzle"
+        android:gravity="center_horizontal"
+        android:text="@string/game"
+        android:textColor="@color/lightYellow"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/buttonHelp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonPlay"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="200dp"
+        android:layout_marginRight="200dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/button_background"
+        android:text="@string/how_to_play"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/buttonExit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonHelp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="200dp"
+        android:layout_marginRight="200dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/button_background"
+        android:onClick="clickExit"
+        android:text="@string/exit_game"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/buttonPlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="200dp"
+        android:layout_marginRight="200dp"
+        android:layout_marginTop="63dp"
+        android:background="@drawable/button_background"
+        android:text="@string/play_game"
+        android:textSize="20sp" />
+
+</RelativeLayout>
