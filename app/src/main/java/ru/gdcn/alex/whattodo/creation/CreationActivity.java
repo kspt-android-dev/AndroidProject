@@ -11,8 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import org.sqlite.core.DB;
+
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.data.DBConnector;
+import ru.gdcn.alex.whattodo.objects.Item;
 import ru.gdcn.alex.whattodo.objects.Note;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
@@ -21,12 +24,9 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
     private static final String TAG = "ToDO_Logger";
     private static final String className = "CreationActivity";
 
-    private TextView header, content;
+    private TextView header;
 
-    private Note note;
-    private int countCards;
-
-    private boolean clickCreate;
+    private CreationManager noteManager;
 
     private FragmentManager fragmentManager;
     private ListFragment listFragment;
@@ -41,43 +41,32 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation);
         header = findViewById(R.id.creation_note_header);
-        fragmentManager = getSupportFragmentManager();
 
-        initObjects();
+        fragmentManager = getSupportFragmentManager();
+        noteFragment = new NoteFragment();
+        listFragment = new ListFragment();
+
+        noteManager = new CreationManager(this);
+        noteManager.init(getIntent());
 
         setupActionBar();
         setupData();
     }
 
     private void setupData() {
-        header.setText(note.getHeader());
-        if (note.getType().equals("note")) {
+        header.setText(noteManager.getNote().getHeader());
+        if (noteManager.getNote().getType().equals("note")) {
             fragmentManager.beginTransaction()
                     .replace(R.id.creation_main_space, noteFragment)
                     .commit();
             findViewById(R.id.creation_bottom_menu_note).setSelected(true);
-            noteFragment.setText(note.getContent());
         }
-        if (note.getType().equals("list")){
+        if (noteManager.getNote().getType().equals("list")) {
             fragmentManager.beginTransaction()
                     .replace(R.id.creation_main_space, listFragment)
                     .commit();
             findViewById(R.id.creation_bottom_menu_list).setSelected(true);
-            //TODO утсанавилвать данные
         }
-    }
-
-    //TODO переделать
-    private void initObjects() {
-        Log.d(TAG, TextFormer.getStartText(className) + "Инициализирую данные...");
-        note = (Note) getIntent().getSerializableExtra("card");
-        if (note == null)
-            note = new Note();
-        countCards = getIntent().getIntExtra("count_cards", 0);
-        clickCreate = getIntent().getBooleanExtra("clickCreate", true);
-        noteFragment = new NoteFragment();
-        listFragment = new ListFragment();
-        Log.d(TAG, TextFormer.getStartText(className) + "Инициализация данных завершена!");
     }
 
     private void setupActionBar() {
@@ -95,11 +84,11 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.creation_top_menu, menu);
-        if (note.getFixed() == 1) {
+        if (noteManager.getNote().getFixed() == 1) {
             menu.getItem(0).setChecked(true);
             menu.getItem(0).getIcon().setTint(Color.parseColor("#FF2ABFF1"));
         }
-        if (note.getDate() != null) {
+        if (noteManager.getNote().getDate() != null) {
             menu.getItem(1).setChecked(true);
             menu.getItem(1).getIcon().setTint(Color.parseColor("#FF2ABFF1"));
         }
@@ -134,11 +123,11 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         if (item.isChecked()) {
             item.setChecked(false);
             item.getIcon().setTint(Color.parseColor("#FFFFFF"));
-            note.setFixed(0);
+            noteManager.getNote().setFixed(0);
         } else {
             item.setChecked(true);
             item.getIcon().setTint(Color.parseColor("#FF2ABFF1"));
-            note.setFixed(1);
+            noteManager.getNote().setFixed(1);
         }
     }
 
@@ -155,25 +144,37 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onPause() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сработала пауза!");
-        saveData();
         super.onPause();
+        saveData();
     }
 
     //TODO переделать сохранение
     private void saveData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сохраняю данные...");
-        note.setHeader(String.valueOf(header.getText()));
-        note.setContent(String.valueOf(content.getText()));
-        note.setPosition(countCards + 1);
-        if (clickCreate) {
-            if (String.valueOf(header.getText()).equals("") && String.valueOf(content.getText()).equals("")) {
+        noteManager.getNote().setHeader(String.valueOf(header.getText()));
+
+        if (noteManager.isClickCreate()) {
+            if (noteManager.getNote().getHeader().equals("") &&
+                    noteManager.getNote().getContent().equals("")) {
                 Log.d(TAG, TextFormer.getStartText(className) + "Пустые поля. Такую запись не добавляю!");
                 return;
             }
-            DBConnector.insertNote(getApplicationContext(), note);
+            DBConnector.insertNote(getApplicationContext(), noteManager.getNote());
+            for (Item item : noteManager.getItems()) {
+                DBConnector.insertItem(getApplicationContext(), item);
+            }
             Log.d(TAG, TextFormer.getStartText(className) + "Данные добавлены!");
         } else {
-            DBConnector.updateNote(getApplicationContext(), note);
+            DBConnector.updateNote(getApplicationContext(), noteManager.getNote());
+            for (Item item : noteManager.getDeleteItems()) {
+                DBConnector.deleteItem(getApplicationContext(), item);
+            }
+            for (Item item : noteManager.getItems()) {
+                if (item.getId() == Item.NEW_ITEM)
+                    DBConnector.insertItem(getApplicationContext(), item);
+                else
+                    DBConnector.updateItem(getApplicationContext(), item);
+            }
             Log.d(TAG, TextFormer.getStartText(className) + "Данные обновлены!");
         }
 
@@ -198,7 +199,10 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
                 if (!v.isSelected()) {
                     v.setSelected(true);
                     findViewById(R.id.creation_bottom_menu_list).setSelected(false);
-                    setType("note");
+                    noteManager.getNote().setType("note");
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.creation_main_space, noteFragment)
+                            .commit();
                 }
                 break;
             case R.id.creation_bottom_menu_list:
@@ -206,7 +210,10 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
                 if (!v.isSelected()) {
                     v.setSelected(true);
                     findViewById(R.id.creation_bottom_menu_note).setSelected(false);
-                    setType("list");
+                    noteManager.getNote().setType("list");
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.creation_main_space, listFragment)
+                            .commit();
                 }
                 break;
             case R.id.creation_bottom_menu_other:
@@ -224,16 +231,7 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
-    private void setType(String type) {
-        note.setType(type);
-        if (type.equals("note") && findViewById(R.id.creation_bottom_menu_list).isSelected()) {
-
-        }
-        if (type.equals("list") && findViewById(R.id.creation_bottom_menu_note).isSelected()) {
-
-        }
+    public CreationManager getNoteManager() {
+        return noteManager;
     }
-
-
 }

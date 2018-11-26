@@ -5,6 +5,7 @@ import android.util.Log;
 import com.orm.SugarRecord;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
@@ -15,7 +16,7 @@ public class Note implements Serializable {
     private static final String className = "Note";
 
     private int id;
-    private int position = 1;
+    private int position;
     private String header;
     private String content;
     private String type = "note";
@@ -23,17 +24,20 @@ public class Note implements Serializable {
     private int fixed = 0;
     private int deleted = 0;
 
-    public Note(){}
-
-    public Note(int position, String header, String content, String type, String date, int fixed, int deleted) {
+    public Note(int id, int position) {
+        this.id = id;
         this.position = position;
-        this.header = header;
-        this.content = content;
-        this.type = type;
-        this.date = date;
-        this.fixed = fixed;
-        this.deleted = deleted;
     }
+
+//    public Note(int position, String header, String content, String type, String date, int fixed, int deleted) {
+//        this.position = position;
+//        this.header = header;
+//        this.content = content;
+//        this.type = type;
+//        this.date = date;
+//        this.fixed = fixed;
+//        this.deleted = deleted;
+//    }
 
     public Note(int id, int position, String header, String content, String type, String date, int fixed, int deleted) {
         this.id = id;
@@ -104,5 +108,18 @@ public class Note implements Serializable {
 
     public void setDeleted(int deleted) {
         this.deleted = deleted;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Note note = (Note) o;
+        return id == note.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, header, content, type, date, fixed, deleted);
     }
 }

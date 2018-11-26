@@ -8,9 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,53 +21,59 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
     private static final String TAG = "ToDO_Logger";
     public static final String className = "ItemRecyclerAdapter";
 
-    private List<Item> itemList = new ArrayList<>();
+    private CreationActivity activity;
 
-    private Context context;
+    private List<Item> itemList;
+    private List<Item> deleteItemList;
 
     public ItemsRecyclerAdapter(Context context) {
-        this.context = context;
+        this.activity = (CreationActivity) context;
+        this.itemList = activity.getNoteManager().getItems();
+        this.deleteItemList = activity.getNoteManager().getDeleteItems();
     }
 
-    public void addItem(Item item){
+    public void addItem(Item item) {
         Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточки в список...");
         itemList.add(item);
         notifyItemInserted(itemList.size() - 1);
         Log.d(TAG, TextFormer.getStartText(className) + "Карточка добавлена!");
     }
 
-    public void addItem(Item item, int position){
+    public void addItem(Item item, int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточки в список...");
         itemList.add(position, item);
         notifyItemInserted(position);
         Log.d(TAG, TextFormer.getStartText(className) + "Карточка добавлена!");
     }
 
-    public void addItems(Collection<Item> items){
+    public void addItems(Collection<Item> items) {
         Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточек в список...");
         itemList.addAll(items);
         notifyDataSetChanged();
         Log.d(TAG, TextFormer.getStartText(className) + "Карточки добавлены!");
     }
 
-    public void removeItem(Item item){
+    public void removeItem(Item item) {
         Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточки из списка...");
         int i = itemList.indexOf(item);
         itemList.remove(item);
+        if (item.getId() != Item.NEW_ITEM)
+            deleteItemList.add(item);
         notifyItemRemoved(i);
         Log.d(TAG, TextFormer.getStartText(className) + "Карточка удалена из списка!");
     }
 
-    public Item getItem(int index){
+    public Item getItem(int index) {
         return itemList.get(index);
     }
 
-    public Collection<Item> getItems(){
+    public Collection<Item> getItems() {
         return itemList;
     }
 
-    public void clearItems(){
+    public void clearItems() {
         Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточек из списка...");
+        deleteItemList.addAll(itemList);
         itemList.clear();
         notifyDataSetChanged();
         Log.d(TAG, TextFormer.getStartText(className) + "Карточки удалены!");
@@ -100,8 +104,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
 
         ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            checkBox = itemView.findViewById(R.id.creation_list_fragment_recycler_item_check_box);
-//            headerView = itemView.findViewById(R.id.notes_recyclerview_header);
+            checkBox = itemView.findViewById(R.id.creation_list_fragment_recycler_item_checkbox);
         }
 
         void bind(Item note) {

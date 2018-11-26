@@ -7,7 +7,9 @@ public class Item implements Serializable {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "Item";
 
-    private int id;
+    public static final int NEW_ITEM = -13;
+
+    private int id = NEW_ITEM;
     private int parentId = 0;
     private int position = 1;
     private String content = "";

@@ -90,7 +90,6 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
             Note note = notesRecyclerAdapter.getItem(position);
             Intent intent = new Intent(getContext(), CreationActivity.class);
             intent.putExtra("note", note);
-            intent.putExtra("clickCreate", false);
             startActivity(intent);
         }
     }

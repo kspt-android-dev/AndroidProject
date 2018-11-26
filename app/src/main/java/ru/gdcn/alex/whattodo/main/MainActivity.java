@@ -113,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
     public void clickCreate(View v){
         Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия кнопки \"Создать\"...");
         Intent intent = new Intent(this, CreationActivity.class);
-        intent.putExtra("count_cards",
-                DBConnector.loadNotes(getApplicationContext()).size()); //TODO ну и костыль
         startActivity(intent);
         Log.d(TAG, TextFormer.getStartText(className) + "Обработка нажатия кнопки \"Создать\" завершено!");
     }

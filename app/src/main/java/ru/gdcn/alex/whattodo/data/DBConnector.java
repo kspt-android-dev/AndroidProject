@@ -27,6 +27,7 @@ public class DBConnector {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_ID, note.getId());
         contentValues.put(KEY_POSITION, note.getPosition());
         contentValues.put(KEY_HEADER, note.getHeader());
         contentValues.put(KEY_CONTENT, note.getContent());
@@ -151,7 +152,7 @@ public class DBConnector {
         String selection = KEY_PARENT_ID + "=?";
         String[] sArgs = {String.valueOf(parentId)};
 
-        Cursor cursor = database.query(TABLE_NOTES,
+        Cursor cursor = database.query(TABLE_ITEMS,
                 null,
                 selection,
                 sArgs,

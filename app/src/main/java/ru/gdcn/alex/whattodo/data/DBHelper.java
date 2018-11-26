@@ -13,7 +13,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "DBHelper";
 
-    public static final int DATABASE_VERSION = 8;
+    public static final int DATABASE_VERSION = 12;
     public static final String DATABASE_NAME = "WhatToDO_DB";
     public static final String TABLE_NOTES = "Notes";
     public static final String TABLE_ITEMS = "Items";
@@ -45,10 +45,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sqlNotes = "create table " + TABLE_NOTES+ "(" +
+        String sqlNotes = "create table " + TABLE_NOTES + "(" +
                 KEY_ID + " integer primary key," +
                 KEY_POSITION + " integer not null," +
-                KEY_PARENT_ID + " integer not null," +
                 KEY_HEADER + " text," +
                 KEY_CONTENT + " text," +
                 KEY_TYPE + " text not null," +
@@ -57,7 +56,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 KEY_DELETED + " integer not null" + ")";
         db.execSQL(sqlNotes);
 
-        String sqlItems = "create table " + TABLE_ITEMS+ "(" +
+        String sqlItems = "create table " + TABLE_ITEMS + "(" +
                 KEY_ID + " integer primary key," +
                 KEY_PARENT_ID + " integer not null," +
                 KEY_POSITION + " integer not null," +
@@ -70,8 +69,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sql = "drop table if exists " + TABLE_NOTES;
-        db.execSQL(sql);
+        String sqlNotes = "drop table if exists " + TABLE_NOTES;
+        db.execSQL(sqlNotes);
+        String sqlItems = "drop table if exists " + TABLE_ITEMS;
+        db.execSQL(sqlItems);
         Log.d(TAG, TextFormer.getStartText(className) + "Обновил таблицу - " + TABLE_NOTES + "!");
         onCreate(db);
     }
