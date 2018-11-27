@@ -59,7 +59,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
         Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточки из списка...");
         int i = noteList.indexOf(note);
         notifyItemRemoved(i);
-//        noteList.remove(i);
+        noteList.remove(i);
 //        selectedCardList.remove((Object) note.getId());
         Log.d(TAG, TextFormer.getStartText(className) + "Карточка удалена из списка!");
     }
@@ -151,8 +151,8 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
     @Override
     public void onViewSwiped(int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Словил свайп..." + position);
-        removeItem(getItem(position));
         DBConnector.deleteNote(context, getItem(position));
+        removeItem(getItem(position));
     }
 
     private void swapCard(int oldPosition, int newPosition){

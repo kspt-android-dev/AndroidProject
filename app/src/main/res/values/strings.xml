@@ -19,4 +19,7 @@
     <string name="strings_main_bottom_menu_trash">Корзина</string>
     <string name="strings_main_bottom_menu_calendar">Каленадрь</string>
     <string name="strings_main_bottom_menu_notes">Записи</string>
+
+    <string name="header_text_size">20sp</string>
+    <string name="content_text_size">16sp</string>
 </resources>

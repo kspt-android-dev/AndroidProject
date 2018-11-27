@@ -84,6 +84,8 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
     @Override
     public void onItemClick(View view, int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Словил клик на элемент!");
+        if (view == null)
+            return;
         if (isMultiSelect) {
             multiSelect(position);
         } else {
@@ -109,12 +111,12 @@ public class NotesFragment extends Fragment implements ActionMode.Callback,
     @Override
     public void onScroll(float startY, float endY) {
         Log.d(TAG, TextFormer.getStartText(className) + "Словил прокрутку!");
-        if (recyclerView.getItemDecorationCount() < notesRecyclerAdapter.getItemCount()) {
-            if (startY > endY)
-                fab.hide();
-            if (startY < endY)
-                fab.show();
-        }
+//        if (recyclerView.getItemDecorationCount() < notesRecyclerAdapter.getItemCount()) {
+//            if (startY > endY)
+//                fab.hide();
+//            if (startY < endY)
+//                fab.show();
+//        }
     }
 
     //Дальше пока не используется. Нужно для выделения нескольких элементов

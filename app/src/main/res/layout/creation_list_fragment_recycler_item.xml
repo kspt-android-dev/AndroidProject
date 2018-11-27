@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_margin="12dp">
+    android:layout_margin="3dp">
 
     <CheckBox
         android:id="@+id/creation_list_fragment_recycler_item_checkbox"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:inputType="textMultiLine"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:hint="Test"
-        android:padding="12dp"
+        android:padding="6dp"
         android:background="@drawable/edit_text_background"/>
 
 </LinearLayout>
