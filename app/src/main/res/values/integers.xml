@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="note_header_text_size">20sp</string>
+    <string name="note_content_text_size">16sp</string>
+</resources>

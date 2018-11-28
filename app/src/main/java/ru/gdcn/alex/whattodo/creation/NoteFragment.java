@@ -47,6 +47,8 @@ public class NoteFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        activity.getNoteManager().getDeleteItems().addAll(activity.getNoteManager().getItems());
+        activity.getNoteManager().getItems().clear();
         contentView.setText(activity.getNoteManager().getNote().getContent());
         Log.d(TAG, TextFormer.getStartText(className) + "Resume NoteFragment!");
     }

@@ -41,12 +41,43 @@ public class CreationManager {
         if (note == null) {
             note = new Note(countNotes + 1, countNotes + 1);
             clickCreate = true;
-            items = new ArrayList<>();
         }
-        else
+        if (note.getType().equals("list"))
             items = (List<Item>) DBConnector.loadItems(activity, note.getId());
+        else
+            items = new ArrayList<>();
 
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация данных завершена!");
+    }
+
+    public void save() {
+        if (isClickCreate()) {
+            if (note.getHeader().equals("") && note.getContent().equals("")) {
+                Log.d(TAG, TextFormer.getStartText(className) + "Пустые поля. Такую запись не добавляю!");
+                return;
+            }
+            DBConnector.insertNote(activity, note);
+            if (note.getType().equals("list"))
+                for (Item item : items) {
+                    DBConnector.insertItem(activity, item);
+                }
+            Log.d(TAG, TextFormer.getStartText(className) + "Пунктов сохранено - " + items.size());
+            Log.d(TAG, TextFormer.getStartText(className) + "Данные добавлены!");
+        } else {
+            DBConnector.updateNote(activity, note);
+            for (Item item : deleteItems) {
+                DBConnector.deleteItem(activity, item);
+            }
+            if (note.getType().equals("list"))
+                for (Item item : items) {
+                    if (item.getId() == Item.NEW_ITEM)
+                        DBConnector.insertItem(activity, item);
+                    else
+                        DBConnector.updateItem(activity, item);
+                }
+            Log.d(TAG, TextFormer.getStartText(className) + "Пунктов сохранено - " + items.size());
+            Log.d(TAG, TextFormer.getStartText(className) + "Данные обновлены!");
+        }
     }
 
     public Note getNote() {

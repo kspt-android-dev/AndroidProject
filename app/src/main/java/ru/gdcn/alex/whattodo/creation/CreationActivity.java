@@ -152,32 +152,7 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
     private void saveData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сохраняю данные...");
         noteManager.getNote().setHeader(String.valueOf(header.getText()));
-
-        if (noteManager.isClickCreate()) {
-            if (noteManager.getNote().getHeader().equals("") &&
-                    noteManager.getNote().getContent().equals("")) {
-                Log.d(TAG, TextFormer.getStartText(className) + "Пустые поля. Такую запись не добавляю!");
-                return;
-            }
-            DBConnector.insertNote(getApplicationContext(), noteManager.getNote());
-            for (Item item : noteManager.getItems()) {
-                DBConnector.insertItem(getApplicationContext(), item);
-            }
-            Log.d(TAG, TextFormer.getStartText(className) + "Данные добавлены!");
-        } else {
-            DBConnector.updateNote(getApplicationContext(), noteManager.getNote());
-            for (Item item : noteManager.getDeleteItems()) {
-                DBConnector.deleteItem(getApplicationContext(), item);
-            }
-            for (Item item : noteManager.getItems()) {
-                if (item.getId() == Item.NEW_ITEM)
-                    DBConnector.insertItem(getApplicationContext(), item);
-                else
-                    DBConnector.updateItem(getApplicationContext(), item);
-            }
-            Log.d(TAG, TextFormer.getStartText(className) + "Данные обновлены!");
-        }
-
+        noteManager.save();
     }
 
     //TODO обрабатывать выбранный тип записи

@@ -10,9 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:inputType="textMultiLine"
-        android:padding="20dp"
+        android:paddingStart="20dp"
+        android:paddingBottom="10dp"
+        android:paddingEnd="20dp"
         android:hint="@string/creation_note_hint_text"
         android:gravity="top|start"
-        android:textSize="20sp"/>
+        android:textSize="16sp"
+        android:background="@drawable/edit_text_background"/>
 
 </LinearLayout>

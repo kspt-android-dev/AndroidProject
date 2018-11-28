@@ -23,16 +23,17 @@
             android:maxLines="5"
             android:background="@drawable/edit_text_background"
             android:layout_marginBottom="5dp"
-            android:padding="20dp"
-            android:textSize="24sp" />
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingEnd="20dp"
+            android:textSize="20sp" />
 
         <LinearLayout
             android:id="@+id/creation_main_space"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-
         </LinearLayout>
 
     </LinearLayout>

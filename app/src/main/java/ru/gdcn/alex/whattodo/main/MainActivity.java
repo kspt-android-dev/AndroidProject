@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                                         .replace(R.id.main_space, tasks)
                                         .commit();
                                 item.setChecked(true);
-                                DBConnector.clearTables(getApplicationContext());
+//                                DBConnector.clearTables(getApplicationContext());
                                 break;
                             case R.id.main_bottom_menu_calendar:
                                 fragmentManager.beginTransaction()

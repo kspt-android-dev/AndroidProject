@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 
 import java.util.Collection;
 import java.util.List;
@@ -101,14 +102,16 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private CheckBox checkBox;
+        private EditText editText;
 
         ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             checkBox = itemView.findViewById(R.id.creation_list_fragment_recycler_item_checkbox);
+            editText = itemView.findViewById(R.id.creation_list_fragment_recycler_item_content);
         }
 
         void bind(Item note) {
-            checkBox.setText(note.getContent());
+            editText.setText(note.getContent());
             checkBox.setChecked(note.getChecked() == 1);
         }
 
