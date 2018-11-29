@@ -10,14 +10,18 @@ class Board(var gameWay: ArrayList<GameCell>) {
 
     private val gameWayLength: Int = gameWay.size
 
-    fun movePlayer(newPositionIndex: Int, player: Player): Cell {
+    fun movePlayer(newPositionIndex: Int, player: Player): Cell { // return current player's cell
         return if (newPositionIndex > gameWayLength - 1) {
             player.currentPosition = newPositionIndex - gameWayLength
-            player.earnMoney(GameData.loopMoney)
+            loopPassEvents(player)
             gameWay[newPositionIndex - gameWayLength]
         } else {
             player.currentPosition = newPositionIndex
             return gameWay[newPositionIndex]
         }
+    }
+
+    private fun loopPassEvents(player: Player){
+        player.earnMoney(GameData.loopMoney)
     }
 }

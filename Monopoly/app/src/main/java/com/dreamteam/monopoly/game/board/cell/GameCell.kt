@@ -1,8 +1,9 @@
 package com.dreamteam.monopoly.game.board.cell
 
+import android.graphics.Bitmap
 import com.dreamteam.monopoly.game.player.Player
 
-open class GameCell(id: String, val type: GameCellType, val info: GameCellInfo) : Cell(id) {
+open class GameCell(id: String, bitmap: Bitmap, val type: GameCellType, val info: GameCellInfo) : Cell(id, bitmap) {
 
     var state: CellState = CellState.FREE
     var owner: Player? = null
@@ -28,7 +29,7 @@ open class GameCell(id: String, val type: GameCellType, val info: GameCellInfo) 
         owner = null
     }
 
-    //fun checkBuyCost(money: Int): Boolean = money >= type.cost.costBuy
+    fun checkBuyCost(money: Int): Boolean = money >= info.cost.costBuy
 
-    //fun checkChargeCost(money: Int): Boolean = money >= type.cost.costCharge
+    fun checkChargeCost(money: Int): Boolean = money >= info.cost.costCharge
 }

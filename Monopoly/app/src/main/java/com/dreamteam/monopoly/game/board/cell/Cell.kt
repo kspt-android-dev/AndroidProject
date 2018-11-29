@@ -1,8 +1,5 @@
 package com.dreamteam.monopoly.game.board.cell
 
-import android.graphics.BitmapFactory
+import android.graphics.Bitmap
 
-abstract class Cell(val id: String) {
-    //  image
-    //val image: BitmapFactory
-}
+abstract class Cell(val id: String, val bitmap: Bitmap)
