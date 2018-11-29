@@ -54,7 +54,8 @@ public class SwipeDragHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        //TODO переделать чтоб при свайпе элемент не исчезал
+        //TODO переделать чтоб при свайпе элемент не исчезал, если вдруг буду делать не удаление на это действие
+        //а так же хотелось сделать чтоб снизу при сдвиге отображалась картинка какое действие сейчас будет
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }

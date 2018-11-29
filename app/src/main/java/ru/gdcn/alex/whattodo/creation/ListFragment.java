@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -33,8 +34,8 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     private RecyclerView recyclerView;
     private ItemsRecyclerAdapter itemsRecyclerAdapter;
 
-    private int lastPosition = -1;
-    private EditText lastView = null;
+//    private int lastPosition = -1;
+//    private EditText lastView = null;
 
 //    private boolean firstView = true;
 
@@ -73,7 +74,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
         Log.d(TAG, TextFormer.getStartText(className) + "Сработала Resume!");
         if (activity.getNoteManager().getItems().size() != 0) {
             Log.d(TAG, TextFormer.getStartText(className) + "Первое открытие!");
-            itemsRecyclerAdapter.notifyDataSetChanged();
+//            itemsRecyclerAdapter.notifyDataSetChanged();
         }
         else {
             Log.d(TAG, TextFormer.getStartText(className) + "Не первое открытие!");
@@ -97,26 +98,18 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     public void onPause() {
         super.onPause();
         Log.d(TAG, TextFormer.getStartText(className) + "Сработала Pause!");
-        if (lastView != null) {
-            itemsRecyclerAdapter.getItem(lastPosition).setContent(lastView.getText().toString());
-        }
         StringBuilder stringBuilder = new StringBuilder();
-        for (Item item : activity.getNoteManager().getItems()) {
-            stringBuilder.append(item.getContent()).append("\n");
+        List<Item> items = activity.getNoteManager().getItems();
+        for (int i = 0; i < items.size()-1; i++) {
+            stringBuilder.append(items.get(i).getContent()).append("\n");
         }
+        stringBuilder.append(items.get(items.size()-1).getContent());
         activity.getNoteManager().getNote().setContent(stringBuilder.toString());
     }
 
     @Override
     public void onItemClick(View view, int position) {
-//        ((CheckBox) view).setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        if (lastView != null) {
-            itemsRecyclerAdapter.getItem(lastPosition).setContent(lastView.getText().toString());
-        }
-        lastPosition = position;
-        lastView = view.findViewById(R.id.creation_list_fragment_recycler_item_content);
-
-        //TODO
+        //Видимо тоже не надо. хм...
     }
 
     @Override

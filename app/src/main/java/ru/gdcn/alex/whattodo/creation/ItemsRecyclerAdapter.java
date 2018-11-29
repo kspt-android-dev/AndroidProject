@@ -1,14 +1,18 @@
 package ru.gdcn.alex.whattodo.creation;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Collection;
 import java.util.List;
@@ -93,6 +97,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
         itemViewHolder.bind(itemList.get(i));
     }
 
+
     @Override
     public int getItemCount() {
         return itemList.size();
@@ -107,12 +112,49 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
         ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             checkBox = itemView.findViewById(R.id.creation_list_fragment_recycler_item_checkbox);
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    Item item = getItem(position);
+                    if (item.getChecked() == 1) {
+                        item.setChecked(0);
+                    } else {
+                        item.setChecked(1);
+                    }
+                    bind(item);
+                }
+            });
             editText = itemView.findViewById(R.id.creation_list_fragment_recycler_item_content);
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    Log.d(TAG, TextFormer.getStartText(className) + "Изменение текста.........");
+                    getItem(getAdapterPosition()).setContent(s.toString());
+                }
+            });
         }
 
-        void bind(Item note) {
-            editText.setText(note.getContent());
-            checkBox.setChecked(note.getChecked() == 1);
+        void bind(Item item) {
+            editText.setText(item.getContent());
+            if (item.getChecked() == 1) {
+                checkBox.setChecked(true);
+                editText.setPaintFlags(editText.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                checkBox.setChecked(false);
+                if ((editText.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) == Paint.STRIKE_THRU_TEXT_FLAG)
+                    editText.setPaintFlags(editText.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
+            }
         }
 
 

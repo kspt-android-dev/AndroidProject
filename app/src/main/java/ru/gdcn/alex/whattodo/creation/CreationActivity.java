@@ -31,10 +31,6 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
     private FragmentManager fragmentManager;
     private ListFragment listFragment;
     private NoteFragment noteFragment;
-    //TODO
-    /*
-    1. Хранить экзмепляры обоих фрагментов, для обращения к их методам получения данных из них.
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,14 +144,12 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         saveData();
     }
 
-    //TODO переделать сохранение
     private void saveData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сохраняю данные...");
         noteManager.getNote().setHeader(String.valueOf(header.getText()));
         noteManager.save();
     }
 
-    //TODO обрабатывать выбранный тип записи
     @Override
     public void onClick(View v) {
         Log.d(TAG, TextFormer.getStartText(className) + "Обрабатываю нажатием кнопки нижнего меню...");
