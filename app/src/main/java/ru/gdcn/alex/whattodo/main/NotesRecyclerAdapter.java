@@ -20,37 +20,21 @@ import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.recycler.SwipeDragHelperCallback;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdapter.CardViewHolder>
-                                implements SwipeDragHelperCallback.ActionCompletionContract {
+public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdapter.CardViewHolder> {
 
     private static final String TAG = "ToDO_Logger";
     private static final String className = "NotesRecyclerAdapter";
 
-    private List<Note> noteList = new ArrayList<>();
-    private List<Integer> selectedCardList = new ArrayList<>();
+    private List<Note> noteList;
     private Context context;
 
     public NotesRecyclerAdapter(Context context) {
         this.context = context;
     }
 
-    public void addItem(Note note){
-        Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточки в список...");
-        noteList.add(note);
-        notifyItemInserted(noteList.size() - 1);
-        Log.d(TAG, TextFormer.getStartText(className) + "Карточка добавлена!");
-    }
-
-    public void addItem(Note note, int position){
-        Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточки в список...");
-        noteList.add(position, note);
-        notifyItemInserted(position);
-        Log.d(TAG, TextFormer.getStartText(className) + "Карточка добавлена!");
-    }
-
-    public void addItems(Collection<Note> notes){
+    public void loadNotes(){
         Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточек в список...");
-        noteList.addAll(notes);
+        noteList = DBConnector.loadNotes(context);
         notifyDataSetChanged();
         Log.d(TAG, TextFormer.getStartText(className) + "Карточки добавлены!");
     }
@@ -60,50 +44,20 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
         int i = noteList.indexOf(note);
         noteList.remove(i);
         notifyItemRemoved(i);
-//        selectedCardList.remove((Object) note.getId());
         DBConnector.deleteNote(context, note);
         Log.d(TAG, TextFormer.getStartText(className) + "Карточка удалена из списка!");
     }
 
-    public void clearItems(){
-        Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточек из списка...");
-        noteList.clear();
-        notifyDataSetChanged();
-        Log.d(TAG, TextFormer.getStartText(className) + "Карточки удалены!");
-    }
-
-    public Collection<Note> getItems(){
-        return noteList;
-    }
-
-    public void addSelectedItem(int id){
-        Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточки в список выделенных...");
-        selectedCardList.add(id);
-        notifyDataSetChanged();
-        Log.d(TAG, TextFormer.getStartText(className) + "Карточка добавлена в список выделенных!");
-    }
-
-    public void addSelectedItems(Collection<Integer> setectedCards){
-        selectedCardList.addAll(setectedCards);
-        notifyDataSetChanged();
-    }
-
-    public void removeSelectedItem(int id){
-        Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточки из списка выделенных...");
-        selectedCardList.remove((Object) id);
-        notifyDataSetChanged();
-        Log.d(TAG, TextFormer.getStartText(className) + "Карточка удалена из списка выделенных!");
-    }
-
-    public Collection<Integer> getSelectedItems(){
-        return selectedCardList;
-    }
-
-    public void clearSelectedItems(){
-        Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточек из списка выделенных...");
-        selectedCardList.clear();
-        notifyDataSetChanged();
-        Log.d(TAG, TextFormer.getStartText(className) + "Карточки удалены из списка выделенных!");
+    public void swapCard(int oldPosition, int newPosition){
+        Note o = noteList.get(oldPosition);
+        Note n = noteList.get(newPosition);
+        int temp = o.getPosition();
+        o.setPosition(n.getPosition());
+        n.setPosition(temp);
+        Collections.swap(noteList, oldPosition, newPosition);
+        notifyItemMoved(oldPosition, newPosition);
+        DBConnector.updateNote(context, o);
+        DBConnector.updateNote(context, n);
     }
 
     public Note getItem(int index){
@@ -126,71 +80,54 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder cardViewHolder, int i) {
         cardViewHolder.bind(noteList.get(i));
-
-//        holder.title.setText(list.get(position).getTitle());
-//        int id = noteList.get(i).getId();
-
-//        if (selectedCardList.contains(id)){
-//            //if item is selected then,set foreground color of FrameLayout.
-//            cardViewHolder.selectBack();
-//
-//        }
-//        else {
-//            //else remove selected item color.
-//            cardViewHolder.removeSelect();
-//        }
-    }
-
-    @Override
-    public void onViewMoved(int oldPosition, int newPosition) {
-        //TODO теперь надо чтоб в бд тоже местами поменялись
-        Log.d(TAG, TextFormer.getStartText(className) + "Словил перемещение...");
-        swapCard(oldPosition, newPosition);
-        notifyItemMoved(oldPosition, newPosition);
-    }
-
-    @Override
-    public void onViewSwiped(int position) {
-        Log.d(TAG, TextFormer.getStartText(className) + "Словил свайп..." + position);
-        Note deletedNote = getItem(position);
-        removeItem(deletedNote);
-    }
-
-    private void swapCard(int oldPosition, int newPosition){
-        Note o = noteList.get(oldPosition);
-        Note n = noteList.get(newPosition);
-        int temp = o.getPosition();
-        o.setPosition(n.getPosition());
-        n.setPosition(temp);
-        Collections.swap(noteList, oldPosition, newPosition);
-        DBConnector.updateNote(context, o);
-        DBConnector.updateNote(context, n);
     }
 
     class CardViewHolder extends RecyclerView.ViewHolder {
 
         private TextView headerView;
-//        private CardView cardView;
 
         CardViewHolder(@NonNull View itemView) {
             super(itemView);
             headerView = itemView.findViewById(R.id.notes_recyclerview_header);
-//            cardView = itemView.findViewById(R.id.notes_recyclerview_card);
         }
 
         void bind(Note note) {
             headerView.setText(note.getHeader());
         }
 
-//        void selectBack(){
-//            cardView.setBackgroundColor(cardView.getContext().getResources().getColor(R.color.colorPrimaryDark));
-//            cardView.setCardBackgroundColor(cardView.getContext().getResources().getColor(R.color.colorPrimaryDark));
-//        }
-//
-//        void removeSelect(){
-//            cardView.setCardBackgroundColor(cardView.getContext().getResources().getColor(R.color.colorPrimary));
-//        }
-
-
     }
+
+    //        void removeSelect(){
+//
+//        }
+//            cardView.setCardBackgroundColor(cardView.getContext().getResources().getColor(R.color.colorPrimaryDark));
+//            cardView.setBackgroundColor(cardView.getContext().getResources().getColor(R.color.colorPrimaryDark));
+//    public void addSelectedItem(int id){
+//        Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточки в список выделенных...");
+//        selectedCardList.add(id);
+//        notifyDataSetChanged();
+//        Log.d(TAG, TextFormer.getStartText(className) + "Карточка добавлена в список выделенных!");
+//    }
+//
+//    public void addSelectedItems(Collection<Integer> setectedCards){
+//        selectedCardList.addAll(setectedCards);
+//        notifyDataSetChanged();
+//    }
+//
+//    public void removeSelectedItem(int id){
+//        Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточки из списка выделенных...");
+//        selectedCardList.remove((Object) id);
+//        notifyDataSetChanged();
+//        Log.d(TAG, TextFormer.getStartText(className) + "Карточка удалена из списка выделенных!");
+//    }
+//
+//    public Collection<Integer> getSelectedItems(){
+//        return selectedCardList;
+//    }
+//    public void clearSelectedItems(){
+//        Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточек из списка выделенных...");
+//        selectedCardList.clear();
+//        notifyDataSetChanged();
+//        Log.d(TAG, TextFormer.getStartText(className) + "Карточки удалены из списка выделенных!");
+//    }
 }

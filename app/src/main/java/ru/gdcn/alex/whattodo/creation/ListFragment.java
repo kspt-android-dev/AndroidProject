@@ -31,19 +31,13 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
 
     private CreationActivity activity;
 
-    private RecyclerView recyclerView;
     private ItemsRecyclerAdapter itemsRecyclerAdapter;
-
-//    private int lastPosition = -1;
-//    private EditText lastView = null;
-
-//    private boolean firstView = true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.activity = (CreationActivity) getActivity();
-        Log.d(TAG, TextFormer.getStartText(className) + "Создал ListFragment!");
+        Log.d(TAG, TextFormer.getStartText(className) + "onCreate!");
     }
 
     @Nullable
@@ -60,7 +54,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
 
     private void initRecyclerView() {
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация списка...");
-        recyclerView = getActivity().findViewById(R.id.creation_list_fragment_recycler);
+        RecyclerView recyclerView = getActivity().findViewById(R.id.creation_list_fragment_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         itemsRecyclerAdapter = new ItemsRecyclerAdapter(activity);
         recyclerView.setAdapter(itemsRecyclerAdapter);
@@ -69,14 +63,10 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, TextFormer.getStartText(className) + "Сработала Resume!");
-        if (activity.getNoteManager().getItems().size() != 0) {
-            Log.d(TAG, TextFormer.getStartText(className) + "Первое открытие!");
-//            itemsRecyclerAdapter.notifyDataSetChanged();
-        }
-        else {
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, TextFormer.getStartText(className) + "onStart!");
+        if (activity.getNoteManager().getItems().size() == 0) {
             Log.d(TAG, TextFormer.getStartText(className) + "Не первое открытие!");
             Log.d(TAG, TextFormer.getStartText(className) + "Разделяю на элементы...");
             String[] contents = activity.getNoteManager().getNote().getContent().split("\n");
@@ -86,7 +76,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
                         activity.getNoteManager().getNote().getId(),
                         i + 1,
                         contents[i],
-                        0
+                        Item.DEFAULT_CHECKED
                 ));
             }
             Log.d(TAG, TextFormer.getStartText(className) + "Разделение произошло!");
@@ -95,9 +85,9 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, TextFormer.getStartText(className) + "Сработала Pause!");
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, TextFormer.getStartText(className) + "onStop!");
         StringBuilder stringBuilder = new StringBuilder();
         List<Item> items = activity.getNoteManager().getItems();
         for (int i = 0; i < items.size()-1; i++) {

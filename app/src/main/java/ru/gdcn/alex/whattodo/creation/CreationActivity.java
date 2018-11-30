@@ -46,10 +46,6 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         noteManager.init(getIntent());
 
         setupActionBar();
-        setupData();
-    }
-
-    private void setupData() {
         header.setText(noteManager.getNote().getHeader());
         if (noteManager.getNote().getType().equals("note")) {
             fragmentManager.beginTransaction()
@@ -138,9 +134,9 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    protected void onPause() {
-        Log.d(TAG, TextFormer.getStartText(className) + "Сработала пауза!");
-        super.onPause();
+    protected void onStop() {
+        Log.d(TAG, TextFormer.getStartText(className) + "Сработала стоп!");
+        super.onStop();
         saveData();
     }
 

@@ -20,14 +20,14 @@ public class DBConnector {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "DBConnector";
 
-    public static void insertNote(Context activity, Note note) {
+    public static long insertNote(Context activity, Note note) {
         Log.d(TAG, TextFormer.getStartText(className) + "Добавляем запись в таблицу...");
 
         DBHelper dbHelper = new DBHelper(activity);
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_ID, note.getId());
+//        contentValues.put(KEY_ID, note.getId());
         contentValues.put(KEY_POSITION, note.getPosition());
         contentValues.put(KEY_HEADER, note.getHeader());
         contentValues.put(KEY_CONTENT, note.getContent());
@@ -35,13 +35,14 @@ public class DBConnector {
         contentValues.put(KEY_DATE, stringToDate(note.getDate()));
         contentValues.put(KEY_FIXED, note.getFixed());
         contentValues.put(KEY_DELETED, note.getDeleted());
-        database.insert(TABLE_NOTES, null, contentValues);
+        long id = database.insert(TABLE_NOTES, null, contentValues);
 
         Log.d(TAG, TextFormer.getStartText(className) + "Размер базы данных: " + database.getPageSize() + " байт!");
 
         contentValues.clear();
         database.close();
         dbHelper.close();
+        return id;
     }
 
     public static void updateNote(Context activity, Note note) {
@@ -142,7 +143,7 @@ public class DBConnector {
         dbHelper.close();
     }
 
-    public static Collection<Item> loadItems(Context activity, int parentId){
+    public static Collection<Item> loadItems(Context activity, long parentId){
         Log.d(TAG, TextFormer.getStartText(className) + "Пытаюсь достать данные из таблицы...");
         List<Item> items = new ArrayList<>();
 
@@ -186,7 +187,7 @@ public class DBConnector {
         return items;
     }
 
-    public static Collection<Note> loadNotes(Context activity) {
+    public static List<Note> loadNotes(Context activity) {
         Log.d(TAG, TextFormer.getStartText(className) + "Пытаюсь достать данные из таблицы...");
         List<Note> notes = new ArrayList<>();
 

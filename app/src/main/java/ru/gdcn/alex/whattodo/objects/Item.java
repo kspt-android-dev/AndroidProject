@@ -8,16 +8,15 @@ public class Item implements Serializable {
     private static final String className = "Item";
 
     public static final int NEW_ITEM = -13;
+    public static final int DEFAULT_CHECKED = 0;
 
     private int id = NEW_ITEM;
-    private int parentId = 0;
-    private int position = 1;
-    private String content = "";
-    private int checked = 0;
+    private long parentId;
+    private int position;
+    private String content;
+    private int checked;
 
-    public Item(){}
-
-    public Item(int parentId, int position, String content, int checked) {
+    public Item(long parentId, int position, String content, int checked) {
         this.parentId = parentId;
         this.position = position;
         this.content = content;
@@ -36,12 +35,8 @@ public class Item implements Serializable {
         return id;
     }
 
-    public int getParentId() {
+    public long getParentId() {
         return parentId;
-    }
-
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
     }
 
     public int getPosition() {

@@ -15,7 +15,7 @@ public class Note implements Serializable {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "Note";
 
-    private int id;
+    private long id;
     private int position;
     private String header;
     private String content;
@@ -24,20 +24,14 @@ public class Note implements Serializable {
     private int fixed = 0;
     private int deleted = 0;
 
+    public Note(int position) {
+        this.position = position;
+    }
+
     public Note(int id, int position) {
         this.id = id;
         this.position = position;
     }
-
-//    public Note(int position, String header, String content, String type, String date, int fixed, int deleted) {
-//        this.position = position;
-//        this.header = header;
-//        this.content = content;
-//        this.type = type;
-//        this.date = date;
-//        this.fixed = fixed;
-//        this.deleted = deleted;
-//    }
 
     public Note(int id, int position, String header, String content, String type, String date, int fixed, int deleted) {
         this.id = id;
@@ -50,8 +44,12 @@ public class Note implements Serializable {
         this.deleted = deleted;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getHeader() {

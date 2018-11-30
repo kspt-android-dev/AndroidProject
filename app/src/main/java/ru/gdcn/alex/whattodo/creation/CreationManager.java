@@ -25,9 +25,6 @@ public class CreationManager {
     private List<Item> items;
     private List<Item> deleteItems = new ArrayList<>();
 
-    public boolean clickCreate = false;
-
-
     public CreationManager(Context activity) {
         this.activity = activity;
     }
@@ -39,8 +36,8 @@ public class CreationManager {
 
         note = (Note) data.getSerializableExtra("note");
         if (note == null) {
-            note = new Note(countNotes + 1, countNotes + 1);
-            clickCreate = true;
+            note = new Note(countNotes + 1);
+            note.setId(DBConnector.insertNote(activity, note));
         }
         if (note.getType().equals("list"))
             items = (List<Item>) DBConnector.loadItems(activity, note.getId());
@@ -51,33 +48,34 @@ public class CreationManager {
     }
 
     public void save() {
-        if (isClickCreate()) {
-            if (note.getHeader().equals("") && note.getContent().equals("")) {
-                Log.d(TAG, TextFormer.getStartText(className) + "Пустые поля. Такую запись не добавляю!");
-                return;
-            }
-            DBConnector.insertNote(activity, note);
-            if (note.getType().equals("list"))
-                for (Item item : items) {
-                    DBConnector.insertItem(activity, item);
-                }
-            Log.d(TAG, TextFormer.getStartText(className) + "Пунктов сохранено - " + items.size());
-            Log.d(TAG, TextFormer.getStartText(className) + "Данные добавлены!");
-        } else {
-            DBConnector.updateNote(activity, note);
-            for (Item item : deleteItems) {
-                DBConnector.deleteItem(activity, item);
-            }
-            if (note.getType().equals("list"))
-                for (Item item : items) {
-                    if (item.getId() == Item.NEW_ITEM)
-                        DBConnector.insertItem(activity, item);
-                    else
-                        DBConnector.updateItem(activity, item);
-                }
-            Log.d(TAG, TextFormer.getStartText(className) + "Пунктов сохранено - " + items.size());
-            Log.d(TAG, TextFormer.getStartText(className) + "Данные обновлены!");
+
+        if (note.getHeader().equals("") && note.getContent().equals("")) {
+            Log.d(TAG, TextFormer.getStartText(className) + "Пустые поля. Такую запись не добавляю или удаляем!");
+            DBConnector.deleteNote(activity, note);
+            return;
         }
+//            DBConnector.insertNote(activity, note);
+//            if (note.getType().equals("list"))
+//                for (Item item : items) {
+//                    DBConnector.insertItem(activity, item);
+//                }
+//            Log.d(TAG, TextFormer.getStartText(className) + "Пунктов сохранено - " + items.size());
+//            Log.d(TAG, TextFormer.getStartText(className) + "Данные добавлены!");
+
+        DBConnector.updateNote(activity, note);
+        for (Item item : deleteItems) {
+            DBConnector.deleteItem(activity, item);
+        }
+        if (note.getType().equals("list"))
+            for (Item item : items) {
+                if (item.getId() == Item.NEW_ITEM)
+                    DBConnector.insertItem(activity, item);
+                else
+                    DBConnector.updateItem(activity, item);
+            }
+        Log.d(TAG, TextFormer.getStartText(className) + "Пунктов сохранено - " + items.size());
+        Log.d(TAG, TextFormer.getStartText(className) + "Данные обновлены!");
+
     }
 
     public Note getNote() {
@@ -91,10 +89,4 @@ public class CreationManager {
     public List<Item> getDeleteItems() {
         return deleteItems;
     }
-
-    public boolean isClickCreate() {
-        return clickCreate;
-    }
-
-
 }
