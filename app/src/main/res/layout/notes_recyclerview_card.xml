@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/notes_recyclerview_card"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="wrap_content"
+    android:minHeight="56dp"
     android:layout_marginLeft="6dp"
-    android:layout_marginTop="3dp"
+    android:layout_marginTop="5dp"
     android:layout_marginRight="6dp"
-    android:layout_marginBottom="3dp"
+    android:layout_marginBottom="5dp"
     android:backgroundTint="@color/colorPrimary"
     android:elevation="10dp"
     app:cardCornerRadius="3dp">
@@ -16,7 +17,8 @@
     <LinearLayout
         android:id="@+id/notes_recyclerview_header_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
         android:divider="@drawable/divider"
         android:dividerPadding="7dp"
         android:orientation="horizontal"
@@ -25,11 +27,11 @@
         <TextView
             android:id="@+id/notes_recyclerview_header"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="56dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
+            android:padding="12dp"
             android:textSize="20sp"
             android:hint="(Без названия)" />
 

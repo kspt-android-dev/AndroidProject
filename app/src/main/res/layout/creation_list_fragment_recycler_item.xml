@@ -12,17 +12,26 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
     <EditText
         android:id="@+id/creation_list_fragment_recycler_item_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="+ Добавить пункт"
+        android:layout_height="wrap_content"
         android:inputType="textMultiLine"
+        android:layout_weight="1"
         android:textSize="16sp"
         android:padding="3dp"
         android:gravity="center_vertical"
         android:background="@drawable/edit_text_background"/>
+
+    <ImageButton
+        android:id="@+id/creation_list_fragment_recycler_item_delete"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:background="@drawable/ic_clear_black_24dp"
+        android:backgroundTint="@color/colorPrimary"/>
 
 </LinearLayout>

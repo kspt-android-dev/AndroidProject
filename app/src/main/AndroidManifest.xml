@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".creation.CreationActivity" />
+        <activity android:name=".creation.CreationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
         <activity android:name=".AboutActivity"></activity>
     </application>
 

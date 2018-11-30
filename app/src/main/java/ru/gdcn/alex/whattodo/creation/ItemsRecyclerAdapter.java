@@ -1,17 +1,24 @@
 package ru.gdcn.alex.whattodo.creation;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.inputmethodservice.Keyboard;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Collection;
@@ -94,7 +101,10 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int i) {
-        itemViewHolder.bind(itemList.get(i));
+        if (i == getItemCount() - 1) {
+            itemViewHolder.bindAdd();
+        } else
+            itemViewHolder.bindItem(itemList.get(i));
     }
 
 
@@ -108,6 +118,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
 
         private CheckBox checkBox;
         private EditText editText;
+        private ImageButton imageButton;
 
         ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -122,7 +133,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
                     } else {
                         item.setChecked(1);
                     }
-                    bind(item);
+                    bindItem(item);
                 }
             });
             editText = itemView.findViewById(R.id.creation_list_fragment_recycler_item_content);
@@ -143,9 +154,47 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
                     getItem(getAdapterPosition()).setContent(s.toString());
                 }
             });
+            editText.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                        addItem(new Item(
+                                activity.getNoteManager().getNote().getId(),
+                                getAdapterPosition() + 1,
+                                "",
+                                Item.DEFAULT_CHECKED
+                        ), getAdapterPosition() + 1);
+                        return true;
+                    }
+                    if (keyCode == KeyEvent.KEYCODE_DEL && event.getAction() == KeyEvent.ACTION_DOWN) {
+                        if (((EditText)v).getText().toString().equals(""))
+                            removeItem(itemList.get(getAdapterPosition()));
+                        return false;
+                    }
+                    return false;
+                }
+            });
+            editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (getAdapterPosition() == getItemCount()-1)
+                        return;
+                    if (!hasFocus)
+                        imageButton.setVisibility(View.INVISIBLE);
+                    else
+                        imageButton.setVisibility(View.VISIBLE);
+                }
+            });
+            imageButton = itemView.findViewById(R.id.creation_list_fragment_recycler_item_delete);
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeItem(getItem(getAdapterPosition()));
+                }
+            });
         }
 
-        void bind(Item item) {
+        void bindItem(Item item) {
             editText.setText(item.getContent());
             if (item.getChecked() == 1) {
                 checkBox.setChecked(true);
@@ -157,6 +206,14 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
             }
         }
 
+        void bindAdd() {
+            editText.setHint("+ Новый пункт");
+            editText.setEnabled(false);
+            checkBox.setVisibility(View.INVISIBLE);
+            checkBox.setEnabled(false);
+            imageButton.setFocusable(false);
+            imageButton.setEnabled(false);
+        }
 
     }
 }

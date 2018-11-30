@@ -1,6 +1,8 @@
 package ru.gdcn.alex.whattodo.creation;
 
+import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,12 +11,16 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +30,7 @@ import ru.gdcn.alex.whattodo.objects.Item;
 import ru.gdcn.alex.whattodo.recycler.RecyclerItemClickListener;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class ListFragment extends Fragment implements RecyclerItemClickListener.OnItemClickListener {
+public class ListFragment extends Fragment implements RecyclerItemClickListener.OnItemClickListener{
 
     private static final String TAG = "ToDO_Logger";
     private static final String className = "ListFragment";
@@ -71,16 +77,26 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
             Log.d(TAG, TextFormer.getStartText(className) + "Разделяю на элементы...");
             String[] contents = activity.getNoteManager().getNote().getContent().split("\n");
             List<Item> items = new ArrayList<>();
-            for (int i = 0; i < contents.length; i++) {
+            if (contents.length != 0) {
+                for (int i = 0; i < contents.length; i++) {
+                    items.add(new Item(
+                            activity.getNoteManager().getNote().getId(),
+                            i + 1,
+                            contents[i],
+                            Item.DEFAULT_CHECKED
+                    ));
+                }
+            } else {
                 items.add(new Item(
                         activity.getNoteManager().getNote().getId(),
-                        i + 1,
-                        contents[i],
+                        1,
+                        "",
                         Item.DEFAULT_CHECKED
                 ));
             }
-            Log.d(TAG, TextFormer.getStartText(className) + "Разделение произошло!");
+            items.add(new Item(Item.LAST_ITEM));
             itemsRecyclerAdapter.addItems(items);
+            Log.d(TAG, TextFormer.getStartText(className) + "Разделение произошло!");
         }
     }
 
@@ -90,16 +106,27 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
         Log.d(TAG, TextFormer.getStartText(className) + "onStop!");
         StringBuilder stringBuilder = new StringBuilder();
         List<Item> items = activity.getNoteManager().getItems();
-        for (int i = 0; i < items.size()-1; i++) {
-            stringBuilder.append(items.get(i).getContent()).append("\n");
+        if (items.size() > 1) {
+            for (int i = 0; i < items.size() - 2; i++) {
+                stringBuilder.append(items.get(i).getContent()).append("\n");
+            }
+            stringBuilder.append(items.get(items.size() - 2).getContent());
         }
-        stringBuilder.append(items.get(items.size()-1).getContent());
         activity.getNoteManager().getNote().setContent(stringBuilder.toString());
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        //Видимо тоже не надо. хм...
+        //Это тоже наверное можно убрать, сделав по другому
+        if (view == null)
+            return;
+        if (itemsRecyclerAdapter.getItem(position).getId() == Item.LAST_ITEM)
+            itemsRecyclerAdapter.addItem(new Item(
+                    activity.getNoteManager().getNote().getId(),
+                    itemsRecyclerAdapter.getItemCount(),
+                    "",
+                    Item.DEFAULT_CHECKED
+                    ), itemsRecyclerAdapter.getItemCount() - 1);
     }
 
     @Override

@@ -19,12 +19,10 @@
             android:layout_height="wrap_content"
             android:hint="@string/creation_note_hint_header"
             android:inputType="textMultiLine"
-            android:maxLines="5"
             android:background="@drawable/edit_text_background"
-            android:layout_marginBottom="5dp"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingStart="23dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="15dp"
             android:paddingEnd="20dp"
             android:textSize="20sp"/>
 
