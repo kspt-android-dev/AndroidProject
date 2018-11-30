@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import com.dreamteam.monopoly.game.GameManager
 import android.graphics.drawable.Drawable
-
+import com.muddzdev.styleabletoastlibrary.StyleableToast
 
 
 class GameActivity : AppCompatActivity(), View.OnClickListener  {
@@ -37,6 +37,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener  {
                         .getIdentifier("dice${cubiks.second}", "drawable", packageName))
                 cube1.setImageDrawable(drawCube1)
                 cube2.setImageDrawable(drawCube2)
+                //showToast(v!!)
             }
         })
 
@@ -47,5 +48,9 @@ class GameActivity : AppCompatActivity(), View.OnClickListener  {
         //starting game activity
         intent = Intent(this, GameActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun showToast(v: View) {
+        StyleableToast.makeText(this, "Piu", R.style.TinyToast)
     }
 }

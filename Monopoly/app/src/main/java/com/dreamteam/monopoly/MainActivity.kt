@@ -11,10 +11,11 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
+import com.muddzdev.styleabletoastlibrary.StyleableToast
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity  : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     //image button
     private var buttonPlay: Button? = null
@@ -41,12 +42,13 @@ class MainActivity  : AppCompatActivity(), View.OnClickListener {
 
         buttonExit!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                finish();
-                System.exit(0);
+                finish()
+                System.exit(0)
             }
         })
 
     }
+
     @Override
     override fun onClick(v: View) {
         //starting game activity
