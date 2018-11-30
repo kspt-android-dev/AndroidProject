@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">Monopoly</string>
+    <string name="app_name">Best Monopoly Ever!</string>
     <string name="buttonPlay">Play</string>
+    <string name="buttonExit">Exit</string>
 </resources>

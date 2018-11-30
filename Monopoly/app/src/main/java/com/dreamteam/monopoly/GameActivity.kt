@@ -6,8 +6,16 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
+import com.dreamteam.monopoly.game.GameManager
+import android.graphics.drawable.Drawable
+
+
 
 class GameActivity : AppCompatActivity(), View.OnClickListener  {
+
+    private var buttonThrowCubes: Button? = null
+    private var gameManager: GameManager = GameManager()
 
     //image button
     private var cellButtons: ArrayList<Button> = ArrayList<Button>(44)
@@ -15,18 +23,22 @@ class GameActivity : AppCompatActivity(), View.OnClickListener  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
-
-
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
-        for (i in 0..44)
-        {
-            cellButtons.add(findViewById(R.id.buttonPlay))
-            cellButtons[cellButtons.lastIndex].setOnClickListener(this)
-        }
-
-
+        gameManager.AddPlayer("Alesha")
+        buttonThrowCubes = findViewById(R.id.buttonThrowCubes)
         //adding a click listener
+        buttonThrowCubes!!.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                val cubiks: Pair<Int, Int> = gameManager.getCurrentPlayer().throwCubiks()
+                val cube1 : ImageView = findViewById(R.id.cube1)
+                val cube2 : ImageView = findViewById(R.id.cube2)
+                val drawCube1 = resources.getDrawable(resources
+                        .getIdentifier("dice${cubiks.first}", "drawable", packageName))
+                val drawCube2 = resources.getDrawable(resources
+                        .getIdentifier("dice${cubiks.second}", "drawable", packageName))
+                cube1.setImageDrawable(drawCube1)
+                cube2.setImageDrawable(drawCube2)
+            }
+        })
 
     }
 
