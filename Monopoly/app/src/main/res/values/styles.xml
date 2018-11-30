@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+
+    <style name="TinyToast">
+        <item name="colorBackground">#a253fc</item>
+    </style>
 </resources>

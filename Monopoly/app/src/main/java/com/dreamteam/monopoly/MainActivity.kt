@@ -11,6 +11,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
+import com.muddzdev.styleabletoastlibrary.StyleableToast
 
 
 class MainActivity : Activity(), View.OnClickListener {
@@ -39,7 +40,13 @@ class MainActivity : Activity(), View.OnClickListener {
     @Override
     override fun onClick(v: View) {
         //starting game activity
+        showToast(v)
         intent = Intent(this, GameActivity::class.java)
         startActivity(intent)
     }
+
+    fun showToast(v: View) {
+        StyleableToast.makeText(this, "Time to play the game", R.style.TinyToast)
+    }
+
 }
