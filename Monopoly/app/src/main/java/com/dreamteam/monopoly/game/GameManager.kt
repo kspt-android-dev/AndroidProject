@@ -9,7 +9,7 @@ class GameManager {
     var players: ArrayList<Player> = ArrayList()
     var currentPlayerIndex: Int = 0
 
-    fun NextMove() {
+    fun NextPlayerMove() {
         players[currentPlayerIndex].isActive = false
         if (currentPlayerIndex < players.size - 1) currentPlayerIndex++
         else currentPlayerIndex = 0
@@ -34,6 +34,10 @@ class GameManager {
     fun AddPlayersFullData(playersData: List<Pair<String, Int>>) {
         for (data: Pair<String, Int> in playersData)
             players.add(Player(data.first, data.second, mainBoard))
+    }
+
+    fun RemovePlayer(player: Player) {
+        players.remove(player)
     }
 
     fun RemovePlayer(name: String) {

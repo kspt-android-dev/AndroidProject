@@ -25,9 +25,9 @@ class Player(val name: String, startMoney: Int, private val board: Board) {
     fun decision(action: PlayerActions): Boolean {
         return when (action) {
             PlayerActions.BUY -> board.gameWay[currentPosition].type == GameCellType.COMPANY &&
-                    board.gameWay[currentPosition].buy(this)        //TODO()
+                    board.gameWay[currentPosition].buy(this)
             PlayerActions.PAY -> board.gameWay[currentPosition].type == GameCellType.COMPANY &&
-                    board.gameWay[currentPosition].pay(this)        //TODO()
+                    board.gameWay[currentPosition].pay(this)
             PlayerActions.STAY -> TODO()
             PlayerActions.RETREAT -> retreat()
         }
@@ -47,6 +47,14 @@ class Player(val name: String, startMoney: Int, private val board: Board) {
             money -= amount
             true
         } else false
+    }
+
+    fun addGameCell(newCell: GameCell) {
+        cells.add(newCell)
+    }
+
+    fun removeGameCell(rmCell: GameCell){
+        cells.remove(rmCell)
     }
 
     private fun IntRange.random() = Random().nextInt((endInclusive + 1) - start) + start
