@@ -47,16 +47,16 @@ public class NoteFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, TextFormer.getStartText(className) + "onResume!");
         activity.getNoteManager().getDeleteItems().addAll(activity.getNoteManager().getItems());
         activity.getNoteManager().getItems().clear();
         contentView.setText(activity.getNoteManager().getNote().getContent());
-        Log.d(TAG, TextFormer.getStartText(className) + "Resume NoteFragment!");
     }
 
     @Override
     public void onPause() {
+        Log.d(TAG, TextFormer.getStartText(className) + "onPause!");
         super.onPause();
         activity.getNoteManager().getNote().setContent(contentView.getText().toString());
-        Log.d(TAG, TextFormer.getStartText(className) + "Pause NoteFragment!");
     }
 }

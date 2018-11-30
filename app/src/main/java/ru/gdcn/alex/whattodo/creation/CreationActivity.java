@@ -134,9 +134,9 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    protected void onStop() {
-        Log.d(TAG, TextFormer.getStartText(className) + "Сработала стоп!");
-        super.onStop();
+    protected void onPause() {
+        Log.d(TAG, TextFormer.getStartText(className) + "onPause!");
+        super.onPause();
         saveData();
     }
 

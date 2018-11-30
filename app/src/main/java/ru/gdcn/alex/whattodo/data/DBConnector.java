@@ -37,7 +37,7 @@ public class DBConnector {
         contentValues.put(KEY_DELETED, note.getDeleted());
         long id = database.insert(TABLE_NOTES, null, contentValues);
 
-        Log.d(TAG, TextFormer.getStartText(className) + "Размер базы данных: " + database.getPageSize() + " байт!");
+        Log.d(TAG, TextFormer.getStartText(className) + "Размер базы данных: " + database.getPageSize() + " байт!" + id);
 
         contentValues.clear();
         database.close();

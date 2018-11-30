@@ -54,8 +54,8 @@ public class NotesFragment extends Fragment implements
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         Log.d(TAG, TextFormer.getStartText(className) + "onStart!");
         notesRecyclerAdapter.loadNotes();
     }

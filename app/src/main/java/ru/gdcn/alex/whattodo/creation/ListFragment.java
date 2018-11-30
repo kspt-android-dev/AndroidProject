@@ -63,8 +63,8 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         Log.d(TAG, TextFormer.getStartText(className) + "onStart!");
         if (activity.getNoteManager().getItems().size() == 0) {
             Log.d(TAG, TextFormer.getStartText(className) + "Не первое открытие!");
@@ -85,8 +85,8 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onPause() {
+        super.onPause();
         Log.d(TAG, TextFormer.getStartText(className) + "onStop!");
         StringBuilder stringBuilder = new StringBuilder();
         List<Item> items = activity.getNoteManager().getItems();
