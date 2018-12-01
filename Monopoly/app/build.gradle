@@ -32,4 +32,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.muddzdev:styleabletoast:2.0.1'
     implementation 'com.github.hajiyevelnur92:intentanimation:1.0'
+    implementation 'com.tapadoo.android:alerter:3.0.2'
 }
