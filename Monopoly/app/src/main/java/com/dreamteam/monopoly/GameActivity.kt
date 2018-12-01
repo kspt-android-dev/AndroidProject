@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import com.dreamteam.monopoly.game.GameManager
-import com.dreamteam.monopoly.helpers.makeAlert
+import com.dreamteam.monopoly.helpers.makeTinyAlert
 import com.dreamteam.monopoly.helpers.showToast
 import com.tapadoo.alerter.Alerter
 import maes.tech.intentanim.CustomIntent
@@ -45,7 +45,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
 
             buttonThrowDices!!.isEnabled = false;
             buttonThrowDices!!.visibility = View.INVISIBLE
-            makeAlert(this, "Game info", "Next player move")
+            makeTinyAlert(this, "Game info", "Next player move")
 
             val handler = Handler()
             handler.postDelayed({
