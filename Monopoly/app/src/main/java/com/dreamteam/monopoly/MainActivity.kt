@@ -11,6 +11,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
+import com.dreamteam.monopoly.helpers.showToast
 import com.muddzdev.styleabletoastlibrary.StyleableToast
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     @Override
     override fun onClick(v: View) {
         //starting game activity
+        showToast(v, "Time to play the game!")
         intent = Intent(this, GameActivity::class.java)
         startActivity(intent)
     }
