@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameActivity">
+    tools:context=".GameActivity"
+    android:id="@+id/ConstraintLayout">
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineCenter"
@@ -17,7 +18,7 @@
 
     <!--UP-->
     <ImageButton
-        android:id="@+id/buttonUp1"
+        android:id="@+id/button0"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginTop="8dp"
@@ -25,11 +26,11 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUp2"
+        app:layout_constraintEnd_toStartOf="@+id/button1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/buttonUp2"
+        android:id="@+id/button1"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:layout_marginTop="8dp"
@@ -37,11 +38,11 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUp3"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/buttonUp3"
+        android:id="@+id/button2"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:layout_marginTop="8dp"
@@ -50,11 +51,11 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUp4"
+        app:layout_constraintEnd_toStartOf="@+id/button3"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/buttonUp4"
+        android:id="@+id/button3"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:layout_marginTop="8dp"
@@ -63,11 +64,11 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUp5"
+        app:layout_constraintEnd_toStartOf="@+id/button4"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/buttonUp5"
+        android:id="@+id/button4"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:layout_marginTop="8dp"
@@ -76,11 +77,11 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUp6"
+        app:layout_constraintEnd_toStartOf="@+id/button5"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/buttonUp6"
+        android:id="@+id/button5"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:layout_marginTop="8dp"
@@ -94,7 +95,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/buttonUp7"
+        android:id="@+id/button6"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:layout_marginStart="0dp"
@@ -103,11 +104,11 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/buttonUp6"
+        app:layout_constraintStart_toEndOf="@+id/button5"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/buttonUp8"
+        android:id="@+id/button7"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:layout_marginStart="0dp"
@@ -116,11 +117,11 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/buttonUp7"
+        app:layout_constraintStart_toEndOf="@+id/button6"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/buttonUp9"
+        android:id="@+id/button8"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:layout_marginStart="0dp"
@@ -129,11 +130,11 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/buttonUp8"
+        app:layout_constraintStart_toEndOf="@+id/button7"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/buttonUp10"
+        android:id="@+id/button9"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:layout_marginStart="0dp"
@@ -142,11 +143,11 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/buttonUp9"
+        app:layout_constraintStart_toEndOf="@+id/button8"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/buttonUp11"
+        android:id="@+id/button10"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginTop="8dp"
@@ -154,197 +155,197 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/buttonUp10"
+        app:layout_constraintStart_toEndOf="@+id/button9"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <!--Right-->
     <ImageButton
-        android:id="@+id/buttonUp12"
+        android:id="@+id/button11"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp11"
+        app:layout_constraintEnd_toEndOf="@+id/button10"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp11"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp11" />
+        app:layout_constraintStart_toStartOf="@+id/button10"
+        app:layout_constraintTop_toBottomOf="@+id/button10" />
 
     <ImageButton
-        android:id="@+id/buttonUp13"
+        android:id="@+id/button12"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#005599"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp12"
+        app:layout_constraintEnd_toEndOf="@+id/button11"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp12"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp12" />
+        app:layout_constraintStart_toStartOf="@+id/button11"
+        app:layout_constraintTop_toBottomOf="@+id/button11" />
 
     <ImageButton
-        android:id="@+id/buttonUp14"
+        android:id="@+id/button13"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp13"
+        app:layout_constraintEnd_toEndOf="@+id/button12"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp13"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp13" />
+        app:layout_constraintStart_toStartOf="@+id/button12"
+        app:layout_constraintTop_toBottomOf="@+id/button12" />
 
     <ImageButton
-        android:id="@+id/buttonUp15"
+        android:id="@+id/button14"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#005599"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp14"
+        app:layout_constraintEnd_toEndOf="@+id/button13"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp14"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp14" />
+        app:layout_constraintStart_toStartOf="@+id/button13"
+        app:layout_constraintTop_toBottomOf="@+id/button13" />
 
     <ImageButton
-        android:id="@+id/buttonUp16"
+        android:id="@+id/button15"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp15"
+        app:layout_constraintEnd_toEndOf="@+id/button14"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp15"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp15" />
+        app:layout_constraintStart_toStartOf="@+id/button14"
+        app:layout_constraintTop_toBottomOf="@+id/button14" />
 
     <ImageButton
-        android:id="@+id/buttonUp17"
+        android:id="@+id/button16"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#005599"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp16"
+        app:layout_constraintEnd_toEndOf="@+id/button15"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp16"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp16" />
+        app:layout_constraintStart_toStartOf="@+id/button15"
+        app:layout_constraintTop_toBottomOf="@+id/button15" />
 
     <ImageButton
-        android:id="@+id/buttonUp18"
+        android:id="@+id/button17"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp17"
+        app:layout_constraintEnd_toEndOf="@+id/button16"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp17"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp17" />
+        app:layout_constraintStart_toStartOf="@+id/button16"
+        app:layout_constraintTop_toBottomOf="@+id/button16" />
 
     <ImageButton
-        android:id="@+id/buttonUp19"
+        android:id="@+id/button18"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#005599"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp18"
+        app:layout_constraintEnd_toEndOf="@+id/button17"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp18"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp18" />
+        app:layout_constraintStart_toStartOf="@+id/button17"
+        app:layout_constraintTop_toBottomOf="@+id/button17" />
 
     <ImageButton
-        android:id="@+id/buttonUp20"
+        android:id="@+id/button19"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp19"
+        app:layout_constraintEnd_toEndOf="@+id/button18"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp19"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp19" />
+        app:layout_constraintStart_toStartOf="@+id/button18"
+        app:layout_constraintTop_toBottomOf="@+id/button18" />
 
     <!--RightDownCorner-->
     <ImageButton
-        android:id="@+id/buttonUp21"
+        android:id="@+id/button20"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:background="#990099"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp20"
+        app:layout_constraintEnd_toEndOf="@+id/button19"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp20"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp20" />
+        app:layout_constraintStart_toStartOf="@+id/button19"
+        app:layout_constraintTop_toBottomOf="@+id/button19" />
 
     <!--Down-->
     <ImageButton
-        android:id="@+id/buttonUp22"
+        android:id="@+id/button21"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUp21"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUp21"
-        app:layout_constraintTop_toTopOf="@+id/buttonUp21"
+        app:layout_constraintBottom_toBottomOf="@+id/button20"
+        app:layout_constraintEnd_toStartOf="@+id/button20"
+        app:layout_constraintTop_toTopOf="@+id/button20"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        android:id="@+id/buttonUp23"
+        android:id="@+id/button22"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:background="#005599"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUp22"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUp22"
-        app:layout_constraintTop_toTopOf="@+id/buttonUp22"
+        app:layout_constraintBottom_toBottomOf="@+id/button21"
+        app:layout_constraintEnd_toStartOf="@+id/button21"
+        app:layout_constraintTop_toTopOf="@+id/button21"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        android:id="@+id/buttonUp24"
+        android:id="@+id/button23"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUp23"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUp23"
-        app:layout_constraintTop_toTopOf="@+id/buttonUp23"
+        app:layout_constraintBottom_toBottomOf="@+id/button22"
+        app:layout_constraintEnd_toStartOf="@+id/button22"
+        app:layout_constraintTop_toTopOf="@+id/button22"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        android:id="@+id/buttonUp25"
+        android:id="@+id/button24"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:background="#005599"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUp24"
-        app:layout_constraintEnd_toStartOf="@+id/buttonUp24"
-        app:layout_constraintTop_toTopOf="@+id/buttonUp24"
+        app:layout_constraintBottom_toBottomOf="@+id/button23"
+        app:layout_constraintEnd_toStartOf="@+id/button23"
+        app:layout_constraintTop_toTopOf="@+id/button23"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        android:id="@+id/buttonUp26"
+        android:id="@+id/button25"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:layout_marginStart="8dp"
@@ -355,67 +356,67 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUp27"
+        app:layout_constraintBottom_toBottomOf="@+id/button26"
         app:layout_constraintEnd_toStartOf="@+id/guidelineCenter"
         app:layout_constraintStart_toStartOf="@+id/guidelineCenter"
-        app:layout_constraintTop_toTopOf="@+id/buttonUp25"
+        app:layout_constraintTop_toTopOf="@+id/button24"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
-        android:id="@+id/buttonUp27"
+        android:id="@+id/button26"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:background="#005599"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUp28"
-        app:layout_constraintStart_toEndOf="@+id/buttonUp28"
-        app:layout_constraintTop_toTopOf="@+id/buttonUp28"
+        app:layout_constraintBottom_toBottomOf="@+id/button27"
+        app:layout_constraintStart_toEndOf="@+id/button27"
+        app:layout_constraintTop_toTopOf="@+id/button27"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        android:id="@+id/buttonUp28"
+        android:id="@+id/button27"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUp29"
-        app:layout_constraintStart_toEndOf="@+id/buttonUp29"
-        app:layout_constraintTop_toTopOf="@+id/buttonUp29"
+        app:layout_constraintBottom_toBottomOf="@+id/button28"
+        app:layout_constraintStart_toEndOf="@+id/button28"
+        app:layout_constraintTop_toTopOf="@+id/button28"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        android:id="@+id/buttonUp29"
+        android:id="@+id/button28"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:background="#005599"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUp30"
-        app:layout_constraintStart_toEndOf="@+id/buttonUp30"
-        app:layout_constraintTop_toTopOf="@+id/buttonUp30"
+        app:layout_constraintBottom_toBottomOf="@+id/button29"
+        app:layout_constraintStart_toEndOf="@+id/button29"
+        app:layout_constraintTop_toTopOf="@+id/button29"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        android:id="@+id/buttonUp30"
+        android:id="@+id/button29"
         android:layout_width="31dp"
         android:layout_height="55dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonUp31"
-        app:layout_constraintStart_toEndOf="@+id/buttonUp31"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp32"
+        app:layout_constraintBottom_toBottomOf="@+id/button30"
+        app:layout_constraintStart_toEndOf="@+id/button30"
+        app:layout_constraintTop_toBottomOf="@+id/button31"
         app:layout_constraintVertical_bias="0.0" />
 
     <!--LeftDownCorner-->
     <ImageButton
-        android:id="@+id/buttonUp31"
+        android:id="@+id/button30"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginStart="8dp"
@@ -423,120 +424,120 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp32"
+        app:layout_constraintEnd_toEndOf="@+id/button31"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp32"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp32" />
+        app:layout_constraintStart_toStartOf="@+id/button31"
+        app:layout_constraintTop_toBottomOf="@+id/button31" />
 
     <!--Left-->
     <ImageButton
-        android:id="@+id/buttonUp32"
+        android:id="@+id/button31"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp33"
+        app:layout_constraintEnd_toEndOf="@+id/button32"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp33"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp33" />
+        app:layout_constraintStart_toStartOf="@+id/button32"
+        app:layout_constraintTop_toBottomOf="@+id/button32" />
 
 
     <ImageButton
-        android:id="@+id/buttonUp33"
+        android:id="@+id/button32"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#005599"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp34"
+        app:layout_constraintEnd_toEndOf="@+id/button33"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp34"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp34" />
+        app:layout_constraintStart_toStartOf="@+id/button33"
+        app:layout_constraintTop_toBottomOf="@+id/button33" />
 
 
     <ImageButton
-        android:id="@+id/buttonUp34"
+        android:id="@+id/button33"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp35"
+        app:layout_constraintEnd_toEndOf="@+id/button34"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp35"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp35" />
+        app:layout_constraintStart_toStartOf="@+id/button34"
+        app:layout_constraintTop_toBottomOf="@+id/button34" />
 
     <ImageButton
-        android:id="@+id/buttonUp35"
+        android:id="@+id/button34"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#005599"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp36"
+        app:layout_constraintEnd_toEndOf="@+id/button35"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp36"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp36" />
+        app:layout_constraintStart_toStartOf="@+id/button35"
+        app:layout_constraintTop_toBottomOf="@+id/button35" />
 
     <ImageButton
-        android:id="@+id/buttonUp36"
+        android:id="@+id/button35"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp37"
+        app:layout_constraintEnd_toEndOf="@+id/button36"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp37"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp37" />
+        app:layout_constraintStart_toStartOf="@+id/button36"
+        app:layout_constraintTop_toBottomOf="@+id/button36" />
 
     <ImageButton
-        android:id="@+id/buttonUp37"
+        android:id="@+id/button36"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#005599"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp38"
+        app:layout_constraintEnd_toEndOf="@+id/button37"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp38"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp38" />
+        app:layout_constraintStart_toStartOf="@+id/button37"
+        app:layout_constraintTop_toBottomOf="@+id/button37" />
 
     <ImageButton
-        android:id="@+id/buttonUp38"
+        android:id="@+id/button37"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#009900"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp39"
+        app:layout_constraintEnd_toEndOf="@+id/button38"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp39"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp39" />
+        app:layout_constraintStart_toStartOf="@+id/button38"
+        app:layout_constraintTop_toBottomOf="@+id/button38" />
 
     <ImageButton
-        android:id="@+id/buttonUp39"
+        android:id="@+id/button38"
         android:layout_width="55dp"
         android:layout_height="31dp"
         android:background="#005599"
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp40"
+        app:layout_constraintEnd_toEndOf="@+id/button39"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp40"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp40" />
+        app:layout_constraintStart_toStartOf="@+id/button39"
+        app:layout_constraintTop_toBottomOf="@+id/button39" />
 
     <ImageButton
-        android:id="@+id/buttonUp40"
+        android:id="@+id/button39"
         android:layout_width="55dp"
         android:layout_height="31dp"
 
@@ -545,10 +546,10 @@
         android:contentDescription="TODO"
         android:text="X"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/buttonUp1"
+        app:layout_constraintEnd_toEndOf="@+id/button0"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonUp1"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp1" />
+        app:layout_constraintStart_toStartOf="@+id/button0"
+        app:layout_constraintTop_toBottomOf="@+id/button0" />
 
     <Button
         android:id="@+id/buttonThrowCubes"
@@ -560,7 +561,7 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUp6" />
+        app:layout_constraintTop_toBottomOf="@+id/button5" />
 
     <ImageView
         android:id="@+id/cube1"
@@ -581,6 +582,16 @@
         android:layout_marginRight="50dp"
         app:layout_constraintRight_toRightOf="@+id/cube1"
         app:layout_constraintTop_toBottomOf="@+id/buttonThrowCubes" />
+
+    <ImageView
+        android:id="@+id/Player1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/player1"
+        app:layout_constraintTop_toTopOf="@+id/button0"
+        app:layout_constraintRight_toRightOf="@+id/button0"
+        app:layout_constraintLeft_toLeftOf="@+id/button0"/>
 
 
 </android.support.constraint.ConstraintLayout>

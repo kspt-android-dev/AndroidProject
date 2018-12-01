@@ -1,5 +1,6 @@
 package com.dreamteam.monopoly.game.player
 
+import android.app.Activity
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.board.cell.GameCell
 import com.dreamteam.monopoly.game.board.cell.GameCellType
@@ -12,14 +13,14 @@ class Player(val name: String, startMoney: Int, private val board: Board) {
     var cells: ArrayList<GameCell> = ArrayList()    // ?
     var isActive: Boolean = false
 
-    fun throwDices(): Pair<Int, Int> {
+    fun throwDices(activity: Activity): Pair<Int, Int> {
         val dices: Pair<Int, Int> = Pair((1..6).random(), (1..6).random())
-        go(dices.first + dices.second)
+        go(dices.first + dices.second , activity)
         return dices
     }
 
-    private fun go(steps: Int) {
-        board.movePlayer(currentPosition + steps, this)
+    private fun go(steps: Int , activity: Activity) {
+        board.movePlayer(currentPosition + steps, this , activity)
     }
 
     fun decision(action: PlayerActions): Boolean {
