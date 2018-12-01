@@ -14,6 +14,7 @@ import android.widget.Button
 import com.dreamteam.monopoly.helpers.showToast
 import com.muddzdev.styleabletoastlibrary.StyleableToast
 import kotlinx.android.synthetic.main.activity_main.*
+import maes.tech.intentanim.CustomIntent.customType
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -25,7 +26,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         /*window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -56,5 +56,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         showToast(v, "Time to play the game!")
         intent = Intent(this, GameActivity::class.java)
         startActivity(intent)
+        customType(this, "bottom-to-up")
     }
 }

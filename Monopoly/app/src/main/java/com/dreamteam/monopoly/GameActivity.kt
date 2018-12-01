@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import com.dreamteam.monopoly.game.GameManager
 import com.dreamteam.monopoly.helpers.showToast
+import maes.tech.intentanim.CustomIntent
 
 
 class GameActivity : AppCompatActivity(), View.OnClickListener {
@@ -47,5 +48,11 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         //starting game activity
         intent = Intent(this, GameActivity::class.java)
         startActivity(intent)
+    }
+
+    @Override
+    override fun finish() {
+        super.finish()
+        CustomIntent.customType(this, "up-to-bottom")
     }
 }
