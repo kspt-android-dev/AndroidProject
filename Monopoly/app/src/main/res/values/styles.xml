@@ -10,7 +10,7 @@
     <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
 
     <style name="TinyToast">
-        <item name="colorBackground">#b388ff</item>
+        <item name="colorBackground">@color/colorAccent</item>
         <item name="textColor">#000</item>
         <item name="textSize">16sp</item>s
         <item name="strokeColor">#000</item>

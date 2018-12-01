@@ -3,14 +3,15 @@ package com.dreamteam.monopoly
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Debug
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import com.dreamteam.monopoly.game.GameManager
+import com.dreamteam.monopoly.helpers.makeAlert
 import com.dreamteam.monopoly.helpers.showToast
+import com.tapadoo.alerter.Alerter
 import maes.tech.intentanim.CustomIntent
 
 
@@ -26,8 +27,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        gameManager.AddPlayer("Alesha")
-        gameManager.AddPlayer("Sanya")
+        gameManager.addPlayer("Alesha")
+        gameManager.addPlayer("Sanya")
 
         buttonThrowDices = findViewById(R.id.buttonThrowCubes)
         //adding a click listener
@@ -43,23 +44,22 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
             cube2.setImageDrawable(drawCube2)
 
             buttonThrowDices!!.isEnabled = false;
-            buttonThrowDices!!.setVisibility(View.INVISIBLE)
+            buttonThrowDices!!.visibility = View.INVISIBLE
+            makeAlert(this, "Game info", "Next player move")
 
-            val handler : Handler = Handler()
+            val handler = Handler()
             handler.postDelayed({
                 cube1.setImageDrawable(null)
                 cube2.setImageDrawable(null)
-                Log.d("###CurrentPlayerIndex",gameManager.currentPlayerIndex.toString())
-                Log.d("###SumOfDices",(dices.first + dices.second).toString())
-                gameManager.NextPlayerMove() //this code should be after action after throwing dice #Player.decision
+                Log.d("###CurrentPlayerIndex", gameManager.currentPlayerIndex.toString())
+                Log.d("###SumOfDices", (dices.first + dices.second).toString())
+                gameManager.nextPlayerMove() //this code should be after action after throwing dice #Player.decision
                 buttonThrowDices!!.isEnabled = true
-                buttonThrowDices!!.setVisibility(View.VISIBLE)
+                buttonThrowDices!!.visibility = View.VISIBLE
+                // Alerter.hide() // mb after in some seconds
             }, 2000)
-
-
             showToast(v!!, "Piu")
         }
-
     }
 
     @Override
@@ -72,6 +72,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
     @Override
     override fun finish() {
         super.finish()
+        Alerter.hide()
         CustomIntent.customType(this, "up-to-bottom")
     }
 }

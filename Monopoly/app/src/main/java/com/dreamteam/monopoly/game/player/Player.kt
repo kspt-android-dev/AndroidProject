@@ -12,10 +12,10 @@ class Player(val name: String, startMoney: Int, private val board: Board) {
     var cells: ArrayList<GameCell> = ArrayList()    // ?
     var isActive: Boolean = false
 
-    fun throwCubiks(): Pair<Int, Int> {
-        val cubiks: Pair<Int, Int> = Pair((1..6).random(), (1..6).random())
-        go(cubiks.first + cubiks.second)
-        return cubiks
+    fun throwDices(): Pair<Int, Int> {
+        val dices: Pair<Int, Int> = Pair((1..6).random(), (1..6).random())
+        go(dices.first + dices.second)
+        return dices
     }
 
     private fun go(steps: Int) {
