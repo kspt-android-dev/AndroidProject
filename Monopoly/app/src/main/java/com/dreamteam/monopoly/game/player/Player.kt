@@ -14,7 +14,7 @@ class Player(val name: String, startMoney: Int, private val board: Board) {
 
     fun throwCubiks(): Pair<Int, Int> {
         val cubiks: Pair<Int, Int> = Pair((1..6).random(), (1..6).random())
-        //go(cubiks.first + cubiks.second)
+        go(cubiks.first + cubiks.second)
         return cubiks
     }
 

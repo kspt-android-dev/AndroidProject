@@ -3,6 +3,9 @@ package com.dreamteam.monopoly
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Debug
+import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -24,6 +27,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_game)
 
         gameManager.AddPlayer("Alesha")
+        gameManager.AddPlayer("Sanya")
 
         buttonThrowDices = findViewById(R.id.buttonThrowCubes)
         //adding a click listener
@@ -37,6 +41,21 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
                     .getIdentifier("dice${dices.second}", "drawable", packageName))
             cube1.setImageDrawable(drawCube1)
             cube2.setImageDrawable(drawCube2)
+
+            buttonThrowDices!!.isEnabled = false;
+            buttonThrowDices!!.setVisibility(View.INVISIBLE)
+
+            val handler : Handler = Handler()
+            handler.postDelayed({
+                cube1.setImageDrawable(null)
+                cube2.setImageDrawable(null)
+                Log.d("###CurrentPlayerIndex",gameManager.currentPlayerIndex.toString())
+                Log.d("###SumOfDices",(dices.first + dices.second).toString())
+                gameManager.NextPlayerMove() //this code should be after action after throwing dice #Player.decision
+                buttonThrowDices!!.isEnabled = true
+                buttonThrowDices!!.setVisibility(View.VISIBLE)
+            }, 2000)
+
 
             showToast(v!!, "Piu")
         }
