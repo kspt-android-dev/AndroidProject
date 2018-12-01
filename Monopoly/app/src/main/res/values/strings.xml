@@ -2,4 +2,5 @@
     <string name="app_name">Best Monopoly Ever!</string>
     <string name="buttonPlay">Play</string>
     <string name="buttonExit">Exit</string>
+    <string name="startGameToast">Time to play the Game!</string>
 </resources>

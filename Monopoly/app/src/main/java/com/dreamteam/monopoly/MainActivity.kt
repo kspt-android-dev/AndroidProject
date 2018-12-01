@@ -1,19 +1,11 @@
 package com.dreamteam.monopoly
 
-import android.app.Activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
-import android.widget.ImageButton
-import android.content.pm.ActivityInfo
-import android.support.v4.content.ContextCompat.startActivity
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.widget.Button
 import com.dreamteam.monopoly.helpers.showToast
-import com.muddzdev.styleabletoastlibrary.StyleableToast
-import kotlinx.android.synthetic.main.activity_main.*
 import maes.tech.intentanim.CustomIntent.customType
 
 
@@ -41,19 +33,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         //adding a click listener
         buttonPlay!!.setOnClickListener(this)
 
-        buttonExit!!.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                finish()
-                System.exit(0)
-            }
-        })
+        buttonExit!!.setOnClickListener {
+            finish()
+            System.exit(0)
+        }
 
     }
 
     @Override
     override fun onClick(v: View) {
         //starting game activity
-        showToast(v, "Time to play the game!")
+        showToast(v, resources.getString(R.string.startGameToast))
         intent = Intent(this, GameActivity::class.java)
         startActivity(intent)
         customType(this, "bottom-to-up")

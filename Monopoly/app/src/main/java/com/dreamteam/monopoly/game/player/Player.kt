@@ -24,9 +24,9 @@ class Player(val name: String, startMoney: Int, private val board: Board) {
 
     fun decision(action: PlayerActions): Boolean {
         return when (action) {
-            PlayerActions.BUY -> board.gameWay[currentPosition].type == GameCellType.COMPANY &&
+            PlayerActions.BUY -> board.gameWay[currentPosition].info.cellType == GameCellType.COMPANY &&
                     board.gameWay[currentPosition].buy(this)
-            PlayerActions.PAY -> board.gameWay[currentPosition].type == GameCellType.COMPANY &&
+            PlayerActions.PAY -> board.gameWay[currentPosition].info.cellType == GameCellType.COMPANY &&
                     board.gameWay[currentPosition].pay(this)
             PlayerActions.STAY -> TODO()
             PlayerActions.RETREAT -> retreat()
@@ -53,7 +53,7 @@ class Player(val name: String, startMoney: Int, private val board: Board) {
         cells.add(newCell)
     }
 
-    fun removeGameCell(rmCell: GameCell){
+    fun removeGameCell(rmCell: GameCell) {
         cells.remove(rmCell)
     }
 

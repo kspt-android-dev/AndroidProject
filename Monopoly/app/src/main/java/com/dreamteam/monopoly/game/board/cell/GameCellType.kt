@@ -5,5 +5,6 @@ enum class GameCellType {
     COMPANY,
     CHANCE,
     PRISON,
-    BANK
+    BANK,
+    DEFAULT
 }

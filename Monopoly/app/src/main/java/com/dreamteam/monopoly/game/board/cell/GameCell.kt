@@ -1,9 +1,8 @@
 package com.dreamteam.monopoly.game.board.cell
 
-import android.graphics.Bitmap
 import com.dreamteam.monopoly.game.player.Player
 
-open class GameCell(id: String,/* bitmap: Bitmap,*/ val type: GameCellType, val info: GameCellInfo) : Cell(id/*, bitmap*/) {
+open class GameCell(/*id: String, bitmap: Bitmap,*/ val info: GameCellInfo) : Cell(/*id, bitmap*/) {
 
     var state: CellState = CellState.FREE
     var owner: Player? = null
