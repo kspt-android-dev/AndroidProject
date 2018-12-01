@@ -10,9 +10,7 @@ object GameData {
     const val loopMoney: Int = 2000
 
     val boardGameCells: ArrayList<GameCell> = arrayListOf(
-            /*GameCell(id = "0", bitmap = TODO(), info = GameCellInfo.OTHER, type = GameCellType.START),
-            GameCell(id = "0", bitmap = TODO(), info = GameCellInfo.EDSACK, type = GameCellType.COMPANY),
-            GameCell(id = "0", bitmap = TODO(), info = GameCellInfo.OTHER, type = GameCellType.CHANCE),
-            GameCell(id = "0", bitmap = TODO(), info = GameCellInfo.QUARTUS, type = GameCellType.COMPANY)*/)
+            GameCell(id = "0", info = GameCellInfo.OTHER, type = GameCellType.START),
+            GameCell(id = "0", info = GameCellInfo.EDSACK, type = GameCellType.COMPANY))
 
 }
