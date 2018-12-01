@@ -32,7 +32,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         buttonThrowDices = findViewById(R.id.buttonThrowCubes)
         //adding a click listener
         buttonThrowDices!!.setOnClickListener { v ->
-            val dices: Pair<Int, Int> = gameManager.getCurrentPlayer().throwCubiks()
+            val dices: Pair<Int, Int> = gameManager.getCurrentPlayer().throwDices()
             val cube1: ImageView = findViewById(R.id.cube1)
             val cube2: ImageView = findViewById(R.id.cube2)
             val drawCube1 = resources.getDrawable(resources
