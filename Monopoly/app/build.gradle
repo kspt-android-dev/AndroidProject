@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 27
@@ -33,4 +34,6 @@ dependencies {
     implementation 'com.muddzdev:styleabletoast:2.0.1'
     implementation 'com.github.hajiyevelnur92:intentanimation:1.0'
     implementation 'com.tapadoo.android:alerter:3.0.2'
+    implementation 'com.google.firebase:firebase-database:16.0.5'
+    implementation 'com.tomer:fadingtextview:2.5'
 }

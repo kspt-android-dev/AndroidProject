@@ -45,7 +45,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
 
             buttonThrowDices!!.isEnabled = false;
             buttonThrowDices!!.visibility = View.INVISIBLE
-            makeTinyAlert(this, "Next player move")
+
 
             val handler = Handler()
             handler.postDelayed({
@@ -59,6 +59,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
                 // Alerter.hide() // mb after in some seconds
             }, 2000)
             showToast(v!!, "Piu")
+            makeTinyAlert(this, gameManager.getCurrentPlayer().name + " move")
         }
     }
 

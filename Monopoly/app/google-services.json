@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1066664535216",
+    "firebase_url": "https://thebestevermonopoly.firebaseio.com",
+    "project_id": "thebestevermonopoly",
+    "storage_bucket": "thebestevermonopoly.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066664535216:android:cd5a5082e62716d0",
+        "android_client_info": {
+          "package_name": "com.dreamteam.monopoly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1066664535216-mm766p5aortad917oe8mhresh729r5s6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dreamteam.monopoly",
+            "certificate_hash": "e1b9149930ff6ab2e90dc687a1ccb1e6156e190b"
+          }
+        },
+        {
+          "client_id": "1066664535216-f99esmhevim11ka1l26c97m3c21rlj85.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqA5iti6P6dT3EU7VDO5Dw_Yrszv8sVGk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1066664535216-f99esmhevim11ka1l26c97m3c21rlj85.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
