@@ -46,7 +46,19 @@
         app:layout_constraintStart_toStartOf="@+id/PlayBtn"
         app:layout_constraintTop_toTopOf="@+id/PlayBtn" />
         -->
-
+    <com.tomer.fadingtextview.FadingTextView
+        android:layout_width="114dp"
+        android:layout_height="71dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textColor="#AA0000"
+        android:textSize="45sp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonPlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonPlay"
+        app:layout_constraintTop_toTopOf="@+id/buttonPlay"
+        app:texts="@array/doItFadingText"
+        app:timeout="500" />
 
     <TextView
         android:id="@+id/textView"
