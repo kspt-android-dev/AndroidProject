@@ -585,13 +585,39 @@
 
     <ImageView
         android:id="@+id/Player1"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:src="@drawable/player1"
         app:layout_constraintTop_toTopOf="@+id/button0"
         app:layout_constraintRight_toRightOf="@+id/button0"
         app:layout_constraintLeft_toLeftOf="@+id/button0"/>
+
+    <ImageView
+        android:id="@+id/Player2"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/player2"
+        app:layout_constraintTop_toTopOf="@+id/button0"
+        app:layout_constraintRight_toRightOf="@+id/button0"
+        app:layout_constraintBottom_toBottomOf="@+id/button0"/>
+
+    <ImageView
+        android:id="@+id/Player3"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/player3"
+        app:layout_constraintBottom_toBottomOf="@+id/button0"
+        app:layout_constraintRight_toRightOf="@+id/button0"
+        app:layout_constraintLeft_toLeftOf="@+id/button0"/>
+
+    <ImageView
+        android:id="@+id/Player4"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/player4"
+        app:layout_constraintTop_toTopOf="@+id/button0"
+        app:layout_constraintLeft_toLeftOf="@+id/button0"
+        app:layout_constraintBottom_toBottomOf="@+id/button0"/>
 
 
 </android.support.constraint.ConstraintLayout>
