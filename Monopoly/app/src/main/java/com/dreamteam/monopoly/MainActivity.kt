@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 .repeat(5)
                 .playOn(buttonPlay)
         showToast(v, resources.getString(R.string.startGameToast))
-        intent = Intent(this, GameActivity::class.java)
+        intent = Intent(this, AmountOfPlayersActivity::class.java)
         startActivity(intent)
         customType(this, "bottom-to-up")
     }
