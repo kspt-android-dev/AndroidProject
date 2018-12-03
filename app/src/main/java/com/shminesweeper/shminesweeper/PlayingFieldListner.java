@@ -15,12 +15,6 @@ public class PlayingFieldListner implements View.OnTouchListener {
     float startX = 0;
     float startY = 0;
 
-    private PointerCoords firstPointer = new PointerCoords();
-    private PointerCoords secondPointer = new PointerCoords();
-
-    // начальное расстояние между "пальцами"
-    private int startDistanse;
-
     private PlayingField playingField;
 
     PlayingFieldListner(PlayingField playingField){
@@ -39,17 +33,6 @@ public class PlayingFieldListner implements View.OnTouchListener {
                 break;
             case ACTION_MOVE:
 
-                // ------------------- scaling -------------------
-                if (motionEvent.getPointerCount() > 1) {
-                    motionEvent.getPointerCoords(0, firstPointer);
-                    motionEvent.getPointerCoords(1, secondPointer);
-                    startDistanse = (startDistanse == 0) ?
-                            countDistanse(firstPointer, secondPointer) : startDistanse;
-                    int curDistance = countDistanse(firstPointer, secondPointer);
-
-                    //TODO set scale index
-                }
-                //---------------------------------------------------------
 
                 // ------------------- moving -------------------
 
@@ -73,7 +56,6 @@ public class PlayingFieldListner implements View.OnTouchListener {
                 break;
             case ACTION_UP:
             case ACTION_CANCEL:
-                startDistanse = 0;
 
                 // изменение настроек при несовпедении их новых параметров с предыдущими
                 if (Math.abs(motionEvent.getX()+view.getScrollX() - (startX+view.getScrollX())) < 50 &&
@@ -87,14 +69,4 @@ public class PlayingFieldListner implements View.OnTouchListener {
         return false;
     }
 
-    // определение расстояния между "пальцами" для масштабирования поля
-    private int countDistanse(PointerCoords firstPointer, PointerCoords secondPointer){
-        int result;
-
-        result = (int) Math.sqrt(
-                        Math.pow( Math.abs(firstPointer.x - secondPointer.x), 2) +
-                        Math.pow( Math.abs(firstPointer.y - secondPointer.y), 2));
-
-        return result;
-    }
 }

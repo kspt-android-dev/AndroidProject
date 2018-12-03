@@ -316,23 +316,6 @@ public class SquarePlayingField extends PlayingField {
 
         restoreDialog(savedInstanceState);
 
-        /* TODO доделать сдвиг при перевороте
-//        this.setScrollX((int)savedInstanceState.get("screenSizeX") - (getScreenSize().x / 2 ));
-//        this.setScrollY((int) savedInstanceState.get("screenSizeY") - ( getScreenSize().y / 2));
-
-        int newScrollX = (int)savedInstanceState.get("screenSizeX") - (getScreenSize().x / 2 );
-        int newScrollY = (int) savedInstanceState.get("screenSizeY") - ( getScreenSize().y / 2);
-        //максимальный скролл влево
-        int maxScrollX = this.widthInPixel() >= this.getWidth() ?
-                this.widthInPixel() + 100 - this.getWidth() : 0;;
-        int maxScrollY = this.heightInPixel() >= this.getHeight() ?
-                this.heightInPixel() + 100 - this.getHeight() : 0;
-
-        this.setScrollX( (newScrollX <= -100) ? -99 :
-                ( newScrollX >= maxScrollX) ? maxScrollX - 1 : newScrollX );
-        this.setScrollY( (newScrollY <= -100) ? -99 :
-                (newScrollY >= maxScrollY) ? maxScrollY - 1 : newScrollY);
-                */
     }
 
     // восстановление ячеек игрового поля после переворота экрана в соответствии с сохранённым состоянием
@@ -372,15 +355,6 @@ public class SquarePlayingField extends PlayingField {
                 shownDialog = ShownDialog.NONE;
                 break;
         }
-    }
-
-    private Point getScreenSize(){
-        WindowManager wm = (WindowManager) this.getContext().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        size.x = display.getWidth();
-        size.y = display.getHeight();
-        return size;
     }
 
     @Override

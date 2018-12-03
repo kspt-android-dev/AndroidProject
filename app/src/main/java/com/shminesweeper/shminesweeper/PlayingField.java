@@ -148,18 +148,6 @@ public class PlayingField extends View {
         // restore dialog
         restoreDialog(savedInstanceState);
 
-/* TODO доделать сдвиг при перевороте
-        int newScrollX = (int)savedInstanceState.get("screenSizeX") - (getScreenSize().x / 2 );
-        int newScrollY = (int) savedInstanceState.get("screenSizeY") - ( getScreenSize().y / 2);
-        //максимальный скролл влево
-        int maxScrollX = this.widthInPixel() - getScreenSize().x + 100;
-        int maxScrollY = this.heightInPixel() - getScreenSize().y + 100;
-
-        this.setScrollX( (newScrollX < -100) ? -99 :
-                ( newScrollX > maxScrollX) ? maxScrollX - 1 : newScrollX );
-        this.setScrollY( (newScrollY < -100) ? -99 :
-                (newScrollY > maxScrollY) ? maxScrollY - 1 : newScrollY);
-                */
     }
 
     // восстановление ячеек игрового поля после переворота экрана в соответствии с сохранённым состоянием
@@ -200,15 +188,6 @@ public class PlayingField extends View {
                 shownDialog = ShownDialog.NONE;
                 break;
         }
-    }
-
-    private Point getScreenSize(){
-        WindowManager wm = (WindowManager) this.getContext().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        size.x = display.getWidth();
-        size.y = display.getHeight();
-        return size;
     }
 
     public void startNewGame() {
