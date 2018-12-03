@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.content.Intent
 import android.view.View
 import android.widget.Button
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.dreamteam.monopoly.helpers.showToast
 import maes.tech.intentanim.CustomIntent.customType
 
@@ -34,6 +36,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         buttonPlay!!.setOnClickListener(this)
 
         buttonExit!!.setOnClickListener {
+            YoYo.with(Techniques.Tada)
+                    .duration(700)
+                    .repeat(5)
+                    .playOn(buttonExit)
             finish()
             System.exit(0)
         }
@@ -43,6 +49,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     @Override
     override fun onClick(v: View) {
         //starting game activity
+        YoYo.with(Techniques.Tada)
+                .duration(700)
+                .repeat(5)
+                .playOn(buttonPlay)
         showToast(v, resources.getString(R.string.startGameToast))
         intent = Intent(this, GameActivity::class.java)
         startActivity(intent)
