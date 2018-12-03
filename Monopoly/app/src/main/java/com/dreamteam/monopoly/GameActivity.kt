@@ -27,8 +27,12 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        gameManager.addPlayer("Alesha")
-        gameManager.addPlayer("Sanya")
+        val intent = intent
+        val playersNames : ArrayList<String> = intent.getStringArrayListExtra("PlayersNames")
+        for (string in playersNames)
+        {
+            gameManager.addPlayer(string)
+        }
 
         buttonThrowDices = findViewById(R.id.buttonThrowCubes)
         //adding a click listener
@@ -76,4 +80,6 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         Alerter.hide()
         CustomIntent.customType(this, "up-to-bottom")
     }
+
+    fun getGameManager(): GameManager = gameManager
 }

@@ -18,6 +18,8 @@ class GameManager {
 
     fun getCurrentPlayer(): Player = players[currentPlayerIndex]
 
+    fun get_CurrentPlayerIndex(): Int = currentPlayerIndex
+
     fun addPlayer(name: String) {
         players.add(Player(name, startMoney, mainBoard))
     }
