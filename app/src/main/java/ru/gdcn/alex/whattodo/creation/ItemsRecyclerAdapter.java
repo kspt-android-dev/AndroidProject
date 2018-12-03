@@ -101,9 +101,9 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int i) {
-        if (i == getItemCount() - 1) {
+        if (itemList.get(i).getId() == Item.LAST_ITEM)
             itemViewHolder.bindAdd();
-        } else
+        else
             itemViewHolder.bindItem(itemList.get(i));
     }
 
@@ -159,6 +159,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
                     if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                         addItem(new Item(
+                                Item.NEW_ITEM,
                                 activity.getNoteManager().getNote().getId(),
                                 getAdapterPosition() + 1,
                                 "",
@@ -167,7 +168,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
                         return true;
                     }
                     if (keyCode == KeyEvent.KEYCODE_DEL && event.getAction() == KeyEvent.ACTION_DOWN) {
-                        if (((EditText)v).getText().toString().equals(""))
+                        if (((EditText) v).getText().toString().equals(""))
                             removeItem(itemList.get(getAdapterPosition()));
                         return false;
                     }
@@ -177,7 +178,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
             editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if (getAdapterPosition() == getItemCount()-1)
+                    if (getAdapterPosition() == getItemCount() - 1)
                         return;
                     if (!hasFocus)
                         imageButton.setVisibility(View.INVISIBLE);

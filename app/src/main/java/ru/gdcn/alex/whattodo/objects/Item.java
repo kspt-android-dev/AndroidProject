@@ -11,7 +11,7 @@ public class Item implements Serializable {
     public static final int LAST_ITEM = -15;
     public static final int DEFAULT_CHECKED = 0;
 
-    private long id = NEW_ITEM;
+    private long id;
     private long parentId;
     private int position;
     private String content;
@@ -21,7 +21,8 @@ public class Item implements Serializable {
         this.id = id;
     }
 
-    public Item(long parentId, int position, String content, int checked) {
+    public Item(long id, long parentId, int position, String content, int checked) {
+        this.id  = id;
         this.parentId = parentId;
         this.position = position;
         this.content = content;

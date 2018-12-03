@@ -80,6 +80,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
             if (contents.length != 0) {
                 for (int i = 0; i < contents.length; i++) {
                     items.add(new Item(
+                            Item.NEW_ITEM,
                             activity.getNoteManager().getNote().getId(),
                             i + 1,
                             contents[i],
@@ -88,6 +89,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
                 }
             } else {
                 items.add(new Item(
+                        Item.NEW_ITEM,
                         activity.getNoteManager().getNote().getId(),
                         1,
                         "",
@@ -122,6 +124,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
             return;
         if (itemsRecyclerAdapter.getItem(position).getId() == Item.LAST_ITEM)
             itemsRecyclerAdapter.addItem(new Item(
+                    Item.NEW_ITEM,
                     activity.getNoteManager().getNote().getId(),
                     itemsRecyclerAdapter.getItemCount(),
                     "",
