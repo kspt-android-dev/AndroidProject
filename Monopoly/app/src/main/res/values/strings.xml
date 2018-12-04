@@ -2,5 +2,11 @@
     <string name="app_name">Best Monopoly Ever!</string>
     <string name="buttonPlay">Play</string>
     <string name="buttonExit">Exit</string>
+    <string name="buttonBack">Back</string>
+    <string name="buttonEnter">Enter</string>
+    <string name="buttonStart">Start</string>
+    <string name="buttonDelete">Delete</string>
+    <string name="playersTitle">Players:</string>
     <string name="startGameToast">Time to play the Game!</string>
+    <string name="nameSize">Name should be from 1 to 15 symbols!</string>
 </resources>

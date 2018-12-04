@@ -23,7 +23,7 @@
         android:layout_below="@+id/Namespace"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:text="Enter" />
+        android:text="@string/buttonEnter" />
 
     <Button
         android:id="@+id/buttonBack"
@@ -32,7 +32,7 @@
         android:layout_below="@+id/buttonEnter"
         android:layout_marginTop="45dp"
         android:layout_toStartOf="@+id/buttonEnter"
-        android:text="Back" />
+        android:text="@string/buttonBack" />
 
     <Button
         android:id="@+id/buttonStart"
@@ -41,7 +41,16 @@
         android:layout_below="@+id/buttonEnter"
         android:layout_marginTop="45dp"
         android:layout_toEndOf="@+id/buttonEnter"
-        android:text="Start" />
+        android:text="@string/buttonStart" />
+
+    <Button
+        android:id="@+id/buttonDelete"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/Players"
+        android:layout_marginTop="45dp"
+        android:layout_toEndOf="@+id/buttonEnter"
+        android:text="@string/buttonDelete" />
 
     <TextView
         android:id="@+id/Players"
@@ -53,7 +62,7 @@
         android:layout_marginLeft="10dp"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:text="Players:" />
+        android:text="@string/playersTitle" />
 
 
     <TextView

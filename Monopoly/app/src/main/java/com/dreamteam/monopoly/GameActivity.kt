@@ -1,6 +1,7 @@
 package com.dreamteam.monopoly
 
 import android.content.Intent
+import android.media.Image
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import com.dreamteam.monopoly.game.GameManager
+import com.dreamteam.monopoly.game.player.Player
 import com.dreamteam.monopoly.helpers.makeTinyAlert
 import com.dreamteam.monopoly.helpers.showToast
 import com.tapadoo.alerter.Alerter
@@ -32,6 +34,12 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         for (string in playersNames)
         {
             gameManager.addPlayer(string)
+            for (i in 1..playersNames.size)      //making visible only players images
+            {
+                val myPlayer = getResources().getIdentifier("Player${i}", "id", packageName)
+                val PlayerImage : ImageView = findViewById(myPlayer)
+                PlayerImage.visibility = View.VISIBLE
+            }
         }
 
         buttonThrowDices = findViewById(R.id.buttonThrowCubes)

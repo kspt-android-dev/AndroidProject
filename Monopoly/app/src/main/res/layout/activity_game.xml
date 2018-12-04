@@ -588,6 +588,7 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:src="@drawable/player1"
+        android:visibility="invisible"
         app:layout_constraintTop_toTopOf="@+id/button0"
         app:layout_constraintRight_toRightOf="@+id/button0"
         app:layout_constraintLeft_toLeftOf="@+id/button0"/>
@@ -597,6 +598,7 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:src="@drawable/player2"
+        android:visibility="invisible"
         app:layout_constraintTop_toTopOf="@+id/button0"
         app:layout_constraintRight_toRightOf="@+id/button0"
         app:layout_constraintBottom_toBottomOf="@+id/button0"/>
@@ -606,6 +608,7 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:src="@drawable/player3"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/button0"
         app:layout_constraintRight_toRightOf="@+id/button0"
         app:layout_constraintLeft_toLeftOf="@+id/button0"/>
@@ -615,6 +618,7 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:src="@drawable/player4"
+        android:visibility="invisible"
         app:layout_constraintTop_toTopOf="@+id/button0"
         app:layout_constraintLeft_toLeftOf="@+id/button0"
         app:layout_constraintBottom_toBottomOf="@+id/button0"/>
