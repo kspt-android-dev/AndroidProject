@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -141,12 +142,12 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     Item item = getItem(position);
-                    if (item.getChecked() == 1) {
-                        item.setChecked(0);
-                    } else {
+                    if (((CheckBox)v).isChecked()) {
                         item.setChecked(1);
+                    } else {
+                        item.setChecked(0);
                     }
-                    notifyItemChanged(getAdapterPosition());
+                    bindItem(item);
                 }
             });
             editText = itemView.findViewById(R.id.creation_list_fragment_recycler_item_content);
