@@ -19,6 +19,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.objects.Item;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdapter.ItemViewHolder> {
+public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = "ToDO_Logger";
     public static final String className = "ItemRecyclerAdapter";
@@ -38,6 +39,10 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
 
     private List<Item> itemList;
     private List<Item> deleteItemList;
+
+    public static final int TYPE_ITEM = 1;
+    public static final int TYPE_ADDBUTTON = 2;
+
 
     public ItemsRecyclerAdapter(Context context) {
         this.activity = (CreationActivity) context;
@@ -92,22 +97,51 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
         Log.d(TAG, TextFormer.getStartText(className) + "Карточки удалены!");
     }
 
-
+    @Override
+    public int getItemViewType(int position) {
+        if (position == getItemCount() - 1) {
+            return TYPE_ADDBUTTON;
+        } else {
+            return TYPE_ITEM;
+        }
+    }
 
     @NonNull
     @Override
-    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.creation_list_fragment_recycler_item, viewGroup, false);
-        return new ItemViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View view = null;
+        RecyclerView.ViewHolder vh = null;
+        switch (viewType) {
+            case TYPE_ITEM:
+                view = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.creation_list_fragment_recycler_item, viewGroup, false);
+                vh = new ItemViewHolder(view);
+                break;
+            case TYPE_ADDBUTTON:
+                view = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.creation_list_fragment_recycler_addbutton, viewGroup, false);
+                vh = new AddButtonViewHolder(view);
+                break;
+        }
+
+        return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int i) {
-        if (itemList.get(i).getId() == Item.LAST_ITEM)
-            itemViewHolder.bindAdd();
-        else
-            itemViewHolder.bindItem(itemList.get(i));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+
+
+        switch (this.getItemViewType(position))
+        {
+            case TYPE_ITEM:
+                ((ItemViewHolder)viewHolder).bindItem(getItem(position));
+                //наполняем данными разметку для нулевого типа
+                break;
+            case TYPE_ADDBUTTON:
+                (HolderFirstType) holder;
+                //наполняем данными разметку для нулевого типа
+                break;
+        }
     }
 
 
@@ -221,15 +255,40 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
                     editText.setPaintFlags(editText.getPaintFlags() ^ Paint.STRIKE_THRU_TEXT_FLAG);
             }
         }
+    }
 
-        void bindAdd() {
-            editText.setHint("+ Новый пункт");
-            editText.setEnabled(false);
-            checkBox.setVisibility(View.INVISIBLE);
-            checkBox.setEnabled(false);
-            imageButton.setFocusable(false);
-            imageButton.setEnabled(false);
+    class AddButtonViewHolder extends RecyclerView.ViewHolder {
+
+        private ImageView imageView;
+        private TextView textView;
+
+        public AddButtonViewHolder(@NonNull View itemView) {
+            super(itemView);
+            imageView = itemView.findViewById(R.id.creation_list_fragment_recycler_addbutton_image);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onCLick(v);
+                }
+            });
+
+            textView = itemView.findViewById(R.id.creation_list_fragment_recycler_addbutton_text);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onCLick(v);
+                }
+            });
         }
 
+        private void onCLick(View v){
+            itemsRecyclerAdapter.addItem(new Item(
+                    Item.NEW_ITEM,
+                    activity.getNoteManager().getNote().getId(),
+                    itemsRecyclerAdapter.getItemCount(),
+                    "",
+                    Item.DEFAULT_CHECKED
+            ), itemsRecyclerAdapter.getItemCount() - 1);
+        }
     }
 }
