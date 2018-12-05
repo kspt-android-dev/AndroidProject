@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.inputmethodservice.Keyboard;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -91,6 +92,8 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
         Log.d(TAG, TextFormer.getStartText(className) + "Карточки удалены!");
     }
 
+
+
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -120,7 +123,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
         private EditText editText;
         private ImageButton imageButton;
 
-        ItemViewHolder(@NonNull View itemView) {
+        ItemViewHolder(@NonNull final View itemView) {
             super(itemView);
             checkBox = itemView.findViewById(R.id.creation_list_fragment_recycler_item_checkbox);
             checkBox.setOnClickListener(new View.OnClickListener() {
@@ -186,6 +189,18 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
                         imageButton.setVisibility(View.VISIBLE);
                 }
             });
+//            editText.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+//                @Override
+//                public void onViewAttachedToWindow(View v) {
+//                    Log.d(TAG, TextFormer.getStartText(className) + "Присоединил!");
+//                    v.requestFocus();
+//                }
+//
+//                @Override
+//                public void onViewDetachedFromWindow(View v) {
+//
+//                }
+//            });
             imageButton = itemView.findViewById(R.id.creation_list_fragment_recycler_item_delete);
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
