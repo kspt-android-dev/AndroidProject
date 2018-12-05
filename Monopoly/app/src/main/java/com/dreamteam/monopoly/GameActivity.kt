@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import com.dreamteam.monopoly.game.GameManager
 import com.dreamteam.monopoly.game.player.Player
 import com.dreamteam.monopoly.helpers.makeTinyAlert
@@ -21,8 +22,6 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
 
     private var buttonThrowDices: Button? = null
     private var gameManager: GameManager = GameManager()
-
-    //image button
     private var cellButtons: ArrayList<Button> = ArrayList<Button>(44)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,45 +29,30 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_game)
 
         val intent = intent
-        val playersNames : ArrayList<String> = intent.getStringArrayListExtra("PlayersNames")
-        for (string in playersNames)
-        {
-            gameManager.addPlayer(string)
-            for (i in 1..playersNames.size)      //making visible only players images
-            {
-                val myPlayer = getResources().getIdentifier("Player${i}", "id", packageName)
-                val PlayerImage : ImageView = findViewById(myPlayer)
-                PlayerImage.visibility = View.VISIBLE
-            }
-        }
+        val playersNames : ArrayList<String> = intent.getStringArrayListExtra("PlayersNames") //get info from AmountOfPlayers Activity
+        startAssignment(playersNames)
 
         buttonThrowDices = findViewById(R.id.buttonThrowCubes)
-        //adding a click listener
         buttonThrowDices!!.setOnClickListener { v ->
             val dices: Pair<Int, Int> = gameManager.getCurrentPlayer().throwDices(this)
             val cube1: ImageView = findViewById(R.id.cube1)
             val cube2: ImageView = findViewById(R.id.cube2)
             val drawCube1 = resources.getDrawable(resources
-                    .getIdentifier("dice${dices.first}", "drawable", packageName))
+                    .getIdentifier("dice${dices.first}", "drawable", packageName))      //gettind first cube image
             val drawCube2 = resources.getDrawable(resources
-                    .getIdentifier("dice${dices.second}", "drawable", packageName))
-            cube1.setImageDrawable(drawCube1)
+                    .getIdentifier("dice${dices.second}", "drawable", packageName))     //gettind second cube image
+            cube1.setImageDrawable(drawCube1)  //draw this pics
             cube2.setImageDrawable(drawCube2)
 
-            buttonThrowDices!!.isEnabled = false;
+            buttonThrowDices!!.isEnabled = false    //make button throw dices unusable
             buttonThrowDices!!.visibility = View.INVISIBLE
-
-
             val handler = Handler()
             handler.postDelayed({
-                cube1.setImageDrawable(null)
+                cube1.setImageDrawable(null) //delete images dices pics
                 cube2.setImageDrawable(null)
-                Log.d("###CurrentPlayerIndex", gameManager.currentPlayerIndex.toString())
-                Log.d("###SumOfDices", (dices.first + dices.second).toString())
                 gameManager.nextPlayerMove() //this code should be after action after throwing dice #Player.decision
                 buttonThrowDices!!.isEnabled = true
                 buttonThrowDices!!.visibility = View.VISIBLE
-                // Alerter.hide() // mb after in some seconds
             }, 2000)
             showToast(v!!, "Piu")
             makeTinyAlert(this, gameManager.getCurrentPlayer().name + " move")
@@ -90,4 +74,24 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun getGameManager(): GameManager = gameManager
+
+    fun startAssignment(playersNames : ArrayList<String> ) //adding text/players on map
+    {
+        for (string in playersNames) {
+            gameManager.addPlayer(string)
+            val playerStatsId = getResources().getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
+            val playerStats: TextView = findViewById(playerStatsId)
+            playerStats.text = string
+            val playerMoneyId = getResources().getIdentifier("playerMoney${gameManager.players.size}", "id", packageName)
+            val playerMoney: TextView = findViewById(playerMoneyId)
+            playerMoney.text = gameManager.getPlayerByName(string)!!.money.toString()
+        }
+
+        for (i in 1..playersNames.size)
+        {
+            val myPlayerId = getResources().getIdentifier("Player${i}", "id", packageName)
+            val PlayerImage: ImageView = findViewById(myPlayerId)
+            PlayerImage.visibility = View.VISIBLE
+        }
+    }
 }

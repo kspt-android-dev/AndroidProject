@@ -19,14 +19,23 @@ class Board(var gameWay: ArrayList<GameCell>) {
     private val gameWayLength: Int = gameWay.size
 
     fun movePlayer(newPositionIndex: Int, player: Player , activity: Activity): Cell {
-        var ga:GameActivity = activity as GameActivity// return current player's cell
         player.currentPosition = newPositionIndex
         while (player.currentPosition > gameWayLength - 1) {
             player.currentPosition -=  gameWayLength
             loopPassEvents(player)
-            Log.d("###IamGoingToCellNumber", (newPositionIndex - gameWayLength).toString())
         }
-        val currentPlayerIndex = ga.getGameManager().get_CurrentPlayerIndex();
+        changeImagePlace(player,activity)
+        return gameWay[player.currentPosition]
+    }
+
+    private fun loopPassEvents(player: Player){
+        player.earnMoney(GameData.loopMoney)
+    }
+
+    private  fun changeImagePlace(player: Player , activity: Activity)
+    {
+        var gameAct:GameActivity = activity as GameActivity // return current player's cell
+        val currentPlayerIndex = gameAct.getGameManager().currentPlayerIndex;
         val constraintSet = ConstraintSet()
         val constraintLayout : ConstraintLayout = activity.findViewById(R.id.ConstraintLayout)
         constraintSet.clone(constraintLayout)
@@ -47,11 +56,5 @@ class Board(var gameWay: ArrayList<GameCell>) {
             else constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
         }
         constraintSet.applyTo(constraintLayout)
-        Log.d("###IamGoingToCellNumber", (newPositionIndex).toString())
-        return gameWay[player.currentPosition]
-    }
-
-    private fun loopPassEvents(player: Player){
-        player.earnMoney(GameData.loopMoney)
     }
 }

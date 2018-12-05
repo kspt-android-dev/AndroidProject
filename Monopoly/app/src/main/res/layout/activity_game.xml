@@ -623,5 +623,89 @@
         app:layout_constraintLeft_toLeftOf="@+id/button0"
         app:layout_constraintBottom_toBottomOf="@+id/button0"/>
 
+    <TextView
+        android:id="@+id/playerStats1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:text=""
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button30"/>
+
+    <TextView
+        android:id="@+id/playerStats2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:text=""
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerMoney1" />
+
+    <TextView
+        android:id="@+id/playerStats3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:textSize="15dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerMoney2" />
+
+    <TextView
+        android:id="@+id/playerStats4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:textSize="15dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerMoney3" />
+
+    <TextView
+        android:id="@+id/playerMoney1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="15dp"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@+id/playerStats1"
+        app:layout_constraintStart_toStartOf="@+id/playerStats1"/>
+
+    <TextView
+        android:id="@+id/playerMoney2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="15dp"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@+id/playerStats2"
+        app:layout_constraintStart_toStartOf="@+id/playerStats2"/>
+
+    <TextView
+        android:id="@+id/playerMoney3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="15dp"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@+id/playerStats3"
+        app:layout_constraintStart_toStartOf="@+id/playerStats3"/>
+
+    <TextView
+        android:id="@+id/playerMoney4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="15dp"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@+id/playerStats4"
+        app:layout_constraintStart_toStartOf="@+id/playerStats4"/>
+
 
 </android.support.constraint.ConstraintLayout>

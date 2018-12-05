@@ -18,8 +18,6 @@ class GameManager {
 
     fun getCurrentPlayer(): Player = players[currentPlayerIndex]
 
-    fun get_CurrentPlayerIndex(): Int = currentPlayerIndex
-
     fun addPlayer(name: String) {
         players.add(Player(name, startMoney, mainBoard))
     }
@@ -48,5 +46,9 @@ class GameManager {
 
     fun removePlayer(index: Int) {
         players.removeAt(index)
+    }
+
+    fun getPlayerByName(name: String): Player? {
+        return players.find { p -> p.name == name}
     }
 }
