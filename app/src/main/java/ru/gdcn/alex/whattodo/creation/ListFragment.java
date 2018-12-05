@@ -30,7 +30,7 @@ import ru.gdcn.alex.whattodo.objects.Item;
 import ru.gdcn.alex.whattodo.recycler.RecyclerItemClickListener;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class ListFragment extends Fragment implements RecyclerItemClickListener.OnItemClickListener{
+public class ListFragment extends Fragment {
 
     private static final String TAG = "ToDO_Logger";
     private static final String className = "ListFragment";
@@ -64,7 +64,6 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         itemsRecyclerAdapter = new ItemsRecyclerAdapter(activity);
         recyclerView.setAdapter(itemsRecyclerAdapter);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerView, this));
         Log.d(TAG, TextFormer.getStartText(className) + "Список инициализирован!");
     }
 
@@ -77,7 +76,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
             Log.d(TAG, TextFormer.getStartText(className) + "Разделяю на элементы...");
             String[] contents = activity.getNoteManager().getNote().getContent().split("\n");
             List<Item> items = new ArrayList<>();
-            if (contents.length != 0) {
+            if ((contents.length != 0 && !contents[0].equals("")) || contents.length > 1) {
                 for (int i = 0; i < contents.length; i++) {
                     items.add(new Item(
                             Item.NEW_ITEM,
@@ -89,14 +88,14 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
                 }
             } else {
                 items.add(new Item(
-                        Item.NEW_ITEM,
+                        Item.ADDING_ITEM,
                         activity.getNoteManager().getNote().getId(),
                         1,
                         "",
                         Item.DEFAULT_CHECKED
                 ));
+                Log.d(TAG, TextFormer.getStartText(className) + "Добавил пустой элемент!");
             }
-            items.add(new Item(Item.LAST_ITEM));
             itemsRecyclerAdapter.addItems(items);
             Log.d(TAG, TextFormer.getStartText(className) + "Разделение произошло!");
         }
@@ -108,37 +107,13 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
         Log.d(TAG, TextFormer.getStartText(className) + "onStop!");
         StringBuilder stringBuilder = new StringBuilder();
         List<Item> items = activity.getNoteManager().getItems();
-        if (items.size() > 1) {
-            for (int i = 0; i < items.size() - 2; i++) {
+        if (!items.get(items.size() - 1).getContent().equals("") ||
+                (items.get(items.size() - 1).getContent().equals("") && items.size() > 1)) {
+            for (int i = 0; i < items.size() - 1; i++) {
                 stringBuilder.append(items.get(i).getContent()).append("\n");
             }
-            stringBuilder.append(items.get(items.size() - 2).getContent());
+            stringBuilder.append(items.get(items.size() - 1).getContent());
         }
         activity.getNoteManager().getNote().setContent(stringBuilder.toString());
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        //Это тоже наверное можно убрать, сделав по другому
-        if (view == null)
-            return;
-        if (itemsRecyclerAdapter.getItem(position).getId() == Item.LAST_ITEM)
-            itemsRecyclerAdapter.addItem(new Item(
-                    Item.NEW_ITEM,
-                    activity.getNoteManager().getNote().getId(),
-                    itemsRecyclerAdapter.getItemCount(),
-                    "",
-                    Item.DEFAULT_CHECKED
-                    ), itemsRecyclerAdapter.getItemCount() - 1);
-    }
-
-    @Override
-    public void onItemLongClick(View view, int position) {
-        //Не надо
-    }
-
-    @Override
-    public void onScroll(float startY, float endY) {
-        //Не надо
     }
 }

@@ -8,7 +8,7 @@ public class Item implements Serializable {
     private static final String className = "Item";
 
     public static final long NEW_ITEM = -13;
-    public static final int LAST_ITEM = -15;
+    public static final int ADDING_ITEM = -15;
     public static final int DEFAULT_CHECKED = 0;
 
     private long id;
@@ -35,6 +35,10 @@ public class Item implements Serializable {
         this.position = position;
         this.content = content;
         this.checked = checked;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getId() {

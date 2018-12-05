@@ -43,7 +43,6 @@ public class CreationManager {
             items = (List<Item>) DBConnector.loadItems(activity, note.getId());
         else
             items = new ArrayList<>();
-        items.add(new Item(Item.LAST_ITEM));
 
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализация данных завершена!");
     }
@@ -60,14 +59,12 @@ public class CreationManager {
         }
         if (note.getType().equals("list"))
             for (Item item : items) {
-                if (item.getId() == Item.LAST_ITEM)
-                    continue;
                 if (item.getId() == Item.NEW_ITEM)
                     DBConnector.insertItem(activity, item);
                 else
                     DBConnector.updateItem(activity, item);
             }
-        Log.d(TAG, TextFormer.getStartText(className) + "Пунктов сохранено - " + (items.size() - 1));
+        Log.d(TAG, TextFormer.getStartText(className) + "Пунктов сохранено - " + items.size());
         Log.d(TAG, TextFormer.getStartText(className) + "Данные обновлены!");
 
     }

@@ -27,7 +27,6 @@ public class DBConnector {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-//        contentValues.put(KEY_ID, note.getId());
         contentValues.put(KEY_POSITION, note.getPosition());
         contentValues.put(KEY_HEADER, note.getHeader());
         contentValues.put(KEY_CONTENT, note.getContent());

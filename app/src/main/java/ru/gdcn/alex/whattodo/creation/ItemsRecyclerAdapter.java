@@ -50,17 +50,12 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         this.deleteItemList = activity.getNoteManager().getDeleteItems();
     }
 
-    public void addItem(Item item) {
-        Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточки в список...");
-        itemList.add(item);
-        notifyItemInserted(itemList.size() - 1);
-        Log.d(TAG, TextFormer.getStartText(className) + "Карточка добавлена!");
-    }
-
     public void addItem(Item item, int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточки в список...");
         itemList.add(position, item);
         notifyItemInserted(position);
+        RecyclerView recyclerView = activity.findViewById(R.id.creation_list_fragment_recycler);
+        recyclerView.smoothScrollToPosition(position);
         Log.d(TAG, TextFormer.getStartText(className) + "Карточка добавлена!");
     }
 
@@ -85,18 +80,6 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         return itemList.get(index);
     }
 
-    public Collection<Item> getItems() {
-        return itemList;
-    }
-
-    public void clearItems() {
-        Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточек из списка...");
-        deleteItemList.addAll(itemList);
-        itemList.clear();
-        notifyDataSetChanged();
-        Log.d(TAG, TextFormer.getStartText(className) + "Карточки удалены!");
-    }
-
     @Override
     public int getItemViewType(int position) {
         if (position == getItemCount() - 1) {
@@ -106,10 +89,15 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
+    @Override
+    public int getItemCount() {
+        return itemList.size() + 1;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = null;
+        View view;
         RecyclerView.ViewHolder vh = null;
         switch (viewType) {
             case TYPE_ITEM:
@@ -129,25 +117,13 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-
-
-        switch (this.getItemViewType(position))
-        {
+        switch (this.getItemViewType(position)) {
             case TYPE_ITEM:
-                ((ItemViewHolder)viewHolder).bindItem(getItem(position));
-                //наполняем данными разметку для нулевого типа
+                ((ItemViewHolder) viewHolder).bindItem(getItem(position));
                 break;
             case TYPE_ADDBUTTON:
-                (HolderFirstType) holder;
-                //наполняем данными разметку для нулевого типа
                 break;
         }
-    }
-
-
-    @Override
-    public int getItemCount() {
-        return itemList.size();
     }
 
 
@@ -170,7 +146,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
                     } else {
                         item.setChecked(1);
                     }
-                    bindItem(item);
+                    notifyItemChanged(getAdapterPosition());
                 }
             });
             editText = itemView.findViewById(R.id.creation_list_fragment_recycler_item_content);
@@ -196,7 +172,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
                     if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                         addItem(new Item(
-                                Item.NEW_ITEM,
+                                Item.ADDING_ITEM,
                                 activity.getNoteManager().getNote().getId(),
                                 getAdapterPosition() + 1,
                                 "",
@@ -215,31 +191,35 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if (getAdapterPosition() == getItemCount() - 1)
-                        return;
                     if (!hasFocus)
                         imageButton.setVisibility(View.INVISIBLE);
                     else
                         imageButton.setVisibility(View.VISIBLE);
                 }
             });
-//            editText.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-//                @Override
-//                public void onViewAttachedToWindow(View v) {
-//                    Log.d(TAG, TextFormer.getStartText(className) + "Присоединил!");
-//                    v.requestFocus();
-//                }
-//
-//                @Override
-//                public void onViewDetachedFromWindow(View v) {
-//
-//                }
-//            });
             imageButton = itemView.findViewById(R.id.creation_list_fragment_recycler_item_delete);
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     removeItem(getItem(getAdapterPosition()));
+                }
+            });
+
+            itemView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+                @Override
+                public void onViewAttachedToWindow(View v) {
+                    Log.d(TAG, TextFormer.getStartText(className) + "Attach!");
+                    if (getItem(getAdapterPosition()).getId() == Item.ADDING_ITEM) {
+                        v.requestFocus();
+                        getItem(getAdapterPosition()).setId(Item.NEW_ITEM);
+                        Log.d(TAG, TextFormer.getStartText(className) + "Focus!");
+                    }
+
+                }
+
+                @Override
+                public void onViewDetachedFromWindow(View v) {
+
                 }
             });
         }
@@ -262,7 +242,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         private ImageView imageView;
         private TextView textView;
 
-        public AddButtonViewHolder(@NonNull View itemView) {
+        AddButtonViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.creation_list_fragment_recycler_addbutton_image);
             imageView.setOnClickListener(new View.OnClickListener() {
@@ -281,14 +261,14 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             });
         }
 
-        private void onCLick(View v){
-            itemsRecyclerAdapter.addItem(new Item(
-                    Item.NEW_ITEM,
+        private void onCLick(View v) {
+            addItem(new Item(
+                    Item.ADDING_ITEM,
                     activity.getNoteManager().getNote().getId(),
-                    itemsRecyclerAdapter.getItemCount(),
+                    getAdapterPosition(),
                     "",
                     Item.DEFAULT_CHECKED
-            ), itemsRecyclerAdapter.getItemCount() - 1);
+            ), getAdapterPosition());
         }
     }
 }
