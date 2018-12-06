@@ -9,6 +9,7 @@ import java.util.*
 class Player(val name: String, startMoney: Int, private val board: Board) {
 
     var currentPosition: Int = 0
+    var targetPosition: Int = currentPosition
     var money: Int = startMoney
     var cells: ArrayList<GameCell> = ArrayList()    // ?
     var isActive: Boolean = false

@@ -116,10 +116,10 @@ class AmountOfPlayersActivity : AppCompatActivity() {
 
     }
 
-    fun moveAllNames() {
+    private fun moveAllNames() {
         for ((index, txtView) in arrayOfTextViews.withIndex()) {
             if (txtView.text == "") {
-                for (i in index..arrayOfTextViews.size - 1)
+                for (i in index until arrayOfTextViews.size)
                     if (arrayOfTextViews[i].text != "") {
                         txtView.text = arrayOfTextViews[i].text
                         arrayOfTextViews[i].text = ""

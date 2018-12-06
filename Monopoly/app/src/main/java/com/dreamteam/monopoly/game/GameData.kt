@@ -8,6 +8,10 @@ object GameData {
     const val loopMoney: Int = 2000
     const val startEnterMoney: Int = 1000
 
+    const val boardSizeModifier:Float = 0.95f
+    const val cellSidesModifier:Float = 1.75f
+
+
     val boardGameCells: ArrayList<GameCell> = arrayListOf(
             GameCell(info = GameCellInfo.START),
             GameCell(info = GameCellInfo.EDSACK),
