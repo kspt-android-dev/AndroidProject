@@ -40,7 +40,7 @@
         android:layout_height="56dp"
         android:orientation="horizontal"
         android:layout_gravity="bottom"
-        android:background="@color/colorPrimary">
+        android:background="@color/main">
 
         <ImageButton
             android:id="@+id/creation_bottom_menu_add"

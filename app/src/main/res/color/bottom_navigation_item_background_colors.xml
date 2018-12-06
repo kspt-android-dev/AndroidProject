@@ -2,10 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:color="@android:color/darker_gray"
+        android:color="@color/bottom_menu_item_unchecked"
         android:state_checked="false"/>
     <item
-        android:color="@android:color/white"
+        android:color="@color/bottom_menu_item_checked"
         android:state_checked="true"/>
 
 </selector>

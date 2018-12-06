@@ -1,17 +1,22 @@
 package ru.gdcn.alex.whattodo.main;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import ru.gdcn.alex.whattodo.AboutActivity;
 import ru.gdcn.alex.whattodo.R;
@@ -77,6 +82,23 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         Log.d(TAG, TextFormer.getStartText(className) + "Создание MainActivity завершено!");
+        setupActionBar();
+    }
+
+    private void setupActionBar() {
+        Log.d(TAG, TextFormer.getStartText(className) + "Настраиваю ActionBar...");
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar == null) {
+            Log.e(TAG, TextFormer.getStartText(className) + "Не удалось получить ActionBar!");
+            return;
+        }
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main)));
+        actionBar.setTitle((Html.fromHtml("<font color=\"#80a19d\">" + getString(R.string.app_name) + "</font>")));
+
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(getResources().getColor(R.color.status_bar));
+        Log.d(TAG, TextFormer.getStartText(className) + "ActionBar настроен!");
     }
 
     @Override
