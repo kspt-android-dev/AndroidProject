@@ -20,5 +20,5 @@
     <string name="strings_main_bottom_menu_calendar">Каленадрь</string>
     <string name="strings_main_bottom_menu_notes">Записи</string>
 
-
+    <string name="main_notes_recycler_header_all">Все записи</string>
 </resources>

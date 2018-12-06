@@ -108,6 +108,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
                 ((CardViewHolder)viewHolder).bind(noteList.get(position-1));
                 break;
             case OTHER_NOTES_HEADER:
+                ((HeaderViewHolder)viewHolder).bindAllHeader();
                 break;
         }
     }
@@ -128,8 +129,16 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     public class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+        TextView header;
+
         HeaderViewHolder(@NonNull View itemView) {
             super(itemView);
+            header = itemView.findViewById(R.id.main_notes_recycler_header);
+        }
+
+        public void bindAllHeader() {
+            header.setText(R.string.main_notes_recycler_header_all);
         }
     }
 }
