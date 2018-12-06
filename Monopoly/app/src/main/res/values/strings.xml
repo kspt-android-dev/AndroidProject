@@ -6,7 +6,13 @@
     <string name="buttonEnter">Enter</string>
     <string name="buttonStart">Start</string>
     <string name="buttonDelete">Delete</string>
+    <string name="playerNameHint">BestEverPlayer:</string>
     <string name="playersTitle">Players:</string>
+    <string name="newPlayer">New player : </string>
+    <string name="removed"> removed</string>
     <string name="startGameToast">Time to play the Game!</string>
     <string name="nameSize">Name should be from 1 to 15 symbols!</string>
+    <string name="gameCellDescription">Game cell</string>
+    <string name="dices">Dices</string>
+    <string name="throw_dices">Throw dices</string>
 </resources>

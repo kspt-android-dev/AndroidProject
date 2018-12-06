@@ -15,7 +15,7 @@
         android:cursorVisible="true"
         android:text=""
         android:autofillHints="@string/playerNameHint"
-        tools:ignore="LabelFor,UnusedAttribute" />
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/buttonEnter"
