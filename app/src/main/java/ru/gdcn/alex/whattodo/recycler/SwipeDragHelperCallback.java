@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 
+import ru.gdcn.alex.whattodo.main.NotesRecyclerAdapter;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class SwipeDragHelperCallback extends ItemTouchHelper.Callback {
@@ -15,7 +16,7 @@ public class SwipeDragHelperCallback extends ItemTouchHelper.Callback {
 
     private ActionCompletionContract contract;
 
-    public SwipeDragHelperCallback(ActionCompletionContract contract){
+    public SwipeDragHelperCallback(ActionCompletionContract contract) {
         Log.d(TAG, TextFormer.getStartText(className) + "Установил слушателя для перемещения и свайпа!");
         this.contract = contract;
     }
@@ -23,10 +24,16 @@ public class SwipeDragHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         Log.d(TAG, TextFormer.getStartText(className) + "Получаю направление действия...");
-        int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-        int swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-        Log.d(TAG, TextFormer.getStartText(className) + "Направление действия определено!");
-        return makeMovementFlags(dragFlags, swipeFlags);
+        if (viewHolder instanceof NotesRecyclerAdapter.HeaderViewHolder) {
+            Log.d(TAG, TextFormer.getStartText(className) + "Направление действия определено - заголовок!");
+            return ItemTouchHelper.ACTION_STATE_IDLE;
+        } else {
+            int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+            int swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+            Log.d(TAG, TextFormer.getStartText(className) + "Направление действия определено - карточка!");
+            return makeMovementFlags(dragFlags, swipeFlags);
+        }
+
     }
 
     @Override

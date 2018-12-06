@@ -76,15 +76,13 @@ public class NotesFragment extends Fragment implements
     @Override
     public void onItemClick(View view, int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Словил клик на элемент!");
-        if (view == null)
+        if (view == null ||
+                notesRecyclerAdapter.getItemViewType(position) == NotesRecyclerAdapter.OTHER_NOTES_HEADER)
             return;
-//        if (isMultiSelect) {
-//            multiSelect(position);
-//        } else {
-            Note note = notesRecyclerAdapter.getItem(position);
-            Intent intent = new Intent(getContext(), CreationActivity.class);
-            intent.putExtra("note", note);
-            startActivity(intent);
+        Note note = notesRecyclerAdapter.getItem(position);
+        Intent intent = new Intent(getContext(), CreationActivity.class);
+        intent.putExtra("note", note);
+        startActivity(intent);
 //        }
     }
 
@@ -115,13 +113,15 @@ public class NotesFragment extends Fragment implements
     public void onViewMoved(int oldPosition, int newPosition) {
         Log.d(TAG, TextFormer.getStartText(className) + "Словил перемещение..." + oldPosition
                 + " - " + newPosition);
-        notesRecyclerAdapter.swapCard(oldPosition, newPosition);
+        if (newPosition != 0)
+            notesRecyclerAdapter.swapCard(oldPosition, newPosition);
     }
 
     @Override
     public void onViewSwiped(int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Словил свайп..." + position);
-        notesRecyclerAdapter.removeItem(notesRecyclerAdapter.getItem(position));
+        if (notesRecyclerAdapter.getItemViewType(position) == NotesRecyclerAdapter.OTHER_NOTES)
+            notesRecyclerAdapter.removeItem(position);
     }
 
     //Дальше пока не используется. Нужно для выделения нескольких элементов
