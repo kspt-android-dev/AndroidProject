@@ -17,10 +17,6 @@ public class Item implements Serializable {
     private String content;
     private int checked;
 
-    public Item(long id) {
-        this.id = id;
-    }
-
     public Item(long id, long parentId, int position, String content, int checked) {
         this.id  = id;
         this.parentId = parentId;
