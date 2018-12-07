@@ -1,11 +1,13 @@
 package com.dreamteam.monopoly.game
 
+import android.app.Activity
 import com.dreamteam.monopoly.game.GameData.startMoney
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.player.Player
+import com.dreamteam.monopoly.game.player.PlayerType
 
-class GameManager {
-    var mainBoard: Board = Board(GameData.boardGameCells)
+class GameManager(private val activity: Activity) {
+    var mainBoard: Board = Board(GameData.boardGameCells, activity)
     var players: ArrayList<Player> = ArrayList()
     var currentPlayerIndex: Int = 0
 
@@ -19,21 +21,21 @@ class GameManager {
     fun getCurrentPlayer(): Player = players[currentPlayerIndex]
 
     fun addPlayer(name: String) {
-        players.add(Player(name, startMoney, mainBoard))
+        players.add(Player(name, startMoney, PlayerType.PERSON, mainBoard))
     }
 
     fun addPlayers(playersData: List<String>) {
         for (name: String in playersData)
-            players.add(Player(name, startMoney, mainBoard))
+            players.add(Player(name, startMoney,PlayerType.PERSON,  mainBoard))
     }
 
-    fun addPlayer(name: String, startMoney: Int) {
-        players.add(Player(name, startMoney, mainBoard))
+    fun addPlayer(name: String, startMoney: Int, type: PlayerType) {
+        players.add(Player(name, startMoney, type, mainBoard))
     }
 
     fun addPlayersFullData(playersData: List<Pair<String, Int>>) {
         for (data: Pair<String, Int> in playersData)
-            players.add(Player(data.first, data.second, mainBoard))
+            players.add(Player(data.first, data.second, PlayerType.AI, mainBoard))
     }
 
     fun removePlayer(player: Player) {

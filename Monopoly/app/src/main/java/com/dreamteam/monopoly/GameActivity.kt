@@ -20,8 +20,8 @@ import maes.tech.intentanim.CustomIntent
 class GameActivity : AppCompatActivity(), View.OnClickListener {
 
     private var buttonThrowDices: Button? = null
-    private var gameManager: GameManager = GameManager()
-    private var cellButtons: ArrayList<Button> = ArrayList<Button>(44)
+    private var gameManager: GameManager = GameManager(this)
+    private var cellButtons: ArrayList<Button> = ArrayList(gameManager.mainBoard.gameWayLength)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

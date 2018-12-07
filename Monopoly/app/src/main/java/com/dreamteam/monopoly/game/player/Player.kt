@@ -6,7 +6,7 @@ import com.dreamteam.monopoly.game.board.cell.GameCell
 import com.dreamteam.monopoly.game.board.cell.GameCellType
 import java.util.*
 
-class Player(val name: String, startMoney: Int, private val board: Board) {
+class Player(val name: String, startMoney: Int, val type: PlayerType, private val board: Board) {
 
     var currentPosition: Int = 0
     var targetPosition: Int = currentPosition
@@ -16,12 +16,12 @@ class Player(val name: String, startMoney: Int, private val board: Board) {
 
     fun throwDices(activity: Activity): Pair<Int, Int> {
         val dices: Pair<Int, Int> = Pair((1..6).random(), (1..6).random())
-        go(dices.first + dices.second , activity)
+        go(dices.first + dices.second, activity)
         return dices
     }
 
-    private fun go(steps: Int , activity: Activity) {
-        board.movePlayer(currentPosition + steps, this , activity)
+    private fun go(steps: Int, activity: Activity) {
+        board.movePlayer(currentPosition + steps, this)
     }
 
     fun decision(action: PlayerActions): Boolean {

@@ -112,8 +112,6 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             if (numberOfPlayers < 2) buttonStart!!.isEnabled = false
             if (numberOfPlayers < 4) buttonEnter!!.isEnabled = true
         }
-
-
     }
 
     private fun moveAllNames() {

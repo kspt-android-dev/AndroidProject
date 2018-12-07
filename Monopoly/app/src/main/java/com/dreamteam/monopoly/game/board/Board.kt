@@ -18,15 +18,15 @@ import com.dreamteam.monopoly.game.GameManager
 
 class Board(var gameWay: ArrayList<GameCell>, private val activity: Activity) {
 
-    private val gameWayLength: Int = gameWay.size
+    val gameWayLength: Int = gameWay.size
 
     fun initBoard() {
         val metrics = DisplayMetrics()
         activity.windowManager.defaultDisplay.getMetrics(metrics)
         val boardWidth: Int = (metrics.widthPixels * GameData.boardSizeModifier).toInt()
         val boardHeight: Int = boardWidth
-        val cellWidth: Int = (boardWidth / ((gameWayLength / 4 - 2) + 2 * GameData.boardSizeModifier)).toInt()
-        val cellHeight: Int = (cellWidth * GameData.boardSizeModifier).toInt()
+        val cellWidth: Int = (boardWidth / ((gameWayLength / 4 - 2) + 2 * GameData.cellSidesModifier)).toInt()
+        val cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
         var index = 0
 
         //create corner TODO
