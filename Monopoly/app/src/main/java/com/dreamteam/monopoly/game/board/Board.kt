@@ -30,7 +30,7 @@ class Board(var gameWay: ArrayList<GameCell>, private val activity: Activity) {
         Log.d("#####", gameWay.size.toString())
         Log.d("#####", player.targetPosition.toString())
         changeImagePlace(player)
-
+        if (player.targetPosition == 0) player.earnMoney(GameData.startEnterMoney)
         return gameWay[player.targetPosition]
     }
 
@@ -38,7 +38,7 @@ class Board(var gameWay: ArrayList<GameCell>, private val activity: Activity) {
         player.earnMoney(GameData.loopMoney)
     }
 
-    fun changeImagePlace(player: Player) {
+    private fun changeImagePlace(player: Player) {
         val gameAct: GameActivity = activity as GameActivity // return current player's cell
         val currentPlayerIndex = gameAct.getGameManager().currentPlayerIndex;
         val constraintSet = ConstraintSet()

@@ -1,7 +1,7 @@
 package com.dreamteam.monopoly.game.player
 
-import android.app.Activity
 import com.dreamteam.monopoly.game.board.Board
+import com.dreamteam.monopoly.game.board.cell.CellState
 import com.dreamteam.monopoly.game.board.cell.GameCell
 import com.dreamteam.monopoly.game.board.cell.GameCellType
 import java.util.*
@@ -14,14 +14,37 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     var cells: ArrayList<GameCell> = ArrayList()    // ?
     var isActive: Boolean = false
 
-    fun throwDices(activity: Activity): Pair<Int, Int> {
+    fun throwDices(): Pair<Int, Int> {
         val dices: Pair<Int, Int> = Pair((1..6).random(), (1..6).random())
-        go(dices.first + dices.second, activity)
+        go(dices.first + dices.second)
         return dices
     }
 
-    private fun go(steps: Int, activity: Activity) {
+    private fun go(steps: Int) {
         board.movePlayer(currentPosition + steps, this)
+    }
+
+    fun analyze(): PlayerMoveCondition {
+        val currentCell: GameCell = board.gameWay[targetPosition] // targetPosition ?
+        when (currentCell.state) {
+            CellState.FREE -> return if (currentCell.info.cellType == GameCellType.COMPANY &&
+                    currentCell.checkBuyCost(money)) buyOpportunity()
+            else {
+                if (currentCell.info.cellType == GameCellType.BANK &&
+                        !decision(PlayerActions.PAY)) decision(PlayerActions.RETREAT)
+                else decision(PlayerActions.STAY)
+                PlayerMoveCondition.COMPLETED
+            }
+            CellState.OWNED -> {
+                if (currentCell.owner != this)
+                    if (!decision(PlayerActions.PAY)) decision(PlayerActions.RETREAT)
+                return PlayerMoveCondition.COMPLETED
+            }
+            CellState.SLEEPING -> {
+                decision(PlayerActions.STAY)
+                return PlayerMoveCondition.COMPLETED
+            }
+        }
     }
 
     fun decision(action: PlayerActions): Boolean {
@@ -30,13 +53,25 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
                     board.gameWay[currentPosition].buy(this)
             PlayerActions.PAY -> board.gameWay[currentPosition].info.cellType == GameCellType.COMPANY &&
                     board.gameWay[currentPosition].pay(this)
-            PlayerActions.STAY -> TODO()
+            PlayerActions.STAY -> stay()
             PlayerActions.RETREAT -> retreat()
         }
     }
 
+    private fun stay(): Boolean {
+        return true
+    }
+
     private fun retreat(): Boolean {
         return true
+    }
+
+    private fun buyOpportunity(): PlayerMoveCondition {
+        return if (type == PlayerType.PERSON) PlayerMoveCondition.ACTION_EXPECTING
+        else {
+            decision(PlayerActions.BUY)
+            PlayerMoveCondition.COMPLETED
+        }
     }
 
     //-----Money-----
