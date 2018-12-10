@@ -1,6 +1,7 @@
 package com.dreamteam.monopoly.game.board
 
 import android.app.Activity
+import android.graphics.Color.GREEN
 import android.os.Handler
 import android.util.Log
 import com.dreamteam.monopoly.game.GameData
@@ -11,57 +12,25 @@ import java.util.ArrayList
 import android.support.constraint.ConstraintSet
 import com.dreamteam.monopoly.R
 import android.support.constraint.ConstraintLayout
-import android.util.DisplayMetrics
 import com.dreamteam.monopoly.GameActivity
-import com.dreamteam.monopoly.game.GameManager
+import kotlin.math.log
 
 
 class Board(var gameWay: ArrayList<GameCell>, private val activity: Activity) {
 
     val gameWayLength: Int = gameWay.size
 
-    fun initBoard() {
-        val metrics = DisplayMetrics()
-        activity.windowManager.defaultDisplay.getMetrics(metrics)
-        val boardWidth: Int = (metrics.widthPixels * GameData.boardSizeModifier).toInt()
-        val boardHeight: Int = boardWidth
-        val cellWidth: Int = (boardWidth / ((gameWayLength / 4 - 2) + 2 * GameData.cellSidesModifier)).toInt()
-        val cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
-        var index = 0
-
-        //create corner TODO
-        index++
-        while (index < gameWayLength / 4 - 2) {
-            // up cell create TODO
-            index++
-        }
-        //create corner TODO
-        index++
-        while (index < gameWayLength / 2 - 2) {
-            // right cell create TODO
-            index++
-        }
-        //create corner TODO
-        index++
-        while (index < 3 * gameWayLength / 2 - 2) {
-            // down cell create TODO
-            index++
-        }
-        //create corner TODO
-        index++
-        while (index < gameWayLength - 2) {
-            // left cell create TODO
-            index++
-        }
-    }
 
     fun movePlayer(newPositionIndex: Int, player: Player): Cell {
-        player.targetPosition = newPositionIndex
-        while (player.targetPosition > gameWayLength - 1) {
-            player.targetPosition -= gameWayLength
+        player.currentPosition = newPositionIndex
+        while (player.currentPosition > gameWayLength - 1) {
+            player.currentPosition -= gameWayLength
             loopPassEvents(player)
         }
+        Log.d("#####", gameWay.size.toString())
+        Log.d("#####", player.targetPosition.toString())
         changeImagePlace(player)
+
         return gameWay[player.targetPosition]
     }
 
@@ -69,7 +38,7 @@ class Board(var gameWay: ArrayList<GameCell>, private val activity: Activity) {
         player.earnMoney(GameData.loopMoney)
     }
 
-    private fun changeImagePlace(player: Player) {
+    fun changeImagePlace(player: Player) {
         val gameAct: GameActivity = activity as GameActivity // return current player's cell
         val currentPlayerIndex = gameAct.getGameManager().currentPlayerIndex;
         val constraintSet = ConstraintSet()
@@ -78,11 +47,11 @@ class Board(var gameWay: ArrayList<GameCell>, private val activity: Activity) {
 
 
         val myPlayer = activity.getResources().getIdentifier("Player${currentPlayerIndex + 1}", "id", activity.packageName)
-        while (player.currentPosition != player.targetPosition) {
+       // while (player.currentPosition != player.targetPosition &&  player.currentPosition <= player.targetPosition) {
             val handler = Handler()
-            handler.postDelayed({
-                player.currentPosition++
-                val myId = activity.getResources().getIdentifier("button${player.currentPosition}", "id", activity.packageName)
+                //player.currentPosition++
+            Log.d("CURR POS", player.currentPosition.toString())
+                val myId = activity.getResources().getIdentifier("cell${player.currentPosition }", "id", activity.packageName)
                 if (currentPlayerIndex == 0 || currentPlayerIndex == 2) {
                     constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
                     constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
@@ -96,8 +65,7 @@ class Board(var gameWay: ArrayList<GameCell>, private val activity: Activity) {
                     else constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
                 }
                 constraintSet.applyTo(constraintLayout)
-            }, 200)
         }
-    }
+   // }
 }
 

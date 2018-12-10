@@ -7,588 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guidelineCenter"
-        android:layout_width="1dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-
-    <!--UP-->
-    <ImageButton
-        android:id="@+id/button0"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/button1"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/button1"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/button2"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="0dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/button3"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="0dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/button4"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="0dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/button5"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/button5"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineCenter"
-        app:layout_constraintStart_toStartOf="@+id/guidelineCenter"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/button6"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/button5"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/button7"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/button6"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/button8"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/button7"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/button9"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/button8"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/button10"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/button9"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <!--Right-->
-    <ImageButton
-        android:id="@+id/button11"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button10"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button10"
-        app:layout_constraintTop_toBottomOf="@+id/button10" />
-
-    <ImageButton
-        android:id="@+id/button12"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button11"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button11"
-        app:layout_constraintTop_toBottomOf="@+id/button11" />
-
-    <ImageButton
-        android:id="@+id/button13"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button12"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button12"
-        app:layout_constraintTop_toBottomOf="@+id/button12" />
-
-    <ImageButton
-        android:id="@+id/button14"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button13"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button13"
-        app:layout_constraintTop_toBottomOf="@+id/button13" />
-
-    <ImageButton
-        android:id="@+id/button15"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button14"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button14"
-        app:layout_constraintTop_toBottomOf="@+id/button14" />
-
-    <ImageButton
-        android:id="@+id/button16"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button15"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button15"
-        app:layout_constraintTop_toBottomOf="@+id/button15" />
-
-    <ImageButton
-        android:id="@+id/button17"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button16"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button16"
-        app:layout_constraintTop_toBottomOf="@+id/button16" />
-
-    <ImageButton
-        android:id="@+id/button18"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button17"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button17"
-        app:layout_constraintTop_toBottomOf="@+id/button17" />
-
-    <ImageButton
-        android:id="@+id/button19"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button18"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button18"
-        app:layout_constraintTop_toBottomOf="@+id/button18" />
-
-    <!--RightDownCorner-->
-    <ImageButton
-        android:id="@+id/button20"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button19"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button19"
-        app:layout_constraintTop_toBottomOf="@+id/button19" />
-
-    <!--Down-->
-    <ImageButton
-        android:id="@+id/button21"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button20"
-        app:layout_constraintEnd_toStartOf="@+id/button20"
-        app:layout_constraintTop_toTopOf="@+id/button20"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/button22"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button21"
-        app:layout_constraintEnd_toStartOf="@+id/button21"
-        app:layout_constraintTop_toTopOf="@+id/button21"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/button23"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button22"
-        app:layout_constraintEnd_toStartOf="@+id/button22"
-        app:layout_constraintTop_toTopOf="@+id/button22"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/button24"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button23"
-        app:layout_constraintEnd_toStartOf="@+id/button23"
-        app:layout_constraintTop_toTopOf="@+id/button23"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/button25"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button26"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineCenter"
-        app:layout_constraintStart_toStartOf="@+id/guidelineCenter"
-        app:layout_constraintTop_toTopOf="@+id/button24"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageButton
-        android:id="@+id/button26"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button27"
-        app:layout_constraintStart_toEndOf="@+id/button27"
-        app:layout_constraintTop_toTopOf="@+id/button27"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/button27"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button28"
-        app:layout_constraintStart_toEndOf="@+id/button28"
-        app:layout_constraintTop_toTopOf="@+id/button28"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/button28"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button29"
-        app:layout_constraintStart_toEndOf="@+id/button29"
-        app:layout_constraintTop_toTopOf="@+id/button29"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/button29"
-        android:layout_width="31dp"
-        android:layout_height="55dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button30"
-        app:layout_constraintStart_toEndOf="@+id/button30"
-        app:layout_constraintTop_toBottomOf="@+id/button31"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <!--LeftDownCorner-->
-    <ImageButton
-        android:id="@+id/button30"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button31"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/button31"
-        app:layout_constraintTop_toBottomOf="@+id/button31" />
-
-    <!--Left-->
-    <ImageButton
-        android:id="@+id/button31"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button32"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button32"
-        app:layout_constraintTop_toBottomOf="@+id/button32" />
-
-
-    <ImageButton
-        android:id="@+id/button32"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button33"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button33"
-        app:layout_constraintTop_toBottomOf="@+id/button33" />
-
-
-    <ImageButton
-        android:id="@+id/button33"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button34"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button34"
-        app:layout_constraintTop_toBottomOf="@+id/button34" />
-
-    <ImageButton
-        android:id="@+id/button34"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button35"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button35"
-        app:layout_constraintTop_toBottomOf="@+id/button35" />
-
-    <ImageButton
-        android:id="@+id/button35"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button36"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button36"
-        app:layout_constraintTop_toBottomOf="@+id/button36" />
-
-    <ImageButton
-        android:id="@+id/button36"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button37"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button37"
-        app:layout_constraintTop_toBottomOf="@+id/button37" />
-
-    <ImageButton
-        android:id="@+id/button37"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button38"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button38"
-        app:layout_constraintTop_toBottomOf="@+id/button38" />
-
-    <ImageButton
-        android:id="@+id/button38"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button39"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button39"
-        app:layout_constraintTop_toBottomOf="@+id/button39" />
-
-    <ImageButton
-        android:id="@+id/button39"
-        android:layout_width="55dp"
-        android:layout_height="31dp"
-
-        android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/gameCellDescription"
-        android:scaleType="fitXY"
-        android:src="@drawable/cell_borders_up"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/button0"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button0"
-        app:layout_constraintTop_toBottomOf="@+id/button0" />
 
     <Button
         android:id="@+id/buttonThrowCubes"
@@ -600,7 +18,7 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintTop_toBottomOf="@id/UnderTopPartGuideline" />
 
     <ImageView
         android:id="@+id/cube1"
@@ -624,50 +42,6 @@
         app:layout_constraintRight_toRightOf="@+id/cube1"
         app:layout_constraintTop_toBottomOf="@+id/buttonThrowCubes" />
 
-    <ImageView
-        android:id="@+id/Player1"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginTop="5dp"
-        android:contentDescription="@string/playerNameHint"
-        android:src="@drawable/player1"
-        app:layout_constraintLeft_toLeftOf="@+id/button0"
-        app:layout_constraintRight_toRightOf="@+id/button0"
-        app:layout_constraintTop_toTopOf="@+id/button0" />
-
-
-    <ImageView
-        android:id="@+id/Player2"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:contentDescription="@string/playerNameHint"
-        android:src="@drawable/player2"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/button0"
-        app:layout_constraintRight_toRightOf="@+id/button0"
-        app:layout_constraintTop_toTopOf="@+id/button0" />
-
-    <ImageView
-        android:id="@+id/Player3"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:contentDescription="@string/playerNameHint"
-        android:src="@drawable/player3"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/button0"
-        app:layout_constraintLeft_toLeftOf="@+id/button0"
-        app:layout_constraintRight_toRightOf="@+id/button0" />
-
-    <ImageView
-        android:id="@+id/Player4"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:contentDescription="@string/playerNameHint"
-        android:src="@drawable/player4"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/button0"
-        app:layout_constraintLeft_toLeftOf="@+id/button0"
-        app:layout_constraintTop_toTopOf="@+id/button0" />
 
     <TextView
         android:id="@+id/playerStats1"
@@ -678,7 +52,7 @@
         android:text=""
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button30" />
+        app:layout_constraintTop_toBottomOf="@+id/HorizontalGuideline" />
 
     <TextView
         android:id="@+id/playerStats2"
@@ -752,6 +126,104 @@
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/playerStats4"
         app:layout_constraintTop_toBottomOf="@+id/playerStats4" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/HorizontalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/VerticalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/cellName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cell Name:"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/HorizontalGuideline"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
+
+    <TextView
+        android:id="@+id/cellCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cell Cost for buying:"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/cellName"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
+
+    <TextView
+        android:id="@+id/cellSell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cell Cost for selling:"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/cellCost"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
+
+    <TextView
+        android:id="@+id/cellCharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cell charge:"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/cellSell"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
+
+    <TextView
+        android:id="@+id/cellHouseOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cell cost for buy/sell first house:"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/cellCharge"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
+    <TextView
+        android:id="@+id/cellHouseTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cell cost for buy/sell second house:"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/cellHouseOne"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
+    <TextView
+        android:id="@+id/cellHouseThree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cell cost for buy/sell third house:"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/cellHouseTwo"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
+
+    <TextView
+        android:id="@+id/cellHotel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cell cost for buy/sell Hotel:"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/cellHouseThree"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/UnderTopPartGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
 
 
 </android.support.constraint.ConstraintLayout>

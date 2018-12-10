@@ -8,7 +8,7 @@ import java.util.*
 
 class Player(val name: String, startMoney: Int, val type: PlayerType, private val board: Board) {
 
-    var currentPosition: Int = 0
+    var currentPosition: Int = 1
     var targetPosition: Int = currentPosition
     var money: Int = startMoney
     var cells: ArrayList<GameCell> = ArrayList()    // ?
