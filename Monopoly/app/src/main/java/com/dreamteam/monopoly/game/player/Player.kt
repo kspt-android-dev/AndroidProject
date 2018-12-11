@@ -13,6 +13,7 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     var money: Int = startMoney
     var cells: ArrayList<GameCell> = ArrayList()    // ?
     var isActive: Boolean = false
+    var id:Int = 0
 
     fun throwDices(): Pair<Int, Int> {
         val dices: Pair<Int, Int> = Pair((1..6).random(), (1..6).random())
@@ -92,6 +93,10 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
 
     fun removeGameCell(rmCell: GameCell) {
         cells.remove(rmCell)
+    }
+    fun setPlayerID(int: Int)
+    {
+        id = int
     }
 
     private fun IntRange.random() = Random().nextInt((endInclusive + 1) - start) + start

@@ -27,8 +27,6 @@ class Board(var gameWay: ArrayList<GameCell>, private val activity: Activity) {
             player.currentPosition -= gameWayLength
             loopPassEvents(player)
         }
-        Log.d("#####", gameWay.size.toString())
-        Log.d("#####", player.targetPosition.toString())
         changeImagePlace(player)
         if (player.targetPosition == 0) player.earnMoney(GameData.startEnterMoney)
         return gameWay[player.targetPosition]
@@ -48,7 +46,6 @@ class Board(var gameWay: ArrayList<GameCell>, private val activity: Activity) {
 
         val myPlayer = activity.getResources().getIdentifier("Player${currentPlayerIndex + 1}", "id", activity.packageName)
        // while (player.currentPosition != player.targetPosition &&  player.currentPosition <= player.targetPosition) {
-            val handler = Handler()
                 //player.currentPosition++
             Log.d("CURR POS", player.currentPosition.toString())
                 val myId = activity.getResources().getIdentifier("cell${player.currentPosition }", "id", activity.packageName)

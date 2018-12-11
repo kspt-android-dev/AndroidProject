@@ -15,7 +15,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/throw_dices"
-        android:textSize="15sp"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/UnderTopPartGuideline" />
@@ -225,5 +225,38 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" />
 
+    <Button
+        android:id="@+id/YesButton"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:text="Yes"
+        android:clickable="false"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/DialogView"
+        app:layout_constraintStart_toStartOf="@+id/DialogView" />
+
+    <Button
+        android:id="@+id/NoButton"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:text="No"
+        android:clickable="false"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/DialogView"
+        app:layout_constraintEnd_toEndOf="@+id/DialogView" />
+
+    <Button
+        android:id="@+id/DialogView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:clickable="false"
+        android:text="Buy this cell?"
+        android:visibility="invisible"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/UnderTopPartGuideline" />
 
 </android.support.constraint.ConstraintLayout>
