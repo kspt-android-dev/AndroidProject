@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Lines</string>
+    <string name="score">Current Score:</string>
 </resources>

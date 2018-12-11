@@ -7,15 +7,25 @@ import ru.polytech.course.pashnik.lines.Scene;
 public class Intellect {
 
     private Random random = new Random();
+    private Board board;
 
-    public Cell nextCell() {
-        int cellSize = Scene.getCellSize();
-        int x = random.nextInt(cellSize);
-        int y = random.nextInt(cellSize);
-        return new Cell(x, y);
+    public Intellect(Board board) {
+        this.board = board;
     }
 
-    public int nextColor() {
-        return random.nextInt(7);
+    /*
+    Dummy intellect will generate a cell in which there is no ball
+     */
+    public Cell generateNextCell() {
+        while (true) {
+            int x = random.nextInt(Scene.CELL_NUMBER);
+            int y = random.nextInt(Scene.CELL_NUMBER);
+            Cell cell = new Cell(x, y);
+            if (!board.haveCell(cell)) return cell;
+        }
+    }
+
+    public ColorType generateNextColor() {
+        return ColorType.getColorType(random.nextInt(7));
     }
 }

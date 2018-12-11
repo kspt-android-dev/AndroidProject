@@ -13,11 +13,11 @@ public class Board {
             new Cell(-1, 1), // main diagonal
             new Cell(1, 1)}; // secondary diagonal
 
-    private ColorType getColor(Cell cell) {
+    public ColorType getColor(Cell cell) {
         return map.get(cell);
     }
 
-    private boolean haveCell(Cell cell) {
+    public boolean haveCell(Cell cell) {
         return map.get(cell) != null;
     }
 
