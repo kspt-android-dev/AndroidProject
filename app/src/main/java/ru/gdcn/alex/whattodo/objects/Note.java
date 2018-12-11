@@ -1,14 +1,7 @@
 package ru.gdcn.alex.whattodo.objects;
 
-import android.util.Log;
-
-import com.orm.SugarRecord;
-
 import java.io.Serializable;
 import java.util.Objects;
-
-import ru.gdcn.alex.whattodo.R;
-import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class Note implements Serializable {
 
@@ -20,7 +13,7 @@ public class Note implements Serializable {
     private String header;
     private String content;
     private String type = "note";
-    private String date;
+    private Integer date;
     private int fixed = 0;
     private int deleted = 0;
 
@@ -33,7 +26,7 @@ public class Note implements Serializable {
         this.position = position;
     }
 
-    public Note(int id, int position, String header, String content, String type, String date, int fixed, int deleted) {
+    public Note(int id, int position, String header, String content, String type, Integer date, int fixed, int deleted) {
         this.id = id;
         this.position = position;
         this.header = header;
@@ -64,7 +57,7 @@ public class Note implements Serializable {
         return type;
     }
 
-    public String getDate() {
+    public Integer getDate() {
         return date;
     }
 
@@ -84,7 +77,7 @@ public class Note implements Serializable {
         this.type = type;
     }
 
-    public void setDate(String date) {
+    public void setDate(Integer date) {
         this.date = date;
     }
 

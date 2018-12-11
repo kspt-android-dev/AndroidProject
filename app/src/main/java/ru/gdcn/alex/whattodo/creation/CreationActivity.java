@@ -14,12 +14,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import org.sqlite.core.DB;
-
 import ru.gdcn.alex.whattodo.R;
-import ru.gdcn.alex.whattodo.data.DBConnector;
-import ru.gdcn.alex.whattodo.objects.Item;
-import ru.gdcn.alex.whattodo.objects.Note;
+import ru.gdcn.alex.whattodo.creation.alarm.CreateAlarmDialog;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class CreationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -106,8 +102,7 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.creation_top_alarm:
                 Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"Alarm\"!");
-                resetColor(item);
-//                resetAlarm(); //TODO
+                resetAlarm(item);
 //                createSchedule(); //TODO
                 break;
             case android.R.id.home:
@@ -131,14 +126,21 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void resetColor(MenuItem item) {
+    private void resetAlarm(MenuItem item) {
         if (item.isChecked()) {
             item.setChecked(false);
             item.getIcon().setTint(Color.parseColor("#FFFFFF"));
+            createAlarm();
         } else {
             item.setChecked(true);
             item.getIcon().setTint(Color.parseColor("#FF2ABFF1"));
+            createAlarm();
         }
+    }
+
+    private void createAlarm() {
+        CreateAlarmDialog createAlarmDialog = new CreateAlarmDialog();
+        createAlarmDialog.show(getSupportFragmentManager(), "alarm");
     }
 
     @Override

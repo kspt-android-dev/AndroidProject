@@ -31,7 +31,7 @@ public class DBConnector {
         contentValues.put(KEY_HEADER, note.getHeader());
         contentValues.put(KEY_CONTENT, note.getContent());
         contentValues.put(KEY_TYPE, note.getType());
-        contentValues.put(KEY_DATE, stringToDate(note.getDate()));
+        contentValues.put(KEY_DATE, note.getDate());
         contentValues.put(KEY_FIXED, note.getFixed());
         contentValues.put(KEY_DELETED, note.getDeleted());
         long id = database.insert(TABLE_NOTES, null, contentValues);
@@ -55,7 +55,7 @@ public class DBConnector {
         contentValues.put(KEY_HEADER, note.getHeader());
         contentValues.put(KEY_CONTENT, note.getContent());
         contentValues.put(KEY_TYPE, note.getType());
-        contentValues.put(KEY_DATE, stringToDate(note.getDate()));
+        contentValues.put(KEY_DATE, note.getDate());
         contentValues.put(KEY_FIXED, note.getFixed());
         contentValues.put(KEY_DELETED, note.getDeleted());
         database.update(TABLE_NOTES, contentValues, KEY_ID + " = " + note.getId(), null);
@@ -222,7 +222,7 @@ public class DBConnector {
                         cursor.getString(indexHeader),
                         cursor.getString(indexContent),
                         cursor.getString(indexType),
-                        cursor.getString(indexDate),
+                        cursor.getInt(indexDate),
                         cursor.getInt(indexFixed),
                         cursor.getInt(indexDeleted)
                 ));
@@ -250,13 +250,5 @@ public class DBConnector {
         dbHelper.close();
 
         Log.d(TAG, TextFormer.getStartText(className) + "Таблица отчищена!");
-    }
-
-    private static Integer stringToDate(String dateString) {
-        return null;
-    }
-
-    private static String dateToString(java.util.Date date) {
-        return null;
     }
 }

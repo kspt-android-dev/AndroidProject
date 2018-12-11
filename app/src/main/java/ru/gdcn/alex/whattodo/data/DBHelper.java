@@ -13,7 +13,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "DBHelper";
 
-    public static final int DATABASE_VERSION = 17;
+    public static final int DATABASE_VERSION = 18;
     public static final String DATABASE_NAME = "WhatToDO_DB";
     public static final String TABLE_NOTES = "Notes";
     public static final String TABLE_ITEMS = "Items";
@@ -51,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 KEY_HEADER + " text," +
                 KEY_CONTENT + " text," +
                 KEY_TYPE + " text not null," +
-                KEY_DATE + " numeric," +
+                KEY_DATE + " integer," +
                 KEY_FIXED + " integer not null," +
                 KEY_DELETED + " integer not null" + ")";
         db.execSQL(sqlNotes);
