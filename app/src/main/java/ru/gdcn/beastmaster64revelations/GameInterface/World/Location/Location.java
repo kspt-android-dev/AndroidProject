@@ -1,6 +1,7 @@
 package ru.gdcn.beastmaster64revelations.GameInterface.World.Location;
 
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.NPC;
+import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.MapPoint;
 
 import java.util.List;
@@ -92,6 +93,6 @@ public interface Location {
     //TODO
     public void playerGone();
     //TODO
-    public void playerCame();
+    public void playerCame(Player player);
 
 }

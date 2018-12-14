@@ -1,5 +1,7 @@
 package ru.gdcn.beastmaster64revelations.GameInterface.World.Location;
 
-public enum LocationType {
-    DUNGEON, FOREST, FLATLAND, ROCK;
+import java.io.Serializable;
+
+public enum LocationType implements Serializable {
+    DUNGEON, FOREST, FLATLAND, ROCK
 }

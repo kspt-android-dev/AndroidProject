@@ -1,5 +1,7 @@
 package ru.gdcn.beastmaster64revelations.GameClass.Actions;
 
+import java.util.Random;
+
 import ru.gdcn.beastmaster64revelations.GameInterface.Action.Action;
 import ru.gdcn.beastmaster64revelations.GameInterface.Action.ActionResult;
 import ru.gdcn.beastmaster64revelations.GameInterface.Action.ActionType;
@@ -36,7 +38,7 @@ public class BasicAttack implements Action {
     @Override
     public ActionResult use(Character user, Character other) {
         Integer damage = (int) (user.getFullAttack() * damageModifier);
-        other.dealPhysicalDamage(damage);
+        other.dealPhysicalDamage(damage - damage/4 + new Random().nextInt(damage/2));
         //ToDO
         return ActionResult.HIT;
     }

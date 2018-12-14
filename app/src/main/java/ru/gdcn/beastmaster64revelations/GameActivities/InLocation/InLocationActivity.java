@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import ru.gdcn.beastmaster64revelations.FightActivity;
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.PlayerClass;
 import ru.gdcn.beastmaster64revelations.GameClass.WorldElemets.SimpleLocationClass;
+import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.LocationType;
 import ru.gdcn.beastmaster64revelations.R;
 import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;
@@ -18,7 +19,7 @@ public class InLocationActivity extends AppCompatActivity {
 
     ProportionalImageView imageView;
     InLocationFragment locationFragment;
-    SimpleLocationClass location;
+    Location location;
     PlayerClass player;
 
     @Override
@@ -40,20 +41,25 @@ public class InLocationActivity extends AppCompatActivity {
                 .commit();
 
         location = generateLocation();
-        locationFragment.setCurrentLocation(location);
-        changeBackground(location.getType());
+        transitionToNewLocation(location);
 
         Button toMenu = findViewById(R.id.activity_in_location_manu_settings);
         toMenu.setOnClickListener(v -> {
             //TODO GOBACK
         });
+    }
 
+    private void transitionToNewLocation(Location location) {
+        player.changeLocationTo(location);
+        this.location = location;
+        location.playerCame(player);
+        changeBackground(location.getType());
+        locationFragment.setCurrentLocation(location);
+        locationFragment.updateContent();
     }
 
     public void goFurther(){
-        location = generateLocation();
-        locationFragment.setContent(location);
-        changeBackground(location.getType());
+        transitionToNewLocation(generateLocation());
     }
 
     private SimpleLocationClass generateLocation() {
@@ -64,6 +70,7 @@ public class InLocationActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FightActivity.class);
         intent.putExtra("enemy", location.getNPC());
         intent.putExtra("player", player);
+        intent.putExtra("locationType", location.getType());
         startActivity(intent);
     }
 
@@ -84,7 +91,6 @@ public class InLocationActivity extends AppCompatActivity {
                 break;
         }
         imageView.setImageDrawable(imageView.getResources().getDrawable(image));
-
     }
 
 }

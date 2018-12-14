@@ -63,7 +63,7 @@ public class CharacterCard extends LinearLayout {
 //        stats.setTextColor(Color.WHITE);
 
         this.setOrientation(LinearLayout.VERTICAL);
-        this.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        this.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         this.setGravity(Gravity.CENTER);
 
         this.addView(name);

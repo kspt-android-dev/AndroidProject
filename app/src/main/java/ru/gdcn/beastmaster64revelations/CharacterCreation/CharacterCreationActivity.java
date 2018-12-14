@@ -35,7 +35,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         Button readyButton = findViewById(R.id.activity_character_creation_proceedButton);
         readyButton.setOnClickListener(v -> {
 
-            player = new PlayerClass("TEST", null, 80,1,10,10);
+            player = new PlayerClass("Герой", null, 60,30,25,10);
             Intent intent = new Intent(getApplicationContext(), InLocationActivity.class);
             intent.putExtra("player", player);
             startActivity(intent);

@@ -10,6 +10,7 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Action.Action;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Opponent;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.OpponentType;
+import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
 import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;
 
 public class DummyEnemy extends CharacterClass implements Opponent {
@@ -18,6 +19,13 @@ public class DummyEnemy extends CharacterClass implements Opponent {
         super(generateName(), null, 10, 10, 10, 10);
     }
 
+    public DummyEnemy(Player player) {
+        super(generateName(), null,
+                player.getStrength() - 3 + new Random().nextInt(7),
+                player.getAgility() - 3 + new Random().nextInt(7),
+                player.getIntellect() - 3 + new Random().nextInt(7),
+                10);
+    }
 
     public static String generateName() {
         int number = new Random().nextInt(4);
@@ -64,7 +72,7 @@ public class DummyEnemy extends CharacterClass implements Opponent {
     @Override
     public Action makeNextFightTurn(Character enemy) {
         Action action;
-        if (HP/maxHP * 1.0 < 0.2){
+        if (HP * 1.0/maxHP < 0.2){
             action = new BasicHeal("Пуф!", 4);
         } else {
             action = new BasicAttack("Бац", 0.6);

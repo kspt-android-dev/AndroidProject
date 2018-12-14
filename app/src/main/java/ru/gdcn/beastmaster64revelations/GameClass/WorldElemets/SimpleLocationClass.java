@@ -7,6 +7,7 @@ import java.util.Random;
 
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.TestCharacters.DummyEnemy;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.NPC;
+import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.LocationType;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Treasure;
@@ -20,17 +21,16 @@ public class SimpleLocationClass implements Location, Serializable {
     String description;
     LocationType type;
     String name;
+    Player player;
 
     public SimpleLocationClass(MapPoint coordinates){
         this.coordinates = coordinates;
-        this.someSickFuck = new DummyEnemy();
         name = randomLocationName();
         hasPlayer = false;
     }
 
     public SimpleLocationClass(){
         this.coordinates = null;
-        this.someSickFuck = new DummyEnemy();
         name = randomLocationName();
         hasPlayer = false;
     }
@@ -162,12 +162,23 @@ public class SimpleLocationClass implements Location, Serializable {
 
     @Override
     public void playerGone() {
+        player = null;
         hasPlayer = false;
     }
 
     @Override
-    public void playerCame() {
+    public void playerCame(Player player) {
+        this.player = player;
+        this.someSickFuck = generateEnemy();
         hasPlayer = true;
+    }
+
+    private NPC generateEnemy() {
+        return new DummyEnemy(player);
+    }
+
+    public Player getPlayer(){
+        return player;
     }
 
 }

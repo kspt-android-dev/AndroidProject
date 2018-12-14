@@ -65,6 +65,7 @@ public class InLocationFragment extends Fragment {
         goAwayButton.setOnClickListener(v -> {
             goAway();
         });
+        setContent(currentLocation);
 
         //this.setContent(new SimpleLocationClass(new MapPoint(0,0)));
     }
@@ -95,9 +96,6 @@ public class InLocationFragment extends Fragment {
     }
 
     public void setContent(Location location){
-
-        currentLocation = location;
-
         TextView nameView = getActivity().findViewById(R.id.fragment_in_location_content_LocationName);
         nameView.setText(location.getName());
         TextView descView = getActivity().findViewById(R.id.fragment_in_location_content_LocationDescriptionContent);
@@ -110,7 +108,12 @@ public class InLocationFragment extends Fragment {
     }
 
 
-    public void setCurrentLocation(SimpleLocationClass location) {
+    public void setCurrentLocation(Location location) {
         currentLocation = location;
+    }
+
+    public void updateContent() {
+        if (isAdded())
+            setContent(currentLocation);
     }
 }

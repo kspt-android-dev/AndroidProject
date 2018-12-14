@@ -36,7 +36,7 @@ public class CharacterClass implements Character, Serializable {
                           Integer agility,
                           Integer intellect,
                           Integer luck) {
-        this.maxHP = strength * 10 / agility;
+        this.maxHP = (strength * strength + 1) / (agility + 1);
         this.HP = maxHP;
         this.name = name;
         this.currentLocation = location;
@@ -105,7 +105,7 @@ public class CharacterClass implements Character, Serializable {
     public Integer getFullAttack() {
         //return getBasicAttack() + currentWeapon.getBasePoints() + currentWeapon.getExtraPoints();
         //TODO
-        return strength+agility;
+        return (int) (Math.pow(strength + agility * 1.0, 0.6));
     }
 
     @Override
@@ -189,8 +189,12 @@ public class CharacterClass implements Character, Serializable {
 
     @Override
     public Boolean dealHeal(Integer points) {
-        if (points == null || this.isDead() || points < 0 || HP + points >= maxHP)
+        if (points == null || this.isDead() || points < 0)
             return false;
+        if (HP + points >= maxHP){
+            HP = maxHP;
+            return true;
+        }
         HP += points;
         return true;
     }

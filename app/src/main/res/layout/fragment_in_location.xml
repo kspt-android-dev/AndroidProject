@@ -27,7 +27,7 @@
                 android:fontFamily="sans-serif-condensed"
                 android:text="Название"
                 android:textAlignment="center"
-                android:textColor="#DDDDFF"
+                android:textColor="#FFFFFF"
                 android:textSize="40sp" />
 
             <TextView
@@ -40,7 +40,7 @@
                 android:layout_marginBottom="5dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="Описание"
-                android:textColor="#DDDDFF"
+                android:textColor="#FFFFFF"
                 android:textSize="30sp" />
 
             <TextView
@@ -53,7 +53,7 @@
                 android:layout_marginBottom="5dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="TextView"
-                android:textColor="#DDDDFF"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 
             <TextView
@@ -66,7 +66,7 @@
                 android:layout_marginBottom="5dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="NPC"
-                android:textColor="#DDDDFF"
+                android:textColor="#FFFFFF"
                 android:textSize="30sp" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:layout_marginBottom="5dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="TextView"
-                android:textColor="#DDDDFF"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -91,7 +91,7 @@
                 <Button
                     android:id="@+id/fragment_in_location_content_NPCattack"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-condensed"
@@ -101,7 +101,7 @@
                 <Button
                     android:id="@+id/fragment_in_location_content_NPCtalk"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif-condensed"
@@ -111,8 +111,9 @@
 
             <Button
                 android:id="@+id/fragment_in_location_content_GoAway"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="220dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:layout_weight="0"
                 android:fontFamily="sans-serif-condensed"

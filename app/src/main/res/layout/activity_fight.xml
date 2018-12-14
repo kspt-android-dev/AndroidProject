@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_fight_backFrame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#181818"
+    android:background="#333"
     tools:context=".FightActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -20,7 +22,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="303dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0"
             android:gravity="center"
             android:orientation="horizontal">
@@ -28,29 +30,35 @@
             <FrameLayout
                 android:id="@+id/activity_fight_placeholder_left"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_weight="1">
+                android:layout_height="230dp"
+                android:layout_weight="1"
+                android:background="#208888FF"
+                android:foregroundGravity="center">
 
             </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/activity_fight_placeholder_right"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_weight="1">
+                android:layout_height="230dp"
+                android:layout_weight="1"
+                android:background="#20FF8888">
 
             </FrameLayout>
         </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/activity_fight_progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
+        <ImageView
+            android:id="@+id/activity_fight_progressBarEnemy"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
+            app:srcCompat="@android:color/holo_red_light" />
+
+        <ImageView
+            android:id="@+id/activity_fight_progressBarPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
             android:layout_weight="0"
-            android:max="1000"
-            android:progress="0"
-            android:progressTint="@color/colorAccent" />
+            app:srcCompat="@android:color/holo_blue_bright" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -97,7 +105,7 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_weight="30"
-            android:background="#272121"
+            android:background="#60000000"
             android:fillViewport="true">
 
             <TextView
