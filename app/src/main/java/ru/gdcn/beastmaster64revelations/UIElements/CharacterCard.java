@@ -26,7 +26,7 @@ public class CharacterCard extends LinearLayout {
     TextView name;
     ImageView face;
     TextView HP;
-    TextView stats;
+    //TextView stats;
 
     public CharacterCard(final Context context, @Nullable AttributeSet attrs, Character character) {
         super(context, attrs);
@@ -52,15 +52,15 @@ public class CharacterCard extends LinearLayout {
         HP.setTextAlignment(TEXT_ALIGNMENT_CENTER);
         HP.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
 
-        stats = new TextView(context);
-        stats.setText("-----\n" +
-                "СИЛ:" + character.getStrength() + "\n" +
-                "ЛОВ:" + character.getAgility() + "\n" +
-                "ИНТ:" + character.getIntellect() + "\n" +
-                "-----");
-        stats.setTextAlignment(TEXT_ALIGNMENT_CENTER);
-        stats.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-        stats.setTextColor(Color.WHITE);
+//        stats = new TextView(context);
+//        stats.setText("-----\n" +
+//                "СИЛ:" + character.getStrength() + "\n" +
+//                "ЛОВ:" + character.getAgility() + "\n" +
+//                "ИНТ:" + character.getIntellect() + "\n" +
+//                "-----");
+//        stats.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+//        stats.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+//        stats.setTextColor(Color.WHITE);
 
         this.setOrientation(LinearLayout.VERTICAL);
         this.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -69,7 +69,7 @@ public class CharacterCard extends LinearLayout {
         this.addView(name);
         this.addView(face);
         this.addView(HP);
-        this.addView(stats);
+        //this.addView(stats);
 
     }
 

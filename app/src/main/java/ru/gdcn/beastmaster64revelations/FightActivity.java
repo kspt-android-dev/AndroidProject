@@ -39,6 +39,7 @@ public class FightActivity extends AppCompatActivity {
     List<Button> allActionButtons = new ArrayList<>();
 
     Integer currentZ = 10;
+    CountDownTimer AItimer;
 
     TextView fightConsoleText;
     NestedScrollView fightConsoleScroll;
@@ -128,25 +129,27 @@ public class FightActivity extends AppCompatActivity {
             logFightAction(player.getName() + " только что вылечился!");
         });
 
-        runEnemyAI();
-
+        runEnemyAI(1500);
     }
 
+    private void runEnemyAI(int millisDelay) {
 
-
-    private void runEnemyAI() {
-        if (player.isDead())
-            onPlayerDead();
-        if (enemy.isDead())
-            onEnemyDead();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        AItimer = new CountDownTimer(millisDelay, 25) {
             @Override
-            public void run() {
-                if (player.isDead())
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                if (player.isDead()) {
                     onPlayerDead();
-                if (enemy.isDead())
+                    return;
+                }
+                if (enemy.isDead()){
                     onEnemyDead();
+                    return;
+                }
                 runOnUiThread(() -> {
                     Action enemyAction = enemy.makeNextFightTurn(player);
                     logFightAction(enemy.getName() + " использует " + enemyAction.getName() + "!!!");
@@ -154,9 +157,11 @@ public class FightActivity extends AppCompatActivity {
                     playerCard.updateContent();
                     enemyCard.updateContent();
                 });
-                runEnemyAI();
+                runEnemyAI(1500);
             }
-        }, 100);
+        };
+
+        AItimer.start();
     }
 
 
