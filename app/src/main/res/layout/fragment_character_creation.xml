@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_orange_light"
+    android:gravity="top|center"
+    android:orientation="vertical"
+    android:showDividers="beginning|middle|end"
+    tools:context=".CharacterCreation.CharacterCreationFragment">
+
+
+    <TextView
+        android:id="@+id/fragment_character_creation_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Персонаж"
+        android:textColor="#000000"
+        android:textSize="26sp" />
+
+    <EditText
+        android:id="@+id/fragment_character_creation_nameField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:ems="10"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:hint="Имя персонажа"
+        android:inputType="textPersonName"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/fragment_character_creation_totalPointsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:text="0"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/fragment_character_creation_attributeChangersLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+</LinearLayout>
