@@ -53,15 +53,15 @@ class GameActivity : AppCompatActivity() {
         val metrics = DisplayMetrics()
 
         windowManager.defaultDisplay.getMetrics(metrics)
-        val boardWidth: Int = (metrics.widthPixels * GameData.boardSizeModifier).toInt()
+        val boardWidth: Int = metrics.widthPixels
         val boardHeight: Int = boardWidth
-        var cellWidth: Int = (boardWidth / ((gameManager.mainBoard.gameWayLength / 4 - 2) + 2 * GameData.cellSidesModifier)).toInt()
+        var cellWidth: Int = (boardWidth / ((gameManager.mainBoard.gameWayLength / 4 - 1) + 2 * GameData.cellSidesModifier)).toInt()
         var cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
 
 
         underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
         horizotnalGuidleline.setGuidelinePercent((2*cellHeight.toFloat() + 9 * cellWidth.toFloat())/metrics.heightPixels)
-        createBoard(constraintLayout , cellHeight , cellWidth)
+        createBoard(constraintLayout , cellHeight , cellWidth )
         startAssignment(playersNames)
 
         for (i in 1..playersNames.size) {
