@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">EruditKurs</string>
+    <string name="title_activity_start_game">EruditKurs</string>
+    <string name="button">Button</string>
+    <string name="newGame">Новая игра</string>
+    <string name="exit">Выход</string>
+    <string name="rules">Правила</string>
+    <string name="startGame">Старт игры</string>
+    <string name="nextTurn">Конец хода</string>
+</resources>
