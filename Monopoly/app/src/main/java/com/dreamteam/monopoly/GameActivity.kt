@@ -17,12 +17,11 @@ import com.dreamteam.monopoly.game.GameManager
 import com.dreamteam.monopoly.game.player.Player
 import com.dreamteam.monopoly.game.player.PlayerActions
 import com.dreamteam.monopoly.game.player.PlayerMoveCondition
-import com.dreamteam.monopoly.helpers.makeTinyAlert
-import com.dreamteam.monopoly.helpers.showToast
 import com.tapadoo.alerter.Alerter
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
+
 
 
 class GameActivity : AppCompatActivity() {
@@ -32,7 +31,7 @@ class GameActivity : AppCompatActivity() {
     private var noButton: Button? = null
     private var question: Button? = null
     private var gameManager: GameManager = GameManager(this)
-    private var cellButtons: ArrayList<Button> = ArrayList(gameManager.mainBoard.gameWayLength)
+    private var cellButtons: ArrayList<ImageButton> = ArrayList(gameManager.mainBoard.gameWayLength)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +43,7 @@ class GameActivity : AppCompatActivity() {
         question = findViewById(R.id.DialogView) as Button
         val constraintLayout = findViewById(R.id.ConstraintLayout) as ConstraintLayout
         val underTopLineGuideline = findViewById(R.id.UnderTopPartGuideline) as Guideline
+        val horizotnalGuidleline = findViewById(R.id.HorizontalGuideline) as Guideline
 
 
         val intent = intent
@@ -60,6 +60,7 @@ class GameActivity : AppCompatActivity() {
 
 
         underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
+        horizotnalGuidleline.setGuidelinePercent((2*cellHeight.toFloat() + 9 * cellWidth.toFloat())/metrics.heightPixels)
         createBoard(constraintLayout , cellHeight , cellWidth)
         startAssignment(playersNames)
 
@@ -201,10 +202,10 @@ class GameActivity : AppCompatActivity() {
         var button = ImageButton(this)
         button.layoutParams = LayoutParams(cellHeight, cellHeight)
         button.id = (thisButtonID)
-        button.setOnClickListener(View.OnClickListener {
-        })
+        button.setOnClickListener(ShowInfoClick)
         button.setBackgroundResource(R.drawable.cell_borders_up)
         constraintLayout.addView(button)
+        cellButtons.add(button)
         val constraintSet = ConstraintSet()
         constraintSet.clone(constraintLayout)
         constraintSet.connect(R.id.UnderTopPartGuideline, ConstraintSet.TOP, constraintLayout.getId(), ConstraintSet.TOP, cellHeight)
@@ -218,10 +219,10 @@ class GameActivity : AppCompatActivity() {
             previousButtonID = getResources().getIdentifier("cell${index}", "id", packageName)
             thisButtonID = getResources().getIdentifier("cell${index + 1}", "id", packageName)
             button.id = (thisButtonID)
-            button.setOnClickListener(View.OnClickListener {
-            })
+            button.setOnClickListener(ShowInfoClick)
             button.setBackgroundResource(R.drawable.cell_borders_up)
             constraintLayout.addView(button)
+            cellButtons.add(button)
             val constraintSet = ConstraintSet()
             constraintSet.clone(constraintLayout)
             constraintSet.connect(button.id, ConstraintSet.START, previousButtonID, ConstraintSet.END, 0)
@@ -236,10 +237,10 @@ class GameActivity : AppCompatActivity() {
         previousButtonID = getResources().getIdentifier("cell${index}", "id", packageName)
         thisButtonID = getResources().getIdentifier("cell${index + 1}", "id", packageName)
         button.id = (thisButtonID)
-        button.setOnClickListener(View.OnClickListener {
-        })
+        button.setOnClickListener(ShowInfoClick)
         button.setBackgroundResource(R.drawable.cell_borders_up)
         constraintLayout.addView(button)
+        cellButtons.add(button)
         constraintSet.clone(constraintLayout)
         constraintSet.connect(button.id, ConstraintSet.START, previousButtonID, ConstraintSet.END, 0)
         constraintSet.connect(button.id, ConstraintSet.TOP, previousButtonID, ConstraintSet.TOP, 0)
@@ -252,10 +253,10 @@ class GameActivity : AppCompatActivity() {
             previousButtonID = getResources().getIdentifier("cell${index}", "id", packageName)
             thisButtonID = getResources().getIdentifier("cell${index + 1}", "id", packageName)
             button.id = (thisButtonID)
-            button.setOnClickListener(View.OnClickListener {
-            })
+            button.setOnClickListener(ShowInfoClick)
             button.setBackgroundResource(R.drawable.cell_borders_up)
             constraintLayout.addView(button)
+            cellButtons.add(button)
             val constraintSet = ConstraintSet()
             constraintSet.clone(constraintLayout)
             constraintSet.connect(button.id, ConstraintSet.START, previousButtonID, ConstraintSet.START, 0)
@@ -270,10 +271,10 @@ class GameActivity : AppCompatActivity() {
         previousButtonID = getResources().getIdentifier("cell${index}", "id", packageName)
         thisButtonID = getResources().getIdentifier("cell${index + 1}", "id", packageName)
         button.id = (thisButtonID)
-        button.setOnClickListener(View.OnClickListener {
-        })
+        button.setOnClickListener(ShowInfoClick)
         button.setBackgroundResource(R.drawable.cell_borders_up)
         constraintLayout.addView(button)
+        cellButtons.add(button)
         constraintSet.clone(constraintLayout)
         constraintSet.connect(button.id, ConstraintSet.START, previousButtonID, ConstraintSet.START, 0)
         constraintSet.connect(button.id, ConstraintSet.TOP, previousButtonID, ConstraintSet.BOTTOM, 0)
@@ -287,10 +288,10 @@ class GameActivity : AppCompatActivity() {
             previousButtonID = getResources().getIdentifier("cell${index}", "id", packageName)
             thisButtonID = getResources().getIdentifier("cell${index + 1}", "id", packageName)
             button.id = (thisButtonID)
-            button.setOnClickListener(View.OnClickListener {
-            })
+            button.setOnClickListener(ShowInfoClick)
             button.setBackgroundResource(R.drawable.cell_borders_up)
             constraintLayout.addView(button)
+            cellButtons.add(button)
             val constraintSet = ConstraintSet()
             constraintSet.clone(constraintLayout)
             constraintSet.connect(button.id, ConstraintSet.END, previousButtonID, ConstraintSet.START, 0)
@@ -305,10 +306,10 @@ class GameActivity : AppCompatActivity() {
         previousButtonID = resources.getIdentifier("cell$index", "id", packageName)
         thisButtonID = resources.getIdentifier("cell${index + 1}", "id", packageName)
         button.id = (thisButtonID)
-        button.setOnClickListener(View.OnClickListener {
-        })
+        button.setOnClickListener(ShowInfoClick)
         button.setBackgroundResource(R.drawable.cell_borders_up)
         constraintLayout.addView(button)
+        cellButtons.add(button)
         constraintSet.clone(constraintLayout)
         constraintSet.connect(button.id, ConstraintSet.END, previousButtonID, ConstraintSet.START, 0)
         constraintSet.connect(button.id, ConstraintSet.TOP, previousButtonID, ConstraintSet.TOP, 0)
@@ -322,10 +323,10 @@ class GameActivity : AppCompatActivity() {
             previousButtonID = resources.getIdentifier("cell$index", "id", packageName)
             thisButtonID = resources.getIdentifier("cell${index + 1}", "id", packageName)
             button.id = (thisButtonID)
-            button.setOnClickListener(View.OnClickListener {
-            })
+            button.setOnClickListener(ShowInfoClick)
             button.setBackgroundResource(R.drawable.cell_borders_up)
             constraintLayout.addView(button)
+            cellButtons.add(button)
             val constraintSet = ConstraintSet()
             constraintSet.clone(constraintLayout)
             constraintSet.connect(button.id, ConstraintSet.START, previousButtonID, ConstraintSet.START, 0)
@@ -337,6 +338,22 @@ class GameActivity : AppCompatActivity() {
     }
 
     val ShowInfoClick = View.OnClickListener { view ->
+        val i = cellButtons.indexOf(view)
+        Log.d("TAG", i.toString())
+        val name : String = GameData.boardGameCells[i].info.name
+        val costBuy = GameData.boardGameCells[i].info.cost.costBuy
+        val costSell = GameData.boardGameCells[i].info.cost.costSell
+        val charge = GameData.boardGameCells[i].info.cost.costCharge
+        val nameSpace : TextView = findViewById(R.id.cellName)
+        val buySpace : TextView = findViewById(R.id.cellCost)
+        val sellSpace : TextView = findViewById(R.id.cellSell)
+        val chargeSpace : TextView = findViewById(R.id.cellCharge)
+
+        nameSpace.text = "Name: $name"
+        buySpace.text = "Buy: $costBuy"
+        sellSpace.text = "Sell: $costSell"
+        chargeSpace.text = "Charge: $charge"
+
 
     }
 
