@@ -2,7 +2,9 @@ package ru.polytech.course.pashnik.lines.Core;
 
 import java.util.HashMap;
 
-public class Board {
+import ru.polytech.course.pashnik.lines.MainContract;
+
+public class Board implements MainContract.Model {
 
     private final HashMap<Cell, ColorType> map = new HashMap<>();
     private final WinLines winLines = new WinLines();
@@ -13,14 +15,17 @@ public class Board {
             new Cell(-1, 1), // main diagonal
             new Cell(1, 1)}; // secondary diagonal
 
+    @Override
     public ColorType getColor(Cell cell) {
         return map.get(cell);
     }
 
+    @Override
     public boolean haveCell(Cell cell) {
         return map.get(cell) != null;
     }
 
+    @Override
     public void addCell(Cell cell, ColorType color) {
         map.put(cell, color);
     }
@@ -31,6 +36,7 @@ public class Board {
     posDirection and negDirection.
      */
 
+    @Override
     public boolean isWin(Cell currentCell) {
         ColorType color = getColor(currentCell);
         for (Cell directionCell : DIRECTIONS) {
@@ -53,15 +59,17 @@ public class Board {
         return !winLines.isEmpty();
     }
 
-    private boolean isWinLength(int currentLength) {
-        return currentLength > 4;
-    }
-
+    @Override
     public WinLines getWinLines() {
         return winLines;
     }
 
+    @Override
     public void removeCell(Cell cell) {
         map.remove(cell);
+    }
+
+    private boolean isWinLength(int currentLength) {
+        return currentLength > 4;
     }
 }

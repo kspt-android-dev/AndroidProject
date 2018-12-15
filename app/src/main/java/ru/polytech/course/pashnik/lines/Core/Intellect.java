@@ -2,15 +2,18 @@ package ru.polytech.course.pashnik.lines.Core;
 
 import java.util.Random;
 
-import ru.polytech.course.pashnik.lines.Scene;
+import ru.polytech.course.pashnik.lines.Graphics.GameView;
+import ru.polytech.course.pashnik.lines.MainContract;
 
 public class Intellect {
 
     private Random random = new Random();
-    private Board board;
+    private MainContract.Model model;
+    private int cellNumber;
 
-    public Intellect(Board board) {
-        this.board = board;
+    public Intellect(MainContract.Model model) {
+        this.model = model;
+        cellNumber = GameView.getCellNumber();
     }
 
     /*
@@ -18,10 +21,10 @@ public class Intellect {
      */
     public Cell generateNextCell() {
         while (true) {
-            int x = random.nextInt(Scene.CELL_NUMBER);
-            int y = random.nextInt(Scene.CELL_NUMBER);
+            int x = random.nextInt(cellNumber);
+            int y = random.nextInt(cellNumber);
             Cell cell = new Cell(x, y);
-            if (!board.haveCell(cell)) return cell;
+            if (!model.haveCell(cell)) return cell;
         }
     }
 

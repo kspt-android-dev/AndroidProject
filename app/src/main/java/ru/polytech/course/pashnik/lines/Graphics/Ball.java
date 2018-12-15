@@ -6,7 +6,6 @@ import android.graphics.Paint;
 
 import ru.polytech.course.pashnik.lines.Core.Cell;
 import ru.polytech.course.pashnik.lines.Core.ColorType;
-import ru.polytech.course.pashnik.lines.Scene;
 
 
 public class Ball {
@@ -17,7 +16,7 @@ public class Ball {
     private final ColorType color;
 
     public Ball(int x, int y, ColorType color) {
-        int cellSize = Scene.getCellSize();
+        int cellSize = GameView.getCellSize();
         this.x = cellSize / 2 + x * cellSize;
         this.y = cellSize / 2 + y * cellSize;
         this.color = color;
