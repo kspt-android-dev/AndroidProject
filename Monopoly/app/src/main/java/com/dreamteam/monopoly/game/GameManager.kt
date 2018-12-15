@@ -1,13 +1,14 @@
 package com.dreamteam.monopoly.game
 
 import android.app.Activity
+import com.dreamteam.monopoly.GameActivity
 import com.dreamteam.monopoly.game.GameData.startMoney
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.player.Player
 import com.dreamteam.monopoly.game.player.PlayerType
 
 class GameManager(private val activity: Activity) {
-    var mainBoard: Board = Board(GameData.boardGameCells, activity)
+    var mainBoard: Board = Board(GameData.boardGameCells, activity as GameActivity)
     var players: ArrayList<Player> = ArrayList()
     var currentPlayerIndex: Int = 0
 

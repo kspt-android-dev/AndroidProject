@@ -32,6 +32,8 @@ class GameActivity : AppCompatActivity() {
     private var gameManager: GameManager = GameManager(this)
     private var cellButtons: ArrayList<ImageButton> = ArrayList(gameManager.mainBoard.gameWayLength)
 
+    private var indexForBoard : Int = 0;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
@@ -199,147 +201,56 @@ class GameActivity : AppCompatActivity() {
 
     }
 
-    private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) {
-        var index = 0
-        var previousButtonID = getResources().getIdentifier("cell${index}", "id", packageName)
-        var thisButtonID = getResources().getIdentifier("cell${index + 1}", "id", packageName)
+    private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) { // LEFT = 1 RIGHT = 2 TOP = 3 BOTTOM = 4 START = 6 END = 7
+        createCell(cellHeight,cellHeight , constraintLayout , 3, 3, 6, 6, 3, 3 , true )
 
+        while (indexForBoard < gameManager.mainBoard.gameWayLength / 4) {
+            createCell(cellWidth,cellHeight , constraintLayout , 6, 7, 3, 3, 4, 4  )
+        }
+        createCell(cellHeight,cellHeight , constraintLayout , 6, 7, 3, 3, 4, 4  )
+
+        while (indexForBoard < gameManager.mainBoard.gameWayLength / 2) {
+            createCell(cellHeight,cellWidth , constraintLayout , 6, 6, 3, 4, 7, 7  )
+        }
+        createCell(cellHeight,cellHeight , constraintLayout , 6, 6, 3, 4, 7, 7  )
+
+        while (indexForBoard < 3 * gameManager.mainBoard.gameWayLength / 4) {
+            createCell(cellWidth,cellHeight , constraintLayout , 7, 6, 3, 3, 4, 4  )
+        }
+        createCell(cellHeight,cellHeight , constraintLayout , 7, 6, 3, 3, 4, 4  )
+
+        while (indexForBoard < gameManager.mainBoard.gameWayLength) {
+            createCell(cellHeight,cellWidth , constraintLayout , 6, 6, 4, 3, 7, 7  )
+        }
+    }
+
+    fun createCell(width:Int , height:Int , layout: ConstraintLayout, From1: Int, To1:Int, From2: Int, To2:Int,From3: Int, To3:Int  ,start:Boolean = false )
+    {
+        var thisButtonID = getResources().getIdentifier("cell${indexForBoard + 1}", "id", packageName)
+        var previousButtonID = resources.getIdentifier("cell$indexForBoard", "id", packageName)
         var button = ImageButton(this)
-        button.layoutParams = LayoutParams(cellHeight, cellHeight)
+        button.layoutParams = LayoutParams(width, height)
         button.id = (thisButtonID)
         button.setOnClickListener(ShowInfoClick)
         button.setBackgroundResource(R.drawable.cell_borders_up)
-        constraintLayout.addView(button)
+        layout.addView(button)
         cellButtons.add(button)
         val constraintSet = ConstraintSet()
-        constraintSet.clone(constraintLayout)
-        constraintSet.connect(R.id.UnderTopPartGuideline, ConstraintSet.TOP, constraintLayout.getId(), ConstraintSet.TOP, cellHeight)
-        constraintSet.connect(button.id, ConstraintSet.START, constraintLayout.getId(), ConstraintSet.START, 0)
-        constraintSet.connect(button.id, ConstraintSet.TOP, constraintLayout.getId(), ConstraintSet.TOP, 0)
-        constraintSet.applyTo(constraintLayout)
-        index++
-        while (index < gameManager.mainBoard.gameWayLength / 4) {
-            val button = ImageButton(this)
-            button.layoutParams = LayoutParams(cellWidth, cellHeight)
-            previousButtonID = getResources().getIdentifier("cell${index}", "id", packageName)
-            thisButtonID = getResources().getIdentifier("cell${index + 1}", "id", packageName)
-            button.id = (thisButtonID)
-            button.setOnClickListener(ShowInfoClick)
-            button.setBackgroundResource(R.drawable.cell_borders_up)
-            constraintLayout.addView(button)
-            cellButtons.add(button)
-            val constraintSet = ConstraintSet()
-            constraintSet.clone(constraintLayout)
-            constraintSet.connect(button.id, ConstraintSet.START, previousButtonID, ConstraintSet.END, 0)
-            constraintSet.connect(button.id, ConstraintSet.TOP, previousButtonID, ConstraintSet.TOP, 0)
-            constraintSet.connect(button.id, ConstraintSet.BOTTOM, previousButtonID, ConstraintSet.BOTTOM, 0)
-            constraintSet.applyTo(constraintLayout)
-            index++
+        constraintSet.clone(layout)
+        if (start) {
+            constraintSet.connect(R.id.UnderTopPartGuideline, From1, layout.getId(), To1, height)
+            constraintSet.connect(button.id, From2, layout.getId(), To2, 0)
+            constraintSet.connect(button.id, From3, layout.getId(), To3, 0)
+
         }
-        //create corner TODO
-        button = ImageButton(this)
-        button.layoutParams = LayoutParams(cellHeight, cellHeight)
-        previousButtonID = getResources().getIdentifier("cell${index}", "id", packageName)
-        thisButtonID = getResources().getIdentifier("cell${index + 1}", "id", packageName)
-        button.id = (thisButtonID)
-        button.setOnClickListener(ShowInfoClick)
-        button.setBackgroundResource(R.drawable.cell_borders_up)
-        constraintLayout.addView(button)
-        cellButtons.add(button)
-        constraintSet.clone(constraintLayout)
-        constraintSet.connect(button.id, ConstraintSet.START, previousButtonID, ConstraintSet.END, 0)
-        constraintSet.connect(button.id, ConstraintSet.TOP, previousButtonID, ConstraintSet.TOP, 0)
-        constraintSet.connect(button.id, ConstraintSet.BOTTOM, previousButtonID, ConstraintSet.BOTTOM, 0)
-        constraintSet.applyTo(constraintLayout)
-        index++
-        while (index < gameManager.mainBoard.gameWayLength / 2) {
-            val button = ImageButton(this)
-            button.layoutParams = LayoutParams(cellHeight, cellWidth)
-            previousButtonID = getResources().getIdentifier("cell${index}", "id", packageName)
-            thisButtonID = getResources().getIdentifier("cell${index + 1}", "id", packageName)
-            button.id = (thisButtonID)
-            button.setOnClickListener(ShowInfoClick)
-            button.setBackgroundResource(R.drawable.cell_borders_up)
-            constraintLayout.addView(button)
-            cellButtons.add(button)
-            val constraintSet = ConstraintSet()
-            constraintSet.clone(constraintLayout)
-            constraintSet.connect(button.id, ConstraintSet.START, previousButtonID, ConstraintSet.START, 0)
-            constraintSet.connect(button.id, ConstraintSet.TOP, previousButtonID, ConstraintSet.BOTTOM, 0)
-            constraintSet.connect(button.id, ConstraintSet.END, previousButtonID, ConstraintSet.END, 0)
-            constraintSet.applyTo(constraintLayout)
-            index++
+        else
+        {
+            constraintSet.connect(button.id, From1, previousButtonID, To1, 0)
+            constraintSet.connect(button.id, From2, previousButtonID, To2, 0)
+            constraintSet.connect(button.id, From3, previousButtonID, To3, 0)
         }
-        //create corner TODO
-        button = ImageButton(this)
-        button.layoutParams = LayoutParams(cellHeight, cellHeight)
-        previousButtonID = getResources().getIdentifier("cell${index}", "id", packageName)
-        thisButtonID = getResources().getIdentifier("cell${index + 1}", "id", packageName)
-        button.id = (thisButtonID)
-        button.setOnClickListener(ShowInfoClick)
-        button.setBackgroundResource(R.drawable.cell_borders_up)
-        constraintLayout.addView(button)
-        cellButtons.add(button)
-        constraintSet.clone(constraintLayout)
-        constraintSet.connect(button.id, ConstraintSet.START, previousButtonID, ConstraintSet.START, 0)
-        constraintSet.connect(button.id, ConstraintSet.TOP, previousButtonID, ConstraintSet.BOTTOM, 0)
-        constraintSet.connect(button.id, ConstraintSet.END, previousButtonID, ConstraintSet.END, 0)
-        constraintSet.applyTo(constraintLayout)
-        index++
-        while (index < 3 * gameManager.mainBoard.gameWayLength / 4) {
-            // down cell create TODO
-            val button = ImageButton(this)
-            button.layoutParams = LayoutParams(cellWidth, cellHeight)
-            previousButtonID = getResources().getIdentifier("cell${index}", "id", packageName)
-            thisButtonID = getResources().getIdentifier("cell${index + 1}", "id", packageName)
-            button.id = (thisButtonID)
-            button.setOnClickListener(ShowInfoClick)
-            button.setBackgroundResource(R.drawable.cell_borders_up)
-            constraintLayout.addView(button)
-            cellButtons.add(button)
-            val constraintSet = ConstraintSet()
-            constraintSet.clone(constraintLayout)
-            constraintSet.connect(button.id, ConstraintSet.END, previousButtonID, ConstraintSet.START, 0)
-            constraintSet.connect(button.id, ConstraintSet.TOP, previousButtonID, ConstraintSet.TOP, 0)
-            constraintSet.connect(button.id, ConstraintSet.BOTTOM, previousButtonID, ConstraintSet.BOTTOM, 0)
-            constraintSet.applyTo(constraintLayout)
-            index++
-        }
-        //create corner TODO
-        button = ImageButton(this)
-        button.layoutParams = LayoutParams(cellHeight, cellHeight)
-        previousButtonID = resources.getIdentifier("cell$index", "id", packageName)
-        thisButtonID = resources.getIdentifier("cell${index + 1}", "id", packageName)
-        button.id = (thisButtonID)
-        button.setOnClickListener(ShowInfoClick)
-        button.setBackgroundResource(R.drawable.cell_borders_up)
-        constraintLayout.addView(button)
-        cellButtons.add(button)
-        constraintSet.clone(constraintLayout)
-        constraintSet.connect(button.id, ConstraintSet.END, previousButtonID, ConstraintSet.START, 0)
-        constraintSet.connect(button.id, ConstraintSet.TOP, previousButtonID, ConstraintSet.TOP, 0)
-        constraintSet.connect(button.id, ConstraintSet.BOTTOM, previousButtonID, ConstraintSet.BOTTOM, 0)
-        constraintSet.applyTo(constraintLayout)
-        index++
-        while (index < gameManager.mainBoard.gameWayLength) {
-            // left cell create TODO
-            val button = ImageButton(this)
-            button.layoutParams = LayoutParams(cellHeight, cellWidth)
-            previousButtonID = resources.getIdentifier("cell$index", "id", packageName)
-            thisButtonID = resources.getIdentifier("cell${index + 1}", "id", packageName)
-            button.id = (thisButtonID)
-            button.setOnClickListener(ShowInfoClick)
-            button.setBackgroundResource(R.drawable.cell_borders_up)
-            constraintLayout.addView(button)
-            cellButtons.add(button)
-            val constraintSet = ConstraintSet()
-            constraintSet.clone(constraintLayout)
-            constraintSet.connect(button.id, ConstraintSet.START, previousButtonID, ConstraintSet.START, 0)
-            constraintSet.connect(button.id, ConstraintSet.BOTTOM, previousButtonID, ConstraintSet.TOP, 0)
-            constraintSet.connect(button.id, ConstraintSet.END, previousButtonID, ConstraintSet.END, 0)
-            constraintSet.applyTo(constraintLayout)
-            index++
-        }
+        constraintSet.applyTo(layout)
+        indexForBoard++
     }
 
     val ShowInfoClick = View.OnClickListener { view ->
