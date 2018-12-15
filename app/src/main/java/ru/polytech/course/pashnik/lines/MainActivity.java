@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         /*Если я определяю обработчик здесь, то он вообще не работает.
         Хотелось бы конечно его определять здесь, а не в GameView как сейчас*/
 
+
 //        gameView.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
