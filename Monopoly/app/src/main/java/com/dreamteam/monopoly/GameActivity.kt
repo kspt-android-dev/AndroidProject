@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
 
 
-
 class GameActivity : AppCompatActivity() {
 
     private var buttonThrowDices: Button? = null
@@ -60,8 +59,8 @@ class GameActivity : AppCompatActivity() {
 
 
         underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
-        horizotnalGuidleline.setGuidelinePercent((2*cellHeight.toFloat() + 9 * cellWidth.toFloat())/metrics.heightPixels)
-        createBoard(constraintLayout , cellHeight , cellWidth )
+        horizotnalGuidleline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels)
+        createBoard(constraintLayout, cellHeight, cellWidth)
         startAssignment(playersNames)
 
         for (i in 1..playersNames.size) {
@@ -142,9 +141,9 @@ class GameActivity : AppCompatActivity() {
         val cube1: ImageView = findViewById(R.id.cube1)
         val cube2: ImageView = findViewById(R.id.cube2)
         val drawCube1 = resources.getDrawable(resources
-                .getIdentifier("dice${dices.first}", "drawable", packageName),null)      //gettind first cube image
+                .getIdentifier("dice${dices.first}", "drawable", packageName), null)      //gettind first cube image
         val drawCube2 = resources.getDrawable(resources
-                .getIdentifier("dice${dices.second}", "drawable", packageName),null)     //gettind second cube image
+                .getIdentifier("dice${dices.second}", "drawable", packageName), null)     //gettind second cube image
         cube1.setImageDrawable(drawCube1)  //draw this pics
         cube2.setImageDrawable(drawCube2)
 
@@ -162,6 +161,13 @@ class GameActivity : AppCompatActivity() {
         Toasty.info(this, gameManager.getCurrentPlayer().name + " move", Toast.LENGTH_SHORT, true).show()
     }
 
+    fun playerSetCellMark(index: Int) {
+        // TODO - setup unique color on owned cell (spawn image above old one)
+    }
+
+    fun playerRemoveCellMark(index: Int) {
+        // TODO - remove unique color on owned cell
+    }
 
     @Override
     override fun finish() {
@@ -172,8 +178,7 @@ class GameActivity : AppCompatActivity() {
 
     fun getGameManager(): GameManager = gameManager
 
-    private fun yesNoButtonListner()
-    {
+    private fun yesNoButtonListner() {
         yesButton!!.visibility = View.INVISIBLE
         noButton!!.visibility = View.INVISIBLE
         question!!.visibility = View.INVISIBLE
@@ -194,7 +199,7 @@ class GameActivity : AppCompatActivity() {
 
     }
 
-    private fun createBoard(constraintLayout : ConstraintLayout , cellHeight:Int, cellWidth:Int) {
+    private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) {
         var index = 0
         var previousButtonID = getResources().getIdentifier("cell${index}", "id", packageName)
         var thisButtonID = getResources().getIdentifier("cell${index + 1}", "id", packageName)
@@ -340,14 +345,14 @@ class GameActivity : AppCompatActivity() {
     val ShowInfoClick = View.OnClickListener { view ->
         val i = cellButtons.indexOf(view)
         Log.d("TAG", i.toString())
-        val name : String = GameData.boardGameCells[i].info.name
+        val name: String = GameData.boardGameCells[i].info.name
         val costBuy = GameData.boardGameCells[i].info.cost.costBuy
         val costSell = GameData.boardGameCells[i].info.cost.costSell
         val charge = GameData.boardGameCells[i].info.cost.costCharge
-        val nameSpace : TextView = findViewById(R.id.cellName)
-        val buySpace : TextView = findViewById(R.id.cellCost)
-        val sellSpace : TextView = findViewById(R.id.cellSell)
-        val chargeSpace : TextView = findViewById(R.id.cellCharge)
+        val nameSpace: TextView = findViewById(R.id.cellName)
+        val buySpace: TextView = findViewById(R.id.cellCost)
+        val sellSpace: TextView = findViewById(R.id.cellSell)
+        val chargeSpace: TextView = findViewById(R.id.cellCharge)
 
         nameSpace.text = "Name: $name"
         buySpace.text = "Buy: $costBuy"
@@ -357,7 +362,7 @@ class GameActivity : AppCompatActivity() {
 
     }
 
-    private fun updPlayerMoney(player:Player) {
+    private fun updPlayerMoney(player: Player) {
         val playerMoneyId = resources.getIdentifier("playerMoney${gameManager.getPlayerByName(player.name)!!.id}", "id", packageName)
         val playerMoney: TextView = findViewById(playerMoneyId)
         playerMoney.text = gameManager.getPlayerByName(player.name)!!.money.toString()

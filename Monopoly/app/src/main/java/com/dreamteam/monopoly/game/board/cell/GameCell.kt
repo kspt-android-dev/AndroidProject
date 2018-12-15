@@ -30,6 +30,12 @@ open class GameCell(/*id: String, bitmap: Bitmap,*/ val info: GameCellInfo) : Ce
         owner = null
     }
 
+    fun reset() {
+        state = CellState.FREE
+        owner!!.removeGameCell(this)
+        owner = null
+    }
+
     fun checkBuyCost(money: Int): Boolean = money >= info.cost.costBuy
 
     fun checkChargeCost(money: Int): Boolean = money >= info.cost.costCharge

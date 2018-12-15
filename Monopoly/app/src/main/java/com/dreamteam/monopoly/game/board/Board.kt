@@ -16,7 +16,7 @@ import com.dreamteam.monopoly.GameActivity
 import kotlin.math.log
 
 
-class Board(var gameWay: ArrayList<GameCell>, private val activity: Activity) {
+class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
 
     val gameWayLength: Int = gameWay.size
 
@@ -37,8 +37,7 @@ class Board(var gameWay: ArrayList<GameCell>, private val activity: Activity) {
     }
 
     private fun changeImagePlace(player: Player) {
-        val gameAct: GameActivity = activity as GameActivity // return current player's cell
-        val currentPlayerIndex = gameAct.getGameManager().currentPlayerIndex;
+        val currentPlayerIndex = activity.getGameManager().currentPlayerIndex;
         val constraintSet = ConstraintSet()
         val constraintLayout: ConstraintLayout = activity.findViewById(R.id.ConstraintLayout)
         constraintSet.clone(constraintLayout)

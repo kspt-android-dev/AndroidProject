@@ -13,7 +13,7 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     var money: Int = startMoney
     var cells: ArrayList<GameCell> = ArrayList()    // ?
     var isActive: Boolean = false
-    var id:Int = 0
+    var id: Int = 0
 
     fun throwDices(): Pair<Int, Int> {
         val dices: Pair<Int, Int> = Pair((1..6).random(), (1..6).random())
@@ -64,6 +64,8 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     }
 
     private fun retreat(): Boolean {
+        for (cell: GameCell in cells)
+            cell.reset()
         return true
     }
 
@@ -75,7 +77,14 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         }
     }
 
-    //-----Money-----
+    private fun markOwnedCell(newCell: GameCell) {
+        board.activity.playerSetCellMark(board.gameWay.indexOf(newCell))
+    }
+
+    private fun removeMark(rmCell: GameCell){
+        board.activity.playerRemoveCellMark(board.gameWay.indexOf(rmCell))
+    }
+
     fun earnMoney(amount: Int) {
         money += amount
     }
@@ -89,13 +98,15 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
 
     fun addGameCell(newCell: GameCell) {
         cells.add(newCell)
+        markOwnedCell(newCell)
     }
 
     fun removeGameCell(rmCell: GameCell) {
         cells.remove(rmCell)
+        removeMark(rmCell)
     }
-    fun setPlayerID(int: Int)
-    {
+
+    fun setPlayerID(int: Int) {
         id = int
     }
 
