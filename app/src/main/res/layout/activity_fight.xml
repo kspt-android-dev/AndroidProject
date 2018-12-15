@@ -63,7 +63,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="30"
+            android:layout_weight="34"
             android:orientation="horizontal">
 
             <Button
@@ -72,7 +72,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="УДАРИТЬ" />
+                style="@style/BMRButtonSmall"
+                android:text="KICK" />
 
             <Button
                 android:id="@+id/activity_fight_action_heal"
@@ -80,7 +81,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
-                android:text="ЛЕЧИТЬСЯ" />
+                style="@style/BMRButtonSmall"
+                android:text="HEAL" />
 
             <Button
                 android:id="@+id/activity_fight_action_magic"
@@ -88,6 +90,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="@style/BMRButtonSmall"
                 android:text="МАГИЯ" />
 
             <Button
@@ -96,7 +99,54 @@
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                style="@style/BMRButtonSmall"
+                android:textSize="17sp"
                 android:text="СИЛЬНО УДАРИТЬ" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="34"
+            android:elevation="0dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/activity_fight_action_5"
+                style="@style/BMRButton"
+                android:text="TODO"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                 />
+
+            <Button
+                android:id="@+id/activity_fight_action_6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                style="@style/BMRButton"
+                android:text="TODO" />
+
+            <Button
+                android:id="@+id/activity_fight_action_7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                style="@style/BMRButton"
+                android:text="TODO" />
+
+            <Button
+                android:id="@+id/activity_fight_action_8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                style="@style/BMRButton"
+                android:text="TODO" />
         </LinearLayout>
 
         <android.support.v4.widget.NestedScrollView
@@ -104,7 +154,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:layout_weight="30"
+            android:layout_weight="32"
             android:background="#60000000"
             android:fillViewport="true">
 
@@ -114,9 +164,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="FIGHT!"
+                style="@style/BMRTextSmall"
                 android:textAlignment="center"
                 android:textColor="@color/colorButtonText"
-                android:textSize="18sp" />
+                android:textSize="22sp" />
         </android.support.v4.widget.NestedScrollView>
 
     </LinearLayout>

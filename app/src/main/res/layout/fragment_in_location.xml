@@ -24,21 +24,21 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="sans-serif-condensed"
+                style="@style/BMRTextTitle"
                 android:text="Название"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="40sp" />
+                android:textSize="50dp"
+                android:textColor="#FFFFFF"/>
 
             <TextView
                 android:id="@+id/fragment_in_location_content_LocationDescriptionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/BMRTextTitle"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="sans-serif-condensed"
                 android:text="Описание"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp" />
@@ -51,10 +51,10 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="sans-serif-condensed"
+                android:textAlignment="inherit"
+                style="@style/BMRTextSmall"
                 android:text="TextView"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:textColor="#FFFFFF"/>
 
             <TextView
                 android:id="@+id/fragment_in_location_content_NPCTitle"
@@ -64,7 +64,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="sans-serif-condensed"
+                style="@style/BMRTextTitle"
                 android:text="NPC"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp" />
@@ -76,11 +76,12 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
+
+                android:textAlignment="inherit"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="sans-serif-condensed"
+                style="@style/BMRTextSmall"
                 android:text="TextView"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:textColor="#FFFFFF"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,9 +95,8 @@
                     android:layout_height="60dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:fontFamily="sans-serif-condensed"
                     android:text="Напасть!"
-                    android:textSize="20sp" />
+                    style="@style/BMRButton"/>
 
                 <Button
                     android:id="@+id/fragment_in_location_content_NPCtalk"
@@ -104,9 +104,8 @@
                     android:layout_height="60dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:fontFamily="sans-serif-condensed"
                     android:text="Говорить"
-                    android:textSize="20sp" />
+                    style="@style/BMRButton" />
             </LinearLayout>
 
             <Button
@@ -116,9 +115,8 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:layout_weight="0"
-                android:fontFamily="sans-serif-condensed"
                 android:text="Идти дальше"
-                android:textSize="24sp" />
+                style="@style/BMRButton" />
 
         </LinearLayout>
     </ScrollView>

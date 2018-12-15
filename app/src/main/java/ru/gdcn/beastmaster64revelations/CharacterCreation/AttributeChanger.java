@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ru.gdcn.beastmaster64revelations.UIElements.RPGButton;
-
 public class AttributeChanger extends LinearLayout {
 
     private String attrName;

@@ -7,4 +7,12 @@
     <color name="colorButtonText">#E1E1FF</color>
 
     <color name="black_overlay">#66000000</color>
+    <color name="BMRButton_color_enabled">#1a1a3b</color>
+    <color name="BMRButton_color_disabled">#434f66</color>
+    <color name="BMRButton_color_pressed" >#081028</color>
+    <color name="BMRButton_small_color_pressed" >#152948</color>
+    <color name="BMRButton_small_color_disabled" >#6d7f9c</color>
+    <color name="BMRButton_small_color_enabled" >#09101d</color>
+    <color name="BMRButton_stroke">#282c36</color>
+
 </resources>

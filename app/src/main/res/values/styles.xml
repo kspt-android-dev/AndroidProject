@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -19,5 +19,36 @@
     <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
     </style>
+
+    <style name="BMRButton" parent="Theme.AppCompat">
+        <!--<item name="android:colorButtonNormal">@color/BMRButton_color_disabled</item>-->
+        <!--<item name="android:colorAccent">@color/BMRButton_color_enabled</item>-->
+        <item name="android:background">@drawable/custom_button</item>
+        <item name="android:disabledAlpha">0.4</item>
+        <item name="android:textColor">#ffe8e2</item>
+        <item name="android:fontFamily">@font/straight</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="BMRButtonSmall" parent="BMRButton">
+        <item name="android:background">@drawable/custom_button_small</item>
+        <item name="android:fontFamily">@font/straight</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="BMRTextSmall" parent="Theme.AppCompat">
+        <item name="android:fontFamily">@font/thin</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">#ffe8e2</item>
+    </style>
+
+    <style name="BMRTextTitle" parent="Theme.AppCompat">
+        <item name="android:fontFamily">@font/straight</item>
+        <item name="android:textSize">34sp</item>
+        <item name="android:textColor">#ffe8e2</item>
+    </style>
+
+    <style name="BMRTheme" parent="AppTheme" />
 
 </resources>

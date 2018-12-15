@@ -34,9 +34,11 @@ public class CharacterCard extends LinearLayout {
 
         face = new ImageView(context);
         if (character instanceof PlayerClass)
-            face.setImageDrawable(face.getResources().getDrawable(R.drawable.worker_face));
+            face.setImageDrawable(face.getResources().getDrawable(R.drawable.hero_face));
         else
             face.setImageDrawable(face.getResources().getDrawable(R.drawable.orc_face));
+        LayoutParams layoutParams = new LayoutParams(300, 300);
+        face.setLayoutParams(layoutParams);
 
         name = new TextView(context);
         name.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));

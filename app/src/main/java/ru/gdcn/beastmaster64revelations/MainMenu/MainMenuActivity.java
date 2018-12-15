@@ -32,31 +32,20 @@ public class MainMenuActivity extends AppCompatActivity {
         Button exitButton = findViewById(R.id.main_menu_button_exit);
 
         GameLogger.log("Добавляем событие входа в игру");
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goToGameIntent = new Intent(getApplicationContext(), CharacterCreationActivity.class);
-                startActivity(goToGameIntent);
-            }
+        playButton.setOnClickListener(v -> {
+            Intent goToGameIntent = new Intent(getApplicationContext(), CharacterCreationActivity.class);
+            startActivity(goToGameIntent);
         });
 
         GameLogger.log("Добавляем событие входа в настройки");
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goToSettingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(goToSettingsIntent);
-            }
+        settingsButton.setOnClickListener(v -> {
+            Intent goToSettingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(goToSettingsIntent);
         });
+        settingsButton.setEnabled(false);
 
         GameLogger.log("Добавляем событие выхода из игры");
-        exitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO нормальный выход (диалоговое окно)
-                finish();
-            }
-        });
+        exitButton.setOnClickListener(v -> finish());
 
     }
 

@@ -1,28 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="top|center_horizontal"
-    android:orientation="vertical"
+    android:background="#050505"
     tools:context=".CharacterCreation.CharacterCreationActivity">
 
-    <FrameLayout
-        android:id="@+id/activity_character_creation_fragHolder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="15sp"
-        android:layout_weight="1">
-
-    </FrameLayout>
-
-    <Button
-        android:id="@+id/activity_character_creation_proceedButton"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15sp"
-        android:text="СОЗДАТЬ"
-        android:textSize="20sp" />
+        android:alpha="0.4"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:srcCompat="@drawable/character_art" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/activity_character_creation_fragHolder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15sp"
+            android:layout_weight="60">
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/activity_character_creation_proceedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:layout_margin="15sp"
+            style="@style/BMRButton"
+            android:text="СОЗДАТЬ"
+            android:layout_weight="0"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+</FrameLayout>

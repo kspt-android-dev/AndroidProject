@@ -7,6 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:paddingBottom="40sp"
+    android:background="#191515"
     tools:context=".MainMenu.MainMenuActivity">
 
     <TextView
@@ -15,7 +16,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="BM64:REV"
-        android:textSize="45sp" />
+        style="@style/BMRTextTitle"
+        android:textColor="#551515"
+        android:textSize="70sp" />
 
     <Button
         android:id="@+id/main_menu_button_play"
@@ -23,7 +26,8 @@
         android:layout_height="70dp"
         android:layout_margin="10dp"
         android:text="Играть"
-        android:textSize="25sp" />
+        style="@style/BMRButton"
+        />
 
     <Button
         android:id="@+id/main_menu_button_settings"
@@ -31,7 +35,7 @@
         android:layout_height="70dp"
         android:layout_margin="10dp"
         android:text="Настройки"
-        android:textSize="25sp" />
+        style="@style/BMRButton"/>
 
     <Button
         android:id="@+id/main_menu_button_exit"
@@ -40,7 +44,7 @@
         android:layout_margin="10dp"
         android:layout_marginBottom="0dp"
         android:backgroundTint="@color/colorAccent"
-        android:text="Выход"
-        android:textSize="25sp" />
+        style="@style/BMRButton"
+        android:text="Выход"/>
 
 </LinearLayout>
