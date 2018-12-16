@@ -21,6 +21,7 @@
         <activity android:name=".creation.CreationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
         <activity android:name=".AboutActivity"></activity>
+        <receiver android:name=".creation.AlarmBroadcastReceiver"/>
     </application>
 
 </manifest>
