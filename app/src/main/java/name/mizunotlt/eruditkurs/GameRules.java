@@ -14,6 +14,12 @@ public class GameRules {
     private int score = 0;
     private boolean flagx2Word = false;
     private boolean flagx3Word = false;
+    private final int COUNT_LETTER = 33;
+    private final int COUNT_LETTER_PLAYER = 7;
+    private final int cellsInRow = 15;
+    private final int countCells = 225;
+
+    private ArrayList<Integer> countFreeLetter = new ArrayList<>();
     private void initListLetter(){
         listLetter.add(0, new Letter('А', 1, 10));
         listLetter.add(1, new Letter('Б', 3, 3));
@@ -68,181 +74,74 @@ public class GameRules {
         }
     }
     GameRules(){
-
         initListLetter();
     }
     private Letter findLetter(char letter){
-        switch (letter){
-            case 'А': {
-                return listLetter.get(0);
+        for (Letter templet: listLetter){
+            if (templet.getLetter() == letter)
+                return templet;
+        }
+        return new Letter(' ', 0, 0);
+    }
+    private void countScore(Cell cell){
+        int incScore = findLetter(cell.getLetter()).getCountScore();
+        switch (cell.typeCell()){
+            case 3:{
+                if(!cell.getUseErly()){
+                    incScore = 2 * incScore;
+                    cell.changeUseErly();
+                }
+                break;
             }
-            case 'Б': {
-                return listLetter.get(1);
+            case 4:{
+                if(!cell.getUseErly()){
+                    incScore += 3 * incScore;
+                    cell.changeUseErly();
+                }
+                break;
             }
-            case 'В': {
-                return listLetter.get(2);
+            case 5:{
+                if(!cell.getUseErly()){
+                    cell.changeUseErly();
+                    flagx2Word = true;
+                }
+                break;
             }
-            case 'Г': {
-                return listLetter.get(3);
-            }
-            case 'Д': {
-                return listLetter.get(4);
-            }
-            case 'Е': {
-                return listLetter.get(5);
-            }
-            case 'Ж': {
-                return listLetter.get(6);
-            }
-            case 'З': {
-                return listLetter.get(7);
-            }
-            case 'И': {
-                return listLetter.get(8);
-            }
-            case 'Й': {
-                return listLetter.get(9);
-            }
-            case 'К': {
-                return listLetter.get(10);
-            }
-            case 'Л': {
-                return listLetter.get(11);
-            }
-            case 'М': {
-                return listLetter.get(12);
-            }
-            case 'Н': {
-                return listLetter.get(13);
-            }
-            case 'О': {
-                return listLetter.get(14);
-            }
-            case 'П': {
-                return listLetter.get(15);
-            }
-            case 'Р': {
-                return listLetter.get(16);
-            }
-            case 'С': {
-                return listLetter.get(17);
-            }
-            case 'Т': {
-                return listLetter.get(18);
-            }
-            case 'У': {
-                return listLetter.get(19);
-            }
-            case 'Ф': {
-                return listLetter.get(20);
-            }
-            case 'Х': {
-                return listLetter.get(21);
-            }
-            case 'Ц': {
-                return listLetter.get(22);
-            }
-            case 'Ч': {
-                return listLetter.get(23);
-            }
-            case 'Ш': {
-                return listLetter.get(24);
-            }
-            case 'Щ': {
-                return listLetter.get(25);
-            }
-            case 'Ь': {
-                return listLetter.get(26);
-            }
-            case 'Ы': {
-                return listLetter.get(27);
-            }
-            case 'Ъ': {
-                return listLetter.get(28);
-            }
-            case 'Э': {
-                return listLetter.get(29);
-            }
-            case 'Ю': {
-                return listLetter.get(30);
-            }
-            case 'Я': {
-                return listLetter.get(31);
-            }
-            default:{
-                return listLetter.get(32);
+            case 6:{
+                if(!cell.getUseErly()){
+                    cell.changeUseErly();
+                    flagx3Word =true;
+                }
+                break;
             }
         }
+        score += incScore;
     }
     private String makeWord(Player player, ArrayList<Cell> workList){
         StringBuilder result = new StringBuilder();
         int first = player.getFirstTap();
         int startMakeWord = 0;
         int index = first;
-        if ((workList.get(first + 15).getIsLetter())|(workList.get(first - 15).getIsLetter())){
+
+        if ((workList.get(first + cellsInRow).getIsLetter())|(workList.get(first - cellsInRow).getIsLetter())){
             if (!(workList.get(first + 1).getIsLetter()) & (!workList.get(first - 1 ).getIsLetter())){
                 while (index > 0){
-                    if ((!workList.get(index).getIsLetter()) || (index - 15 < 0)){
+                    if ((!workList.get(index).getIsLetter()) || (index - cellsInRow < 0)){
                         startMakeWord = index;
                         break;
                     }
-                    index -=15;
+                    index -=cellsInRow;
                 }
-                while (startMakeWord < 225){
-                    startMakeWord += 15;
+                startMakeWord += cellsInRow;
+                while (startMakeWord < countCells){
                     if (workList.get(startMakeWord).getIsLetter()){
                         result.append(workList.get(startMakeWord).getLetter());
-                        switch (workList.get(startMakeWord).typeCell()){
-                            case 3:{
-                               if(!workList.get(startMakeWord).getUseErly()){
-                                   score += 2 * findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                   workList.get(startMakeWord).changeUseErly();
-                               }
-                               else{
-                                   score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                               }
-                               break;
-                            }
-                            case 4:{
-                                if(!workList.get(startMakeWord).getUseErly()){
-                                    score += 3 * findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                    workList.get(startMakeWord).changeUseErly();
-                                }
-                                else {
-                                    score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                }
-                                break;
-                            }
-                            case 5:{
-                                if(!workList.get(startMakeWord).getUseErly()){
-                                    score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                    workList.get(startMakeWord).changeUseErly();
-                                    flagx2Word = true;
-                                }
-                                else {
-                                    score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                }
-                                break;
-                            }
-                            case 6:{
-                                if(!workList.get(startMakeWord).getUseErly()){
-                                    score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                    workList.get(startMakeWord).changeUseErly();
-                                    flagx3Word =true;
-                                }
-                                else {
-                                    score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                }
-                                break;
-                            }
-                            default:{
-                                score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                            }
-                        }
+                        countScore(workList.get(startMakeWord));
                     }
                     else {
                         break;
                     }
+                    startMakeWord += cellsInRow;
                 }
                 if (flagx3Word)
                     score *= 3;
@@ -253,7 +152,7 @@ public class GameRules {
                 return result.toString();
         }
         if ((workList.get(first - 1).getIsLetter()) | (workList.get(first + 1).getIsLetter())){
-            if (!(workList.get(first - 15).getIsLetter()) & (!workList.get(first + 15 ).getIsLetter())){
+            if (!(workList.get(first - cellsInRow).getIsLetter()) & (!workList.get(first + cellsInRow ).getIsLetter())){
                 while (index / 10 > 0){
                     if (!workList.get(index).getIsLetter()){
                         startMakeWord = index + 1;
@@ -265,53 +164,7 @@ public class GameRules {
 
                     if (workList.get(startMakeWord).getIsLetter()){
                         result.append(workList.get(startMakeWord).getLetter());
-                        switch (workList.get(startMakeWord).typeCell()){
-                            case 3:{
-                                if(!workList.get(startMakeWord).getUseErly()){
-                                    score += 2 * findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                    workList.get(startMakeWord).changeUseErly();
-                                }
-                                else{
-                                    score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                }
-                                break;
-                            }
-                            case 4:{
-                                if(!workList.get(startMakeWord).getUseErly()){
-                                    score += 3 * findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                    workList.get(startMakeWord).changeUseErly();
-                                }
-                                else {
-                                    score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                }
-                                break;
-                            }
-                            case 5:{
-                                if(!workList.get(startMakeWord).getUseErly()){
-                                    score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                    workList.get(startMakeWord).changeUseErly();
-                                    flagx2Word = true;
-                                }
-                                else {
-                                    score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                }
-                                break;
-                            }
-                            case 6:{
-                                if(!workList.get(startMakeWord).getUseErly()){
-                                    score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                    workList.get(startMakeWord).changeUseErly();
-                                    flagx3Word =true;
-                                }
-                                else {
-                                    score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                                }
-                                break;
-                            }
-                            default:{
-                                score += findLetter(workList.get(startMakeWord).getLetter()).getCountScore();
-                            }
-                        }
+                        countScore(workList.get(startMakeWord));
                     }
                     else {
                         break;
@@ -329,18 +182,21 @@ public class GameRules {
         return result.toString();
     }
     private boolean test = false;
-    private MyAsyncTask asTask;
+
     public String checkWord(Player player, ArrayList<Cell> workList) {
         String word = makeWord(player, workList);
         try {
-            asTask = new MyAsyncTask();
+            MyAsyncTask asTask = new MyAsyncTask();
             test = asTask.execute(word).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         if (test){
             player.addWord(word);
-            player.appScore(score);
+            if(player.getCountLetter() == 0)
+                player.appScore(score + 15);
+            else
+                player.appScore(score);
             score = 0;
             flagx2Word = false;
             flagx3Word = false;
@@ -353,8 +209,8 @@ public class GameRules {
         List<Character> lettWordList = new ArrayList<>();
         Random rand = new Random();
         int countLet = 0;
-        while (countLet < 7){
-            int next =rand.nextInt(33);
+        while (countLet < COUNT_LETTER_PLAYER){
+            int next =rand.nextInt(COUNT_LETTER);
             if (listLetter.get(next).getCount() != 0) {
                 lettWordList.add(listLetter.get(next).getLetter());
                 countLet++;
@@ -367,8 +223,8 @@ public class GameRules {
     public void resetLetter(Player play){
         Random rand = new Random();
         int index = 0;
-        while (play.getCountLetter() < 7){
-            int next =rand.nextInt(33);
+        while (play.getCountLetter() < COUNT_LETTER_PLAYER){
+            int next =rand.nextInt(COUNT_LETTER);
             if (play.getListLetter().get(index) == ' '){
                 if (listLetter.get(next).getCount() != 0) {
                     listLetter.get(next).setCount(listLetter.get(next).getCount() - 1);
@@ -393,8 +249,8 @@ public class GameRules {
             for (int i = 0; i < list.size(); i++){
                 play.deletLetter(list.get(i));
             }
-            while (play.getCountLetter() < 7){
-                int next =rand.nextInt(33);
+            while (play.getCountLetter() < COUNT_LETTER_PLAYER){
+                int next =rand.nextInt(COUNT_LETTER);
                 if (listLetter.get(next).getCount() != 0) {
                     listLetter.get(next).setCount(listLetter.get(next).getCount() - 1);
                     play.addLetter(list.get(index),listLetter.get(next).getLetter());
@@ -404,144 +260,24 @@ public class GameRules {
         }
         else{
             for(Character let: listLet){
-                switch (let){
-                    case 'А': {
-                        listLetter.get(0).setCount(listLetter.get(0).getCount() + 1);
-                        break;
-                    }
-                    case 'Б': {
-                        listLetter.get(1).setCount(listLetter.get(1).getCount() + 1);
-                        break;
-                    }
-                    case 'В': {
-                        listLetter.get(2).setCount(listLetter.get(2).getCount() + 1);
-                        break;
-                    }
-                    case 'Г': {
-                        listLetter.get(3).setCount(listLetter.get(3).getCount() + 1);
-                        break;
-                    }
-                    case 'Д': {
-                        listLetter.get(4).setCount(listLetter.get(4).getCount() + 1);
-                        break;
-                    }
-                    case 'Е': {
-                        listLetter.get(5).setCount(listLetter.get(5).getCount() + 1);
-                        break;
-                    }
-                    case 'Ж': {
-                        listLetter.get(6).setCount(listLetter.get(6).getCount() + 1);
-                        break;
-                    }
-                    case 'З': {
-                        listLetter.get(7).setCount(listLetter.get(7).getCount() + 1);
-                        break;
-                    }
-                    case 'И': {
-                        listLetter.get(8).setCount(listLetter.get(8).getCount() + 1);
-                        break;
-                    }
-                    case 'Й': {
-                        listLetter.get(9).setCount(listLetter.get(9).getCount() + 1);
-                        break;
-                    }
-                    case 'К': {
-                        listLetter.get(10).setCount(listLetter.get(10).getCount() + 1);
-                        break;
-                    }
-                    case 'Л': {
-                        listLetter.get(11).setCount(listLetter.get(11).getCount() + 1);
-                        break;
-                    }
-                    case 'М': {
-                        listLetter.get(12).setCount(listLetter.get(12).getCount() + 1);
-                        break;
-                    }
-                    case 'Н': {
-                        listLetter.get(13).setCount(listLetter.get(13).getCount() + 1);
-                        break;
-                    }
-                    case 'О': {
-                        listLetter.get(14).setCount(listLetter.get(14).getCount() + 1);
-                        break;
-                    }
-                    case 'П': {
-                        listLetter.get(15).setCount(listLetter.get(15).getCount() + 1);
-                        break;
-                    }
-                    case 'Р': {
-                        listLetter.get(16).setCount(listLetter.get(16).getCount() + 1);
-                        break;
-                    }
-                    case 'С': {
-                        listLetter.get(17).setCount(listLetter.get(17).getCount() + 1);
-                        break;
-                    }
-                    case 'Т': {
-                        listLetter.get(18).setCount(listLetter.get(18).getCount() + 1);
-                        break;
-                    }
-                    case 'У': {
-                        listLetter.get(19).setCount(listLetter.get(19).getCount() + 1);
-                        break;
-                    }
-                    case 'Ф': {
-                        listLetter.get(20).setCount(listLetter.get(20).getCount() + 1);
-                        break;
-                    }
-                    case 'Х': {
-                        listLetter.get(21).setCount(listLetter.get(21).getCount() + 1);
-                        break;
-                    }
-                    case 'Ц': {
-                        listLetter.get(22).setCount(listLetter.get(22).getCount() + 1);
-                        break;
-                    }
-                    case 'Ч': {
-                        listLetter.get(23).setCount(listLetter.get(23).getCount() + 1);
-                        break;
-                    }
-                    case 'Ш': {
-                        listLetter.get(24).setCount(listLetter.get(24).getCount() + 1);
-                        break;
-                    }
-                    case 'Щ': {
-                        listLetter.get(25).setCount(listLetter.get(25).getCount() + 1);
-                        break;
-                    }
-                    case 'Ь': {
-                        listLetter.get(26).setCount(listLetter.get(26).getCount() + 1);
-                        break;
-                    }
-                    case 'Ы': {
-                        listLetter.get(27).setCount(listLetter.get(27).getCount() + 1);
-                        break;
-                    }
-                    case 'Ъ': {
-                        listLetter.get(28).setCount(listLetter.get(28).getCount() + 1);
-                        break;
-                    }
-                    case 'Э': {
-                        listLetter.get(29).setCount(listLetter.get(29).getCount() + 1);
-                        break;
-                    }
-                    case 'Ю': {
-                        listLetter.get(30).setCount(listLetter.get(30).getCount() + 1);
-                        break;
-                    }
-                    case 'Я': {
-                        listLetter.get(31).setCount(listLetter.get(31).getCount() + 1);
-                        break;
-                    }
-                    case '*': {
-                        listLetter.get(32).setCount(listLetter.get(32).getCount() + 1);
-                        break;
-                    }
-                }
+                int oldCount = findLetter(let).getCount();
+                findLetter(let).setCount(oldCount + 1);
             }
             play.clear();
-
             addLetters(play);
         }
     }
+
+    public ArrayList<Integer> getCountFreeLetter() {
+        for(Letter lett: listLetter){
+            countFreeLetter.add(lett.getCount());
+        }
+        return countFreeLetter;
+    }
+    public  void setCountFreeLetter(ArrayList<Integer> countList){
+        for (int i = 0; i < listLetter.size(); i++){
+            listLetter.get(i).setCount(countList.get(i));
+        }
+    }
+
 }

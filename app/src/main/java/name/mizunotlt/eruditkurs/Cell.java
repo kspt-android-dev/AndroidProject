@@ -21,7 +21,8 @@ public class Cell {
     private boolean useErly = false;
     private boolean state = false;
     private int numCell;
-    public Cell(Point startPoint, int numCell){
+    private final int SIZE = 70;
+    Cell(Point startPoint, int numCell){
         this.startPoint = startPoint;
         this.numCell = numCell;
         this.setPath();
@@ -34,10 +35,10 @@ public class Cell {
     private void setPath(){
         path = new Path();
         path.moveTo(startPoint.x, startPoint.y);
-        path.rLineTo(70,0);
-        path.rLineTo(0, 70);
-        path.rLineTo(-70,0);
-        path.rLineTo(0, -70);
+        path.rLineTo(SIZE,0);
+        path.rLineTo(0, SIZE);
+        path.rLineTo(-SIZE,0);
+        path.rLineTo(0, -SIZE);
         path.close();
     }
     public void setDefCell(){

@@ -8,10 +8,12 @@ import android.view.View;
 import static android.os.Parcelable.PARCELABLE_WRITE_RETURN_VALUE;
 import static android.view.MotionEvent.ACTION_CANCEL;
 import static android.view.MotionEvent.ACTION_DOWN;
+import static android.view.MotionEvent.ACTION_MOVE;
+
 //Вся дичь обработки тут а именно выбор буквы и выбор клетки куда поставить
 public class GameFieldListener implements View.OnTouchListener {
-    float startX = 0;
-    float startY = 0;
+    private float startX = 0;
+    private float startY = 0;
     private final int incXLetter = 95;
     private final int SIZE = 60;
     private GameField gameField;
@@ -40,7 +42,6 @@ public class GameFieldListener implements View.OnTouchListener {
                         break;
                     }
                 }
-
                 for (CellForLetter cell : gameField.getListCellLetter()){
                     startPointLetter = cell.getStartPoint();
                     if (((int) startX  >= startPointLetter.x) & ((int)startX <= startPointLetter.x + SIZE)
@@ -50,8 +51,13 @@ public class GameFieldListener implements View.OnTouchListener {
                     }
                 }
                 break;
-
             }
+            /*
+            case ACTION_MOVE:{
+
+                break;
+            }
+            */
             case ACTION_CANCEL:
         }
         return false;

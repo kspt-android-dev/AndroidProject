@@ -30,7 +30,7 @@
         android:layout_marginTop="452dp"
         android:background="@drawable/bot"
         android:onClick="onClickExit"
-        android:text="Выход"
+        android:text="@string/exit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
         android:layout_marginTop="312dp"
         android:background="@drawable/bot"
         android:onClick="onClickNewGame"
-        android:text="Новая игра"
+        android:text="@string/newGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

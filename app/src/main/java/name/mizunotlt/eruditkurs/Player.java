@@ -16,7 +16,7 @@ public class Player {
     public  List<Character> getListLetter(){
         return listLetter;
     }
-    public Player(String name){
+    Player(String name){
         this.name = name;
         this.score = 0;
         this.countLetter = 0;
@@ -34,7 +34,28 @@ public class Player {
             return "ADD";
         }
     }
-
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setScore(int score){
+        this.score = score;
+    }
+    public char[] getLetter(){
+        char[] charLetter = new char[7];
+        int i = 0;
+        for(Character ch: listLetter){
+            charLetter[i] = ch;
+            i++;
+        }
+        return  charLetter;
+    }
+    public void setListLetterAfterReset(char[] array){
+        List<Character> list = new ArrayList<>();
+        for(int i = 0; i < array.length; i++){
+            list.add(array[i]);
+        }
+        this.listLetter = list;
+    }
     public void setFirstTap(int num){
         if (firstTap == 0)
             this.firstTap = num;

@@ -31,9 +31,7 @@ class CheckWordImp implements CheckWord {
     public CheckWordImp(String word){
         this.word = word;
     }
-   private  final JSONParser jsonParser = new JSONParser();
-
-
+    private  final JSONParser jsonParser = new JSONParser();
 
     @Override
     public String getWord() {

@@ -7,4 +7,5 @@
     <string name="rules">Правила</string>
     <string name="startGame">Старт игры</string>
     <string name="nextTurn">Конец хода</string>
+    <string name="newWord">Новое слово</string>
 </resources>

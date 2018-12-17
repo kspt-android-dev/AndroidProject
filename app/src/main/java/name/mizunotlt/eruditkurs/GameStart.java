@@ -12,7 +12,6 @@ import java.io.IOException;
 public class GameStart extends Activity {
     EditText firtsPlayer;
     EditText secondPlayer;
-    boolean tt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

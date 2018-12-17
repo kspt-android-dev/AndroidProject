@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickExit(View view){
-        this.onStop();
+        System.exit(1);
     }
 
     public void onClickAbout(View view){
