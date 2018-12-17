@@ -3,14 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/my_border"
+
     tools:context=".GameActivities.InLocation.InLocationFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/my_border">
+        android:layout_margin="4dp">
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="100"
@@ -18,70 +21,70 @@
 
             <TextView
                 android:id="@+id/fragment_in_location_content_LocationName"
+                style="@style/BMRTextTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                style="@style/BMRTextTitle"
                 android:text="Название"
                 android:textAlignment="center"
-                android:textSize="50dp"
-                android:textColor="#FFFFFF"/>
+                android:textColor="#FFFFFF"
+                android:textSize="50dp" />
 
             <TextView
                 android:id="@+id/fragment_in_location_content_LocationDescriptionTitle"
+                style="@style/BMRTextTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/BMRTextTitle"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:text="Описание"
                 android:textColor="#FFFFFF"
-                android:textSize="30sp" />
+                android:textSize="34sp" />
 
             <TextView
                 android:id="@+id/fragment_in_location_content_LocationDescriptionContent"
+                style="@style/BMRTextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:textAlignment="inherit"
-                style="@style/BMRTextSmall"
                 android:text="TextView"
-                android:textColor="#FFFFFF"/>
+                android:textAlignment="inherit"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/fragment_in_location_content_NPCTitle"
+                style="@style/BMRTextTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                style="@style/BMRTextTitle"
                 android:text="NPC"
                 android:textColor="#FFFFFF"
-                android:textSize="30sp" />
+                android:textSize="34sp" />
 
             <TextView
                 android:id="@+id/fragment_in_location_content_NPCDescription"
+                style="@style/BMRTextSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
 
-                android:textAlignment="inherit"
+                android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                style="@style/BMRTextSmall"
                 android:text="TextView"
-                android:textColor="#FFFFFF"/>
+                android:textAlignment="inherit"
+                android:textColor="#FFFFFF" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -91,32 +94,81 @@
 
                 <Button
                     android:id="@+id/fragment_in_location_content_NPCattack"
+                    style="@style/BMRButton"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:text="Напасть!"
-                    style="@style/BMRButton"/>
+                    android:text="Напасть!" />
 
                 <Button
                     android:id="@+id/fragment_in_location_content_NPCtalk"
+                    style="@style/BMRButton"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:text="Говорить"
-                    style="@style/BMRButton" />
+                    android:text="Говорить" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/fragment_in_location_content_GoAway"
-                android:layout_width="220dp"
-                android:layout_height="80dp"
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="210dp"
+                android:layout_height="210dp"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:layout_weight="0"
-                android:text="Идти дальше"
-                style="@style/BMRButton" />
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/fragment_in_location_content_GoUp"
+                    style="@style/BMRButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:text="@string/arrow_up"
+                    android:textSize="27sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/fragment_in_location_content_GoLeft"
+                        style="@style/BMRButton"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:text="@string/arrow_left"
+                        android:textSize="50sp" />
+
+                    <Space
+                        android:layout_width="70dp"
+                        android:layout_height="70dp" />
+
+                    <Button
+                        android:id="@+id/fragment_in_location_content_GoRight"
+                        style="@style/BMRButton"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:text="@string/arrow_right"
+                        android:textSize="50sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/fragment_in_location_content_GoDown"
+                    style="@style/BMRButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+
+                    android:layout_gravity="center"
+                    android:text="@string/arrow_down"
+                    android:textSize="27sp" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

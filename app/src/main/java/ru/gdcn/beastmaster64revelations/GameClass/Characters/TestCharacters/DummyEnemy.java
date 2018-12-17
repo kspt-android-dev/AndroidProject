@@ -32,7 +32,7 @@ public class DummyEnemy extends CharacterClass implements Opponent {
         String name = "Чёрт";
         switch (number){
             case 0:
-                name = "Бешеный пёс";
+                name = "Адский бес";
                 break;
             case 1:
                 name = "Нетрезвый пират";

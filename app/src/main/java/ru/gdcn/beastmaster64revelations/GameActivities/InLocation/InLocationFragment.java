@@ -61,10 +61,18 @@ public class InLocationFragment extends Fragment {
         talkButton.setOnClickListener(v -> {
             talkNPC();
         });
-        Button goAwayButton = getActivity().findViewById(R.id.fragment_in_location_content_GoAway);
-        goAwayButton.setOnClickListener(v -> {
-            goAway();
-        });
+
+        Button goUpButton = getActivity().findViewById(R.id.fragment_in_location_content_GoUp);
+        Button goDownButton = getActivity().findViewById(R.id.fragment_in_location_content_GoDown);
+        Button goLeftButton = getActivity().findViewById(R.id.fragment_in_location_content_GoLeft);
+        Button goRightButton = getActivity().findViewById(R.id.fragment_in_location_content_GoRight);
+
+        goDownButton.setOnClickListener(v -> goAway());
+        goUpButton.setOnClickListener(v -> goAway());
+        goLeftButton.setOnClickListener(v -> goAway());
+        goRightButton.setOnClickListener(v -> goAway());
+
+
         setContent(currentLocation);
 
         //this.setContent(new SimpleLocationClass(new MapPoint(0,0)));

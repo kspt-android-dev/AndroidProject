@@ -1,4 +1,4 @@
-<resources xmlns:android="http://schemas.android.com/tools">
+<resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -39,7 +39,7 @@
 
     <style name="BMRTextSmall" parent="Theme.AppCompat">
         <item name="android:fontFamily">@font/thin</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">26sp</item>
         <item name="android:textColor">#ffe8e2</item>
     </style>
 

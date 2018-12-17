@@ -82,4 +82,8 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string name="title_activity_fight">FightActivity</string>
+    <string name="arrow_down">\\/</string>
+    <string name="arrow_right"><![CDATA[>]]></string>
+    <string name="arrow_left"><![CDATA[<]]></string>
+    <string name="arrow_up">/\\</string>
 </resources>
