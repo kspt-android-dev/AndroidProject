@@ -4,47 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#d56c4d"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingBottom="40sp"
-    android:background="#191515"
     tools:context=".MainMenu.MainMenuActivity">
 
     <TextView
         android:id="@+id/main_menu_text_title"
+        style="@style/BMRTextTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="BM64:REV"
-        style="@style/BMRTextTitle"
         android:textColor="#551515"
         android:textSize="70sp" />
 
     <Button
         android:id="@+id/main_menu_button_play"
+        style="@style/BMRButton"
         android:layout_width="180dp"
         android:layout_height="70dp"
         android:layout_margin="10dp"
-        android:text="Играть"
-        style="@style/BMRButton"
-        />
+        android:text="Играть" />
 
     <Button
         android:id="@+id/main_menu_button_settings"
+        style="@style/BMRButton"
         android:layout_width="180dp"
         android:layout_height="70dp"
         android:layout_margin="10dp"
-        android:text="Настройки"
-        style="@style/BMRButton"/>
+        android:text="Настройки" />
 
     <Button
         android:id="@+id/main_menu_button_exit"
+        style="@style/BMRButton"
         android:layout_width="180dp"
         android:layout_height="70dp"
         android:layout_margin="10dp"
         android:layout_marginBottom="0dp"
         android:backgroundTint="@color/colorAccent"
-        style="@style/BMRButton"
-        android:text="Выход"/>
+        android:text="Выход" />
 
 </LinearLayout>
