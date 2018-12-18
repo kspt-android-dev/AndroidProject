@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
@@ -24,13 +26,11 @@ public class CharacterCreationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_creation);
-        String[] arr = {"СИЛ", "ЛОВ", "ИНТ"};
         Integer points = 3;
-        creationFragment = CharacterCreationFragment.newInstance(arr, points);
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction()
-                .add(R.id.activity_character_creation_fragHolder, creationFragment)
-                .commit();
+
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 
         Button readyButton = findViewById(R.id.activity_character_creation_proceedButton);
         readyButton.setOnClickListener(v -> {
@@ -39,13 +39,6 @@ public class CharacterCreationActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), InLocationActivity.class);
             intent.putExtra("player", player);
             startActivity(intent);
-
-//            if (!creationFragment.hasPoints() && creationFragment.hasName()){
-//                player = creationFragment.getCharacterFromData();
-//                Intent intent = new Intent(getApplicationContext(), InLocationActivity.class);
-//                intent.putExtra("player", player);
-//                startActivity(intent);
-//            }
 
         });
 
