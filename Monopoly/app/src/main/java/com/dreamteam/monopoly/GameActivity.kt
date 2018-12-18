@@ -7,13 +7,13 @@ import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintLayout.*
 import android.support.constraint.ConstraintSet
 import android.support.constraint.Guideline
-import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.widget.*
 import com.dreamteam.monopoly.game.GameData
 import com.dreamteam.monopoly.game.GameManager
+import com.dreamteam.monopoly.game.board.cell.GameCellType
 import com.dreamteam.monopoly.game.player.Player
 import com.dreamteam.monopoly.game.player.PlayerActions
 import com.dreamteam.monopoly.game.player.PlayerMoveCondition
@@ -99,7 +99,7 @@ class GameActivity : AppCompatActivity() {
             playerStartMove()
             if (gameManager.getCurrentPlayer().analyze() == PlayerMoveCondition.COMPLETED) {
                 val handler = Handler()
-                handler.postDelayed({
+                        handler.postDelayed({
                     playersSwap()
                 }, GameData.swapDicesDelay)
             } else playerActionRequest()
@@ -107,16 +107,23 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun playerActionRequest() {
-        yesButton!!.visibility = View.VISIBLE
-        noButton!!.visibility = View.VISIBLE
-        question!!.visibility = View.VISIBLE
+        if (gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition - 1].info.cellType == GameCellType.COMPANY && //высвечивать купить/нет только если есть возможность купить
+                gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition - 1].owner == null) {
+            yesButton!!.visibility = View.VISIBLE
+            noButton!!.visibility = View.VISIBLE
+            question!!.visibility = View.VISIBLE
 
-        yesButton!!.isClickable = true
-        noButton!!.isClickable = true
+            yesButton!!.isClickable = true
+            noButton!!.isClickable = true
+        } else
+        {
+            playersSwap()
+        }
 
         yesButton!!.setOnClickListener {
             performBuyAction()
             yesNoButtonListner()
+            Log.d("FindError", "yesPressed")
         }
 
         noButton!!.setOnClickListener {
@@ -130,11 +137,13 @@ class GameActivity : AppCompatActivity() {
 
     private fun performBuyAction() {
         gameManager.getCurrentPlayer().decision(PlayerActions.BUY)
+        Log.d("FindError", "im in gameAct/performBuy")
         playersSwap()
     }
 
     private fun performStayAction() {
         gameManager.getCurrentPlayer().decision(PlayerActions.STAY)
+        Log.d("FindError", "im in gameAct/performStay")
         playersSwap()
     }
 
@@ -164,6 +173,17 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun playerSetCellMark(index: Int) {
+        val neededCellID = getResources().getIdentifier("cell${index+1}", "id", packageName)
+        val neededCell = findViewById<ImageButton>(neededCellID)
+        Log.d("playerIndex", gameManager.getCurrentPlayer().id.toString())
+        when (gameManager.getCurrentPlayer().id )
+        {
+            1 -> neededCell.setBackgroundResource(R.drawable.player1cell)
+            2 -> neededCell.setBackgroundResource(R.drawable.player2cell)
+            3 -> neededCell.setBackgroundResource(R.drawable.player3cell)
+            4 -> neededCell.setBackgroundResource(R.drawable.player4cell)
+        }
+
         // TODO - setup unique color on owned cell (spawn image above old one)
     }
 
@@ -255,7 +275,6 @@ class GameActivity : AppCompatActivity() {
 
     val ShowInfoClick = View.OnClickListener { view ->
         val i = cellButtons.indexOf(view)
-        Log.d("TAG", i.toString())
         val name: String = GameData.boardGameCells[i].info.name
         val costBuy = GameData.boardGameCells[i].info.cost.costBuy
         val costSell = GameData.boardGameCells[i].info.cost.costSell

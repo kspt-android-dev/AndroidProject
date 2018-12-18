@@ -1,5 +1,6 @@
 package com.dreamteam.monopoly.game.player
 
+import android.util.Log
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.board.cell.CellState
 import com.dreamteam.monopoly.game.board.cell.GameCell
@@ -49,11 +50,13 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     }
 
     fun decision(action: PlayerActions): Boolean {
+        Log.d("FindError" , board.gameWay[currentPosition-1].info.name )
         return when (action) {
-            PlayerActions.BUY -> board.gameWay[currentPosition].info.cellType == GameCellType.COMPANY &&
-                    board.gameWay[currentPosition].buy(this)
-            PlayerActions.PAY -> board.gameWay[currentPosition].info.cellType == GameCellType.COMPANY &&
-                    board.gameWay[currentPosition].pay(this)
+            PlayerActions.BUY -> board.gameWay[currentPosition-1].info.cellType == GameCellType.COMPANY &&
+                    board.gameWay[currentPosition-1].owner == null &&
+                    board.gameWay[currentPosition-1].buy(this)
+            PlayerActions.PAY -> board.gameWay[currentPosition-1].info.cellType == GameCellType.COMPANY &&
+                    board.gameWay[currentPosition-1].pay(this)
             PlayerActions.STAY -> stay()
             PlayerActions.RETREAT -> retreat()
         }
@@ -97,6 +100,7 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     }
 
     fun addGameCell(newCell: GameCell) {
+        Log.d("FindError", "GameCell bought")
         cells.add(newCell)
         markOwnedCell(newCell)
     }

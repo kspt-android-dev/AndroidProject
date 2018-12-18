@@ -28,8 +28,7 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
             loopPassEvents(player)
         }
         changeImagePlace(player)
-        if (player.targetPosition == 0) player.earnMoney(GameData.startEnterMoney)
-        return gameWay[player.targetPosition]
+        return gameWay[player.currentPosition]
     }
 
     private fun loopPassEvents(player: Player) {
