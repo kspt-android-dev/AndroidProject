@@ -1,51 +1,56 @@
 package com.example.danila.minerandroid;
 
 
-import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 class GraphicCell extends android.support.v7.widget.AppCompatButton {
     private LogicCell logicCell;
-    private Logic logic;
     //private Content myContent;
     private TextView labelProbabilitiys;//Визуализация вероятности мины на клетке
-    public static final int FLAG_COLOR = 255;
-    public static final int WHITE_COLOR = 0;
-    public static final int MINE_COLOR = 122;
+    public static final int FLAG_COLOR = Color.BLUE;
+    public static final int EMPTY_COLOR = Color.WHITE;
+    public static final int CLOSED_COLOR = Color.GRAY;
+    public static final int MINE_COLOR = Color.RED;
+    public int contentColor;
 
 
-    GraphicCell(AppCompatActivity gameActivity, Logic logic, LogicCell logicCell, int x, int y) {
+    GraphicCell(AppCompatActivity gameActivity, FrameLayout frameLayout, Logic logic, Bot bot, LogicCell logicCell,
+                int x, int y, int height, int width) {
         super(gameActivity);
 
-        this.logic = logic;
         this.logicCell = logicCell;
-        setHighlightColor(WHITE_COLOR);
-        setHeight(50);
-        setWidth(50);
+
+
+        setLayoutParams(new LinearLayout.LayoutParams(width, height));
+        setBackgroundColor(CLOSED_COLOR);
         setTranslationX(x * 50);
         setTranslationY(y * 50);
         labelProbabilitiys = new TextView(gameActivity);
-        //labelProbabilitiys.setStyle("-fx-font-size:20;");
-        labelProbabilitiys.setTranslationX(getTranslationX());
-        labelProbabilitiys.setTranslationY(getTranslationY());
+        //labelProbabilitiys.setStyle("-fx-font-size:20;");TODO
+        labelProbabilitiys.setY(getTranslationX());
+        labelProbabilitiys.setY(getTranslationY());
 
 
-//        if (logicCell.getConditon() == 9)
-//            myContent = new Content(this, Color.RED);
-//        else
-//            myContent = new Content(this, 0);
+        if (logicCell.getConditon() == 9)
+            contentColor = MINE_COLOR;
+        else
+            contentColor = EMPTY_COLOR;
+
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (logic.getMoveAction() == 1) {
+                if (logic.getActionMode() == 1) {//если флаг
                     logicCell.setFlag();
                     dropFlag();
                 }
-                if (logic.getMoveAction() == 0) {
-                    logic.getBot().check(logicCell.getNumberInArray());
+                if (logic.getActionMode() == 0) {//если разминирование
+                    bot.check(logicCell.getNumberInArray());
                     check();
                 }
 
@@ -57,17 +62,18 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
 
     //Проверка клетки для бота
     void checkBot() {
-        setVisibility(INVISIBLE);
-        labelProbabilitiys.setVisibility(INVISIBLE);
-        //myContent. (true);
+
+        setBackgroundColor(contentColor);
+        labelProbabilitiys.setVisibility(VISIBLE);//TODO
+
         if (logicCell.getConditon() == 9)
-            setHighlightColor(MINE_COLOR);
+            setBackgroundColor(MINE_COLOR);
 
     }
 
     //Установка флага(для бота)
     void setFlag() {
-        setHighlightColor(FLAG_COLOR);
+        setBackgroundColor(FLAG_COLOR);
     }
 
 
@@ -76,8 +82,7 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
         if (logicCell.isChecked())
             return;
         logicCell.setChecked(true);
-        setVisibility(VISIBLE);
-        //myContent.set(true);
+        setBackgroundColor(contentColor);
 
 
     }
@@ -86,16 +91,16 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
     //Установка/снятие флага(для игрока)
     private void dropFlag() {
         if (logicCell.isFlag())
-            setHighlightColor(WHITE_COLOR);
+            setBackgroundColor(CLOSED_COLOR);
+
         else
-            setHighlightColor(FLAG_COLOR);
+            setBackgroundColor(FLAG_COLOR);
 
     }
 
 
     //Сеттеры, геттеры
 
-    @SuppressLint("DefaultLocale")
     void printLabelProbabilitiys() {
         labelProbabilitiys.setText(String.format("%.2f", logicCell.getProbabilities()));
         labelProbabilitiys.setVisibility(VISIBLE);
@@ -110,46 +115,7 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
         return logicCell;
     }
 
-
-    //    void setText() {
-//        myContent.setText("" + logicCell.getConditon());
-//    }
-
-//    Content getMyContent() {
-//        return myContent;
-//    }
-
-
-    //Значение клетки
-//    class Content extends android.support.v7.widget.AppCompatImageButton {
-//
-//
-//        Content(GraphicCell graphicCell, Color color) {
-//            super("213");
-//            common(graphicCell);
-//
-//
-//        }
-//
-//        @SuppressLint("SetTextI18n")
-//        Content(GraphicCell graphicCell, int nearlyMine) {
-//            super();
-//            setText("" + nearlyMine);
-//            common(graphicCell);
-//        }
-//
-//        //Метод для конструктора
-//        private void common(GraphicCell graphicCell) {
-//            setStyle("-fx-font-size:30;");
-//            //setStyle("-fx-text-alignment:center;");
-//            setTranslateX(graphicCell.getTranslateX());
-//            setTranslateY(graphicCell.getTranslateY());
-//            setVisible(false);
-//        }
-//
-//
-//    }
-
+    public int getContentColor() {
+        return contentColor;
+    }
 }
-
-

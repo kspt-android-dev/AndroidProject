@@ -2,9 +2,7 @@ package com.example.danila.minerandroid;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-
-import java.io.File;
-import java.net.MalformedURLException;
+import android.widget.FrameLayout;
 
 
 class Graphic {
@@ -13,26 +11,24 @@ class Graphic {
     private Logic logic;
     private Bot bot;
     private GraphicCell[] graphicCells;
-    private double sceneWidth;
-    private double sceneHight;
-    private AppCompatActivity gameActivity;
 
 
-    Graphic(AppCompatActivity gameActivity, Logic logic, Bot bot) {
+    Graphic(AppCompatActivity gameActivity, FrameLayout gameField, Logic logic, Bot bot) {
         this.bot = bot;
-        graphicCells = new GraphicCell[logic.getLevelWidth() * logic.getLevelHight()];
         this.logic = logic;
-        for (int i = 0; i < logic.getLevelHight(); i++)
-            for (int j = 0; j < logic.getLevelWidth(); j++)
-                graphicCells[i * logic.getLevelWidth() + j] = new GraphicCell(gameActivity, logic, logic.getLogicCells()[i * logic.getLevelWidth() + j], j, i);
+        int height = gameField.getHeight() / logic.getLevelHight();
+        int width = gameField.getWidth() / logic.getLevelWidth();
 
+        graphicCells = new GraphicCell[logic.getLevelWidth() * logic.getLevelHight()];
 
-//        for (GraphicCell graphicCell : graphicCells)
-//            graphicCell.setText();
+        for (int x = 0; x < logic.getLevelHight(); x++)
+            for (int y = 0; y < logic.getLevelWidth(); y++) {
+                graphicCells[x * logic.getLevelWidth() + y] = new GraphicCell(gameActivity, gameField,
+                        logic, bot, logic.getLogicCells()[x * logic.getLevelWidth() + y],
+                        y, x, 60, 60);
+                gameField.addView(graphicCells[x * logic.getLevelWidth() + y]);
+            }
 
-
-//        for (GraphicCell graphicCell : graphicCells)
-//            root.getChildren().addAll(graphicCell, graphicCell.getMyContent(), graphicCell.getLabelProbabilitiys());
 
     }
 
@@ -44,21 +40,11 @@ class Graphic {
 
     }
 
-//    void printBotsPhrase() {
-//        botsPhrase.setText(bot.getPhrase());
-//    }
-
     //Перезагрузка уровня
     void reload() {
-//        loseLabel.setVisible(false);
-//        winLabel.setVisible(false);
-//        defaultLabel.setVisible(true);
-//        root.setVisible(true);
         for (GraphicCell graphicCell : graphicCells) {
-            graphicCell.setHighlightColor(GraphicCell.WHITE_COLOR);
-            //graphicCell.getMyContent().setVisib(false);
+            graphicCell.setHighlightColor(GraphicCell.CLOSED_COLOR);
             graphicCell.setVisibility(View.VISIBLE);
-            //graphicCell.setText();
         }
         for (GraphicCell graphicCell : graphicCells)
             graphicCell.getLabelProbabilitiys().setVisibility(View.VISIBLE);
@@ -68,13 +54,8 @@ class Graphic {
     //Перезагрузка последнего уровня
     void reloadLast() {
         System.out.println("Reload of last level");
-//        loseLabel.setVisible(false);
-//        winLabel.setVisible(false);
-//        defaultLabel.setVisible(true);
-//        root.setVisible(true);
         for (GraphicCell graphicCell : graphicCells) {
-            graphicCell.setHighlightColor(GraphicCell.WHITE_COLOR);
-            //graphicCell.getMyContent().setVisible(false);
+            graphicCell.setHighlightColor(GraphicCell.CLOSED_COLOR);
             graphicCell.setVisibility(View.VISIBLE);
         }
         for (GraphicCell graphicCell : graphicCells)
@@ -90,15 +71,11 @@ class Graphic {
             if (graphicCell.getLogicCell().getConditon() == 9 && !graphicCell.getLogicCell().isFlag())
                 graphicCell.setHighlightColor(GraphicCell.MINE_COLOR);
             else if (!graphicCell.getLogicCell().isFlag()) {
-                graphicCell.setVisibility(View.INVISIBLE);
+                graphicCell.setBackgroundColor(graphicCell.getContentColor());
                 //graphicCell.getMyContent().setVisible(true);
             }
             graphicCell.getLabelProbabilitiys().setVisibility(View.INVISIBLE);
         }
-//        loseLabel.setVisible(false);
-//        winLabel.setVisible(false);
-//        root.setVisible(true);
-
 
     }
 
@@ -108,4 +85,6 @@ class Graphic {
     public GraphicCell[] getGraphicCells() {
         return graphicCells;
     }
+
+
 }

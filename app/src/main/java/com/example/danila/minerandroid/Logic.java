@@ -11,8 +11,8 @@ class Logic {
     private int minesDigit;
     private int levelWidth;
     private int levelHight;
-    private int moveAction = 0;//0-разминирование,1 - флаг
-    private Bot bot;
+    private int actionMode = 0;//0-разминирование,1 - флаг
+
 
 
     Logic(int width, int hight, int[] numbersOfMines) {
@@ -167,8 +167,8 @@ class Logic {
 
     //Setters
 
-    public void setMoveAction(int moveAction) {
-        this.moveAction = moveAction;
+    public void setActionMode(int actionMode) {
+        this.actionMode = actionMode;
     }
 
     //Getters-----------------------------
@@ -231,12 +231,9 @@ class Logic {
         return findedBombs + checkedCell == logicCells.length;
     }
 
-    public int getMoveAction() {
-        return moveAction;
+    public int getActionMode() {
+        return actionMode;
     }
 
-    public Bot getBot() {
-        return bot;
-    }
 }
 
