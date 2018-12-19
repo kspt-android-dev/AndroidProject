@@ -3,15 +3,12 @@ package com.example.danila.minerandroid;
 import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    FrameLayout gameField;
-    Logic logic;
-    Graphic graphic;
-    Bot bot;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -19,19 +16,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //TODO take from menu
-        int width = 9;
-        int hight = 9;
-        int minesDigit = 9;
+        int fieldWidth = 9;
+        int fieldHeight = 12;
+        int minesDigit = 9;//TODO take from menu
 
-        logic = new Logic(width, hight, minesDigit);
+        Logic logic = new Logic(fieldWidth, fieldHeight, minesDigit);
 
-        bot = new Bot(logic);
+        Bot bot = new Bot(logic);
 
 
-        gameField = (FrameLayout) findViewById(R.id.game_field);
+        //For graphic
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        final int SCREEN_WIDTH = dm.widthPixels;
+        final int SCREEN_HEIGHT = dm.heightPixels;
 
-        graphic = new Graphic(this, gameField, logic, bot);
+        FrameLayout gameField = (FrameLayout) findViewById(R.id.game_field);
+        Button helpMeBotButton = findViewById(R.id.help_me_bot);
+
+        Graphic graphic = new Graphic(this, gameField, helpMeBotButton, SCREEN_WIDTH, SCREEN_HEIGHT, logic, bot);
         bot.setGraphic(graphic);
     }
 

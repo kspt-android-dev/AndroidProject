@@ -2,31 +2,41 @@ package com.example.danila.minerandroid;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
-
 
 class Graphic {
 
 
     private Logic logic;
     private Bot bot;
-    private GraphicCell[] graphicCells;
+    private GraphicCell[] graphicCellsVertMode;
+    private Button modeButton;
 
 
-    Graphic(AppCompatActivity gameActivity, FrameLayout gameField, Logic logic, Bot bot) {
-        this.bot = bot;
+    Graphic(AppCompatActivity gameActivity, FrameLayout gameField, Button helpMeBotButton, int screenWidth, int screenHeight, Logic logic, Bot bot) {
         this.logic = logic;
-        int height = gameField.getHeight() / logic.getLevelHight();
-        int width = gameField.getWidth() / logic.getLevelWidth();
+        this.bot = bot;
+        this.modeButton = helpMeBotButton;
 
-        graphicCells = new GraphicCell[logic.getLevelWidth() * logic.getLevelHight()];
+        this.modeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bot.helpMeBot();
+            }
+        });
 
-        for (int x = 0; x < logic.getLevelHight(); x++)
-            for (int y = 0; y < logic.getLevelWidth(); y++) {
-                graphicCells[x * logic.getLevelWidth() + y] = new GraphicCell(gameActivity, gameField,
-                        logic, bot, logic.getLogicCells()[x * logic.getLevelWidth() + y],
-                        y, x, 60, 60);
-                gameField.addView(graphicCells[x * logic.getLevelWidth() + y]);
+        graphicCellsVertMode = new GraphicCell[logic.getLevelWidth() * logic.getLevelHight()];
+
+        int cellSizeVertMode = screenWidth / logic.getLevelWidth();
+        //int cellHeightHorizMode = screenHeight / logic.getLevelHight();
+
+        for (int y = 0; y < logic.getLevelHight(); y++)
+            for (int x = 0; x < logic.getLevelWidth(); x++) {
+                graphicCellsVertMode[y * logic.getLevelWidth() + x] = new GraphicCell(gameActivity, gameField,
+                        logic, bot, logic.getLogicCells()[y * logic.getLevelWidth() + x],
+                        x, y, cellSizeVertMode);
+                gameField.addView(graphicCellsVertMode[y * logic.getLevelWidth() + x]);
             }
 
 
@@ -34,7 +44,7 @@ class Graphic {
 
 
     void printProabilities() {
-        for (GraphicCell graphicCell : graphicCells)
+        for (GraphicCell graphicCell : graphicCellsVertMode)
             if (!graphicCell.getLogicCell().isFlag() && !graphicCell.getLogicCell().isChecked())
                 graphicCell.printLabelProbabilitiys();
 
@@ -42,11 +52,11 @@ class Graphic {
 
     //Перезагрузка уровня
     void reload() {
-        for (GraphicCell graphicCell : graphicCells) {
+        for (GraphicCell graphicCell : graphicCellsVertMode) {
             graphicCell.setHighlightColor(GraphicCell.CLOSED_COLOR);
             graphicCell.setVisibility(View.VISIBLE);
         }
-        for (GraphicCell graphicCell : graphicCells)
+        for (GraphicCell graphicCell : graphicCellsVertMode)
             graphicCell.getLabelProbabilitiys().setVisibility(View.VISIBLE);
         printProabilities();
     }
@@ -54,11 +64,11 @@ class Graphic {
     //Перезагрузка последнего уровня
     void reloadLast() {
         System.out.println("Reload of last level");
-        for (GraphicCell graphicCell : graphicCells) {
+        for (GraphicCell graphicCell : graphicCellsVertMode) {
             graphicCell.setHighlightColor(GraphicCell.CLOSED_COLOR);
             graphicCell.setVisibility(View.VISIBLE);
         }
-        for (GraphicCell graphicCell : graphicCells)
+        for (GraphicCell graphicCell : graphicCellsVertMode)
             graphicCell.getLabelProbabilitiys().setVisibility(View.INVISIBLE);
 
 
@@ -67,7 +77,7 @@ class Graphic {
 
     //Показывает изначальные условия(для кнопки ESC)
     void checkAll() {
-        for (GraphicCell graphicCell : graphicCells) {
+        for (GraphicCell graphicCell : graphicCellsVertMode) {
             if (graphicCell.getLogicCell().getConditon() == 9 && !graphicCell.getLogicCell().isFlag())
                 graphicCell.setHighlightColor(GraphicCell.MINE_COLOR);
             else if (!graphicCell.getLogicCell().isFlag()) {
@@ -82,8 +92,8 @@ class Graphic {
 
     //Геттеры
 
-    public GraphicCell[] getGraphicCells() {
-        return graphicCells;
+    public GraphicCell[] getGraphicCellsVertMode() {
+        return graphicCellsVertMode;
     }
 
 

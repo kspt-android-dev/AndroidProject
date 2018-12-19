@@ -91,7 +91,7 @@ class Bot {
                         logic.getLogicCells()[number].setFlag(true);
                         findedMines++;
                         if (graphic != null)
-                            graphic.getGraphicCells()[number].setFlag();
+                            graphic.getGraphicCellsVertMode()[number].setFlag();
                         doSomething = true;
                     }
                 }
@@ -102,7 +102,7 @@ class Bot {
                     if (number != -10 && !logic.getLogicCells()[number].isChecked() && !logic.getLogicCells()[number].isFlag()) {
                         addedCells.add(logic.getLogicCells()[number].checkBot());
                         if (graphic != null)
-                            graphic.getGraphicCells()[number].checkBot();
+                            graphic.getGraphicCellsVertMode()[number].checkBot();
                         if (addedCells.get(addedCells.size() - 1).getConditon() == 9) {
                             lose++;
                             gameOver = true;
@@ -234,7 +234,7 @@ class Bot {
     void check(int index) {
         botCells.add(logic.getLogicCells()[index].checkBot());
         if (graphic != null)
-            graphic.getGraphicCells()[index].checkBot();
+            graphic.getGraphicCellsVertMode()[index].checkBot();
     }
 
 

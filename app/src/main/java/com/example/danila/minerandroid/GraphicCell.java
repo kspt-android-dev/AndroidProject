@@ -21,16 +21,16 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
 
 
     GraphicCell(AppCompatActivity gameActivity, FrameLayout frameLayout, Logic logic, Bot bot, LogicCell logicCell,
-                int x, int y, int height, int width) {
+                int x, int y, int cellSize) {
         super(gameActivity);
 
         this.logicCell = logicCell;
 
 
-        setLayoutParams(new LinearLayout.LayoutParams(width, height));
+        setLayoutParams(new LinearLayout.LayoutParams(cellSize, cellSize));
         setBackgroundColor(CLOSED_COLOR);
-        setTranslationX(x * 50);
-        setTranslationY(y * 50);
+        setTranslationX(x * cellSize);
+        setTranslationY(y * cellSize);
         labelProbabilitiys = new TextView(gameActivity);
         //labelProbabilitiys.setStyle("-fx-font-size:20;");TODO
         labelProbabilitiys.setY(getTranslationX());
@@ -45,15 +45,19 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (logic.getActionMode() == 1) {//если флаг
-                    logicCell.setFlag();
-                    dropFlag();
-                }
-                if (logic.getActionMode() == 0) {//если разминирование
-                    bot.check(logicCell.getNumberInArray());
-                    check();
-                }
+                bot.check(logicCell.getNumberInArray());
+                check();
+            }
 
+
+        });
+
+        setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                logicCell.setFlag();
+                dropFlag();
+                return true;
             }
         });
 
