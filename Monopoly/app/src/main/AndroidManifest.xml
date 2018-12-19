@@ -18,7 +18,11 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".GameActivity" />
-        <activity android:name=".AmountOfPlayersActivity"></activity>
+        <activity android:name=".AmountOfPlayersActivity" />
+
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@drawable/cellbglayer" />
     </application>
 
 </manifest>

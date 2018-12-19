@@ -1,5 +1,6 @@
 package com.dreamteam.monopoly
 
+import android.graphics.drawable.LayerDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -7,6 +8,7 @@ import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintLayout.*
 import android.support.constraint.ConstraintSet
 import android.support.constraint.Guideline
+import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
@@ -21,6 +23,9 @@ import com.tapadoo.alerter.Alerter
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
+import android.graphics.drawable.GradientDrawable
+
+
 
 
 class GameActivity : AppCompatActivity() {
@@ -176,14 +181,18 @@ class GameActivity : AppCompatActivity() {
         val neededCellID = getResources().getIdentifier("cell${index+1}", "id", packageName)
         val neededCell = findViewById<ImageButton>(neededCellID)
         Log.d("playerIndex", gameManager.getCurrentPlayer().id.toString())
+        val shape = getResources().getDrawable(R.drawable.cellbglayer) as LayerDrawable
+        val gradientDrawable = shape
+                .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
+        Log.d("COLOR", gradientDrawable.toString())
         when (gameManager.getCurrentPlayer().id )
         {
-            1 -> neededCell.setBackgroundResource(R.drawable.player1cell)
-            2 -> neededCell.setBackgroundResource(R.drawable.player2cell)
-            3 -> neededCell.setBackgroundResource(R.drawable.player3cell)
-            4 -> neededCell.setBackgroundResource(R.drawable.player4cell)
+            1 -> gradientDrawable.setColor(resources.getColor(R.color.Player1BackgroundColor))//neededCell.setBackgroundResource(R.drawable.player1cell)
+            2 -> gradientDrawable.setColor(resources.getColor(R.color.Player2BackgroundColor))
+            3 -> gradientDrawable.setColor(resources.getColor(R.color.Player3BackgroundColor))
+            4 -> gradientDrawable.setColor(resources.getColor(R.color.Player4BackgroundColor))
         }
-
+        cellButtons[gameManager.getCurrentPlayer().currentPosition -1].background = shape
         // TODO - setup unique color on owned cell (spawn image above old one)
     }
 
@@ -252,7 +261,8 @@ class GameActivity : AppCompatActivity() {
         button.layoutParams = LayoutParams(width, height)
         button.id = (thisButtonID)
         button.setOnClickListener(ShowInfoClick)
-        button.setBackgroundResource(R.drawable.cell_borders_up)
+        button.background = resources.getDrawable(resources
+                .getIdentifier("cellbglayer", "drawable", packageName), null)
         layout.addView(button)
         cellButtons.add(button)
         val constraintSet = ConstraintSet()
