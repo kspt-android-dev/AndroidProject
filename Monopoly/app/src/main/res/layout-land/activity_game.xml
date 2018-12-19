@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameActivity">
+
+
+    <Button
+        android:id="@+id/buttonThrowCubes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="@string/throw_dices"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/VerticalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@id/UnderTopPartGuideline" />
+
+    <ImageView
+        android:id="@+id/cube1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/dices"
+        app:layout_constraintEnd_toEndOf="@+id/buttonThrowCubes"
+        app:layout_constraintStart_toStartOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/buttonThrowCubes" />
+
+    <ImageView
+        android:id="@+id/cube2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/dices"
+        app:layout_constraintEnd_toStartOf="@+id/VerticalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/DialogView"
+        app:layout_constraintTop_toBottomOf="@+id/buttonThrowCubes" />
+
+
+    <TextView
+        android:id="@+id/playerStats1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HorizontalGuideline" />
+
+    <TextView
+        android:id="@+id/playerStats2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerMoney1" />
+
+    <TextView
+        android:id="@+id/playerStats3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerMoney2" />
+
+    <TextView
+        android:id="@+id/playerStats4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerMoney3" />
+
+    <TextView
+        android:id="@+id/playerMoney1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerStats1" />
+
+    <TextView
+        android:id="@+id/playerMoney2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerStats2" />
+
+    <TextView
+        android:id="@+id/playerMoney3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerStats3" />
+
+    <TextView
+        android:id="@+id/playerMoney4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerStats4" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/HorizontalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.31" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/VerticalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <TextView
+        android:id="@+id/cellName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/HorizontalGuideline" />
+
+    <TextView
+        android:id="@+id/cellCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/cellName" />
+
+    <TextView
+        android:id="@+id/cellSell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/cellCost" />
+
+    <TextView
+        android:id="@+id/cellCharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/cellSell" />
+
+    <TextView
+        android:id="@+id/cellHouseOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/cellCharge" />
+
+    <TextView
+        android:id="@+id/cellHouseTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/cellHouseOne" />
+
+    <TextView
+        android:id="@+id/cellHouseThree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/cellHouseTwo" />
+
+    <TextView
+        android:id="@+id/cellHotel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/cellHouseThree" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/UnderTopPartGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+
+    <Button
+        android:id="@+id/YesButton"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:clickable="false"
+        android:text="Yes"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/DialogView"
+        app:layout_constraintTop_toBottomOf="@+id/DialogView" />
+
+    <Button
+        android:id="@+id/NoButton"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:clickable="false"
+        android:text="No"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/DialogView"
+        app:layout_constraintTop_toBottomOf="@+id/DialogView" />
+
+    <Button
+        android:id="@+id/DialogView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:gravity="center"
+        android:text="Buy this cell?"
+        android:textSize="15dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/buttonThrowCubes"
+        app:layout_constraintStart_toStartOf="@+id/buttonThrowCubes"
+        app:layout_constraintTop_toBottomOf="@id/UnderTopPartGuideline" />
+
+</android.support.constraint.ConstraintLayout>

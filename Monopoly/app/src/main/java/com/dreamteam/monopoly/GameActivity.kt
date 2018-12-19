@@ -1,5 +1,6 @@
 package com.dreamteam.monopoly
 
+import android.content.res.Configuration
 import android.graphics.drawable.LayerDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -23,6 +24,7 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
 import android.graphics.drawable.GradientDrawable
+import com.dreamteam.monopoly.game.GameData.boardSizeModifier
 
 
 class GameActivity : AppCompatActivity() {
@@ -34,7 +36,7 @@ class GameActivity : AppCompatActivity() {
     private var gameManager: GameManager = GameManager(this)
     private var cellButtons: ArrayList<ImageButton> = ArrayList(gameManager.mainBoard.gameWayLength)
 
-    private var indexForBoard: Int = 0;
+    private var indexForBoard: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +48,8 @@ class GameActivity : AppCompatActivity() {
         question = findViewById(R.id.DialogView)
         val constraintLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayout)
         val underTopLineGuideline = findViewById<Guideline>(R.id.UnderTopPartGuideline)
-        val horizotnalGuidleline = findViewById<Guideline>(R.id.HorizontalGuideline)
+        val horizontalGuideline = findViewById<Guideline>(R.id.HorizontalGuideline)
+        val verticalGuideline = findViewById<Guideline>(R.id.VerticalGuideline)
 
 
         val intent = intent
@@ -56,21 +59,26 @@ class GameActivity : AppCompatActivity() {
         val metrics = DisplayMetrics()
 
         windowManager.defaultDisplay.getMetrics(metrics)
-        val boardWidth: Int = metrics.widthPixels
-        val boardHeight: Int = boardWidth
-        val cellWidth: Int = (boardWidth / ((gameManager.mainBoard.gameWayLength / 4 - 1) + 2 * GameData.cellSidesModifier)).toInt()
+
+        val boardSize: Int = ((if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) metrics.widthPixels else metrics.heightPixels) * boardSizeModifier).toInt()
+        val cellWidth: Int = (boardSize / ((gameManager.mainBoard.gameWayLength / 4 - 1) + 2 * GameData.cellSidesModifier)).toInt()
         val cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
 
 
-        underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
-        horizotnalGuidleline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels)
+        underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / boardSize /*metrics.heightPixels*/)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            horizontalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels)
+        else {
+            horizontalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels / 2)   // TODO
+            verticalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.widthPixels / 2)
+        }
         createBoard(constraintLayout, cellHeight, cellWidth)
         startAssignment(playersNames)
 
         for (i in 1..playersNames.size) {
-            val myPlayerID = getResources().getIdentifier("Player$i", "id", packageName)
+            val myPlayerID = resources.getIdentifier("Player$i", "id", packageName)
             val playerImage = resources.getDrawable(resources
-                    .getIdentifier("player${i}", "drawable", packageName))
+                    .getIdentifier("player$i", "drawable", packageName))
             val player = ImageView(this)
             player.layoutParams = LayoutParams(cellWidth / 2, cellWidth / 2)
             player.id = (myPlayerID)
@@ -174,8 +182,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun playerSetCellMark(index: Int) {
-        val neededCellID = resources.getIdentifier("cell${index + 1}", "id", packageName)
-        val neededCell = findViewById<ImageButton>(neededCellID)
+        //val neededCellID = resources.getIdentifier("cell${index + 1}", "id", packageName)
+        //val neededCell = findViewById<ImageButton>(neededCellID)
         Log.d("playerIndex", gameManager.getCurrentPlayer().id.toString())
         val shape = resources.getDrawable(R.drawable.cellbglayer) as LayerDrawable
         val gradientDrawable = shape
@@ -290,8 +298,6 @@ class GameActivity : AppCompatActivity() {
         buySpace.text = "Buy: $costBuy"
         sellSpace.text = "Sell: $costSell"
         chargeSpace.text = "Charge: $charge"
-
-
     }
 
     private fun updPlayerMoney(player: Player) {
