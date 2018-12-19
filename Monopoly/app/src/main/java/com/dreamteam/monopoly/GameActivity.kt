@@ -8,7 +8,6 @@ import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintLayout.*
 import android.support.constraint.ConstraintSet
 import android.support.constraint.Guideline
-import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
@@ -26,8 +25,6 @@ import maes.tech.intentanim.CustomIntent
 import android.graphics.drawable.GradientDrawable
 
 
-
-
 class GameActivity : AppCompatActivity() {
 
     private var buttonThrowDices: Button? = null
@@ -37,19 +34,19 @@ class GameActivity : AppCompatActivity() {
     private var gameManager: GameManager = GameManager(this)
     private var cellButtons: ArrayList<ImageButton> = ArrayList(gameManager.mainBoard.gameWayLength)
 
-    private var indexForBoard : Int = 0;
+    private var indexForBoard: Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        buttonThrowDices = findViewById(R.id.buttonThrowCubes) as Button
-        yesButton = findViewById(R.id.YesButton) as Button
-        noButton = findViewById(R.id.NoButton) as Button
-        question = findViewById(R.id.DialogView) as Button
-        val constraintLayout = findViewById(R.id.ConstraintLayout) as ConstraintLayout
-        val underTopLineGuideline = findViewById(R.id.UnderTopPartGuideline) as Guideline
-        val horizotnalGuidleline = findViewById(R.id.HorizontalGuideline) as Guideline
+        buttonThrowDices = findViewById(R.id.buttonThrowCubes)
+        yesButton = findViewById(R.id.YesButton)
+        noButton = findViewById(R.id.NoButton)
+        question = findViewById(R.id.DialogView)
+        val constraintLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayout)
+        val underTopLineGuideline = findViewById<Guideline>(R.id.UnderTopPartGuideline)
+        val horizotnalGuidleline = findViewById<Guideline>(R.id.HorizontalGuideline)
 
 
         val intent = intent
@@ -61,8 +58,8 @@ class GameActivity : AppCompatActivity() {
         windowManager.defaultDisplay.getMetrics(metrics)
         val boardWidth: Int = metrics.widthPixels
         val boardHeight: Int = boardWidth
-        var cellWidth: Int = (boardWidth / ((gameManager.mainBoard.gameWayLength / 4 - 1) + 2 * GameData.cellSidesModifier)).toInt()
-        var cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
+        val cellWidth: Int = (boardWidth / ((gameManager.mainBoard.gameWayLength / 4 - 1) + 2 * GameData.cellSidesModifier)).toInt()
+        val cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
 
 
         underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
@@ -104,7 +101,7 @@ class GameActivity : AppCompatActivity() {
             playerStartMove()
             if (gameManager.getCurrentPlayer().analyze() == PlayerMoveCondition.COMPLETED) {
                 val handler = Handler()
-                        handler.postDelayed({
+                handler.postDelayed({
                     playersSwap()
                 }, GameData.swapDicesDelay)
             } else playerActionRequest()
@@ -120,20 +117,19 @@ class GameActivity : AppCompatActivity() {
 
             yesButton!!.isClickable = true
             noButton!!.isClickable = true
-        } else
-        {
+        } else {
             playersSwap()
         }
 
         yesButton!!.setOnClickListener {
             performBuyAction()
-            yesNoButtonListner()
+            yesNoButtonListener()
             Log.d("FindError", "yesPressed")
         }
 
         noButton!!.setOnClickListener {
             performStayAction()
-            yesNoButtonListner()
+            yesNoButtonListener()
         }
 
 
@@ -178,21 +174,20 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun playerSetCellMark(index: Int) {
-        val neededCellID = getResources().getIdentifier("cell${index+1}", "id", packageName)
+        val neededCellID = resources.getIdentifier("cell${index + 1}", "id", packageName)
         val neededCell = findViewById<ImageButton>(neededCellID)
         Log.d("playerIndex", gameManager.getCurrentPlayer().id.toString())
-        val shape = getResources().getDrawable(R.drawable.cellbglayer) as LayerDrawable
+        val shape = resources.getDrawable(R.drawable.cellbglayer) as LayerDrawable
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
         Log.d("COLOR", gradientDrawable.toString())
-        when (gameManager.getCurrentPlayer().id )
-        {
+        when (gameManager.getCurrentPlayer().id) {
             1 -> gradientDrawable.setColor(resources.getColor(R.color.Player1BackgroundColor))//neededCell.setBackgroundResource(R.drawable.player1cell)
             2 -> gradientDrawable.setColor(resources.getColor(R.color.Player2BackgroundColor))
             3 -> gradientDrawable.setColor(resources.getColor(R.color.Player3BackgroundColor))
             4 -> gradientDrawable.setColor(resources.getColor(R.color.Player4BackgroundColor))
         }
-        cellButtons[gameManager.getCurrentPlayer().currentPosition -1].background = shape
+        cellButtons[gameManager.getCurrentPlayer().currentPosition - 1].background = shape
         // TODO - setup unique color on owned cell (spawn image above old one)
     }
 
@@ -209,7 +204,7 @@ class GameActivity : AppCompatActivity() {
 
     fun getGameManager(): GameManager = gameManager
 
-    private fun yesNoButtonListner() {
+    private fun yesNoButtonListener() {
         yesButton!!.visibility = View.INVISIBLE
         noButton!!.visibility = View.INVISIBLE
         question!!.visibility = View.INVISIBLE
@@ -231,36 +226,35 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) { // LEFT = 1 RIGHT = 2 TOP = 3 BOTTOM = 4 START = 6 END = 7
-        createCell(cellHeight,cellHeight , constraintLayout , 3, 3, 6, 6, 3, 3 , true )
+        createCell(cellHeight, cellHeight, constraintLayout, 3, 3, 6, 6, 3, 3, true)
 
         while (indexForBoard < gameManager.mainBoard.gameWayLength / 4) {
-            createCell(cellWidth,cellHeight , constraintLayout , 6, 7, 3, 3, 4, 4  )
+            createCell(cellWidth, cellHeight, constraintLayout, 6, 7, 3, 3, 4, 4)
         }
-        createCell(cellHeight,cellHeight , constraintLayout , 6, 7, 3, 3, 4, 4  )
+        createCell(cellHeight, cellHeight, constraintLayout, 6, 7, 3, 3, 4, 4)
 
         while (indexForBoard < gameManager.mainBoard.gameWayLength / 2) {
-            createCell(cellHeight,cellWidth , constraintLayout , 6, 6, 3, 4, 7, 7  )
+            createCell(cellHeight, cellWidth, constraintLayout, 6, 6, 3, 4, 7, 7)
         }
-        createCell(cellHeight,cellHeight , constraintLayout , 6, 6, 3, 4, 7, 7  )
+        createCell(cellHeight, cellHeight, constraintLayout, 6, 6, 3, 4, 7, 7)
 
         while (indexForBoard < 3 * gameManager.mainBoard.gameWayLength / 4) {
-            createCell(cellWidth,cellHeight , constraintLayout , 7, 6, 3, 3, 4, 4  )
+            createCell(cellWidth, cellHeight, constraintLayout, 7, 6, 3, 3, 4, 4)
         }
-        createCell(cellHeight,cellHeight , constraintLayout , 7, 6, 3, 3, 4, 4  )
+        createCell(cellHeight, cellHeight, constraintLayout, 7, 6, 3, 3, 4, 4)
 
         while (indexForBoard < gameManager.mainBoard.gameWayLength) {
-            createCell(cellHeight,cellWidth , constraintLayout , 6, 6, 4, 3, 7, 7  )
+            createCell(cellHeight, cellWidth, constraintLayout, 6, 6, 4, 3, 7, 7)
         }
     }
 
-    fun createCell(width:Int , height:Int , layout: ConstraintLayout, From1: Int, To1:Int, From2: Int, To2:Int,From3: Int, To3:Int  ,start:Boolean = false )
-    {
-        var thisButtonID = getResources().getIdentifier("cell${indexForBoard + 1}", "id", packageName)
-        var previousButtonID = resources.getIdentifier("cell$indexForBoard", "id", packageName)
-        var button = ImageButton(this)
+    private fun createCell(width: Int, height: Int, layout: ConstraintLayout, From1: Int, To1: Int, From2: Int, To2: Int, From3: Int, To3: Int, start: Boolean = false) {
+        val thisButtonID = resources.getIdentifier("cell${indexForBoard + 1}", "id", packageName)
+        val previousButtonID = resources.getIdentifier("cell$indexForBoard", "id", packageName)
+        val button = ImageButton(this)
         button.layoutParams = LayoutParams(width, height)
         button.id = (thisButtonID)
-        button.setOnClickListener(ShowInfoClick)
+        button.setOnClickListener(showInfoClick)
         button.background = resources.getDrawable(resources
                 .getIdentifier("cellbglayer", "drawable", packageName), null)
         layout.addView(button)
@@ -268,13 +262,11 @@ class GameActivity : AppCompatActivity() {
         val constraintSet = ConstraintSet()
         constraintSet.clone(layout)
         if (start) {
-            constraintSet.connect(R.id.UnderTopPartGuideline, From1, layout.getId(), To1, height)
-            constraintSet.connect(button.id, From2, layout.getId(), To2, 0)
-            constraintSet.connect(button.id, From3, layout.getId(), To3, 0)
+            constraintSet.connect(R.id.UnderTopPartGuideline, From1, layout.id, To1, height)
+            constraintSet.connect(button.id, From2, layout.id, To2, 0)
+            constraintSet.connect(button.id, From3, layout.id, To3, 0)
 
-        }
-        else
-        {
+        } else {
             constraintSet.connect(button.id, From1, previousButtonID, To1, 0)
             constraintSet.connect(button.id, From2, previousButtonID, To2, 0)
             constraintSet.connect(button.id, From3, previousButtonID, To3, 0)
@@ -283,7 +275,7 @@ class GameActivity : AppCompatActivity() {
         indexForBoard++
     }
 
-    val ShowInfoClick = View.OnClickListener { view ->
+    private val showInfoClick = View.OnClickListener { view ->
         val i = cellButtons.indexOf(view)
         val name: String = GameData.boardGameCells[i].info.name
         val costBuy = GameData.boardGameCells[i].info.cost.costBuy
