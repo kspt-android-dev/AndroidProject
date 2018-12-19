@@ -64,7 +64,7 @@ class LogicCell {
     }
 
     //Установка флага(для бота)
-    void setFlag() {
+    void changeFlag() {
         flag = !flag;
 
     }
@@ -73,16 +73,8 @@ class LogicCell {
         this.flag = flag;
     }
 
-    //Добавление к состоянию единицы,используется в printProabilities
-    void addCondition() {
-        if (conditon != 9)
-            conditon++;
-    }
 
-
-    //Сеттеры, геттеры, проверки
-
-
+    //setters
     void setConditon(int conditon) {
         this.conditon = conditon;
     }
@@ -91,7 +83,12 @@ class LogicCell {
         isChecked = checked;
     }
 
+    void addCondition() {
+        if (conditon != 9)
+            conditon++;
+    }
 
+    //getters
     int getConditon() {
         return conditon;
     }

@@ -1,6 +1,7 @@
 package com.example.danila.minerandroid;
 
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,38 +10,34 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+@SuppressLint("ViewConstructor")
 class GraphicCell extends android.support.v7.widget.AppCompatButton {
     private LogicCell logicCell;
-    //private Content myContent;
-    private TextView labelProbabilitiys;//Визуализация вероятности мины на клетке
     public static final int FLAG_COLOR = Color.BLUE;
     public static final int EMPTY_COLOR = Color.WHITE;
     public static final int CLOSED_COLOR = Color.GRAY;
     public static final int MINE_COLOR = Color.RED;
-    public int contentColor;
+
+    public TextView content;
 
 
-    GraphicCell(AppCompatActivity gameActivity, FrameLayout frameLayout, Logic logic, Bot bot, LogicCell logicCell,
-                int x, int y, int cellSize) {
+    @SuppressLint("SetTextI18n")
+    GraphicCell(AppCompatActivity gameActivity, Bot bot, LogicCell logicCell, int x, int y, int cellSize) {
         super(gameActivity);
 
         this.logicCell = logicCell;
 
+        content = new TextView(gameActivity);
+        content.setVisibility(INVISIBLE);
+        content.setTextSize(cellSize);
+        content.setTranslationX(x * cellSize);
+        content.setTranslationY(y * cellSize);
+        content.setText("" + logicCell.getConditon());
 
         setLayoutParams(new LinearLayout.LayoutParams(cellSize, cellSize));
         setBackgroundColor(CLOSED_COLOR);
         setTranslationX(x * cellSize);
         setTranslationY(y * cellSize);
-        labelProbabilitiys = new TextView(gameActivity);
-        //labelProbabilitiys.setStyle("-fx-font-size:20;");TODO
-        labelProbabilitiys.setY(getTranslationX());
-        labelProbabilitiys.setY(getTranslationY());
-
-
-        if (logicCell.getConditon() == 9)
-            contentColor = MINE_COLOR;
-        else
-            contentColor = EMPTY_COLOR;
 
         setOnClickListener(new OnClickListener() {
             @Override
@@ -55,8 +52,8 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
         setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                logicCell.setFlag();
-                dropFlag();
+                logicCell.changeFlag();
+                changeFlag();
                 return true;
             }
         });
@@ -67,8 +64,7 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
     //Проверка клетки для бота
     void checkBot() {
 
-        setBackgroundColor(contentColor);
-        labelProbabilitiys.setVisibility(VISIBLE);//TODO
+        setBackgroundColor(getContentColor());
 
         if (logicCell.getConditon() == 9)
             setBackgroundColor(MINE_COLOR);
@@ -86,40 +82,38 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
         if (logicCell.isChecked())
             return;
         logicCell.setChecked(true);
-        setBackgroundColor(contentColor);
+
+        setBackgroundColor(getContentColor());
+        content.setVisibility(VISIBLE);
 
 
     }
 
 
     //Установка/снятие флага(для игрока)
-    private void dropFlag() {
+    private void changeFlag() {
         if (logicCell.isFlag())
-            setBackgroundColor(CLOSED_COLOR);
-
-        else
             setBackgroundColor(FLAG_COLOR);
+        else
+            setBackgroundColor(CLOSED_COLOR);
 
     }
 
 
     //Сеттеры, геттеры
 
-    void printLabelProbabilitiys() {
-        labelProbabilitiys.setText(String.format("%.2f", logicCell.getProbabilities()));
-        labelProbabilitiys.setVisibility(VISIBLE);
-    }
-
-
-    TextView getLabelProbabilitiys() {
-        return labelProbabilitiys;
-    }
-
     LogicCell getLogicCell() {
         return logicCell;
     }
 
     public int getContentColor() {
-        return contentColor;
+        if (getLogicCell().getConditon() == 9)
+            return MINE_COLOR;
+        else
+            return EMPTY_COLOR;
+    }
+
+    public TextView getContent() {
+        return content;
     }
 }

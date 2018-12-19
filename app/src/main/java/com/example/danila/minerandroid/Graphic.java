@@ -6,36 +6,23 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 class Graphic {
-
-
-    private Logic logic;
-    private Bot bot;
     private GraphicCell[] graphicCellsVertMode;
-    private Button modeButton;
 
+    Graphic(AppCompatActivity gameActivity, FrameLayout gameField,
+            int screenWidth, int screenHeight, Logic logic, Bot bot) {//TODO use screenHeight
 
-    Graphic(AppCompatActivity gameActivity, FrameLayout gameField, Button helpMeBotButton, int screenWidth, int screenHeight, Logic logic, Bot bot) {
-        this.logic = logic;
-        this.bot = bot;
-        this.modeButton = helpMeBotButton;
-
-        this.modeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bot.helpMeBot();
-            }
-        });
 
         graphicCellsVertMode = new GraphicCell[logic.getLevelWidth() * logic.getLevelHight()];
 
         int cellSizeVertMode = screenWidth / logic.getLevelWidth();
-        //int cellHeightHorizMode = screenHeight / logic.getLevelHight();
+        //int cellHeightHorizMode = screenHeight / logic.getLevelHight();//TODO add for swap
 
         for (int y = 0; y < logic.getLevelHight(); y++)
             for (int x = 0; x < logic.getLevelWidth(); x++) {
-                graphicCellsVertMode[y * logic.getLevelWidth() + x] = new GraphicCell(gameActivity, gameField,
-                        logic, bot, logic.getLogicCells()[y * logic.getLevelWidth() + x],
-                        x, y, cellSizeVertMode);
+                graphicCellsVertMode[y * logic.getLevelWidth() + x] =
+                        new GraphicCell(gameActivity, bot, logic.getLogicCells()[y * logic.getLevelWidth() + x],
+                                x, y, cellSizeVertMode);
+
                 gameField.addView(graphicCellsVertMode[y * logic.getLevelWidth() + x]);
             }
 
@@ -43,33 +30,22 @@ class Graphic {
     }
 
 
-    void printProabilities() {
-        for (GraphicCell graphicCell : graphicCellsVertMode)
-            if (!graphicCell.getLogicCell().isFlag() && !graphicCell.getLogicCell().isChecked())
-                graphicCell.printLabelProbabilitiys();
-
-    }
-
     //Перезагрузка уровня
     void reload() {
         for (GraphicCell graphicCell : graphicCellsVertMode) {
-            graphicCell.setHighlightColor(GraphicCell.CLOSED_COLOR);
+            graphicCell.setBackgroundColor(GraphicCell.CLOSED_COLOR);
             graphicCell.setVisibility(View.VISIBLE);
         }
-        for (GraphicCell graphicCell : graphicCellsVertMode)
-            graphicCell.getLabelProbabilitiys().setVisibility(View.VISIBLE);
-        printProabilities();
+
     }
 
     //Перезагрузка последнего уровня
     void reloadLast() {
         System.out.println("Reload of last level");
         for (GraphicCell graphicCell : graphicCellsVertMode) {
-            graphicCell.setHighlightColor(GraphicCell.CLOSED_COLOR);
+            graphicCell.setBackgroundColor(GraphicCell.CLOSED_COLOR);
             graphicCell.setVisibility(View.VISIBLE);
         }
-        for (GraphicCell graphicCell : graphicCellsVertMode)
-            graphicCell.getLabelProbabilitiys().setVisibility(View.INVISIBLE);
 
 
     }
@@ -77,15 +53,14 @@ class Graphic {
 
     //Показывает изначальные условия(для кнопки ESC)
     void checkAll() {
-        for (GraphicCell graphicCell : graphicCellsVertMode) {
+        for (GraphicCell graphicCell : graphicCellsVertMode)
             if (graphicCell.getLogicCell().getConditon() == 9 && !graphicCell.getLogicCell().isFlag())
                 graphicCell.setHighlightColor(GraphicCell.MINE_COLOR);
             else if (!graphicCell.getLogicCell().isFlag()) {
                 graphicCell.setBackgroundColor(graphicCell.getContentColor());
-                //graphicCell.getMyContent().setVisible(true);
+                graphicCell.getContent().setVisibility(View.INVISIBLE);
             }
-            graphicCell.getLabelProbabilitiys().setVisibility(View.INVISIBLE);
-        }
+
 
     }
 
