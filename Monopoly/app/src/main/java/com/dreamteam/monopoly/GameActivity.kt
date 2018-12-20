@@ -197,7 +197,7 @@ class GameActivity : AppCompatActivity() {
         //val neededCellID = resources.getIdentifier("cell${index + 1}", "id", packageName)
         //val neededCell = findViewById<ImageButton>(neededCellID)
         Log.d("playerIndex", gameManager.getCurrentPlayer().id.toString())
-        val shape = cellButtons[gameManager.getCurrentPlayer().currentPosition - 1].background as LayerDrawable
+        val shape = cellButtons[index - 1].background as LayerDrawable
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
         when (gameManager.getCurrentPlayer().id) {
@@ -206,12 +206,15 @@ class GameActivity : AppCompatActivity() {
             3 -> gradientDrawable.setColor(resources.getColor(R.color.Player3BackgroundColor))
             4 -> gradientDrawable.setColor(resources.getColor(R.color.Player4BackgroundColor))
         }
-        cellButtons[gameManager.getCurrentPlayer().currentPosition - 1].background = shape
-        // TODO - setup unique color on owned cell (spawn image above old one)
+        cellButtons[index - 1].background = shape
     }
 
     fun playerRemoveCellMark(index: Int) {
-        // TODO - remove unique color on owned cell
+        val shape = cellButtons[index - 1].background as LayerDrawable
+        val gradientDrawable = shape
+                .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
+        gradientDrawable.setColor(resources.getColor(R.color.cellBackground))
+        cellButtons[index - 1].background = shape
     }
 
     @Override
