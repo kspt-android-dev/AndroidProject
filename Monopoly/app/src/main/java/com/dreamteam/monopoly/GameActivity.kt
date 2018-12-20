@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
 import android.graphics.drawable.GradientDrawable
 import com.dreamteam.monopoly.game.GameData.boardSizeModifier
+import com.dreamteam.monopoly.game.player.PlayerType
 
 
 class GameActivity : AppCompatActivity() {
@@ -75,6 +76,7 @@ class GameActivity : AppCompatActivity() {
         createBoard(constraintLayout, cellHeight, cellWidth)
         startAssignment(playersNames)
 
+        // players pos and marks setup
         for (i in 1..playersNames.size) {
             val myPlayerID = resources.getIdentifier("Player$i", "id", packageName)
             val playerImage = resources.getDrawable(resources
@@ -102,18 +104,21 @@ class GameActivity : AppCompatActivity() {
             constraintSet.applyTo(constraintLayout)
         }
 
-
-
-
+        if (gameManager.getCurrentPlayer().type == PlayerType.AI)
+            playerStartMoveAction()
         buttonThrowDices!!.setOnClickListener {
-            playerStartMove()
-            if (gameManager.getCurrentPlayer().analyze() == PlayerMoveCondition.COMPLETED) {
-                val handler = Handler()
-                handler.postDelayed({
-                    playersSwap()
-                }, GameData.swapDicesDelay)
-            } else playerActionRequest()
+            playerStartMoveAction()
         }
+    }
+
+    private fun playerStartMoveAction() {
+        playerStartMove()
+        if (gameManager.getCurrentPlayer().analyze() == PlayerMoveCondition.COMPLETED) {
+            val handler = Handler()
+            handler.postDelayed({
+                playersSwap()
+            }, GameData.swapDicesDelay)
+        } else playerActionRequest()
     }
 
     private fun playerActionRequest() {
@@ -139,9 +144,6 @@ class GameActivity : AppCompatActivity() {
             performStayAction()
             yesNoButtonListener()
         }
-
-
-        // TODO add listeners to choice buttons
     }
 
     private fun performBuyAction() {
@@ -178,6 +180,9 @@ class GameActivity : AppCompatActivity() {
         gameManager.nextPlayerMove() //this code should be after action after throwing dice #Player.decision
         buttonThrowDices!!.isEnabled = true
         buttonThrowDices!!.visibility = View.VISIBLE
+        if (gameManager.getCurrentPlayer().type == PlayerType.AI) {
+            playerStartMoveAction()
+        }
         Toasty.info(this, gameManager.getCurrentPlayer().name + " move", Toast.LENGTH_SHORT, true).show()
     }
 
@@ -223,13 +228,16 @@ class GameActivity : AppCompatActivity() {
     private fun startAssignment(playersNames: ArrayList<String>) //adding text/players on map
     {
         for (string in playersNames) {
-            gameManager.addPlayer(string)
+            gameManager.addPlayer(string, PlayerType.AI)
             val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
             val playerStats: TextView = findViewById(playerStatsId)
             playerStats.text = string
             gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
             updPlayerMoney(gameManager.getPlayerByName(string)!!)
         }
+    }
+
+    private fun initPlayersPositions() {
 
     }
 
@@ -304,5 +312,9 @@ class GameActivity : AppCompatActivity() {
         val playerMoneyId = resources.getIdentifier("playerMoney${gameManager.getPlayerByName(player.name)!!.id}", "id", packageName)
         val playerMoney: TextView = findViewById(playerMoneyId)
         playerMoney.text = gameManager.getPlayerByName(player.name)!!.money.toString()
+    }
+
+    fun endGameAction(winner: Player) {
+        //TODO swap to results activity
     }
 }
