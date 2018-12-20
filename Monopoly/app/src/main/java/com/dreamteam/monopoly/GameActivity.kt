@@ -1,5 +1,6 @@
 package com.dreamteam.monopoly
 
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.LayerDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -181,10 +182,9 @@ class GameActivity : AppCompatActivity() {
         val neededCellID = getResources().getIdentifier("cell${index+1}", "id", packageName)
         val neededCell = findViewById<ImageButton>(neededCellID)
         Log.d("playerIndex", gameManager.getCurrentPlayer().id.toString())
-        val shape = getResources().getDrawable(R.drawable.cellbglayer) as LayerDrawable
+        val shape = cellButtons[gameManager.getCurrentPlayer().currentPosition -1].background as LayerDrawable
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
-        Log.d("COLOR", gradientDrawable.toString())
         when (gameManager.getCurrentPlayer().id )
         {
             1 -> gradientDrawable.setColor(resources.getColor(R.color.Player1BackgroundColor))//neededCell.setBackgroundResource(R.drawable.player1cell)
@@ -255,14 +255,17 @@ class GameActivity : AppCompatActivity() {
 
     fun createCell(width:Int , height:Int , layout: ConstraintLayout, From1: Int, To1:Int, From2: Int, To2:Int,From3: Int, To3:Int  ,start:Boolean = false )
     {
-        var thisButtonID = getResources().getIdentifier("cell${indexForBoard + 1}", "id", packageName)
+        var thisButtonID = resources.getIdentifier("cell${indexForBoard + 1}", "id", packageName)
         var previousButtonID = resources.getIdentifier("cell$indexForBoard", "id", packageName)
         var button = ImageButton(this)
         button.layoutParams = LayoutParams(width, height)
         button.id = (thisButtonID)
         button.setOnClickListener(ShowInfoClick)
-        button.background = resources.getDrawable(resources
-                .getIdentifier("cellbglayer", "drawable", packageName), null)
+        val shape = resources.getDrawable(resources
+                .getIdentifier("cellbglayer", "drawable", packageName)) as LayerDrawable
+        val bitmap = resources.getDrawable(resources.getIdentifier("cellimage${indexForBoard + 1}", "drawable", packageName)) as BitmapDrawable
+        shape.setDrawableByLayerId(R.id.celllogo, bitmap)
+        button.background = shape
         layout.addView(button)
         cellButtons.add(button)
         val constraintSet = ConstraintSet()

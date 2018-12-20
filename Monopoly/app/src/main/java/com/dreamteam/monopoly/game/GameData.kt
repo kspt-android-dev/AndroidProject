@@ -49,7 +49,7 @@ object GameData {
             GameCell(info = GameCellInfo.QUARTUS),
             GameCell(info = GameCellInfo.KOTLIN),
             GameCell(info = GameCellInfo.OTHER),
-            GameCell(info = GameCellInfo.EDSACK),
+            GameCell(info = GameCellInfo.EDSAC),
             GameCell(info = GameCellInfo.TESLA),
             GameCell(info = GameCellInfo.CHANCE),
             GameCell(info = GameCellInfo.VK),

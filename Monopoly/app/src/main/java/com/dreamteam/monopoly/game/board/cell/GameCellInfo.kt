@@ -2,7 +2,7 @@ package com.dreamteam.monopoly.game.board.cell
 
 enum class GameCellInfo(val cellType: GameCellType, val companyType: CompanyType, val cost: Cost) {
     QUARTUS(GameCellType.COMPANY, CompanyType.SOFT, Cost(4100, 1250, 600)),
-    EDSACK(GameCellType.COMPANY, CompanyType.SOFT, Cost(4600, 2500, 680)),
+    EDSAC(GameCellType.COMPANY, CompanyType.SOFT, Cost(4600, 2500, 680)),
     KOTLIN(GameCellType.COMPANY, CompanyType.SOFT, Cost(4300, 2000, 640)),
 
     AUDI(GameCellType.COMPANY, CompanyType.AUTO, Cost(2000, 900, 400)),

@@ -4,6 +4,11 @@
             <solid android:color="@color/cellBackground" />
         </shape>
     </item>
+    <item android:id = "@+id/celllogo">
+        <bitmap
+            android:src="@drawable/borders_in_vis_rectangle"
+            android:tileMode="repeat" />
+    </item>
     <item>
         <bitmap
             android:src="@drawable/borders_in_vis_rectangle"
