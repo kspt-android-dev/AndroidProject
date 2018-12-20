@@ -1,6 +1,5 @@
 package com.dreamteam.monopoly.game
 
-import android.app.Activity
 import com.dreamteam.monopoly.GameActivity
 import com.dreamteam.monopoly.game.GameData.startMoney
 import com.dreamteam.monopoly.game.board.Board

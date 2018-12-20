@@ -104,11 +104,17 @@ class GameActivity : AppCompatActivity() {
             constraintSet.applyTo(constraintLayout)
         }
 
+        //resetfield(savedInstanceState!!)
+
         if (gameManager.getCurrentPlayer().type == PlayerType.AI)
             playerStartMoveAction()
         buttonThrowDices!!.setOnClickListener {
             playerStartMoveAction()
         }
+    }
+
+    private fun init() {
+
     }
 
     private fun playerStartMoveAction() {
@@ -306,6 +312,20 @@ class GameActivity : AppCompatActivity() {
         buySpace.text = "Buy: $costBuy"
         sellSpace.text = "Sell: $costSell"
         chargeSpace.text = "Charge: $charge"
+    }
+
+    fun resetfield(outState: Bundle) {
+        gameManager.mainBoard.resetField(outState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        //num cell, players
+        //resetfield()
+        val playersPos = ArrayList<Int>(gameManager.players.size)
+        for (p in gameManager.players)
+            playersPos.add(p.currentPosition)
+        outState?.putIntegerArrayList("numCell", playersPos)
     }
 
     private fun updPlayerMoney(player: Player) {

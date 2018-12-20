@@ -4,6 +4,7 @@ import android.util.Log
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.board.cell.CellState
 import com.dreamteam.monopoly.game.board.cell.GameCell
+import com.dreamteam.monopoly.game.board.cell.GameCellInfo
 import com.dreamteam.monopoly.game.board.cell.GameCellType
 import java.util.*
 
@@ -78,6 +79,12 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
             decision(PlayerActions.BUY)
             PlayerMoveCondition.COMPLETED
         }
+    }
+
+    private fun checkSpecialCell(cell:GameCell){
+        /*when (cell.info){
+            GameCellInfo.CHANCE ->{}
+        }*/
     }
 
     private fun markOwnedCell(newCell: GameCell) {

@@ -10,7 +10,6 @@ enum class GameCellInfo(val cellType: GameCellType, val companyType: CompanyType
     BENTLEY(GameCellType.COMPANY, CompanyType.AUTO, Cost(2000, 900, 400)),
     TESLA(GameCellType.COMPANY, CompanyType.AUTO, Cost(2000, 900, 400)),
 
-
     BLIZZARD(GameCellType.COMPANY, CompanyType.GAMEDEV, Cost(4000, 1250, 560)),
     VALVE(GameCellType.COMPANY, CompanyType.GAMEDEV, Cost(4200, 2500, 600)),
     ROCKSTART(GameCellType.COMPANY, CompanyType.GAMEDEV, Cost(3900, 2000, 520)),
