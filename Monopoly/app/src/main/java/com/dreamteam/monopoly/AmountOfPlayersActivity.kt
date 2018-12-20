@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.text.InputFilter
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.dreamteam.monopoly.helpers.InputFilterMinMax
@@ -31,6 +32,8 @@ class AmountOfPlayersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_amount_of_players)
+
+        hideTopBar()
 
         buttonEnter = findViewById(R.id.buttonEnter)
         buttonBack = findViewById(R.id.buttonBack)
@@ -112,6 +115,21 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             if (numberOfPlayers < 2) buttonStart!!.isEnabled = false
             if (numberOfPlayers < 4) buttonEnter!!.isEnabled = true
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideTopBar()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        hideTopBar()
+    }
+
+    private fun hideTopBar() {
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        actionBar?.hide()
     }
 
     private fun moveAllNames() {

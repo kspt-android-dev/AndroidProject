@@ -23,12 +23,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE)
-
-        //setting the orientation to landscape
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT*/
+        hideTopBar()
 
         //getting the button
         buttonPlay = findViewById(R.id.buttonPlay)
@@ -46,6 +41,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             System.exit(0)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideTopBar()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        hideTopBar()
+    }
+
+    private fun hideTopBar() {
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        actionBar?.hide()
     }
 
     @Override
