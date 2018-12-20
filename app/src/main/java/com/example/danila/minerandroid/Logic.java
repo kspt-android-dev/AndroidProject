@@ -165,6 +165,7 @@ class Logic {
     }
 
 
+
     //Setters
 
 
@@ -228,6 +229,10 @@ class Logic {
         }
 
         return findedBombs + checkedCell == logicCells.length;
+    }
+
+    public int getFindedMinesDigit() {
+        return findedBombs;
     }
 }
 

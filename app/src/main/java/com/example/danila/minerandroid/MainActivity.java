@@ -3,10 +3,8 @@ package com.example.danila.minerandroid;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
@@ -27,12 +25,6 @@ public class MainActivity extends Activity {
 
         Bot bot = new Bot(logic);
 
-
-        //For graphic
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        final int SCREEN_WIDTH = dm.widthPixels;
-        final int SCREEN_HEIGHT = dm.heightPixels;
 
         GridLayout gameField = findViewById(R.id.game_field);
         Button helpMeBotButton = findViewById(R.id.helpbot_button);
@@ -61,6 +53,7 @@ public class MainActivity extends Activity {
                 logic.reload();
                 graphic.reload();
                 bot.reload();
+
             }
         });
 
@@ -71,9 +64,9 @@ public class MainActivity extends Activity {
                 logic.reloadLast();
                 graphic.reload();
                 bot.reload();
+
             }
         });
-
 
     }
 

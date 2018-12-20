@@ -4,14 +4,10 @@ package com.example.danila.minerandroid;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 
 @SuppressLint("ViewConstructor")
@@ -36,16 +32,21 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
         setLayoutParams(params);
 
 
+
         this.logicCell = logicCell;
 
         setBackgroundColor(CLOSED_COLOR);
+        setBackground(getResources().getDrawable(R.drawable.rectangle_border));
 
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                bot.check(logicCell.getNumberInArray());
-                check();
-                minesNumberView.setText("" + (logic.getMinesDigit() - bot.getFindedMines()));
+                if (!logic.isGameOver()) {
+                    bot.check(logicCell.getNumberInArray());
+                    check();
+                    minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
+                } else {
+                }//TODO
             }
 
 
@@ -54,9 +55,13 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
         setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                logicCell.changeFlag();
-                changeFlag();
-                minesNumberView.setText("" + (logic.getMinesDigit() - bot.getFindedMines()));
+                if (!logic.isGameOver()) {
+                    logicCell.changeFlag();
+                    changeFlag();
+                    minesNumberView.setText("" + (logic.getMinesDigit() - bot.getFindedMines()));
+                } else {
+                }//TODO
+
                 return true;
             }
         });
@@ -104,8 +109,11 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
     private void changeFlag() {
         if (logicCell.isFlag())
             setBackgroundColor(FLAG_COLOR);
-        else
+        else {
             setBackgroundColor(CLOSED_COLOR);
+            setBackground(getResources().getDrawable(R.drawable.rectangle_border));
+
+        }
 
     }
 

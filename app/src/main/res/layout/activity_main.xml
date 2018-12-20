@@ -49,8 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="0"
@@ -62,21 +62,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="HELP" />
+            android:text="HELP"
+            style="?android:attr/buttonBarButtonStyle"
+            />
 
         <Button
             android:id="@+id/reload_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RELOAD" />
+            android:text="RELOAD"
+            style="?android:attr/buttonBarButtonStyle"
+            />
 
         <Button
             android:id="@+id/reloadlast_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RELOAD LAST" />
+            android:text="RELOAD LAST"
+            style="?android:attr/buttonBarButtonStyle"
+            />
     </LinearLayout>
 
 </LinearLayout>

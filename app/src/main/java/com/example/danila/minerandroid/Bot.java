@@ -12,7 +12,6 @@ class Bot {
     private Graphic graphic;
     private ArrayList<LogicCell> botCells;//Клетки раскрыте ботом
     private boolean shouldCheck = false;//false-считаем вероятности, true-вскрываем наименьшую
-    private boolean gameOver = false;//при вызове бота на уже решенном полеЛ,перенсти контроль поражений и побед в контроллер
     private int numberOfBestProbabilities;
     private int findedMines;
 
@@ -27,22 +26,21 @@ class Bot {
 
         findedMines = 0;
         botCells.clear();
-        gameOver = false;
     }
 
 
     //Вызов бота
     void helpMeBot() {
-        if (!gameOver)
+        if (!logic.isGameOver())
             phrase = "НУ ЧТО\nЩАС Я ТЕБЕ ПОКАЖУ КАК ЭТО ДЕЛАЕТСЯ\n";
-        if (gameOver) {
+        if (logic.isGameOver()) {
             System.out.println(win + " wins\n" + lose + " losses");
             return;
         }
 
-        //1)Делает ход наверняка
-        //2)Пробуем походить, как человек
-        //3)Если не получилось, считаем рандом
+        /*1)Делает ход наверняка
+        2)Пробуем походить, как человек
+        3)Если не получилось, считаем рандом*/
         if (botCells.size() != 0) {
             boolean easyStep = easyStep();
             if (easyStep)
@@ -105,7 +103,6 @@ class Bot {
                             graphic.getGraphicCellsVertMode()[number].checkBot();
                         if (addedCells.get(addedCells.size() - 1).getConditon() == 9) {
                             lose++;
-                            gameOver = true;
                             System.out.println("Хозяин, я глупый бот, перепиши меня");
                         }
                         doSomething = true;
@@ -224,7 +221,6 @@ class Bot {
                 lose++;
                 phrase = "СЛЫШЬ ЧУВАК, ЭТО СЛУЧАЙНОСТЬ\nНАЖМИ R НА КЛАВЕ\nЧУВАК Я ОТЫГРАЮСЬ";
             }
-            gameOver = true;
 
         }
 
