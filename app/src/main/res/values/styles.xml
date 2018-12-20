@@ -47,10 +47,17 @@
 
     <style name="BMRTextTitle" parent="Theme.AppCompat">
         <item name="android:fontFamily">@font/straight</item>
-        <item name="android:textSize">34sp</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:textColor">#ffe8e2</item>
     </style>
 
     <style name="BMRTheme" parent="AppTheme" />
+
+    <style name="MapElement" parent="Theme.AppCompat">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_rowWeight">1</item>
+        <item name="android:layout_columnWeight">1</item>
+    </style>
 
 </resources>

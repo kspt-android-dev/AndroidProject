@@ -1,5 +1,5 @@
 package ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC;
 
 public enum OpponentType {
-    BEAST, BANDIT, KNIGHT, BOSS
+    DRUNK_PIRATE, CULTIST, DARK_TWIN, CAVE_BEAST, BANDIT, FALLEN_KNIGHT, BOSS
 }

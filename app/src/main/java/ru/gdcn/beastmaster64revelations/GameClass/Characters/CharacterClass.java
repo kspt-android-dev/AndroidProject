@@ -2,10 +2,7 @@ package ru.gdcn.beastmaster64revelations.GameClass.Characters;
 
 import java.io.Serializable;
 
-import ru.gdcn.beastmaster64revelations.GameClass.Constants.Integers;
-import ru.gdcn.beastmaster64revelations.GameClass.Items.Equipment.Weapons.Weapon;
 import ru.gdcn.beastmaster64revelations.GameClass.Items.ItemContainerClass;
-import ru.gdcn.beastmaster64revelations.GameClass.Utilities.Utilities;
 import ru.gdcn.beastmaster64revelations.GameInterface.Action.ActionContainer;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Effects.Effect;
@@ -36,7 +33,7 @@ public class CharacterClass implements Character, Serializable {
                           Integer agility,
                           Integer intellect,
                           Integer luck) {
-        this.maxHP = (strength * strength + 1) / (agility + 1);
+        this.maxHP = 1 + strength * 20 + agility * 5;
         this.HP = maxHP;
         this.name = name;
         this.currentLocation = location;
@@ -73,7 +70,7 @@ public class CharacterClass implements Character, Serializable {
 
     @Override
     public Integer getBasicAttack() {
-        return getAgility() / 2 + getStrength();
+        return 1 + getAgility() * 2 + getStrength();
     }
 
     @Override
@@ -103,9 +100,7 @@ public class CharacterClass implements Character, Serializable {
 
     @Override
     public Integer getFullAttack() {
-        //return getBasicAttack() + currentWeapon.getBasePoints() + currentWeapon.getExtraPoints();
-        //TODO
-        return (int) (Math.pow(strength + agility * 1.0, 0.6));
+        return getBasicAttack();
     }
 
     @Override
@@ -136,6 +131,8 @@ public class CharacterClass implements Character, Serializable {
         if (points == null || this.isDead() || points < 0)
             return false;
         strength += points;
+        maxHP = 1 + strength * 20 + agility * 5;
+        HP = maxHP;
         return true;
     }
 
@@ -295,5 +292,10 @@ public class CharacterClass implements Character, Serializable {
     @Override
     public Boolean isDead() {
         return (HP != null && HP <= 0 );
+    }
+
+    @Override
+    public void kill() {
+        HP = 0;
     }
 }

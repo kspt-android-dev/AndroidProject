@@ -8,6 +8,7 @@ import ru.gdcn.beastmaster64revelations.GameClass.Actions.BasicHeal;
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.CharacterClass;
 import ru.gdcn.beastmaster64revelations.GameInterface.Action.Action;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
+import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.NPC;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Opponent;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.OpponentType;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
@@ -15,24 +16,32 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;
 
 public class DummyEnemy extends CharacterClass implements Opponent {
 
+    private OpponentType type;
+    private String description = "Противник средней сложности, имеющий примерно равные характеристики с игроком. Постарайтесь не продуть ему!";
+
     public DummyEnemy() {
         super(generateName(), null, 10, 10, 10, 10);
     }
 
-    public DummyEnemy(Player player) {
-        super(generateName(), null,
-                player.getStrength() - 3 + new Random().nextInt(7),
-                player.getAgility() - 3 + new Random().nextInt(7),
-                player.getIntellect() - 3 + new Random().nextInt(7),
+    public DummyEnemy(String name, Integer randomBase) {
+        super(name, null,
+                randomBase - randomBase/4 + new Random().nextInt(randomBase/2),
+                randomBase - randomBase/4 + new Random().nextInt(randomBase/2),
+                randomBase - randomBase/4 + new Random().nextInt(randomBase/2),
                 10);
+    }
+
+    public DummyEnemy(String name, OpponentType type, Integer randomBase) {
+        this(name, randomBase);
+        this.type = type;
     }
 
     public static String generateName() {
         int number = new Random().nextInt(4);
         String name = "Чёрт";
-        switch (number){
+        switch (number) {
             case 0:
-                name = "Адский бес";
+                name = "Культист";
                 break;
             case 1:
                 name = "Нетрезвый пират";
@@ -42,6 +51,27 @@ public class DummyEnemy extends CharacterClass implements Opponent {
                 break;
         }
         return name;
+    }
+
+    public static NPC generateEnemy(Player player, Double difficulty) {
+        String name = generateName();
+        OpponentType type = makeTypeByName(name);
+        Integer base = 5 + (int) ((player.getAgility() + player.getIntellect() + player.getStrength()) * difficulty / 3);
+        DummyEnemy enemy = new DummyEnemy(name, type, base);
+        return enemy;
+    }
+
+    private static OpponentType makeTypeByName(String name) {
+        switch (name) {
+            case "Культист":
+                return OpponentType.CULTIST;
+            case "Нетрезвый пират":
+                return OpponentType.DRUNK_PIRATE;
+            case "Злой двойник":
+                return OpponentType.DARK_TWIN;
+            default:
+                return OpponentType.DRUNK_PIRATE;
+        }
     }
 
     @Override
@@ -72,10 +102,10 @@ public class DummyEnemy extends CharacterClass implements Opponent {
     @Override
     public Action makeNextFightTurn(Character enemy) {
         Action action;
-        if (HP * 1.0/maxHP < 0.2){
-            action = new BasicHeal("Пуф!", 4);
+        if (HP * 1.0 / maxHP < 0.15) {
+            action = new BasicHeal("Пуф!", 4*enemy.getIntellect());
         } else {
-            action = new BasicAttack("Бац", 0.6);
+            action = new BasicAttack("Бац", 1.0);
         }
         return action;
     }
@@ -87,7 +117,7 @@ public class DummyEnemy extends CharacterClass implements Opponent {
 
     @Override
     public OpponentType getType() {
-        return OpponentType.BANDIT;
+        return type;
     }
 
     @Override
@@ -95,4 +125,8 @@ public class DummyEnemy extends CharacterClass implements Opponent {
         return true;
     }
 
+    @Override
+    public String getDescription() {
+        return description;
+    }
 }

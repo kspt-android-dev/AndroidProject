@@ -1,6 +1,8 @@
 package ru.gdcn.beastmaster64revelations.GameInterface.World;
 
-public class MapPoint {
+import java.io.Serializable;
+
+public class MapPoint implements Serializable {
 
     /**
      * Класс для удобного представления координат локаций
@@ -32,7 +34,7 @@ public class MapPoint {
     }
 
     public MapPoint up() {
-        return new MapPoint(x, y + 1);
+        return new MapPoint(x, y - 1);
     }
 
     public MapPoint left() {
@@ -44,7 +46,7 @@ public class MapPoint {
     }
 
     public MapPoint down() {
-        return new MapPoint(x, y - 1);
+        return new MapPoint(x, y + 1);
     }
 
 }

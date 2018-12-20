@@ -2,7 +2,9 @@ package ru.gdcn.beastmaster64revelations.GameInterface.World.Location;
 
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.NPC;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
+import ru.gdcn.beastmaster64revelations.GameInterface.World.MapDirection;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.MapPoint;
+import ru.gdcn.beastmaster64revelations.GameInterface.World.World;
 
 import java.util.List;
 
@@ -72,6 +74,10 @@ public interface Location {
      * Возвращает true, если в локации находится игрок
      **/
     public Boolean hasPlayer();
+
+    public Location getNeightbour(MapDirection direction);
+
+    public World getWorld();
 
     /**
      * Возвращает координаты данной локации ( для представления координат

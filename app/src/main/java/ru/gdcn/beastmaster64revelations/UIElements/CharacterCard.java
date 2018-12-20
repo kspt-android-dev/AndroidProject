@@ -2,6 +2,7 @@ package ru.gdcn.beastmaster64revelations.UIElements;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -13,7 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ru.gdcn.beastmaster64revelations.CharacterCreation.AttributeCounter;
+import ru.gdcn.beastmaster64revelations.CharacterCreation.Gender;
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.PlayerClass;
+import ru.gdcn.beastmaster64revelations.GameClass.Characters.TestCharacters.DummyEnemy;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
 import ru.gdcn.beastmaster64revelations.R;
@@ -33,10 +36,28 @@ public class CharacterCard extends LinearLayout {
         this.character = character;
 
         face = new ImageView(context);
-        if (character instanceof PlayerClass)
-            face.setImageDrawable(face.getResources().getDrawable(R.drawable.hero_face));
-        else
-            face.setImageDrawable(face.getResources().getDrawable(R.drawable.orc_face));
+        if (character instanceof PlayerClass){
+            if (((PlayerClass)(character)).getGender() == Gender.MALE)
+                face.setImageDrawable(face.getResources().getDrawable(R.drawable.char_face_man));
+            else
+                face.setImageDrawable(face.getResources().getDrawable(R.drawable.char_face_woman));
+        }
+        else{
+            switch (((DummyEnemy) (character)).getType()){
+                case DRUNK_PIRATE:
+                    face.setImageDrawable(face.getResources().getDrawable(R.drawable.enemy_pirate));
+                    break;
+                case DARK_TWIN:
+                    face.setImageDrawable(face.getResources().getDrawable(R.drawable.enemy_dark_twin));
+                    break;
+                case CULTIST:
+                    face.setImageDrawable(face.getResources().getDrawable(R.drawable.enemy_cultist));
+                    break;
+                default:
+                    face.setImageDrawable(face.getResources().getDrawable(R.drawable.orc_face));
+                    break;
+            }
+        }
         LayoutParams layoutParams = new LayoutParams(300, 300);
         face.setLayoutParams(layoutParams);
 
@@ -54,15 +75,8 @@ public class CharacterCard extends LinearLayout {
         HP.setTextAlignment(TEXT_ALIGNMENT_CENTER);
         HP.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
 
-//        stats = new TextView(context);
-//        stats.setText("-----\n" +
-//                "СИЛ:" + character.getStrength() + "\n" +
-//                "ЛОВ:" + character.getAgility() + "\n" +
-//                "ИНТ:" + character.getIntellect() + "\n" +
-//                "-----");
-//        stats.setTextAlignment(TEXT_ALIGNMENT_CENTER);
-//        stats.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-//        stats.setTextColor(Color.WHITE);
+//        Typeface tf = Typeface.createFromFile("fonts/straight");
+//        HP.setTypeface(tf);
 
         this.setOrientation(LinearLayout.VERTICAL);
         this.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -82,4 +96,5 @@ public class CharacterCard extends LinearLayout {
     public ImageView getFace() {
         return face;
     }
+
 }

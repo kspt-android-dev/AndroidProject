@@ -103,8 +103,8 @@ public class CharacterCreationFragment extends Fragment {
         return inputField.getText().length() > 0;
     }
 
-    public Player getCharacterFromData() {
-        Player player = new PlayerClass(inputField.getText().toString(), null, changers[0].getPoints(), changers[1].getPoints(), changers[2].getPoints(), 10);
-        return player;
-    }
+//    public Player getCharacterFromData() {
+//        Player player = new PlayerClass(inputField.getText().toString(), null, changers[0].getPoints(), changers[1].getPoints(), changers[2].getPoints(), 10, gender);
+//        return player;
+//    }
 }

@@ -16,7 +16,6 @@ import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 
 public class DummyCharacter implements Character, Serializable {
 
-    protected Integer maxHP = 100;
     protected Integer HP = 100;
     protected String name;
     protected Location currentLocation;
@@ -226,5 +225,10 @@ public class DummyCharacter implements Character, Serializable {
     @Override
     public Boolean isDead() {
         return (HP <= 0);
+    }
+
+    @Override
+    public void kill() {
+        HP = 0;
     }
 }

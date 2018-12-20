@@ -1,10 +1,12 @@
 package ru.gdcn.beastmaster64revelations.GameInterface.World;
 
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
+import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface World {
+public interface World extends Serializable {
 
     /** Возвращает список королевств **/
     public List<Kingdom> getKingdoms();
@@ -25,4 +27,6 @@ public interface World {
 
     /** Возвращает ссылку на игрока **/
     public Player getPlayer();
+
+    Location getRandomLocation();
 }

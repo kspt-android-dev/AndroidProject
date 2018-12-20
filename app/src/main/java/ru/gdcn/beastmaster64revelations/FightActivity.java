@@ -1,5 +1,7 @@
 package ru.gdcn.beastmaster64revelations;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.CountDownTimer;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
@@ -24,6 +26,7 @@ import ru.gdcn.beastmaster64revelations.GameClass.Characters.PlayerClass;
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.TestCharacters.DummyEnemy;
 import ru.gdcn.beastmaster64revelations.GameInterface.Action.Action;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
+import ru.gdcn.beastmaster64revelations.GameInterface.Character.Interactions.Fight.FightResult;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.NPC;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.LocationType;
 import ru.gdcn.beastmaster64revelations.UIElements.CharacterCard;
@@ -62,6 +65,8 @@ public class FightActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_fight);
+
+        setResult(FightResult.ALL_ALIVE);
 
         backImage = new ProportionalImageView(this);
         backImage.setAlpha(0.45f);
@@ -113,9 +118,11 @@ public class FightActivity extends AppCompatActivity {
         allActionButtons.add(magicButton);
         allActionButtons.add(strongButton);
 
+        runEnemyAI(1500);
+
         kickButton.setOnClickListener(v -> {
             playKickAnimationPlayer();
-            BasicAttack basicAttack = new BasicAttack("Удар", 1.0);
+            BasicAttack basicAttack = new BasicAttack("Удар", 1.1);
             int hpBefore = enemy.getHP();
             basicAttack.use(player, enemy);
             playerCard.updateContent();
@@ -138,10 +145,10 @@ public class FightActivity extends AppCompatActivity {
 
             playBounceAnimation(cardHolderPlayer);
 
-            player.dealHeal(5);
+            player.dealHeal(player.getIntellect() * 4);
             playerCard.updateContent();
             enemyCard.updateContent();
-            actionDelay(500);
+            actionDelay(500 - player.getIntellect());
             logFightAction(player.getName() + " только что вылечился!");
 
             if (player.isDead()) {
@@ -158,11 +165,15 @@ public class FightActivity extends AppCompatActivity {
         magicButton.setOnClickListener(v -> {
             playBounceAnimation(cardHolderPlayer);
 
-            enemy.dealPhysicalDamage(1);
+            enemy.dealPhysicalDamage(player.getIntellect()*5);
 
             playerCard.updateContent();
             enemyCard.updateContent();
-            actionDelay(50);
+            actionDelay(2000 - player.getIntellect()*2);
+
+            AItimer.cancel();
+            runEnemyAI(1000);
+
             logFightAction(player.getName() + " использовал магию!");
 
             if (player.isDead()) {
@@ -175,7 +186,6 @@ public class FightActivity extends AppCompatActivity {
             }
         });
 
-        runEnemyAI(1500);
     }
 
     private void runEnemyAI(int millisDelay) {
@@ -286,6 +296,7 @@ public class FightActivity extends AppCompatActivity {
     }
 
     private void onPlayerDead() {
+        setResult(FightResult.PLAYER_LOST);
         endFight();
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setMessage("Ты проиграл, парень :с");
@@ -293,6 +304,7 @@ public class FightActivity extends AppCompatActivity {
     }
 
     private void onEnemyDead() {
+        setResult(FightResult.PLAYER_WON);
         endFight();
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setMessage("Ты победил!");
@@ -326,6 +338,7 @@ public class FightActivity extends AppCompatActivity {
         }
         backImage.setImageDrawable(backImage.getResources().getDrawable(image));
     }
+
 
     @Override
     protected void onDestroy() {

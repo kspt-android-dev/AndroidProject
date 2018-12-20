@@ -7,11 +7,14 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import ru.gdcn.beastmaster64revelations.CharacterCreation.CharacterCreationActivity;
 import ru.gdcn.beastmaster64revelations.GameLogger;
 import ru.gdcn.beastmaster64revelations.R;
 import ru.gdcn.beastmaster64revelations.Settings.SettingsActivity;
+import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;
 
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -19,6 +22,8 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -28,6 +33,13 @@ public class MainMenuActivity extends AppCompatActivity {
 
         GameLogger.log("Задаём кнопкам события");
         initButtonEvents();
+
+        ImageView imageView = new ProportionalImageView(this);
+        imageView.setAlpha(0.9f);
+        imageView.setImageDrawable(imageView.getResources().getDrawable(R.drawable.main_menu_background));
+        FrameLayout mainFrame = findViewById(R.id.activity_main_menu_mainFrame);
+        mainFrame.addView(imageView, 0);
+
     }
 
     private void initButtonEvents() {

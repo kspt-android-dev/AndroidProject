@@ -1,5 +1,6 @@
 package ru.gdcn.beastmaster64revelations.GameClass.Characters;
 
+import ru.gdcn.beastmaster64revelations.CharacterCreation.Gender;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
 import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;
@@ -17,10 +18,12 @@ public class PlayerClass extends CharacterClass implements Player {
     private ArrayList<Character> civilsKilled;
     private ArrayList<Location> locationsTravelled;
     private ArrayList<Location> dungeonsCleared;
+    private Gender gender;
 
     //TODO А когда инициализируются ArrayList'ы? Поля нигде не инициализируются
-    public PlayerClass(String name, Location location, Integer strength, Integer agility, Integer intellect, Integer luck) {
+    public PlayerClass(String name, Location location, Integer strength, Integer agility, Integer intellect, Integer luck, Gender gender) {
         super(name, location, strength, agility, intellect, luck);
+        this.gender = gender;
     }
 
     @Override
@@ -62,5 +65,10 @@ public class PlayerClass extends CharacterClass implements Player {
     @Override
     public Location getPlayerLocation() {
         return currentLocation;
+    }
+
+    @Override
+    public Gender getGender() {
+        return gender;
     }
 }

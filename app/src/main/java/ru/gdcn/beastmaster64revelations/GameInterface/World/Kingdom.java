@@ -2,9 +2,10 @@ package ru.gdcn.beastmaster64revelations.GameInterface.World;
 
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface Kingdom {
+public interface Kingdom extends Serializable {
 
     /** Возвращает название королевства **/
     public String getName();

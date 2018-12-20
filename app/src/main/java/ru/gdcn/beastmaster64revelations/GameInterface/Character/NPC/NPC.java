@@ -4,9 +4,10 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Action.Action;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
 import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface NPC extends Character {
+public interface NPC extends Character, Serializable {
 
     /** Возвращает true, если NPC можно атаковать **/
     public Boolean isAttackable();
@@ -37,4 +38,5 @@ public interface NPC extends Character {
      *  отсутствие не означает обратного **/
     public Boolean isValuableForLore();
 
+    public String getDescription();
 }

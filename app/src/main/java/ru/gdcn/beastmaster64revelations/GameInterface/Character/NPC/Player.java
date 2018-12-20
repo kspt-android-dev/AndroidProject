@@ -1,5 +1,6 @@
 package ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC;
 
+import ru.gdcn.beastmaster64revelations.CharacterCreation.Gender;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
 import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
@@ -32,5 +33,7 @@ public interface Player extends Character, Serializable {
 
     /** Возвращает локацию, в которой находится игрок **/
     public Location getPlayerLocation();
+
+    public Gender getGender();
 
 }

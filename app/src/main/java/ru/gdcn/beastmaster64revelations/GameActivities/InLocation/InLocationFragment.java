@@ -1,6 +1,5 @@
 package ru.gdcn.beastmaster64revelations.GameActivities.InLocation;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,13 +10,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import ru.gdcn.beastmaster64revelations.FightActivity;
-import ru.gdcn.beastmaster64revelations.GameClass.WorldElemets.SimpleLocationClass;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
-import ru.gdcn.beastmaster64revelations.GameInterface.World.MapPoint;
+import ru.gdcn.beastmaster64revelations.GameInterface.World.MapDirection;
 import ru.gdcn.beastmaster64revelations.R;
 
 public class InLocationFragment extends Fragment {
+
+    Button goUpButton;
+    Button goDownButton;
+    Button goLeftButton;
+    Button goRightButton;
+
+    Button fightNPC;
+    Button talkNPC;
 
     Location currentLocation;
 
@@ -52,35 +57,34 @@ public class InLocationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setContent(currentLocation);
-        Button attackButton = getActivity().findViewById(R.id.fragment_in_location_content_NPCattack);
-        attackButton.setOnClickListener(v -> {
+
+        fightNPC = getActivity().findViewById(R.id.fragment_in_location_content_NPCattack);
+        fightNPC.setOnClickListener(v -> {
             attackNPC();
         });
-        Button talkButton = getActivity().findViewById(R.id.fragment_in_location_content_NPCtalk);
-        talkButton.setOnClickListener(v -> {
+        talkNPC = getActivity().findViewById(R.id.fragment_in_location_content_NPCtalk);
+        talkNPC.setOnClickListener(v -> {
             talkNPC();
         });
 
-        Button goUpButton = getActivity().findViewById(R.id.fragment_in_location_content_GoUp);
-        Button goDownButton = getActivity().findViewById(R.id.fragment_in_location_content_GoDown);
-        Button goLeftButton = getActivity().findViewById(R.id.fragment_in_location_content_GoLeft);
-        Button goRightButton = getActivity().findViewById(R.id.fragment_in_location_content_GoRight);
+        goUpButton = getActivity().findViewById(R.id.fragment_in_location_content_GoUp);
+        goDownButton = getActivity().findViewById(R.id.fragment_in_location_content_GoDown);
+        goLeftButton = getActivity().findViewById(R.id.fragment_in_location_content_GoLeft);
+        goRightButton = getActivity().findViewById(R.id.fragment_in_location_content_GoRight);
 
-        goDownButton.setOnClickListener(v -> goAway());
-        goUpButton.setOnClickListener(v -> goAway());
-        goLeftButton.setOnClickListener(v -> goAway());
-        goRightButton.setOnClickListener(v -> goAway());
-
+        goDownButton.setOnClickListener(v -> goAway(MapDirection.DOWN));
+        goUpButton.setOnClickListener(v -> goAway(MapDirection.UP));
+        goLeftButton.setOnClickListener(v -> goAway(MapDirection.LEFT));
+        goRightButton.setOnClickListener(v -> goAway(MapDirection.RIGHT));
 
         setContent(currentLocation);
 
         //this.setContent(new SimpleLocationClass(new MapPoint(0,0)));
     }
 
-    private void goAway() {
+    private void goAway(MapDirection direction) {
         InLocationActivity activity = (InLocationActivity) getActivity();
-        activity.goFurther();
+        activity.goFurther(direction);
     }
 
     private void talkNPC() {
@@ -104,15 +108,48 @@ public class InLocationFragment extends Fragment {
     }
 
     public void setContent(Location location){
+        this.currentLocation = location;
+        updateButtons();
+
+        if (location.hasNPC()){
+            TextView npcName = getActivity().findViewById(R.id.fragment_in_location_content_NPCTitle);
+            if (location.getNPC().isDead())
+                npcName.setText(location.getNPC().getName() + " (мёртв)");
+            else
+                npcName.setText(location.getNPC().getName());
+            TextView npcDesc = getActivity().findViewById(R.id.fragment_in_location_content_NPCDescription);
+            npcDesc.setText(location.getNPC().getDescription());
+            fightNPC.setEnabled(location.getNPC().isAttackable() && !location.getNPC().isDead());
+            talkNPC.setEnabled(location.getNPC().isTalkable() && !location.getNPC().isDead());
+        }
+
+        TextView diffText = getActivity().findViewById(R.id.fragment_in_location_content_difficulty);
+        diffText.setText(String.valueOf( ((int) (location.getDifficulty() * 10))/10.0 ));
         TextView nameView = getActivity().findViewById(R.id.fragment_in_location_content_LocationName);
         nameView.setText(location.getName());
         TextView descView = getActivity().findViewById(R.id.fragment_in_location_content_LocationDescriptionContent);
         descView.setText(location.getDescription());
+    }
 
-        TextView npcName = getActivity().findViewById(R.id.fragment_in_location_content_NPCTitle);
-        npcName.setText(location.getNPC().getName());
-        TextView npcDesc = getActivity().findViewById(R.id.fragment_in_location_content_NPCDescription);
-        npcDesc.setText(location.getNPC().toString());
+    private void updateButtons() {
+
+        goDownButton.setEnabled(false);
+        goLeftButton.setEnabled(false);
+        goRightButton.setEnabled(false);
+        goUpButton.setEnabled(false);
+
+        if (currentLocation == null)
+            return;
+
+        if (currentLocation.getNeightbour(MapDirection.LEFT) != null)
+            goLeftButton.setEnabled(true);
+        if (currentLocation.getNeightbour(MapDirection.RIGHT) != null)
+            goRightButton.setEnabled(true);
+        if (currentLocation.getNeightbour(MapDirection.DOWN) != null)
+            goDownButton.setEnabled(true);
+        if (currentLocation.getNeightbour(MapDirection.UP) != null)
+            goUpButton.setEnabled(true);
+
     }
 
 

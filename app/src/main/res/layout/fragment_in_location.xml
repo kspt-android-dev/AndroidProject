@@ -79,12 +79,41 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
-
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:text="TextView"
                 android:textAlignment="inherit"
                 android:textColor="#FFFFFF" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/fragment_in_location_content_difficultyTitle"
+                    style="@style/BMRTextTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Сложность:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="34sp" />
+
+                <TextView
+                    android:id="@+id/fragment_in_location_content_difficulty"
+                    style="@style/BMRTextSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Средняя"
+                    android:textAlignment="inherit"
+                    android:textColor="@android:color/holo_orange_dark" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

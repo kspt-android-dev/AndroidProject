@@ -2,9 +2,10 @@ package ru.gdcn.beastmaster64revelations.GameInterface.World;
 
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface GameMap {
+public interface GameMap extends Serializable {
 
     //public Location[][] getLocationsArray();
 
@@ -17,6 +18,8 @@ public interface GameMap {
      * Возвращает соседей клетки с заданными координатами
      **/
     public List<Location> getNeighbours(MapPoint coordinates);
+
+    public Location getNeightbour(MapPoint coordinates, MapDirection direction);
 
     /**
      * Ширина карты

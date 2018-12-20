@@ -11,19 +11,25 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.LocationType;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Treasure;
+import ru.gdcn.beastmaster64revelations.GameInterface.World.MapDirection;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.MapPoint;
+import ru.gdcn.beastmaster64revelations.GameInterface.World.World;
 
 public class SimpleLocationClass implements Location, Serializable {
 
     Boolean hasPlayer;
     MapPoint coordinates;
-    NPC someSickFuck;
+    NPC someSickDude;
     String description;
     LocationType type;
     String name;
     Player player;
+    Double difficulty = 0.1 + new Random().nextDouble() * 2.0;
 
-    public SimpleLocationClass(MapPoint coordinates){
+    private World world;
+
+    public SimpleLocationClass(MapPoint coordinates, World world){
+        this.world = world;
         this.coordinates = coordinates;
         name = randomLocationName();
         hasPlayer = false;
@@ -92,7 +98,7 @@ public class SimpleLocationClass implements Location, Serializable {
 
     @Override
     public Double getDifficulty() {
-        return 1.0;
+        return difficulty;
     }
 
     @Override
@@ -136,6 +142,18 @@ public class SimpleLocationClass implements Location, Serializable {
     }
 
     @Override
+    public Location getNeightbour(MapDirection direction) {
+        if (world == null)
+            return null;
+        return world.getGameMap().getNeightbour(coordinates, direction);
+    }
+
+    @Override
+    public World getWorld() {
+        return world;
+    }
+
+    @Override
     public MapPoint getCoordinates() {
         return coordinates;
     }
@@ -152,12 +170,12 @@ public class SimpleLocationClass implements Location, Serializable {
 
     @Override
     public Boolean hasNPC() {
-        return (someSickFuck != null);
+        return (someSickDude != null);
     }
 
     @Override
     public NPC getNPC() {
-        return someSickFuck;
+        return someSickDude;
     }
 
     @Override
@@ -169,12 +187,13 @@ public class SimpleLocationClass implements Location, Serializable {
     @Override
     public void playerCame(Player player) {
         this.player = player;
-        this.someSickFuck = generateEnemy();
+        if (this.someSickDude == null)
+            this.someSickDude = generateEnemy(player, difficulty);
         hasPlayer = true;
     }
 
-    private NPC generateEnemy() {
-        return new DummyEnemy(player);
+    private NPC generateEnemy(Player player, Double difficulty) {
+        return DummyEnemy.generateEnemy(player, difficulty);
     }
 
     public Player getPlayer(){

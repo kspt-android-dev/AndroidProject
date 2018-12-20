@@ -168,4 +168,7 @@ public interface Character extends Serializable {
 
     /** Возвращает true, если персонаж мертв **/
     public Boolean isDead();
+
+    void kill();
+
 }

@@ -69,4 +69,9 @@ public class NPCclass extends CharacterClass implements NPC {
     public Boolean isValuableForLore() {
         return isValuableForLore != null && isValuableForLore;
     }
+
+    @Override
+    public String getDescription() {
+        return "Заглушка";
+    }
 }

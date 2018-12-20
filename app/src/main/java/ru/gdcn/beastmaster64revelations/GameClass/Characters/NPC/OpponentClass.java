@@ -1,15 +1,8 @@
 package ru.gdcn.beastmaster64revelations.GameClass.Characters.NPC;
 
-import ru.gdcn.beastmaster64revelations.GameClass.Actions.BasicAttack;
-import ru.gdcn.beastmaster64revelations.GameClass.Characters.CharacterClass;
-import ru.gdcn.beastmaster64revelations.GameInterface.Action.Action;
-import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Opponent;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.OpponentType;
-import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
-
-import java.util.List;
 
 public class OpponentClass extends NPCclass implements Opponent {
 

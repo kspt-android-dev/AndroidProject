@@ -1,78 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#050505"
-    tools:context=".CharacterCreation.CharacterCreationActivity">
-
-    <ImageView
-        style="@style/BMRButtonSmall"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.3"
-        android:scaleX="3"
-        android:scaleY="3"
-        app:srcCompat="@drawable/character_art" />
+    tools:context=".StatsFragment"
+    android:background="@drawable/my_border_dark">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_margin="15dp">
         <TextView
-            android:id="@+id/activity_character_creation_char_name"
+            android:id="@+id/fragment_stats_char_name"
             style="@style/BMRTextTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
             android:gravity="center"
+            android:textAlignment="center"
             android:text="Персонаж"
             android:textColor="#ffe2a6"
             android:textSize="40sp"
             tools:layout_margin="6dp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/activity_character_creation_char_face_woman"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:src="@drawable/char_face_woman" />
-
-            <ImageView
-                android:id="@+id/activity_character_creation_char_face_man"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:src="@drawable/char_face_man" />
-
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/activity_character_creation_edit_char_name"
-            style="@style/BMRTextTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:hint="Введите имя персонажа"
-            android:inputType="textPersonName"
-            android:textColor="#ffe2a6"
-            android:textColorHint="#C3BCBC"
-            android:textSize="26sp" />
-
+        <ImageView
+            android:id="@+id/fragment_stats_char_face"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -82,7 +36,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/activity_character_creation_pointsText"
+                android:id="@+id/fragment_stats_pointsText"
                 style="@style/BMRTextSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,10 +44,10 @@
                 android:gravity="right"
                 android:text="Очки:  "
                 android:textColor="#ffe2a6"
-                android:textSize="26sp" />
+                android:textSize="30sp" />
 
             <TextView
-                android:id="@+id/activity_character_creation_points"
+                android:id="@+id/fragment_stats_points"
                 style="@style/BMRTextSmall"
                 android:gravity="left"
                 android:layout_width="wrap_content"
@@ -101,7 +55,7 @@
                 android:layout_weight="1"
                 android:text="5"
                 android:textColor="#ffe2a6"
-                android:textSize="32sp" />
+                android:textSize="38sp" />
         </LinearLayout>
 
 
@@ -112,19 +66,8 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button_minus_str"
-                style="@style/BMRButtonSmall"
-                android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:text="-"
-                android:textSize="23sp" />
-
             <TextView
-                android:id="@+id/activity_character_creation_strengthText"
+                android:id="@+id/fragment_stats_strengthText"
                 style="@style/BMRTextSmall"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
@@ -135,7 +78,7 @@
                 android:textSize="25sp" />
 
             <Button
-                android:id="@+id/button_plus_str"
+                android:id="@+id/fragment_stats_plus_str"
                 style="@style/BMRButtonSmall"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
@@ -155,19 +98,8 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button_minus_agi"
-                style="@style/BMRButtonSmall"
-                android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:text="-"
-                android:textSize="23sp" />
-
             <TextView
-                android:id="@+id/activity_character_creation_agilityText"
+                android:id="@+id/fragment_stats_agilityText"
                 style="@style/BMRTextSmall"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
@@ -178,7 +110,7 @@
                 android:textSize="25sp" />
 
             <Button
-                android:id="@+id/button_plus_agi"
+                android:id="@+id/fragment_stats_plus_agi"
                 style="@style/BMRButtonSmall"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
@@ -197,20 +129,8 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button_minus_int"
-                style="@style/BMRButtonSmall"
-                android:layout_width="0dp"
-
-                android:layout_height="45dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:text="-"
-                android:textSize="23sp" />
-
             <TextView
-                android:id="@+id/activity_character_creation_intellectText"
+                android:id="@+id/fragment_stats_intellectText"
                 style="@style/BMRTextSmall"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
@@ -221,7 +141,7 @@
                 android:textSize="26sp" />
 
             <Button
-                android:id="@+id/button_plus_int"
+                android:id="@+id/fragment_stats_plus_int"
                 style="@style/BMRButtonSmall"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
@@ -232,17 +152,6 @@
                 android:textSize="23sp" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/activity_character_creation_proceedButton"
-            style="@style/BMRButton"
-            android:layout_width="wrap_content"
-            android:layout_height="65dp"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:text="СОЗДАТЬ"
-            android:textSize="30sp" />
-
     </LinearLayout>
 
 </FrameLayout>
