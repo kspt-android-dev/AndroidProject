@@ -125,12 +125,12 @@ class GameActivity : AppCompatActivity() {
             handler.postDelayed({
                 playersSwap()
             }, GameData.swapDicesDelay)
-        } else playerActionRequest()
+        } else  playerActionRequest()
     }
 
     private fun playerActionRequest() {
-        if (gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition - 1].info.cellType == GameCellType.COMPANY && //высвечивать купить/нет только если есть возможность купить
-                gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition - 1].owner == null) {
+        if (gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition].info.cellType == GameCellType.COMPANY && //высвечивать купить/нет только если есть возможность купить
+                gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition ].owner == null) {
             yesButton!!.visibility = View.VISIBLE
             noButton!!.visibility = View.VISIBLE
             question!!.visibility = View.VISIBLE
@@ -197,7 +197,7 @@ class GameActivity : AppCompatActivity() {
         //val neededCellID = resources.getIdentifier("cell${index + 1}", "id", packageName)
         //val neededCell = findViewById<ImageButton>(neededCellID)
         Log.d("playerIndex", gameManager.getCurrentPlayer().id.toString())
-        val shape = cellButtons[index - 1].background as LayerDrawable
+        val shape = cellButtons[index].background as LayerDrawable
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
         when (gameManager.getCurrentPlayer().id) {
@@ -206,15 +206,15 @@ class GameActivity : AppCompatActivity() {
             3 -> gradientDrawable.setColor(resources.getColor(R.color.Player3BackgroundColor))
             4 -> gradientDrawable.setColor(resources.getColor(R.color.Player4BackgroundColor))
         }
-        cellButtons[index - 1].background = shape
+        cellButtons[index].background = shape
     }
 
     fun playerRemoveCellMark(index: Int) {
-        val shape = cellButtons[index - 1].background as LayerDrawable
+        val shape = cellButtons[index].background as LayerDrawable
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
         gradientDrawable.setColor(resources.getColor(R.color.cellBackground))
-        cellButtons[index - 1].background = shape
+        cellButtons[index ].background = shape
     }
 
     @Override

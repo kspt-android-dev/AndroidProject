@@ -10,7 +10,7 @@ import java.util.*
 
 class Player(val name: String, startMoney: Int, val type: PlayerType, private val board: Board) {
 
-    var currentPosition: Int = 1
+    var currentPosition: Int = 0
     var targetPosition: Int = currentPosition
     var money: Int = startMoney
     var cells: ArrayList<GameCell> = ArrayList()
@@ -28,7 +28,9 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     }
 
     fun analyze(): PlayerMoveCondition {
-        val currentCell: GameCell = board.gameWay[targetPosition] // targetPosition ?
+        val currentCell: GameCell = board.gameWay[currentPosition]
+        Log.d ("TAG",board.gameWay[currentPosition].info.name )
+        Log.d ("TAG",currentPosition.toString() )
         when (currentCell.state) {
             CellState.FREE -> return if (currentCell.info.cellType == GameCellType.COMPANY &&
                     currentCell.checkBuyCost(money)) {
@@ -58,13 +60,13 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     }
 
     fun decision(action: PlayerActions): Boolean {
-        Log.d("FindError", board.gameWay[currentPosition - 1].info.name)
+        Log.d("FindError", board.gameWay[currentPosition ].info.name)
         return when (action) {
-            PlayerActions.BUY -> board.gameWay[currentPosition - 1].info.cellType == GameCellType.COMPANY &&
-                    board.gameWay[currentPosition - 1].owner == null &&
-                    board.gameWay[currentPosition - 1].buy(this)
-            PlayerActions.PAY -> board.gameWay[currentPosition - 1].info.cellType == GameCellType.COMPANY &&
-                    board.gameWay[currentPosition - 1].pay(this)
+            PlayerActions.BUY -> board.gameWay[currentPosition ].info.cellType == GameCellType.COMPANY &&
+                    board.gameWay[currentPosition ].owner == null &&
+                    board.gameWay[currentPosition ].buy(this)
+            PlayerActions.PAY -> if (board.gameWay[currentPosition ].info.cellType == GameCellType.COMPANY) board.gameWay[currentPosition ].pay(this)
+                    else loseMoney(board.gameWay[currentPosition ].info.cost.costCharge)
             PlayerActions.STAY -> stay()
             PlayerActions.RETREAT -> retreat()
         }

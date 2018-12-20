@@ -59,7 +59,7 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
         // while (player.currentPosition != player.targetPosition &&  player.currentPosition <= player.targetPosition) {
         //player.currentPosition++
         Log.d("CURR POS", player.currentPosition.toString())
-        val myId = activity.resources.getIdentifier("cell${player.currentPosition}", "id", activity.packageName)
+        val myId = activity.resources.getIdentifier("cell${player.currentPosition + 1}", "id", activity.packageName)
         if (currentPlayerIndex == 0 || currentPlayerIndex == 2) {
             constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
             constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
