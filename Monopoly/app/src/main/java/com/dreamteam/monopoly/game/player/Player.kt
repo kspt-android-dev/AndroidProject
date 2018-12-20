@@ -31,9 +31,12 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         val currentCell: GameCell = board.gameWay[targetPosition] // targetPosition ?
         when (currentCell.state) {
             CellState.FREE -> return if (currentCell.info.cellType == GameCellType.COMPANY &&
-                    currentCell.checkBuyCost(money)) buyOpportunity()
+                    currentCell.checkBuyCost(money)) {
+                buyOpportunity()
+            } else if (currentCell.info.cellType == GameCellType.CHANCE)
+                chanceResult(currentCell)
             else {
-                if (currentCell.info.cellType == GameCellType.BANK &&
+                if ((currentCell.info.cellType == GameCellType.BANK) &&
                         !decision(PlayerActions.PAY)) decision(PlayerActions.RETREAT)
                 else decision(PlayerActions.STAY)
                 PlayerMoveCondition.COMPLETED
@@ -68,8 +71,8 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     }
 
     private fun retreat(): Boolean {
-        for (cell: GameCell in cells)
-            cell.reset()
+        while (cells.size > 0)
+            cells.last().reset()
         return true
     }
 
@@ -81,10 +84,14 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         }
     }
 
-    private fun checkSpecialCell(cell:GameCell){
-        /*when (cell.info){
-            GameCellInfo.CHANCE ->{}
-        }*/
+    private fun chanceResult(cell: GameCell): PlayerMoveCondition {
+        when ((0..3).random()) {
+            0, 1 -> if (!loseMoney((1..2500).random())) loseMoney(money)
+            2, 3 -> earnMoney((1..2500).random())
+            //4 earn random cell
+            //5 lose random cell
+        }
+        return PlayerMoveCondition.COMPLETED
     }
 
     private fun markOwnedCell(newCell: GameCell) {
@@ -122,7 +129,7 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     }
 
     private fun tryToSellEarnedCell() {
-        for (i in 0 until cells.size){
+        for (i in 0 until cells.size) {
             // TODO find best
         }
     }
