@@ -181,43 +181,18 @@
         app:layout_constraintTop_toBottomOf="@+id/cellSell"
         app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
 
-    <TextView
-        android:id="@+id/cellHouseOne"
+
+    <Button
+        android:id="@+id/sellButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:layout_marginStart="15dp"
+        android:text="Sell"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/cellCharge"
-        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
-    <TextView
-        android:id="@+id/cellHouseTwo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/cellHouseOne"
-        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
-    <TextView
-        android:id="@+id/cellHouseThree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/cellHouseTwo"
-        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        android:visibility="invisible"
+        android:clickable="false"/>
 
-    <TextView
-        android:id="@+id/cellHotel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/cellHouseThree"
-        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline" />
 
     <android.support.constraint.Guideline
         android:id="@+id/UnderTopPartGuideline"
@@ -258,5 +233,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/UnderTopPartGuideline" />
+
+
 
 </android.support.constraint.ConstraintLayout>
