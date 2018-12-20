@@ -39,7 +39,7 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
                 if ((currentCell.info.cellType == GameCellType.BANK) &&
                         !decision(PlayerActions.PAY))
                     if (!tryToSellEarnedCell(currentCell.info.cost.costCharge)) decision(PlayerActions.RETREAT)
-                    else decision(PlayerActions.STAY)
+                    else decision(PlayerActions.PAY)
                 PlayerMoveCondition.COMPLETED
             }
             CellState.OWNED -> {
@@ -47,6 +47,7 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
                     if (!decision(PlayerActions.PAY))
                         if (!tryToSellEarnedCell(currentCell.info.cost.costCharge))
                             decision(PlayerActions.RETREAT)
+                        else decision(PlayerActions.PAY)
                 return PlayerMoveCondition.COMPLETED
             }
             CellState.SLEEPING -> {
