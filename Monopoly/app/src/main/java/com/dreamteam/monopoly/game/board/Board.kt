@@ -2,6 +2,7 @@ package com.dreamteam.monopoly.game.board
 
 import android.app.Activity
 import android.graphics.Color.GREEN
+import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import com.dreamteam.monopoly.game.GameData
@@ -35,32 +36,44 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
         player.earnMoney(GameData.loopMoney)
     }
 
+    fun resetField(outState: Bundle) {
+        val numCel = outState.getIntegerArrayList("numCell")
+        if (numCel.size == activity.getGameManager().players.size)
+            for (i in 0 until activity.getGameManager().players.size - 1) {
+                activity.getGameManager().players[i].currentPosition = numCel[i]
+                changeImagePlace(activity.getGameManager().players[i])
+            }
+        else
+            Log.d("[Save]", " players setup position error")
+
+    }
+
     private fun changeImagePlace(player: Player) {
-        val currentPlayerIndex = activity.getGameManager().currentPlayerIndex;
+        val currentPlayerIndex = activity.getGameManager().currentPlayerIndex
         val constraintSet = ConstraintSet()
         val constraintLayout: ConstraintLayout = activity.findViewById(R.id.ConstraintLayout)
         constraintSet.clone(constraintLayout)
 
 
-        val myPlayer = activity.getResources().getIdentifier("Player${currentPlayerIndex + 1}", "id", activity.packageName)
-       // while (player.currentPosition != player.targetPosition &&  player.currentPosition <= player.targetPosition) {
-                //player.currentPosition++
-            Log.d("CURR POS", player.currentPosition.toString())
-                val myId = activity.getResources().getIdentifier("cell${player.currentPosition }", "id", activity.packageName)
-                if (currentPlayerIndex == 0 || currentPlayerIndex == 2) {
-                    constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
-                    constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
-                    if (currentPlayerIndex == 0) constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
-                    else constraintSet.connect(myPlayer, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
-                }
-                if (currentPlayerIndex == 1 || currentPlayerIndex == 3) {
-                    constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
-                    constraintSet.connect(myPlayer, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
-                    if (currentPlayerIndex == 1) constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
-                    else constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
-                }
-                constraintSet.applyTo(constraintLayout)
+        val myPlayer = activity.resources.getIdentifier("Player${currentPlayerIndex + 1}", "id", activity.packageName)
+        // while (player.currentPosition != player.targetPosition &&  player.currentPosition <= player.targetPosition) {
+        //player.currentPosition++
+        Log.d("CURR POS", player.currentPosition.toString())
+        val myId = activity.resources.getIdentifier("cell${player.currentPosition}", "id", activity.packageName)
+        if (currentPlayerIndex == 0 || currentPlayerIndex == 2) {
+            constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
+            constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
+            if (currentPlayerIndex == 0) constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
+            else constraintSet.connect(myPlayer, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
         }
-   // }
+        if (currentPlayerIndex == 1 || currentPlayerIndex == 3) {
+            constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
+            constraintSet.connect(myPlayer, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
+            if (currentPlayerIndex == 1) constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
+            else constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
+        }
+        constraintSet.applyTo(constraintLayout)
+    }
+    // }
 }
 

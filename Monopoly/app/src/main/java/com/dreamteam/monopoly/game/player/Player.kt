@@ -4,6 +4,7 @@ import android.util.Log
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.board.cell.CellState
 import com.dreamteam.monopoly.game.board.cell.GameCell
+import com.dreamteam.monopoly.game.board.cell.GameCellInfo
 import com.dreamteam.monopoly.game.board.cell.GameCellType
 import java.util.*
 
@@ -12,7 +13,7 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     var currentPosition: Int = 1
     var targetPosition: Int = currentPosition
     var money: Int = startMoney
-    var cells: ArrayList<GameCell> = ArrayList()    // ?
+    var cells: ArrayList<GameCell> = ArrayList()
     var isActive: Boolean = false
     var id: Int = 0
 
@@ -50,13 +51,13 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     }
 
     fun decision(action: PlayerActions): Boolean {
-        Log.d("FindError" , board.gameWay[currentPosition-1].info.name )
+        Log.d("FindError", board.gameWay[currentPosition - 1].info.name)
         return when (action) {
-            PlayerActions.BUY -> board.gameWay[currentPosition-1].info.cellType == GameCellType.COMPANY &&
-                    board.gameWay[currentPosition-1].owner == null &&
-                    board.gameWay[currentPosition-1].buy(this)
-            PlayerActions.PAY -> board.gameWay[currentPosition-1].info.cellType == GameCellType.COMPANY &&
-                    board.gameWay[currentPosition-1].pay(this)
+            PlayerActions.BUY -> board.gameWay[currentPosition - 1].info.cellType == GameCellType.COMPANY &&
+                    board.gameWay[currentPosition - 1].owner == null &&
+                    board.gameWay[currentPosition - 1].buy(this)
+            PlayerActions.PAY -> board.gameWay[currentPosition - 1].info.cellType == GameCellType.COMPANY &&
+                    board.gameWay[currentPosition - 1].pay(this)
             PlayerActions.STAY -> stay()
             PlayerActions.RETREAT -> retreat()
         }
@@ -80,11 +81,17 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         }
     }
 
+    private fun checkSpecialCell(cell:GameCell){
+        /*when (cell.info){
+            GameCellInfo.CHANCE ->{}
+        }*/
+    }
+
     private fun markOwnedCell(newCell: GameCell) {
         board.activity.playerSetCellMark(board.gameWay.indexOf(newCell))
     }
 
-    private fun removeMark(rmCell: GameCell){
+    private fun removeMark(rmCell: GameCell) {
         board.activity.playerRemoveCellMark(board.gameWay.indexOf(rmCell))
     }
 
@@ -112,6 +119,12 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
 
     fun setPlayerID(int: Int) {
         id = int
+    }
+
+    private fun tryToSellEarnedCell() {
+        for (i in 0 until cells.size){
+            // TODO find best
+        }
     }
 
     private fun IntRange.random() = Random().nextInt((endInclusive + 1) - start) + start

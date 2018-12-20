@@ -1,6 +1,6 @@
 package com.dreamteam.monopoly
 
-import android.graphics.drawable.BitmapDrawable
+import android.content.res.Configuration
 import android.graphics.drawable.LayerDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +9,6 @@ import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintLayout.*
 import android.support.constraint.ConstraintSet
 import android.support.constraint.Guideline
-import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
@@ -25,8 +24,8 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
 import android.graphics.drawable.GradientDrawable
-
-
+import com.dreamteam.monopoly.game.GameData.boardSizeModifier
+import com.dreamteam.monopoly.game.player.PlayerType
 
 
 class GameActivity : AppCompatActivity() {
@@ -38,19 +37,20 @@ class GameActivity : AppCompatActivity() {
     private var gameManager: GameManager = GameManager(this)
     private var cellButtons: ArrayList<ImageButton> = ArrayList(gameManager.mainBoard.gameWayLength)
 
-    private var indexForBoard : Int = 0;
+    private var indexForBoard: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        buttonThrowDices = findViewById(R.id.buttonThrowCubes) as Button
-        yesButton = findViewById(R.id.YesButton) as Button
-        noButton = findViewById(R.id.NoButton) as Button
-        question = findViewById(R.id.DialogView) as Button
-        val constraintLayout = findViewById(R.id.ConstraintLayout) as ConstraintLayout
-        val underTopLineGuideline = findViewById(R.id.UnderTopPartGuideline) as Guideline
-        val horizotnalGuidleline = findViewById(R.id.HorizontalGuideline) as Guideline
+        buttonThrowDices = findViewById(R.id.buttonThrowCubes)
+        yesButton = findViewById(R.id.YesButton)
+        noButton = findViewById(R.id.NoButton)
+        question = findViewById(R.id.DialogView)
+        val constraintLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayout)
+        val underTopLineGuideline = findViewById<Guideline>(R.id.UnderTopPartGuideline)
+        val horizontalGuideline = findViewById<Guideline>(R.id.HorizontalGuideline)
+        val verticalGuideline = findViewById<Guideline>(R.id.VerticalGuideline)
 
 
         val intent = intent
@@ -60,21 +60,27 @@ class GameActivity : AppCompatActivity() {
         val metrics = DisplayMetrics()
 
         windowManager.defaultDisplay.getMetrics(metrics)
-        val boardWidth: Int = metrics.widthPixels
-        val boardHeight: Int = boardWidth
-        var cellWidth: Int = (boardWidth / ((gameManager.mainBoard.gameWayLength / 4 - 1) + 2 * GameData.cellSidesModifier)).toInt()
-        var cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
+
+        val boardSize: Int = ((if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) metrics.widthPixels else metrics.heightPixels) * boardSizeModifier).toInt()
+        val cellWidth: Int = (boardSize / ((gameManager.mainBoard.gameWayLength / 4 - 1) + 2 * GameData.cellSidesModifier)).toInt()
+        val cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
 
 
-        underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
-        horizotnalGuidleline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels)
+        underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / boardSize /*metrics.heightPixels*/)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            horizontalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels)
+        else {
+            horizontalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels / 2)   // TODO
+            verticalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.widthPixels / 2)
+        }
         createBoard(constraintLayout, cellHeight, cellWidth)
         startAssignment(playersNames)
 
+        // players pos and marks setup
         for (i in 1..playersNames.size) {
-            val myPlayerID = getResources().getIdentifier("Player$i", "id", packageName)
+            val myPlayerID = resources.getIdentifier("Player$i", "id", packageName)
             val playerImage = resources.getDrawable(resources
-                    .getIdentifier("player${i}", "drawable", packageName))
+                    .getIdentifier("player$i", "drawable", packageName))
             val player = ImageView(this)
             player.layoutParams = LayoutParams(cellWidth / 2, cellWidth / 2)
             player.id = (myPlayerID)
@@ -98,18 +104,27 @@ class GameActivity : AppCompatActivity() {
             constraintSet.applyTo(constraintLayout)
         }
 
+        //resetfield(savedInstanceState!!)
 
-
-
+        if (gameManager.getCurrentPlayer().type == PlayerType.AI)
+            playerStartMoveAction()
         buttonThrowDices!!.setOnClickListener {
-            playerStartMove()
-            if (gameManager.getCurrentPlayer().analyze() == PlayerMoveCondition.COMPLETED) {
-                val handler = Handler()
-                        handler.postDelayed({
-                    playersSwap()
-                }, GameData.swapDicesDelay)
-            } else playerActionRequest()
+            playerStartMoveAction()
         }
+    }
+
+    private fun init() {
+
+    }
+
+    private fun playerStartMoveAction() {
+        playerStartMove()
+        if (gameManager.getCurrentPlayer().analyze() == PlayerMoveCondition.COMPLETED) {
+            val handler = Handler()
+            handler.postDelayed({
+                playersSwap()
+            }, GameData.swapDicesDelay)
+        } else playerActionRequest()
     }
 
     private fun playerActionRequest() {
@@ -121,24 +136,20 @@ class GameActivity : AppCompatActivity() {
 
             yesButton!!.isClickable = true
             noButton!!.isClickable = true
-        } else
-        {
+        } else {
             playersSwap()
         }
 
         yesButton!!.setOnClickListener {
             performBuyAction()
-            yesNoButtonListner()
+            yesNoButtonListener()
             Log.d("FindError", "yesPressed")
         }
 
         noButton!!.setOnClickListener {
             performStayAction()
-            yesNoButtonListner()
+            yesNoButtonListener()
         }
-
-
-        // TODO add listeners to choice buttons
     }
 
     private fun performBuyAction() {
@@ -175,24 +186,27 @@ class GameActivity : AppCompatActivity() {
         gameManager.nextPlayerMove() //this code should be after action after throwing dice #Player.decision
         buttonThrowDices!!.isEnabled = true
         buttonThrowDices!!.visibility = View.VISIBLE
+        if (gameManager.getCurrentPlayer().type == PlayerType.AI) {
+            playerStartMoveAction()
+        }
         Toasty.info(this, gameManager.getCurrentPlayer().name + " move", Toast.LENGTH_SHORT, true).show()
     }
 
     fun playerSetCellMark(index: Int) {
-        val neededCellID = getResources().getIdentifier("cell${index+1}", "id", packageName)
-        val neededCell = findViewById<ImageButton>(neededCellID)
+        //val neededCellID = resources.getIdentifier("cell${index + 1}", "id", packageName)
+        //val neededCell = findViewById<ImageButton>(neededCellID)
         Log.d("playerIndex", gameManager.getCurrentPlayer().id.toString())
-        val shape = cellButtons[gameManager.getCurrentPlayer().currentPosition -1].background as LayerDrawable
+        val shape = resources.getDrawable(R.drawable.cellbglayer) as LayerDrawable
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
-        when (gameManager.getCurrentPlayer().id )
-        {
+        Log.d("COLOR", gradientDrawable.toString())
+        when (gameManager.getCurrentPlayer().id) {
             1 -> gradientDrawable.setColor(resources.getColor(R.color.Player1BackgroundColor))//neededCell.setBackgroundResource(R.drawable.player1cell)
             2 -> gradientDrawable.setColor(resources.getColor(R.color.Player2BackgroundColor))
             3 -> gradientDrawable.setColor(resources.getColor(R.color.Player3BackgroundColor))
             4 -> gradientDrawable.setColor(resources.getColor(R.color.Player4BackgroundColor))
         }
-        cellButtons[gameManager.getCurrentPlayer().currentPosition -1].background = shape
+        cellButtons[gameManager.getCurrentPlayer().currentPosition - 1].background = shape
         // TODO - setup unique color on owned cell (spawn image above old one)
     }
 
@@ -209,7 +223,7 @@ class GameActivity : AppCompatActivity() {
 
     fun getGameManager(): GameManager = gameManager
 
-    private fun yesNoButtonListner() {
+    private fun yesNoButtonListener() {
         yesButton!!.visibility = View.INVISIBLE
         noButton!!.visibility = View.INVISIBLE
         question!!.visibility = View.INVISIBLE
@@ -220,64 +234,61 @@ class GameActivity : AppCompatActivity() {
     private fun startAssignment(playersNames: ArrayList<String>) //adding text/players on map
     {
         for (string in playersNames) {
-            gameManager.addPlayer(string)
+            gameManager.addPlayer(string, PlayerType.AI)
             val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
             val playerStats: TextView = findViewById(playerStatsId)
             playerStats.text = string
             gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
             updPlayerMoney(gameManager.getPlayerByName(string)!!)
         }
+    }
+
+    private fun initPlayersPositions() {
 
     }
 
     private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) { // LEFT = 1 RIGHT = 2 TOP = 3 BOTTOM = 4 START = 6 END = 7
-        createCell(cellHeight,cellHeight , constraintLayout , 3, 3, 6, 6, 3, 3 , true )
+        createCell(cellHeight, cellHeight, constraintLayout, 3, 3, 6, 6, 3, 3, true)
 
         while (indexForBoard < gameManager.mainBoard.gameWayLength / 4) {
-            createCell(cellWidth,cellHeight , constraintLayout , 6, 7, 3, 3, 4, 4  )
+            createCell(cellWidth, cellHeight, constraintLayout, 6, 7, 3, 3, 4, 4)
         }
-        createCell(cellHeight,cellHeight , constraintLayout , 6, 7, 3, 3, 4, 4  )
+        createCell(cellHeight, cellHeight, constraintLayout, 6, 7, 3, 3, 4, 4)
 
         while (indexForBoard < gameManager.mainBoard.gameWayLength / 2) {
-            createCell(cellHeight,cellWidth , constraintLayout , 6, 6, 3, 4, 7, 7  )
+            createCell(cellHeight, cellWidth, constraintLayout, 6, 6, 3, 4, 7, 7)
         }
-        createCell(cellHeight,cellHeight , constraintLayout , 6, 6, 3, 4, 7, 7  )
+        createCell(cellHeight, cellHeight, constraintLayout, 6, 6, 3, 4, 7, 7)
 
         while (indexForBoard < 3 * gameManager.mainBoard.gameWayLength / 4) {
-            createCell(cellWidth,cellHeight , constraintLayout , 7, 6, 3, 3, 4, 4  )
+            createCell(cellWidth, cellHeight, constraintLayout, 7, 6, 3, 3, 4, 4)
         }
-        createCell(cellHeight,cellHeight , constraintLayout , 7, 6, 3, 3, 4, 4  )
+        createCell(cellHeight, cellHeight, constraintLayout, 7, 6, 3, 3, 4, 4)
 
         while (indexForBoard < gameManager.mainBoard.gameWayLength) {
-            createCell(cellHeight,cellWidth , constraintLayout , 6, 6, 4, 3, 7, 7  )
+            createCell(cellHeight, cellWidth, constraintLayout, 6, 6, 4, 3, 7, 7)
         }
     }
 
-    fun createCell(width:Int , height:Int , layout: ConstraintLayout, From1: Int, To1:Int, From2: Int, To2:Int,From3: Int, To3:Int  ,start:Boolean = false )
-    {
-        var thisButtonID = resources.getIdentifier("cell${indexForBoard + 1}", "id", packageName)
-        var previousButtonID = resources.getIdentifier("cell$indexForBoard", "id", packageName)
-        var button = ImageButton(this)
+    private fun createCell(width: Int, height: Int, layout: ConstraintLayout, From1: Int, To1: Int, From2: Int, To2: Int, From3: Int, To3: Int, start: Boolean = false) {
+        val thisButtonID = resources.getIdentifier("cell${indexForBoard + 1}", "id", packageName)
+        val previousButtonID = resources.getIdentifier("cell$indexForBoard", "id", packageName)
+        val button = ImageButton(this)
         button.layoutParams = LayoutParams(width, height)
         button.id = (thisButtonID)
-        button.setOnClickListener(ShowInfoClick)
-        val shape = resources.getDrawable(resources
-                .getIdentifier("cellbglayer", "drawable", packageName)) as LayerDrawable
-        val bitmap = resources.getDrawable(resources.getIdentifier("cellimage${indexForBoard + 1}", "drawable", packageName)) as BitmapDrawable
-        shape.setDrawableByLayerId(R.id.celllogo, bitmap)
-        button.background = shape
+        button.setOnClickListener(showInfoClick)
+        button.background = resources.getDrawable(resources
+                .getIdentifier("cellbglayer", "drawable", packageName), null)
         layout.addView(button)
         cellButtons.add(button)
         val constraintSet = ConstraintSet()
         constraintSet.clone(layout)
         if (start) {
-            constraintSet.connect(R.id.UnderTopPartGuideline, From1, layout.getId(), To1, height)
-            constraintSet.connect(button.id, From2, layout.getId(), To2, 0)
-            constraintSet.connect(button.id, From3, layout.getId(), To3, 0)
+            constraintSet.connect(R.id.UnderTopPartGuideline, From1, layout.id, To1, height)
+            constraintSet.connect(button.id, From2, layout.id, To2, 0)
+            constraintSet.connect(button.id, From3, layout.id, To3, 0)
 
-        }
-        else
-        {
+        } else {
             constraintSet.connect(button.id, From1, previousButtonID, To1, 0)
             constraintSet.connect(button.id, From2, previousButtonID, To2, 0)
             constraintSet.connect(button.id, From3, previousButtonID, To3, 0)
@@ -286,7 +297,7 @@ class GameActivity : AppCompatActivity() {
         indexForBoard++
     }
 
-    val ShowInfoClick = View.OnClickListener { view ->
+    private val showInfoClick = View.OnClickListener { view ->
         val i = cellButtons.indexOf(view)
         val name: String = GameData.boardGameCells[i].info.name
         val costBuy = GameData.boardGameCells[i].info.cost.costBuy
@@ -301,13 +312,29 @@ class GameActivity : AppCompatActivity() {
         buySpace.text = "Buy: $costBuy"
         sellSpace.text = "Sell: $costSell"
         chargeSpace.text = "Charge: $charge"
+    }
 
+    fun resetfield(outState: Bundle) {
+        gameManager.mainBoard.resetField(outState)
+    }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        //num cell, players
+        //resetfield()
+        val playersPos = ArrayList<Int>(gameManager.players.size)
+        for (p in gameManager.players)
+            playersPos.add(p.currentPosition)
+        outState?.putIntegerArrayList("numCell", playersPos)
     }
 
     private fun updPlayerMoney(player: Player) {
         val playerMoneyId = resources.getIdentifier("playerMoney${gameManager.getPlayerByName(player.name)!!.id}", "id", packageName)
         val playerMoney: TextView = findViewById(playerMoneyId)
         playerMoney.text = gameManager.getPlayerByName(player.name)!!.money.toString()
+    }
+
+    fun endGameAction(winner: Player) {
+        //TODO swap to results activity
     }
 }

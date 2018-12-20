@@ -1,16 +1,16 @@
 package com.dreamteam.monopoly.game
 
-import android.app.Activity
 import com.dreamteam.monopoly.GameActivity
 import com.dreamteam.monopoly.game.GameData.startMoney
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.player.Player
 import com.dreamteam.monopoly.game.player.PlayerType
 
-class GameManager(private val activity: Activity) {
-    var mainBoard: Board = Board(GameData.boardGameCells, activity as GameActivity)
+class GameManager(private val activity: GameActivity) {
+    var mainBoard: Board = Board(GameData.boardGameCells, activity)
     var players: ArrayList<Player> = ArrayList()
     var currentPlayerIndex: Int = 0
+    var isEndGame: Boolean = false
 
     fun nextPlayerMove() {
         players[currentPlayerIndex].isActive = false
@@ -27,7 +27,11 @@ class GameManager(private val activity: Activity) {
 
     fun addPlayers(playersData: List<String>) {
         for (name: String in playersData)
-            players.add(Player(name, startMoney,PlayerType.PERSON,  mainBoard))
+            players.add(Player(name, startMoney, PlayerType.PERSON, mainBoard))
+    }
+
+    fun addPlayer(name: String, type: PlayerType) {
+        players.add(Player(name, GameData.startMoney, type, mainBoard))
     }
 
     fun addPlayer(name: String, startMoney: Int, type: PlayerType) {
@@ -41,17 +45,27 @@ class GameManager(private val activity: Activity) {
 
     fun removePlayer(player: Player) {
         players.remove(player)
+        checkEndGame()
     }
 
     fun removePlayer(name: String) {
         players.remove(players.find { p -> p.name == name })
+        checkEndGame()
     }
 
     fun removePlayer(index: Int) {
         players.removeAt(index)
+        checkEndGame()
+    }
+
+    private fun checkEndGame() {
+        if (players.size == 1) {
+            isEndGame = true
+            activity.endGameAction(players[0])
+        }
     }
 
     fun getPlayerByName(name: String): Player? {
-        return players.find { p -> p.name == name}
+        return players.find { p -> p.name == name }
     }
 }
