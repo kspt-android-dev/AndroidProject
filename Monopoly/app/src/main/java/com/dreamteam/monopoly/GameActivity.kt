@@ -1,6 +1,7 @@
 package com.dreamteam.monopoly
 
 import android.content.res.Configuration
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.LayerDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -196,17 +197,17 @@ class GameActivity : AppCompatActivity() {
         //val neededCellID = resources.getIdentifier("cell${index + 1}", "id", packageName)
         //val neededCell = findViewById<ImageButton>(neededCellID)
         Log.d("playerIndex", gameManager.getCurrentPlayer().id.toString())
-        val shape = resources.getDrawable(R.drawable.cellbglayer) as LayerDrawable
+        val shape = cellButtons[gameManager.getCurrentPlayer().currentPosition -1].background as LayerDrawable
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
-        Log.d("COLOR", gradientDrawable.toString())
-        when (gameManager.getCurrentPlayer().id) {
+        when (gameManager.getCurrentPlayer().id )
+        {
             1 -> gradientDrawable.setColor(resources.getColor(R.color.Player1BackgroundColor))//neededCell.setBackgroundResource(R.drawable.player1cell)
             2 -> gradientDrawable.setColor(resources.getColor(R.color.Player2BackgroundColor))
             3 -> gradientDrawable.setColor(resources.getColor(R.color.Player3BackgroundColor))
             4 -> gradientDrawable.setColor(resources.getColor(R.color.Player4BackgroundColor))
         }
-        cellButtons[gameManager.getCurrentPlayer().currentPosition - 1].background = shape
+        cellButtons[gameManager.getCurrentPlayer().currentPosition -1].background = shape
         // TODO - setup unique color on owned cell (spawn image above old one)
     }
 
@@ -234,7 +235,7 @@ class GameActivity : AppCompatActivity() {
     private fun startAssignment(playersNames: ArrayList<String>) //adding text/players on map
     {
         for (string in playersNames) {
-            gameManager.addPlayer(string, PlayerType.AI)
+            gameManager.addPlayer(string, PlayerType.PERSON)
             val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
             val playerStats: TextView = findViewById(playerStatsId)
             playerStats.text = string
@@ -277,8 +278,11 @@ class GameActivity : AppCompatActivity() {
         button.layoutParams = LayoutParams(width, height)
         button.id = (thisButtonID)
         button.setOnClickListener(showInfoClick)
-        button.background = resources.getDrawable(resources
-                .getIdentifier("cellbglayer", "drawable", packageName), null)
+        val shape = resources.getDrawable(resources
+                .getIdentifier("cellbglayer", "drawable", packageName)) as LayerDrawable
+        val bitmap = resources.getDrawable(resources.getIdentifier("cellimage${indexForBoard + 1}", "drawable", packageName)) as BitmapDrawable
+        shape.setDrawableByLayerId(R.id.celllogo, bitmap)
+        button.background = shape
         layout.addView(button)
         cellButtons.add(button)
         val constraintSet = ConstraintSet()
