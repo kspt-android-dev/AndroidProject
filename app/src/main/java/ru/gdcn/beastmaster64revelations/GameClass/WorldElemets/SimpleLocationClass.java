@@ -196,6 +196,7 @@ public class SimpleLocationClass implements Location, Serializable {
         return DummyEnemy.generateEnemy(player, difficulty);
     }
 
+    @Override
     public Player getPlayer(){
         return player;
     }

@@ -12,7 +12,15 @@ import ru.gdcn.beastmaster64revelations.GameInterface.World.World;
 
 public class SimpleGameMapClass implements GameMap {
 
+    Location[][] map;
+    World world;
+
     public SimpleGameMapClass(World world) {
+        this(world, 7, 10);
+    }
+
+    public SimpleGameMapClass(World world, int width, int height) {
+        map = new Location[height][width];
         this.world = world;
         for (int y = 0; y < map.length; y++){
             for (int x = 0; x < map[0].length; x++){
@@ -21,8 +29,6 @@ public class SimpleGameMapClass implements GameMap {
         }
     }
 
-    Location[][] map = new Location[10][7];
-    World world;
 
     @Override
     public Location getLocationAt(MapPoint coordinates) {

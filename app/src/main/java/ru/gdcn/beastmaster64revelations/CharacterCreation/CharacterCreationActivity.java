@@ -76,7 +76,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
 
         readyButton = findViewById(R.id.activity_character_creation_proceedButton);
         readyButton.setOnClickListener(v -> {
-            player = new PlayerClass(inputName.getText().toString(), null, stren, agili, intel,10, gender);
+            player = new PlayerClass(inputName.getText().toString(), null, stren, agili, intel, 10, gender);
             Intent intent = new Intent(getApplicationContext(), InLocationActivity.class);
             intent.putExtra("player", player);
             startActivity(intent);
@@ -149,7 +149,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
     }
 
     private void updateContent() {
-        if (points > 0){
+        if (points > 0) {
             enableButton(strPlus);
             enableButton(agiPlus);
             enableButton(intPlus);
@@ -179,7 +179,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
         else
             disableButton(intMin);
 
-        if (gender == Gender.MALE){
+        if (gender == Gender.MALE) {
             manFace.setAlpha(1.0f);
             womanFace.setAlpha(0.5f);
         } else {
@@ -201,7 +201,6 @@ public class CharacterCreationActivity extends AppCompatActivity {
     private void enableButton(Button button) {
         button.setEnabled(true);
     }
-
 
 
 }

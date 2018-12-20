@@ -101,4 +101,6 @@ public interface Location {
     //TODO
     public void playerCame(Player player);
 
+    public Player getPlayer();
+
 }

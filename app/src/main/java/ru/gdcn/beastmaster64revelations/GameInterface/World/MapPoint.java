@@ -1,6 +1,7 @@
 package ru.gdcn.beastmaster64revelations.GameInterface.World;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class MapPoint implements Serializable {
 
@@ -47,6 +48,20 @@ public class MapPoint implements Serializable {
 
     public MapPoint down() {
         return new MapPoint(x, y + 1);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MapPoint point = (MapPoint) o;
+        return x == point.x &&
+                y == point.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 
 }

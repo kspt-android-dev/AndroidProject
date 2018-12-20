@@ -35,7 +35,7 @@ public class InLocationActivity extends AppCompatActivity {
 
     Location location;
     Player player;
-    Integer upgradePoints = 5;
+    Integer upgradePoints = 30;
 
     ProportionalImageView imageView;
 
@@ -83,7 +83,7 @@ public class InLocationActivity extends AppCompatActivity {
         locationFragment.updateContent();
     }
 
-    private void changeFragment(Fragment fragment){
+    private void changeFragment(Fragment fragment) {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.activity_in_location_fragHolder, fragment);
@@ -91,7 +91,7 @@ public class InLocationActivity extends AppCompatActivity {
 
     }
 
-    public void goToMenu(){
+    public void goToMenu() {
         Intent intent = new Intent(this, MainMenuActivity.class);
         startActivity(intent);
     }
@@ -109,7 +109,7 @@ public class InLocationActivity extends AppCompatActivity {
         locationFragment.updateContent();
     }
 
-    public void goFurther(MapDirection direction){
+    public void goFurther(MapDirection direction) {
         transitionToNewLocation(location.getNeightbour(direction));
     }
 
@@ -125,9 +125,9 @@ public class InLocationActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
-    public void changeBackground(LocationType type){
+    public void changeBackground(LocationType type) {
         int image;
-        switch (type){
+        switch (type) {
             case ROCK:
                 image = R.drawable.location_desert;
                 break;
@@ -162,14 +162,14 @@ public class InLocationActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (resultCode){
+        switch (resultCode) {
             case FightResult.PLAYER_LOST:
                 goToMenu();
                 break;
             case FightResult.ALL_ALIVE:
                 break;
             case FightResult.PLAYER_WON:
-                upgradePoints+=3;
+                upgradePoints += 3;
                 setEnemyDead();
                 break;
         }
