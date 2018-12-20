@@ -1,14 +1,16 @@
 package com.example.danila.minerandroid;
 
 import android.annotation.SuppressLint;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.GridLayout;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
 
     @SuppressLint("WrongViewCast")
@@ -32,13 +34,15 @@ public class MainActivity extends AppCompatActivity {
         final int SCREEN_WIDTH = dm.widthPixels;
         final int SCREEN_HEIGHT = dm.heightPixels;
 
-        FrameLayout gameField = (FrameLayout) findViewById(R.id.game_field);
+        GridLayout gameField = findViewById(R.id.game_field);
         Button helpMeBotButton = findViewById(R.id.helpbot_button);
         Button reloadButton = findViewById(R.id.reload_button);
         Button reloadLastButton = findViewById(R.id.reloadlast_button);
+        TextView minesNumberView = findViewById(R.id.mines_number);
+        TextView timerView = findViewById(R.id.timer);
 
 
-        Graphic graphic = new Graphic(this, gameField, SCREEN_WIDTH, SCREEN_HEIGHT, logic, bot);
+        Graphic graphic = new Graphic(this, gameField, minesNumberView, timerView, logic, bot);
 
         bot.setGraphic(graphic);
 
@@ -65,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 logic.reloadLast();
-                graphic.reloadLast();
+                graphic.reload();
                 bot.reload();
             }
         });

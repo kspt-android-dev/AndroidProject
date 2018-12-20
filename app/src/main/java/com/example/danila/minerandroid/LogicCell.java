@@ -67,6 +67,7 @@ class LogicCell {
     void changeFlag() {
         flag = !flag;
 
+
     }
 
     void setFlag(boolean flag) {

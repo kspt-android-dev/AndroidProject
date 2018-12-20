@@ -1,29 +1,36 @@
 package com.example.danila.minerandroid;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.GridLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 class Graphic {
     private GraphicCell[] graphicCellsVertMode;
 
-    Graphic(AppCompatActivity gameActivity, FrameLayout gameField,
-            int screenWidth, int screenHeight, Logic logic, Bot bot) {//TODO use screenHeight
+    Graphic(Activity gameActivity, GridLayout gameField, TextView minesNumberView, TextView timerView,
+            Logic logic, Bot bot) {
 
 
         graphicCellsVertMode = new GraphicCell[logic.getLevelWidth() * logic.getLevelHight()];
 
-        int cellSizeVertMode = screenWidth / logic.getLevelWidth();
-        //int cellHeightHorizMode = screenHeight / logic.getLevelHight();//TODO add for swap
+        gameField.setColumnCount(logic.getLevelWidth());
 
         for (int y = 0; y < logic.getLevelHight(); y++)
             for (int x = 0; x < logic.getLevelWidth(); x++) {
+
                 graphicCellsVertMode[y * logic.getLevelWidth() + x] =
-                        new GraphicCell(gameActivity, bot, logic.getLogicCells()[y * logic.getLevelWidth() + x],
-                                x, y, cellSizeVertMode);
+                        new GraphicCell(gameActivity, minesNumberView, logic, bot, logic.getLogicCells()[y * logic.getLevelWidth() + x]);
+
 
                 gameField.addView(graphicCellsVertMode[y * logic.getLevelWidth() + x]);
+
             }
 
 
@@ -34,31 +41,25 @@ class Graphic {
     void reload() {
         for (GraphicCell graphicCell : graphicCellsVertMode) {
             graphicCell.setBackgroundColor(GraphicCell.CLOSED_COLOR);
-            graphicCell.setVisibility(View.VISIBLE);
+            graphicCell.setText("");
         }
-
-    }
-
-    //Перезагрузка последнего уровня
-    void reloadLast() {
-        System.out.println("Reload of last level");
-        for (GraphicCell graphicCell : graphicCellsVertMode) {
-            graphicCell.setBackgroundColor(GraphicCell.CLOSED_COLOR);
-            graphicCell.setVisibility(View.VISIBLE);
-        }
-
 
     }
 
 
     //Показывает изначальные условия(для кнопки ESC)
+    @SuppressLint("SetTextI18n")
     void checkAll() {
         for (GraphicCell graphicCell : graphicCellsVertMode)
             if (graphicCell.getLogicCell().getConditon() == 9 && !graphicCell.getLogicCell().isFlag())
                 graphicCell.setHighlightColor(GraphicCell.MINE_COLOR);
             else if (!graphicCell.getLogicCell().isFlag()) {
-                graphicCell.setBackgroundColor(graphicCell.getContentColor());
-                graphicCell.getContent().setVisibility(View.INVISIBLE);
+                if (graphicCell.getLogicCell().getConditon() == 9)
+                    graphicCell.setBackgroundColor(GraphicCell.MINE_COLOR);
+                else {
+                    graphicCell.setBackgroundColor(GraphicCell.EMPTY_COLOR);
+                    graphicCell.setText("" + graphicCell.getLogicCell().getConditon());
+                }
             }
 
 

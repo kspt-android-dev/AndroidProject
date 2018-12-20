@@ -11,6 +11,7 @@ class Logic {
     private int minesDigit;
     private int levelWidth;
     private int levelHight;
+    private int findedBombs = 0;
 
 
     Logic(int width, int hight, int[] numbersOfMines) {
@@ -126,6 +127,7 @@ class Logic {
         for (LogicCell logicCell : logicCells) {
             logicCell.probabilities = 1;
             logicCell.setFlag(false);
+            findedBombs--;
             logicCell.setChecked(false);
         }
 
@@ -202,6 +204,8 @@ class Logic {
             if (cell.isChecked())
                 checkedCell++;
         }
+
+        this.findedBombs = findedBombs;
 
         return findedBombs + checkedCell == logicCells.length;
 
