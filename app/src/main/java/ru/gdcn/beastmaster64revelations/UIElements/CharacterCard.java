@@ -69,7 +69,8 @@ public class CharacterCard extends LinearLayout {
         name.setTextColor(Color.WHITE);
 
         HP = new TextView(context);
-        HP.setText(character.getHP() + "/" + character.getMaxHP());
+        String text = character.getHP() + getResources().getString(R.string.text_slash) + character.getMaxHP();
+        HP.setText(text);
         HP.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         HP.setTextColor(Color.RED);
         HP.setTextAlignment(TEXT_ALIGNMENT_CENTER);
@@ -90,7 +91,8 @@ public class CharacterCard extends LinearLayout {
     }
 
     public void updateContent(){
-        HP.setText(character.getHP() + "/" + character.getMaxHP());
+        String text = character.getHP() + getResources().getString(R.string.text_slash) + character.getMaxHP();
+        HP.setText(text);
     }
 
     public ImageView getFace() {

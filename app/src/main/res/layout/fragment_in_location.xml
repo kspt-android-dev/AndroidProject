@@ -28,10 +28,10 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="Название"
+                android:text="@string/in_location_text_name"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
-                android:textSize="50dp" />
+                android:textSize="50sp" />
 
             <TextView
                 android:id="@+id/fragment_in_location_content_LocationDescriptionTitle"
@@ -42,7 +42,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="Описание"
+                android:text="@string/in_location_text_description"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp" />
 
@@ -55,7 +55,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="TextView"
+                android:text="@string/in_location_text_textview"
                 android:textAlignment="inherit"
                 android:textColor="#FFFFFF" />
 
@@ -68,7 +68,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="NPC"
+                android:text="@string/in_location_text_npc"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp" />
 
@@ -81,7 +81,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="TextView"
+                android:text="@string/in_location_text_textview"
                 android:textAlignment="inherit"
                 android:textColor="#FFFFFF" />
 
@@ -97,7 +97,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Сложность:"
+                    android:text="@string/in_location_text_difficulty"
                     android:textColor="#FFFFFF"
                     android:textSize="34sp" />
 
@@ -110,7 +110,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Средняя"
+                    android:text="@string/in_location_text_medium_difficulty"
                     android:textAlignment="inherit"
                     android:textColor="@android:color/holo_orange_dark" />
             </LinearLayout>
@@ -128,7 +128,7 @@
                     android:layout_height="60dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:text="Напасть!" />
+                    android:text="@string/in_location_text_attack" />
 
                 <Button
                     android:id="@+id/fragment_in_location_content_NPCtalk"
@@ -137,7 +137,7 @@
                     android:layout_height="60dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:text="Говорить" />
+                    android:text="@string/in_location_text_talk" />
             </LinearLayout>
 
             <Space

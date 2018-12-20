@@ -73,7 +73,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 style="@style/BMRButtonSmall"
-                android:text="KICK" />
+                android:text="@string/fight_text_kick" />
 
             <Button
                 android:id="@+id/activity_fight_action_heal"
@@ -82,7 +82,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 style="@style/BMRButtonSmall"
-                android:text="HEAL" />
+                android:text="@string/fight_text_heal" />
 
             <Button
                 android:id="@+id/activity_fight_action_magic"
@@ -91,7 +91,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 style="@style/BMRButtonSmall"
-                android:text="МАГИЯ" />
+                android:text="@string/fight_text_magic" />
 
             <Button
                 android:id="@+id/activity_fight_action_kick2"
@@ -101,7 +101,7 @@
                 android:layout_weight="1"
                 style="@style/BMRButtonSmall"
                 android:textSize="17sp"
-                android:text="СИЛЬНО УДАРИТЬ" />
+                android:text="@string/fight_text_hardKick" />
         </LinearLayout>
 
         <LinearLayout
@@ -114,7 +114,7 @@
             <Button
                 android:id="@+id/activity_fight_action_5"
                 style="@style/BMRButton"
-                android:text="TODO"
+                android:text="@string/fight_text_todo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
@@ -128,7 +128,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 style="@style/BMRButton"
-                android:text="TODO" />
+                android:text="@string/fight_text_todo" />
 
             <Button
                 android:id="@+id/activity_fight_action_7"
@@ -137,7 +137,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 style="@style/BMRButton"
-                android:text="TODO" />
+                android:text="@string/fight_text_todo" />
 
             <Button
                 android:id="@+id/activity_fight_action_8"
@@ -146,7 +146,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 style="@style/BMRButton"
-                android:text="TODO" />
+                android:text="@string/fight_text_todo" />
         </LinearLayout>
 
         <android.support.v4.widget.NestedScrollView
@@ -163,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="FIGHT!"
+                android:text="@string/fight_text_fight"
                 style="@style/BMRTextSmall"
                 android:textAlignment="center"
                 android:textColor="@color/colorButtonText"

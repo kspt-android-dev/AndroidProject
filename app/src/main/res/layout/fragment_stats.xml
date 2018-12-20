@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAlignment="center"
-            android:text="Персонаж"
+            android:text="@string/main_character_name"
             android:textColor="#ffe2a6"
             android:textSize="40sp"
             tools:layout_margin="6dp" />
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="Очки:  "
+                android:text="@string/stats_text_points"
                 android:textColor="#ffe2a6"
                 android:textSize="30sp" />
 
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="5"
+                android:text="@string/stats_text_newpoints"
                 android:textColor="#ffe2a6"
                 android:textSize="38sp" />
         </LinearLayout>
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="СИЛ: 0"
+                android:text="@string/character_stats_text_strength"
                 android:textColor="#ffe2a6"
                 android:textSize="25sp" />
 
@@ -85,7 +85,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="+"
+                android:text="@string/text_plus"
                 android:textSize="23sp" />
 
         </LinearLayout>
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="ЛОВ: 0"
+                android:text="@string/character_stats_text_agility"
                 android:textColor="#ffe2a6"
                 android:textSize="25sp" />
 
@@ -117,7 +117,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="+"
+                android:text="@string/text_plus"
                 android:textSize="23sp" />
 
         </LinearLayout>
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="ИНТ: 0"
+                android:text="@string/character_stats_text_intellect"
                 android:textColor="#ffe2a6"
                 android:textSize="26sp" />
 
@@ -148,7 +148,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="+"
+                android:text="@string/text_plus"
                 android:textSize="23sp" />
 
         </LinearLayout>

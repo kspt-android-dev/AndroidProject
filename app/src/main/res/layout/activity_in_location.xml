@@ -46,7 +46,7 @@
                 android:layout_height="70sp"
                 android:layout_weight="1"
                 style="@style/BMRButton"
-                android:text="MENU" />
+                android:text="@string/in_location_text_menu" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
                 android:layout_height="70sp"
                 android:layout_weight="1"
                 style="@style/BMRButton"
-                android:text="LOC" />
+                android:text="@string/in_location_text_loc" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
                 android:layout_weight="1"
                 android:enabled="true"
                 style="@style/BMRButton"
-                android:text="STATS" />
+                android:text="@string/in_location_text_stats" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
                 android:layout_weight="1"
                 android:enabled="true"
                 style="@style/BMRButton"
-                android:text="MAP" />
+                android:text="@string/in_location_text_map" />
 
             <Space
                 android:layout_width="wrap_content"

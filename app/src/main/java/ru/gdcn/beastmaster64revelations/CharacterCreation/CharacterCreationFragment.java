@@ -52,8 +52,8 @@ public class CharacterCreationFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getArguments() != null) {
-            atributes = getArguments().getStringArray("atributeNames");
-            totalPoints = getArguments().getInt("totalPoints");
+            atributes = getArguments().getStringArray(getString(R.string.character_creation_text_attributeNames));
+            totalPoints = getArguments().getInt(getString(R.string.character_creation_text_totalPoints));
         }
 
         changers = new AttributeChanger[atributes.length];
@@ -70,7 +70,7 @@ public class CharacterCreationFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 title.setText(s);
                 if (s.length() == 0)
-                    title.setText("[--имя--]");
+                    title.setText(R.string.main_character_name);
             }
 
             @Override

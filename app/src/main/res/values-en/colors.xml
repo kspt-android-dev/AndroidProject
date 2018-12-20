@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#d81b60</color>
+    <color name="colorButtonBackground">#440009</color>
+    <color name="colorButtonText">#E1E1FF</color>
+
+    <color name="black_overlay">#66000000</color>
+    <color name="BMRButton_color_enabled">#1a1a3b</color>
+    <color name="BMRButton_color_disabled">#434f66</color>
+    <color name="BMRButton_color_pressed" >#081028</color>
+    <color name="BMRButton_small_color_pressed" >#152948</color>
+    <color name="BMRButton_small_color_disabled" >#6d7f9c</color>
+    <color name="BMRButton_small_color_enabled" >#09101d</color>
+    <color name="BMRButton_stroke">#282c36</color>
+    <color name="map_flatland">#a37f62</color>
+    <color name="map_forest">#2b7b44</color>
+    <color name="map_rock">#717a7e</color>
+    <color name="map_default">#665a50</color>
+    <color name="has_player">#f54343</color>
+
+</resources>
