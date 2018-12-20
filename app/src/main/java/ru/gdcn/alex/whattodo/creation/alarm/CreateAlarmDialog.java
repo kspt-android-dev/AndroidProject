@@ -17,10 +17,28 @@ import android.widget.Toast;
 
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.creation.AlarmBroadcastReceiver;
+import ru.gdcn.alex.whattodo.creation.CreationActivity;
+import ru.gdcn.alex.whattodo.objects.Notify;
 
-public class CreateAlarmDialog extends DialogFragment {
+public class CreateAlarmDialog extends DialogFragment{
 
-    private TextView date = null, time;
+    public void update(int year, int month, int day) {
+        date.setText(String.format("%s:%s:%s", day, month + 1, year));
+    }
+
+    public void update(int hour, int minute) {
+        time.setText(String.format("%s:%s", hour, minute));
+    }
+
+    public interface OnAlarmDialogListener{
+        public void onSetAlarm();
+        public void onDeleteAlarm();
+    }
+
+    private TextView date, time;
+
+    private OnAlarmDialogListener onAlarmDialogListener;
+    private Notify notify;
 
     @NonNull
     @Override
@@ -28,9 +46,10 @@ public class CreateAlarmDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.creation_alarm_dialog, null);
-
+        notify = ((CreationActivity)getContext()).getNoteManager().getNotify();
         date = view
                 .findViewById(R.id.creation_alarm_dialog_choose_date);
+        date.setText(String.format("%s:%s:%s", notify.getDay(), notify.getMonth() + 1, notify.getYear()));
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +58,7 @@ public class CreateAlarmDialog extends DialogFragment {
         });
         time = view
                 .findViewById(R.id.creation_alarm_dialog_choose_time);
+        time.setText(String.format("%s:%s", notify.getHour(), notify.getMinute()));
         time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,21 +71,29 @@ public class CreateAlarmDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getContext(), "SAVE!", Toast.LENGTH_SHORT).show();
-                        AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-                        Intent intent = new Intent(getContext(), AlarmBroadcastReceiver.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(),
-                                0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pendingIntent);
+
+                        onAlarmDialogListener.onSetAlarm();
                     }
                 })
-                .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Удалить", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getContext(), "CANSEL!", Toast.LENGTH_SHORT).show();
+                        onAlarmDialogListener.onDeleteAlarm();
+                    }
+                })
+                .setNeutralButton("Отмена", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getDialog().cancel();
                     }
                 })
                 .setTitle("Установите дату и время");
         return builder.create();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        onAlarmDialogListener = (CreationActivity) context;
     }
 }

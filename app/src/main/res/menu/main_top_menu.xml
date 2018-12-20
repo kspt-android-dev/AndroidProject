@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/top_right_menu_settings"
-        android:title="@string/top_right_menu_item_settings" />
+        android:title="@string/top_right_menu_item_settings"
+        android:visible="false"/>
     <item
         android:id="@+id/top_right_menu_about"
         android:title="@string/top_right_menu_item_about" />

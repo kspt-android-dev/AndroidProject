@@ -107,6 +107,7 @@ public class ListFragment extends Fragment {
         Log.d(TAG, TextFormer.getStartText(className) + "onStop!");
         StringBuilder stringBuilder = new StringBuilder();
         List<Item> items = activity.getNoteManager().getItems();
+        //TODO если закрыть когда нет пунктов, то сломается
         if (!items.get(items.size() - 1).getContent().equals("") ||
                 (items.get(items.size() - 1).getContent().equals("") && items.size() > 1)) {
             for (int i = 0; i < items.size() - 1; i++) {

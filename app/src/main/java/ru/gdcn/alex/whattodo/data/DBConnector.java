@@ -1,7 +1,10 @@
 package ru.gdcn.alex.whattodo.data;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -10,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import ru.gdcn.alex.whattodo.creation.AlarmBroadcastReceiver;
 import ru.gdcn.alex.whattodo.objects.Item;
 import ru.gdcn.alex.whattodo.objects.Note;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
@@ -78,6 +82,12 @@ public class DBConnector {
         String where = KEY_PARENT_ID + "=?";
         String[] wArgs = {String.valueOf(note.getId())};
         database.delete(TABLE_ITEMS, where, wArgs);
+
+        AlarmManager am = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(activity, AlarmBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(activity,
+                0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        am.cancel(pendingIntent);
 
         Log.d(TAG, TextFormer.getStartText(className) + "Размер базы данных: " + database.getPageSize() + " байт!");
 
@@ -222,7 +232,7 @@ public class DBConnector {
                         cursor.getString(indexHeader),
                         cursor.getString(indexContent),
                         cursor.getString(indexType),
-                        cursor.getInt(indexDate),
+                        cursor.getLong(indexDate),
                         cursor.getInt(indexFixed),
                         cursor.getInt(indexDeleted)
                 ));

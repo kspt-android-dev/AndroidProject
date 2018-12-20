@@ -1,5 +1,9 @@
 package ru.gdcn.alex.whattodo.creation;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentManager;
@@ -15,15 +19,21 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import ru.gdcn.alex.whattodo.R;
+import ru.gdcn.alex.whattodo.creation.alarm.ChooseDateDialog;
+import ru.gdcn.alex.whattodo.creation.alarm.ChooseTimeDialog;
 import ru.gdcn.alex.whattodo.creation.alarm.CreateAlarmDialog;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class CreationActivity extends AppCompatActivity implements View.OnClickListener {
+public class CreationActivity extends AppCompatActivity implements View.OnClickListener,
+        ChooseDateDialog.OnSetDateIntoDateDialog,
+        ChooseTimeDialog.OnSetTimeIntoDateDialog,
+        CreateAlarmDialog.OnAlarmDialogListener {
 
     private static final String TAG = "ToDO_Logger";
     private static final String className = "CreationActivity";
 
     private TextView header;
+    private MenuItem alarmItem;
 
     private CreationManager noteManager;
 
@@ -80,13 +90,14 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.creation_top_menu, menu);
+        alarmItem = menu.findItem(R.id.creation_top_alarm);
         if (noteManager.getNote().getFixed() == 1) {
             menu.getItem(0).setChecked(true);
             menu.getItem(0).getIcon().setTint(Color.parseColor("#FF2ABFF1"));
         }
         if (noteManager.getNote().getDate() != null) {
-            menu.getItem(1).setChecked(true);
-            menu.getItem(1).getIcon().setTint(Color.parseColor("#FF2ABFF1"));
+            alarmItem.setChecked(true);
+            alarmItem.getIcon().setTint(Color.parseColor("#FF2ABFF1"));
         }
         return true;
     }
@@ -101,16 +112,15 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
                 resetFixed(item);
                 break;
             case R.id.creation_top_alarm:
-                Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"Alarm\"!");
-                resetAlarm(item);
-//                createSchedule(); //TODO
+                Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"Notify\"!");
+                CreateAlarmDialog createAlarmDialog = new CreateAlarmDialog();
+                createAlarmDialog.show(getSupportFragmentManager(), "alarm");
                 break;
             case android.R.id.home:
                 Log.d(TAG, TextFormer.getStartText(className) + "Нажата кнопка \"Назад\"!");
                 this.finish();
                 break;
         }
-
         return false;
     }
 
@@ -124,23 +134,6 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
             item.getIcon().setTint(Color.parseColor("#FF2ABFF1"));
             noteManager.getNote().setFixed(1);
         }
-    }
-
-    private void resetAlarm(MenuItem item) {
-        if (item.isChecked()) {
-            item.setChecked(false);
-            item.getIcon().setTint(Color.parseColor("#FFFFFF"));
-            createAlarm();
-        } else {
-            item.setChecked(true);
-            item.getIcon().setTint(Color.parseColor("#FF2ABFF1"));
-            createAlarm();
-        }
-    }
-
-    private void createAlarm() {
-        CreateAlarmDialog createAlarmDialog = new CreateAlarmDialog();
-        createAlarmDialog.show(getSupportFragmentManager(), "alarm");
     }
 
     @Override
@@ -204,6 +197,47 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
                 Log.d(TAG, TextFormer.getStartText(className) + "Нет такой кнопки!");
                 break;
         }
+    }
+
+    @Override
+    public void onSetDate(int year, int month, int day) {
+        noteManager.getNotify().setYMD(year, month, day);
+        ((CreateAlarmDialog)getSupportFragmentManager().findFragmentByTag("alarm")).update(year, month, day);
+    }
+
+    @Override
+    public void onSetTime(int hour, int minute) {
+        noteManager.getNotify().setHM(hour, minute);
+        ((CreateAlarmDialog)getSupportFragmentManager().findFragmentByTag("alarm")).update(hour, minute);
+    }
+
+    @Override
+    public void onSetAlarm() {
+        alarmItem.setChecked(true);
+        alarmItem.getIcon().setTint(Color.parseColor("#FF2ABF"));
+        noteManager.getNotify().setCalendarData();
+        noteManager.getNote().setDate(noteManager.getNotify().getCalendar().getTimeInMillis());
+
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmBroadcastReceiver.class);
+        intent.putExtra("note", noteManager.getNote());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        am.set(AlarmManager.RTC_WAKEUP, noteManager.getNote().getDate(), pendingIntent); //TODO поменять дату обратно
+    }
+
+    @Override
+    public void onDeleteAlarm() {
+        alarmItem.setChecked(false);
+        alarmItem.getIcon().setTint(Color.parseColor("#FFFFFF"));
+
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        am.cancel(pendingIntent);
+
+        noteManager.getNote().setDate(null);
     }
 
     public CreationManager getNoteManager() {

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.gdcn.alex.whattodo.data.DBConnector;
+import ru.gdcn.alex.whattodo.objects.Notify;
 import ru.gdcn.alex.whattodo.objects.Item;
 import ru.gdcn.alex.whattodo.objects.Note;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
@@ -21,6 +22,7 @@ public class CreationManager {
 
     private Note note;
     private int countNotes;
+    private Notify notify;
 
     private List<Item> items;
     private List<Item> deleteItems = new ArrayList<>();
@@ -29,7 +31,6 @@ public class CreationManager {
         this.activity = activity;
     }
 
-    //TODO переделать
     public void init(Intent data) {
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализирую данные...");
         countNotes = DBConnector.loadNotes(activity).size();
@@ -38,6 +39,9 @@ public class CreationManager {
         if (note == null) {
             note = new Note(countNotes + 1);
             note.setId(DBConnector.insertNote(activity, note));
+            notify = new Notify();
+        } else {
+            notify = new Notify(note.getDate());
         }
         if (note.getType().equals("list"))
             items = (List<Item>) DBConnector.loadItems(activity, note.getId());
@@ -66,7 +70,6 @@ public class CreationManager {
             }
         Log.d(TAG, TextFormer.getStartText(className) + "Пунктов сохранено - " + items.size());
         Log.d(TAG, TextFormer.getStartText(className) + "Данные обновлены!");
-
     }
 
     public Note getNote() {
@@ -79,5 +82,9 @@ public class CreationManager {
 
     public List<Item> getDeleteItems() {
         return deleteItems;
+    }
+
+    public Notify getNotify() {
+        return notify;
     }
 }

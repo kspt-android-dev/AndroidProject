@@ -13,7 +13,7 @@ public class Note implements Serializable {
     private String header;
     private String content;
     private String type = "note";
-    private Integer date;
+    private Long date;
     private int fixed = 0;
     private int deleted = 0;
 
@@ -21,12 +21,7 @@ public class Note implements Serializable {
         this.position = position;
     }
 
-    public Note(int id, int position) {
-        this.id = id;
-        this.position = position;
-    }
-
-    public Note(int id, int position, String header, String content, String type, Integer date, int fixed, int deleted) {
+    public Note(int id, int position, String header, String content, String type, Long date, int fixed, int deleted) {
         this.id = id;
         this.position = position;
         this.header = header;
@@ -57,7 +52,7 @@ public class Note implements Serializable {
         return type;
     }
 
-    public Integer getDate() {
+    public Long getDate() {
         return date;
     }
 
@@ -77,7 +72,7 @@ public class Note implements Serializable {
         this.type = type;
     }
 
-    public void setDate(Integer date) {
+    public void setDate(Long date) {
         this.date = date;
     }
 

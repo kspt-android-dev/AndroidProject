@@ -4,14 +4,17 @@
         <item
             android:id="@+id/main_bottom_menu_notes"
             android:icon="@drawable/ic_description_black_24dp"
-            android:title="@string/strings_main_bottom_menu_notes" />
+            android:title="@string/strings_main_bottom_menu_notes"
+            android:visible="false"/>
         <item
             android:id="@+id/main_bottom_menu_calendar"
             android:icon="@drawable/ic_date_range_black_24dp"
-            android:title="@string/strings_main_bottom_menu_calendar" />
+            android:title="@string/strings_main_bottom_menu_calendar"
+            android:visible="false"/>
         <item
             android:id="@+id/main_bottom_menu_trash"
             android:icon="@drawable/ic_delete_black_24dp"
-            android:title="@string/strings_main_bottom_menu_trash" />
+            android:title="@string/strings_main_bottom_menu_trash"
+            android:visible="false"/>
     </group>
 </menu>
