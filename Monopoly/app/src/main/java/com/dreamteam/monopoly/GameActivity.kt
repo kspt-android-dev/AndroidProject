@@ -62,7 +62,7 @@ class GameActivity : AppCompatActivity() {
 
         windowManager.defaultDisplay.getMetrics(metrics)
 
-        val boardSize: Int = ((if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) metrics.widthPixels else metrics.heightPixels) * boardSizeModifier).toInt()
+        val boardSize: Int = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) metrics.widthPixels else metrics.heightPixels
         val cellWidth: Int = (boardSize / ((gameManager.mainBoard.gameWayLength / 4 - 1) + 2 * GameData.cellSidesModifier)).toInt()
         val cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
 
@@ -197,17 +197,16 @@ class GameActivity : AppCompatActivity() {
         //val neededCellID = resources.getIdentifier("cell${index + 1}", "id", packageName)
         //val neededCell = findViewById<ImageButton>(neededCellID)
         Log.d("playerIndex", gameManager.getCurrentPlayer().id.toString())
-        val shape = cellButtons[gameManager.getCurrentPlayer().currentPosition -1].background as LayerDrawable
+        val shape = cellButtons[gameManager.getCurrentPlayer().currentPosition - 1].background as LayerDrawable
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
-        when (gameManager.getCurrentPlayer().id )
-        {
+        when (gameManager.getCurrentPlayer().id) {
             1 -> gradientDrawable.setColor(resources.getColor(R.color.Player1BackgroundColor))//neededCell.setBackgroundResource(R.drawable.player1cell)
             2 -> gradientDrawable.setColor(resources.getColor(R.color.Player2BackgroundColor))
             3 -> gradientDrawable.setColor(resources.getColor(R.color.Player3BackgroundColor))
             4 -> gradientDrawable.setColor(resources.getColor(R.color.Player4BackgroundColor))
         }
-        cellButtons[gameManager.getCurrentPlayer().currentPosition -1].background = shape
+        cellButtons[gameManager.getCurrentPlayer().currentPosition - 1].background = shape
         // TODO - setup unique color on owned cell (spawn image above old one)
     }
 

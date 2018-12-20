@@ -37,13 +37,16 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
                 chanceResult(currentCell)
             else {
                 if ((currentCell.info.cellType == GameCellType.BANK) &&
-                        !decision(PlayerActions.PAY)) decision(PlayerActions.RETREAT)
-                else decision(PlayerActions.STAY)
+                        !decision(PlayerActions.PAY))
+                    if (!tryToSellEarnedCell(currentCell.info.cost.costCharge)) decision(PlayerActions.RETREAT)
+                    else decision(PlayerActions.STAY)
                 PlayerMoveCondition.COMPLETED
             }
             CellState.OWNED -> {
                 if (currentCell.owner != this)
-                    if (!decision(PlayerActions.PAY)) decision(PlayerActions.RETREAT)
+                    if (!decision(PlayerActions.PAY))
+                        if (!tryToSellEarnedCell(currentCell.info.cost.costCharge))
+                            decision(PlayerActions.RETREAT)
                 return PlayerMoveCondition.COMPLETED
             }
             CellState.SLEEPING -> {
@@ -85,9 +88,10 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     }
 
     private fun chanceResult(cell: GameCell): PlayerMoveCondition {
-        when ((0..3).random()) {
+        when ((0..4).random()) {
             0, 1 -> if (!loseMoney((1..2500).random())) loseMoney(money)
             2, 3 -> earnMoney((1..2500).random())
+            4 -> cells[(0 until cells.size).random()].reset()
             //4 earn random cell
             //5 lose random cell
         }
@@ -128,10 +132,26 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         id = int
     }
 
-    private fun tryToSellEarnedCell() {
+    private fun tryToSellEarnedCell(moneyToGet: Int): Boolean {
+        if (cells.isEmpty()) return false
+        var uselessCell: GameCell = findCellWithLowestSellCost()
         for (i in 0 until cells.size) {
-            // TODO find best
+            val currentSellCost: Int = cells[i].info.cost.costSell
+            if (currentSellCost > moneyToGet && currentSellCost < uselessCell.info.cost.costSell)
+                uselessCell = cells[i]
         }
+        uselessCell.sell()
+        if (uselessCell.info.cost.costSell < moneyToGet)
+            return tryToSellEarnedCell(moneyToGet - uselessCell.info.cost.costSell)
+        return true
+    }
+
+    private fun findCellWithLowestSellCost(): GameCell {
+        var resCell: GameCell = cells[0]
+        for (c in cells)
+            if (c.info.cost.costSell < resCell.info.cost.costSell)
+                resCell = c
+        return resCell
     }
 
     private fun IntRange.random() = Random().nextInt((endInclusive + 1) - start) + start
