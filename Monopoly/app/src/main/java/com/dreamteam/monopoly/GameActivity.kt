@@ -34,6 +34,7 @@ class GameActivity : AppCompatActivity() {
     private var buttonThrowDices: Button? = null
     private var yesButton: Button? = null
     private var noButton: Button? = null
+    private var sellButton: Button? = null
     private var question: Button? = null
     private var gameManager: GameManager = GameManager(this)
     private var cellButtons: ArrayList<ImageButton> = ArrayList(gameManager.mainBoard.gameWayLength)
@@ -48,6 +49,7 @@ class GameActivity : AppCompatActivity() {
         yesButton = findViewById(R.id.YesButton)
         noButton = findViewById(R.id.NoButton)
         question = findViewById(R.id.DialogView)
+        sellButton = findViewById(R.id.sellButton)
         val constraintLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayout)
         val underTopLineGuideline = findViewById<Guideline>(R.id.UnderTopPartGuideline)
         val horizontalGuideline = findViewById<Guideline>(R.id.HorizontalGuideline)
@@ -244,6 +246,8 @@ class GameActivity : AppCompatActivity() {
             gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
             updPlayerMoney(gameManager.getPlayerByName(string)!!)
         }
+
+
     }
 
     private fun initPlayersPositions() {
@@ -318,6 +322,22 @@ class GameActivity : AppCompatActivity() {
         buySpace.text = "Buy: $costBuy"
         sellSpace.text = "Sell: $costSell"
         chargeSpace.text = "Charge: $charge"
+
+        if (GameData.boardGameCells[i].owner == gameManager.getCurrentPlayer())
+        {
+            sellButton!!.visibility = View.VISIBLE
+            sellButton!!.isClickable = true
+            sellButton!!.setOnClickListener{view ->
+                GameData.boardGameCells[i].sell()
+                sellButton!!.visibility = View.INVISIBLE
+                sellButton!!.isClickable = false
+                updPlayerMoney(gameManager.getCurrentPlayer())
+            }
+        } else if (sellButton!!.visibility == View.VISIBLE && sellButton!!.isClickable == true )
+        {
+            sellButton!!.visibility = View.INVISIBLE
+            sellButton!!.isClickable = false
+        }
     }
 
     fun resetfield(outState: Bundle) {
@@ -326,8 +346,6 @@ class GameActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        //num cell, players
-        //resetfield()
         val playersPos = ArrayList<Int>(gameManager.players.size)
         for (p in gameManager.players)
             playersPos.add(p.currentPosition)
