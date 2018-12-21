@@ -10,6 +10,8 @@
 
     <Button
         android:id="@+id/buttonThrowCubes"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -190,6 +192,8 @@
 
     <Button
         android:id="@+id/sellButton"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sell"
@@ -209,28 +213,34 @@
 
     <Button
         android:id="@+id/YesButton"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:clickable="false"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
         android:text="Yes"
+        android:clickable="false"
         android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/DialogView"
-        app:layout_constraintTop_toBottomOf="@+id/DialogView" />
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/DialogView"
+        app:layout_constraintStart_toStartOf="@+id/DialogView" />
 
     <Button
         android:id="@+id/NoButton"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:clickable="false"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
         android:text="No"
+        android:clickable="false"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/DialogView"
-        app:layout_constraintTop_toBottomOf="@+id/DialogView" />
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/DialogView"
+        app:layout_constraintEnd_toEndOf="@+id/DialogView" />
 
     <Button
         android:id="@+id/DialogView"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

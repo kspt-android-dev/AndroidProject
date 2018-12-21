@@ -15,7 +15,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 .withFullScreen()
                 .withTargetActivity(MainActivity::class.java)
                 .withSplashTimeOut(4000)
-                .withBackgroundResource(android.R.color.holo_red_light)
+                .withBackgroundResource(android.R.color.white)
                 //.withHeaderText("Header")
                 //.withFooterText("Footer")
                 //.withBeforeLogoText("My cool company")

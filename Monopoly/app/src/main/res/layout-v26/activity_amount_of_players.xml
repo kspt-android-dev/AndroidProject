@@ -15,10 +15,13 @@
         android:cursorVisible="true"
         android:text=""
         android:autofillHints="@string/playerNameHint"
-        tools:ignore="LabelFor" />
+        tools:ignore="LabelFor,UnusedAttribute" />
 
     <Button
         android:id="@+id/buttonEnter"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_below="@+id/Namespace"
@@ -28,6 +31,9 @@
 
     <Button
         android:id="@+id/buttonBack"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_below="@+id/buttonEnter"
@@ -37,6 +43,9 @@
 
     <Button
         android:id="@+id/buttonStart"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_below="@+id/buttonEnter"
@@ -46,6 +55,9 @@
 
     <Button
         android:id="@+id/buttonDelete"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_below="@+id/Players"
@@ -55,6 +67,7 @@
 
     <TextView
         android:id="@+id/Players"
+        android:textColor="#7d20f5"
         android:layout_width="200dp"
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
@@ -72,6 +85,8 @@
         android:layout_height="30dp"
         android:layout_below="@id/Players"
         android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
         android:text="" />
 
     <TextView
@@ -80,6 +95,8 @@
         android:layout_height="30dp"
         android:layout_below="@id/PlayerName1"
         android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
         android:text="" />
 
     <TextView
@@ -88,6 +105,8 @@
         android:layout_height="30dp"
         android:layout_below="@id/PlayerName2"
         android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
         android:text="" />
 
     <TextView
@@ -96,5 +115,7 @@
         android:layout_height="30dp"
         android:layout_below="@id/PlayerName3"
         android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
         android:text="" />
 </RelativeLayout>

@@ -25,6 +25,7 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
 import android.graphics.drawable.GradientDrawable
+import android.media.Image
 import com.dreamteam.monopoly.game.GameData.boardSizeModifier
 import com.dreamteam.monopoly.game.player.PlayerType
 
@@ -32,6 +33,7 @@ import com.dreamteam.monopoly.game.player.PlayerType
 class GameActivity : AppCompatActivity() {
 
     private var buttonThrowDices: Button? = null
+    //private var buttonSuicide: Button? = null
     private var yesButton: Button? = null
     private var noButton: Button? = null
     private var sellButton: Button? = null
@@ -50,6 +52,7 @@ class GameActivity : AppCompatActivity() {
         noButton = findViewById(R.id.NoButton)
         question = findViewById(R.id.DialogView)
         sellButton = findViewById(R.id.sellButton)
+        //buttonSuicide = findViewById(R.id.buttonSuicide)
         val constraintLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayout)
         val underTopLineGuideline = findViewById<Guideline>(R.id.UnderTopPartGuideline)
         val horizontalGuideline = findViewById<Guideline>(R.id.HorizontalGuideline)
@@ -70,10 +73,13 @@ class GameActivity : AppCompatActivity() {
         val cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
 
 
-        underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / boardSize /*metrics.heightPixels*/)
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             horizontalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels)
+            underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
+        }
         else {
+            underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / boardSize /*metrics.heightPixels*/)
             horizontalGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
             verticalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.widthPixels)
             val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
@@ -186,6 +192,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun playersSwap() {
+        if (sellButton!!.visibility == View.VISIBLE && sellButton!!.isClickable) {
+            sellButton!!.visibility = View.INVISIBLE
+            sellButton!!.isClickable = false
+        }
         cube1.setImageDrawable(null) //delete images dices pics
         cube2.setImageDrawable(null)
         updPlayerMoney(gameManager.getCurrentPlayer())
@@ -249,6 +259,13 @@ class GameActivity : AppCompatActivity() {
             gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
             updPlayerMoney(gameManager.getPlayerByName(string)!!)
         }
+
+       /* buttonSuicide!!.setOnClickListener{view ->
+            gameManager.getCurrentPlayer().decision(PlayerActions.RETREAT)
+            val myPlayerID = resources.getIdentifier("Player${gameManager.getCurrentPlayer().id}", "id", packageName)
+            val player = findViewById<ImageView>(myPlayerID)
+            player.visibility = View.INVISIBLE
+        } */
     }
 
     private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) { // LEFT = 1 RIGHT = 2 TOP = 3 BOTTOM = 4 START = 6 END = 7

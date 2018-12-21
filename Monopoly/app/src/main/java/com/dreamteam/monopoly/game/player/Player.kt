@@ -79,6 +79,7 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     private fun retreat(): Boolean {
         while (cells.size > 0)
             cells.last().reset()
+        board.activity.getGameManager().removePlayer(this)
         return true
     }
 
@@ -94,7 +95,7 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         when ((0..4).random()) {
             0, 1 -> if (!loseMoney((1..2500).random())) loseMoney(money)
             2, 3 -> earnMoney((1..2500).random())
-            4 -> cells[(0 until cells.size).random()].reset()
+            4 -> if (!cells.isEmpty()) cells[(0 until cells.size).random()].reset()
             //4 earn random cell
             //5 lose random cell
         }

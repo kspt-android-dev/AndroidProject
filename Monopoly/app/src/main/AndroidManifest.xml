@@ -13,7 +13,6 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateVisible|adjustResize"
         tools:ignore="GoogleAppIndexingWarning">
-
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +27,11 @@
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@drawable/cellbglayer" />
+
+        <activity
+            android:name=".WinScreenActivity"
+            android:label="@string/title_activity_win_screen"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
