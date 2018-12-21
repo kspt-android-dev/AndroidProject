@@ -43,6 +43,7 @@ public class MainActivity extends Activity {
                 game(9);
             }
         });
+
         hard_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +85,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 logic.reload();
                 graphic.reload();
+                chronometer.start();
             }
         });
 
@@ -93,6 +95,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 logic.reloadLast();
                 graphic.reload();
+                chronometer.start();
             }
         });
 
