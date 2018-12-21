@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/game_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -22,11 +22,12 @@
             android:textSize="40sp" />
 
         <Chronometer
+            android:id="@+id/timer_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="40sp"
             android:gravity="right"
+            android:textSize="40sp"
 
             />
     </LinearLayout>
@@ -58,31 +59,28 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/helpbot_button"
+            android:id="@+id/settings_button"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="HELP"
-            style="?android:attr/buttonBarButtonStyle"
-            />
+            android:text="SETTINGS" />
 
         <Button
             android:id="@+id/reload_button"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RELOAD"
-            style="?android:attr/buttonBarButtonStyle"
-            />
+            android:text="RELOAD" />
 
         <Button
             android:id="@+id/reloadlast_button"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RELOAD LAST"
-            style="?android:attr/buttonBarButtonStyle"
-            />
+            android:text="RELOAD LAST" />
     </LinearLayout>
 
 </LinearLayout>

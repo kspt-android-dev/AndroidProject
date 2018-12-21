@@ -7,8 +7,6 @@ class LogicCell {
     final private int numberInArray;//Номер клетки в массиве cells
     private boolean flag = false;//true-есть флаг, false-нет флага
     private int[] nearlyCells;//Номера клеток, находящихся рядом
-    double probabilities;//принимает разные значения в зависимости от isChecked
-    //Если isChecked-то вероятность группы, если !isChecked-то вероятность рандома
 
     LogicCell(int conditon, int numberInArray) {
         this.numberInArray = numberInArray;
@@ -105,10 +103,6 @@ class LogicCell {
 
     boolean isFlag() {
         return flag;
-    }
-
-    double getProbabilities() {
-        return probabilities;
     }
 
     //Открыли ли клетку(для автоматического открывания клеток вокруг нуля, боту не понадобится)

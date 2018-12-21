@@ -125,7 +125,6 @@ class Logic {
 
             }
         for (LogicCell logicCell : logicCells) {
-            logicCell.probabilities = 1;
             logicCell.setFlag(false);
             findedBombs--;
             logicCell.setChecked(false);

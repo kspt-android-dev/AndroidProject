@@ -2,16 +2,22 @@ package com.example.danila.minerandroid;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.widget.Chronometer;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
 class Graphic {
     private GraphicCell[] graphicCells;
+    private Chronometer chronometer;
+    private TextView minesNumberView;
 
+    @SuppressLint("SetTextI18n")
     Graphic(Activity gameActivity, GridLayout gameField, TextView minesNumberView, Logic logic) {
 
+        minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
 
         graphicCells = new GraphicCell[logic.getLevelWidth() * logic.getLevelHight()];
+
 
         gameField.setColumnCount(logic.getLevelWidth());
 
@@ -64,10 +70,6 @@ class Graphic {
 
 
     //Геттеры
-
-    public GraphicCell[] getGraphicCells() {
-        return graphicCells;
-    }
 
 
 }
