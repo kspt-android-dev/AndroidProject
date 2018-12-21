@@ -188,9 +188,12 @@ public class CharacterCreationActivity extends AppCompatActivity {
         }
 
         pointsText.setText(String.valueOf(points));
-        agiText.setText("ЛОВ: " + agili);
-        strText.setText("СИЛ: " + stren);
-        intText.setText("ИНТ: " + intel);
+        String stats = getResources().getString(R.string.character_stats_text_agility) + agili;
+        agiText.setText(stats);
+        stats = getResources().getString(R.string.character_stats_text_strength) + stren;
+        strText.setText(stats);
+        stats = getResources().getString(R.string.character_stats_text_intellect) + intel;
+        intText.setText(stats);
 
     }
 

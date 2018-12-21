@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="Персонаж"
+            android:text="@string/main_character_name"
             android:textColor="#ffe2a6"
             android:textSize="40sp"
             tools:layout_margin="6dp" />
@@ -46,7 +46,7 @@
                 android:id="@+id/activity_character_creation_char_face_woman"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/char_face_woman" />
 
@@ -54,7 +54,7 @@
                 android:id="@+id/activity_character_creation_char_face_man"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/char_face_man" />
 
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:hint="Введите имя персонажа"
+            android:hint="@string/input_main_character_name"
             android:inputType="textPersonName"
             android:textColor="#ffe2a6"
             android:textColorHint="#C3BCBC"
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="Очки:  "
+                android:text="@string/character_stat_points"
                 android:textColor="#ffe2a6"
                 android:textSize="26sp" />
 
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="5"
+                android:text="@string/character_stats_firstpoints"
                 android:textColor="#ffe2a6"
                 android:textSize="32sp" />
         </LinearLayout>
@@ -120,7 +120,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="-"
+                android:text="@string/text_minus"
                 android:textSize="23sp" />
 
             <TextView
@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="СИЛ: 0"
+                android:text="@string/character_stats_text_strength"
                 android:textColor="#ffe2a6"
                 android:textSize="25sp" />
 
@@ -142,7 +142,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="+"
+                android:text="@string/text_plus"
                 android:textSize="23sp" />
 
         </LinearLayout>
@@ -163,7 +163,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="-"
+                android:text="@string/text_minus"
                 android:textSize="23sp" />
 
             <TextView
@@ -173,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="ЛОВ: 0"
+                android:text="@string/character_stats_text_agility"
                 android:textColor="#ffe2a6"
                 android:textSize="25sp" />
 
@@ -185,7 +185,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="+"
+                android:text="@string/text_plus"
                 android:textSize="23sp" />
 
         </LinearLayout>
@@ -206,7 +206,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="-"
+                android:text="@string/text_minus"
                 android:textSize="23sp" />
 
             <TextView
@@ -216,7 +216,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="ИНТ: 0"
+                android:text="@string/character_stats_text_intellect"
                 android:textColor="#ffe2a6"
                 android:textSize="26sp" />
 
@@ -228,7 +228,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:text="+"
+                android:text="@string/text_plus"
                 android:textSize="23sp" />
 
         </LinearLayout>
@@ -240,7 +240,7 @@
             android:layout_height="65dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="СОЗДАТЬ"
+            android:text="@string/character_create"
             android:textSize="30sp" />
 
     </LinearLayout>

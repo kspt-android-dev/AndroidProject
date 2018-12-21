@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import ru.gdcn.beastmaster64revelations.R;
+
 public class AttributeChanger extends LinearLayout {
 
     private String attrName;
@@ -24,13 +26,14 @@ public class AttributeChanger extends LinearLayout {
         this.counter = counter;
 
         minus = new Button(context);
-        minus.setText("-");
+        minus.setText(R.string.text_minus);
         TextView nameOfAtr = new TextView(context);
-        nameOfAtr.setText(attrName + ": ");
+        attrName += R.string.text_dots;
+        nameOfAtr.setText(attrName);
         textValue = new TextView(context);
-        textValue.setText("0");
+        textValue.setText(R.string.text_zero);
         plus = new Button(context);
-        plus.setText("+");
+        plus.setText(getContext().getString(R.string.text_plusText));
 
         minus.setOnClickListener(new OnClickListener() {
             @Override

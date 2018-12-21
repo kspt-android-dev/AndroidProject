@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="Персонаж"
+        android:text="@string/main_character_name"
         android:textColor="#000000"
         android:textSize="26sp" />
 
@@ -30,7 +30,7 @@
         android:ems="10"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
-        android:hint="Имя персонажа"
+        android:hint="@string/input_main_character_name"
         android:inputType="textPersonName"
         android:textColor="#000000" />
 
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed"
-        android:text="0"
+        android:text="@string/text_zero"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold" />

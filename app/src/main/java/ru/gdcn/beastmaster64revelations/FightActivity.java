@@ -1,7 +1,5 @@
 package ru.gdcn.beastmaster64revelations;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.CountDownTimer;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
@@ -122,14 +120,14 @@ public class FightActivity extends AppCompatActivity {
 
         kickButton.setOnClickListener(v -> {
             playKickAnimationPlayer();
-            BasicAttack basicAttack = new BasicAttack("Удар", 1.1);
+            BasicAttack basicAttack = new BasicAttack(getString(R.string.fight_log_kick), 1.1);
             int hpBefore = enemy.getHP();
             basicAttack.use(player, enemy);
             playerCard.updateContent();
             enemyCard.updateContent();
             actionDelay(1200);
-            logFightAction(player.getName() + " ударил " + enemy.getName() + "!");
-            logFightAction(hpBefore - enemy.getHP() + " урона!");
+            logFightAction(player.getName() + getString(R.string.fight_log_kicked) + enemy.getName() + "!");
+            logFightAction(hpBefore - enemy.getHP() + getString(R.string.fight_log_kicks));
 
             if (player.isDead()) {
                 onPlayerDead();
@@ -149,7 +147,7 @@ public class FightActivity extends AppCompatActivity {
             playerCard.updateContent();
             enemyCard.updateContent();
             actionDelay(500 - player.getIntellect());
-            logFightAction(player.getName() + " только что вылечился!");
+            logFightAction(player.getName() + getString(R.string.fight_log_just_healed));
 
             if (player.isDead()) {
                 onPlayerDead();
@@ -174,7 +172,7 @@ public class FightActivity extends AppCompatActivity {
             AItimer.cancel();
             runEnemyAI(1000);
 
-            logFightAction(player.getName() + " использовал магию!");
+            logFightAction(player.getName() + getString(R.string.fight_log_used_magic));
 
             if (player.isDead()) {
                 onPlayerDead();
@@ -205,11 +203,11 @@ public class FightActivity extends AppCompatActivity {
                         playKickAnimationEnemy();
                     if (enemyAction instanceof BasicHeal)
                         playBounceAnimation(cardHolderEnemy);
-                    logFightAction(enemy.getName() + " использует " + enemyAction.getName() + "!!!");
+                    logFightAction(enemy.getName() + getString(R.string.fight_log_use) + enemyAction.getName() + "!!!");
                     int hpBefore = player.getHP();
                     enemyAction.use(enemy, player);
                     if (enemyAction instanceof BasicAttack)
-                        logFightAction(hpBefore - player.getHP() + " урона!");
+                        logFightAction(hpBefore - player.getHP() + getString(R.string.fight_log_kicks));
                     playerCard.updateContent();
                     enemyCard.updateContent();
                 });
@@ -299,7 +297,7 @@ public class FightActivity extends AppCompatActivity {
         setResult(FightResult.PLAYER_LOST);
         endFight();
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setMessage("Ты проиграл, парень :с");
+                .setMessage(R.string.fight_log_you_lose);
         builder.show();
     }
 
@@ -307,7 +305,7 @@ public class FightActivity extends AppCompatActivity {
         setResult(FightResult.PLAYER_WON);
         endFight();
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setMessage("Ты победил!");
+                .setMessage(R.string.fight_log_you_win);
         builder.show();
     }
 

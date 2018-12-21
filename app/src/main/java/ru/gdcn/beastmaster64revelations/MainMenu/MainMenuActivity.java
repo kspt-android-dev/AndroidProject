@@ -28,10 +28,10 @@ public class MainMenuActivity extends AppCompatActivity {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        GameLogger.log("Инициализация главного меню.");
+        GameLogger.log(getString(R.string.log_initialize));
         setContentView(R.layout.activity_main_menu);
 
-        GameLogger.log("Задаём кнопкам события");
+        GameLogger.log(getString(R.string.log_events));
         initButtonEvents();
 
         ImageView imageView = new ProportionalImageView(this);
@@ -43,25 +43,25 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void initButtonEvents() {
-        GameLogger.log("Вытаскиваем все кнопки по id");
+        GameLogger.log(getString(R.string.log_buttons));
         Button playButton = findViewById(R.id.main_menu_button_play);
         Button settingsButton = findViewById(R.id.main_menu_button_settings);
         Button exitButton = findViewById(R.id.main_menu_button_exit);
 
-        GameLogger.log("Добавляем событие входа в игру");
+        GameLogger.log(getString(R.string.log_game_entry));
         playButton.setOnClickListener(v -> {
             Intent goToGameIntent = new Intent(getApplicationContext(), CharacterCreationActivity.class);
             startActivity(goToGameIntent);
         });
 
-        GameLogger.log("Добавляем событие входа в настройки");
+        GameLogger.log(getString(R.string.log_settings_entry));
         settingsButton.setOnClickListener(v -> {
             Intent goToSettingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(goToSettingsIntent);
         });
         settingsButton.setEnabled(false);
 
-        GameLogger.log("Добавляем событие выхода из игры");
+        GameLogger.log(getString(R.string.log_quit));
         exitButton.setOnClickListener(v -> finish());
 
     }
