@@ -19,10 +19,10 @@ class WinScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_win_screen)
 
         val intent = intent
-        winnerNamespace!!.findViewById<TextView>(R.id.winnerName)
+        winnerNamespace = findViewById(R.id.winerName)
         winnerNamespace!!.text = intent.getStringExtra("winnerName")
 
-        menuButton!!.findViewById<Button>(R.id.buttonMenu)
+        menuButton = findViewById(R.id.buttonMenu)
         menuButton!!.setOnClickListener { view ->
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

@@ -2,13 +2,13 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ConstraintLayout"
+    android:id="@+id/WinScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WinScreenActivity">
 
     <TextView
-        android:id="@+id/winnerName"
+        android:id="@+id/winerName"
         android:textColor="#ff4643"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/winnerName"
+        app:layout_constraintBottom_toTopOf="@id/winerName"
         android:layout_marginBottom="10dp"
         android:textSize="30sp"
         android:textStyle="bold"
