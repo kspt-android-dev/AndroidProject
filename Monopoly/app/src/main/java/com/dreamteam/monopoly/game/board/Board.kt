@@ -53,7 +53,6 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
         val constraintLayout: ConstraintLayout = activity.findViewById(R.id.ConstraintLayout)
         constraintSet.clone(constraintLayout)
 
-
         val myPlayer = activity.resources.getIdentifier("Player${currentPlayerIndex + 1}", "id", activity.packageName)
         // while (player.currentPosition != player.targetPosition &&  player.currentPosition <= player.targetPosition) {
         //player.currentPosition++

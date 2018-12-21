@@ -15,6 +15,9 @@ class GameManager(private val activity: GameActivity) {
 
     fun resetSaveData(savedInstanceState: Bundle) {
         mainBoard.resetField(savedInstanceState.getIntegerArrayList("playersPos"))
+        val savedMoney = savedInstanceState.getIntegerArrayList("playersMoney")
+        for (i in 0 until players.size)
+            players[i].money = savedMoney[i]
     }
 
     fun nextPlayerMove() {

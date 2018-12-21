@@ -74,7 +74,7 @@ class GameActivity : AppCompatActivity() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
             horizontalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels)
         else {
-            horizontalGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels) // TODO
+            horizontalGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
             verticalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.widthPixels)
             val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
             verticalGuideline2.setGuidelinePercent((cellHeight.toFloat() + (4.5f * cellWidth.toFloat())) / metrics.widthPixels)
@@ -117,6 +117,10 @@ class GameActivity : AppCompatActivity() {
         buttonThrowDices!!.setOnClickListener {
             playerStartMoveAction()
         }
+    }
+
+    private fun init(){
+
     }
 
     private fun playerStartMoveAction() {
@@ -245,12 +249,6 @@ class GameActivity : AppCompatActivity() {
             gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
             updPlayerMoney(gameManager.getPlayerByName(string)!!)
         }
-
-
-    }
-
-    private fun initPlayersPositions() {
-
     }
 
     private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) { // LEFT = 1 RIGHT = 2 TOP = 3 BOTTOM = 4 START = 6 END = 7
