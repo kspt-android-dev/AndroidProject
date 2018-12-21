@@ -155,18 +155,34 @@ class Logic {
         }
     }
 
+    void checkCell(int numberOfCell) {
+        if (!logicCells[numberOfCell].isFlag() && !logicCells[numberOfCell].isChecked()) {
 
-    //Вывод условий в консоль
-    void checkAll() {
-        for (LogicCell bomb : bombs)
-            System.out.print("" + bomb.getNumberInArray() + ",");
+            logicCells[numberOfCell].check();
 
-        System.out.println("Колличество бомб " + bombs.length);
+            if (logicCells[numberOfCell].getConditon() == 0)
+                for (int index : logicCells[numberOfCell].getNearlyCells())
+                    if (index >= 0 && !logicCells[index].isChecked())
+                        checkCell(index);
+        }
+
+
+    }
+
+    void changeFlag(int numberOfCell) {
+
+        logicCells[numberOfCell].changeFlag();
+        findedBombs = logicCells[numberOfCell].isFlag() ? findedBombs + 1 : findedBombs - 1;
+
+
     }
 
 
-
-    //Setters
+    //Вывод условий в консоль
+    void checkAll() {
+        for (LogicCell logicCell : logicCells)
+            logicCell.setChecked(true);
+    }
 
 
     //Getters-----------------------------
@@ -234,5 +250,7 @@ class Logic {
     public int getFindedMinesDigit() {
         return findedBombs;
     }
+
+
 }
 

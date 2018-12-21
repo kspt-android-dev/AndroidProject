@@ -19,32 +19,19 @@ public class MainActivity extends Activity {
 
         int fieldWidth = 9;
         int fieldHeight = 12;
-        int minesDigit = 9;//TODO take from menu
+        int minesDigit = 1;//TODO take from menu
 
         Logic logic = new Logic(fieldWidth, fieldHeight, minesDigit);
 
-        Bot bot = new Bot(logic);
-
 
         GridLayout gameField = findViewById(R.id.game_field);
-        Button helpMeBotButton = findViewById(R.id.helpbot_button);
         Button reloadButton = findViewById(R.id.reload_button);
         Button reloadLastButton = findViewById(R.id.reloadlast_button);
         TextView minesNumberView = findViewById(R.id.mines_number);
-        TextView timerView = findViewById(R.id.timer);
 
 
-        Graphic graphic = new Graphic(this, gameField, minesNumberView, timerView, logic, bot);
 
-        bot.setGraphic(graphic);
-
-
-        helpMeBotButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bot.helpMeBot();
-            }
-        });
+        Graphic graphic = new Graphic(this, gameField, minesNumberView,  logic);
 
 
         reloadButton.setOnClickListener(new View.OnClickListener() {
@@ -52,8 +39,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 logic.reload();
                 graphic.reload();
-                bot.reload();
-
             }
         });
 
@@ -63,8 +48,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 logic.reloadLast();
                 graphic.reload();
-                bot.reload();
-
             }
         });
 

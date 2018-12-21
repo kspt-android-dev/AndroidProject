@@ -20,7 +20,7 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
 
 
     @SuppressLint("SetTextI18n")
-    GraphicCell(Activity gameActivity, TextView minesNumberView, Logic logic, Bot bot, LogicCell logicCell) {
+    GraphicCell(Activity gameActivity, TextView minesNumberView, Logic logic, Graphic graphic, LogicCell logicCell) {
         super(gameActivity, null, R.style.grid_button);
 
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
@@ -32,20 +32,24 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
         setLayoutParams(params);
 
 
-
         this.logicCell = logicCell;
 
         setBackgroundColor(CLOSED_COLOR);
-        setBackground(getResources().getDrawable(R.drawable.rectangle_border));
+        //setBackground(getResources().getDrawable(R.drawable.rectangle_border));
 
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!logic.isGameOver()) {
-                    bot.check(logicCell.getNumberInArray());
-                    check();
+                    logic.checkCell(logicCell.getNumberInArray());
+                    if (logic.isGameOver()) {
+                        logic.checkAll();
+                        graphic.checkAll();
+                    }
+                    graphic.update();
                     minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
                 } else {
+                    graphic.checkAll();
                 }//TODO
             }
 
@@ -56,9 +60,9 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
             @Override
             public boolean onLongClick(View v) {
                 if (!logic.isGameOver()) {
-                    logicCell.changeFlag();
+                    logic.changeFlag(logicCell.getNumberInArray());
                     changeFlag();
-                    minesNumberView.setText("" + (logic.getMinesDigit() - bot.getFindedMines()));
+                    minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
                 } else {
                 }//TODO
 
@@ -70,50 +74,32 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
     }
 
 
-    //Проверка клетки для бота
-    @SuppressLint("SetTextI18n")
-    void checkBot() {
-        if (logicCell.getConditon() == 9)
-            setBackgroundColor(MINE_COLOR);
-        else {
-            setBackgroundColor(EMPTY_COLOR);
-            setText("" + logicCell.getConditon());
-        }
-
-    }
-
-
     //Проверка клетки,не для бота
     @SuppressLint("SetTextI18n")
-    private void check() {
-        if (logicCell.isChecked())
-            return;
-        logicCell.setChecked(true);
-
-        if (logicCell.getConditon() == 9)
-            setBackgroundColor(MINE_COLOR);
-        else {
-            setBackgroundColor(EMPTY_COLOR);
-            setText("" + logicCell.getConditon());
-        }
-    }
-
-
-    //Установка флага(для бота)
-    void setFlag() {
-        setBackgroundColor(FLAG_COLOR);
+    void update() {
+        if (logicCell.isChecked()) {
+            if (logicCell.getConditon() == 9)
+                setBackgroundColor(MINE_COLOR);
+            else {
+                setBackgroundColor(EMPTY_COLOR);
+                setText("" + logicCell.getConditon());
+            }
+        } else if (logicCell.isFlag())
+            setBackgroundColor(FLAG_COLOR);
+        else if (!logicCell.isChecked())
+            setBackgroundColor(CLOSED_COLOR);
     }
 
 
     //Установка/снятие флага(для игрока)
     private void changeFlag() {
-        if (logicCell.isFlag())
-            setBackgroundColor(FLAG_COLOR);
-        else {
-            setBackgroundColor(CLOSED_COLOR);
-            setBackground(getResources().getDrawable(R.drawable.rectangle_border));
+        if (!logicCell.isChecked())
+            if (logicCell.isFlag())
+                setBackgroundColor(FLAG_COLOR);
+            else
+                setBackgroundColor(CLOSED_COLOR);
+        //setBackground(getResources().getDrawable(R.drawable.rectangle_border));
 
-        }
 
     }
 

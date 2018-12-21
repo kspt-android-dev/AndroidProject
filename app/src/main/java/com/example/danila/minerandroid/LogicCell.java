@@ -58,14 +58,15 @@ class LogicCell {
     }
 
     //Проверка клетки для бота, сделать для логической клетки
-    LogicCell checkBot() {
+    void check() {
         isChecked = true;
-        return this;
     }
 
     //Установка флага(для бота)
     void changeFlag() {
-        flag = !flag;
+
+        if (!isChecked)
+            flag = !flag;
 
 
     }
