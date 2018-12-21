@@ -1,5 +1,6 @@
 package com.dreamteam.monopoly
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.LayerDrawable
@@ -34,7 +35,7 @@ import com.dreamteam.monopoly.game.player.PlayerType
 class GameActivity : AppCompatActivity() {
 
     private var buttonThrowDices: Button? = null
-    //private var buttonSuicide: Button? = null
+    private var buttonSuicide: Button? = null
     private var yesButton: Button? = null
     private var noButton: Button? = null
     private var sellButton: Button? = null
@@ -56,7 +57,7 @@ class GameActivity : AppCompatActivity() {
         noButton = findViewById(R.id.NoButton)
         question = findViewById(R.id.DialogView)
         sellButton = findViewById(R.id.sellButton)
-        //buttonSuicide = findViewById(R.id.buttonSuicide)
+        buttonSuicide = findViewById(R.id.buttonSuicide)
 
         init()
         if (savedInstanceState != null) {
@@ -212,14 +213,11 @@ class GameActivity : AppCompatActivity() {
         Toasty.info(this, gameManager.getCurrentPlayer().name + " move", Toast.LENGTH_SHORT, true).show()
     }
 
-    fun playerSetCellMark(index: Int) {
-        //val neededCellID = resources.getIdentifier("cell${index + 1}", "id", packageName)
-        //val neededCell = findViewById<ImageButton>(neededCellID)
-        Log.d("playerIndex", gameManager.getCurrentPlayer().id.toString())
+    fun playerSetCellMark(index: Int , player: Player) {
         val shape = cellButtons[index].background as LayerDrawable
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
-        when (gameManager.getCurrentPlayer().id) {
+        when (player.id) {
             1 -> gradientDrawable.setColor(resources.getColor(R.color.Player1BackgroundColor))//neededCell.setBackgroundResource(R.drawable.player1cell)
             2 -> gradientDrawable.setColor(resources.getColor(R.color.Player2BackgroundColor))
             3 -> gradientDrawable.setColor(resources.getColor(R.color.Player3BackgroundColor))
@@ -264,12 +262,12 @@ class GameActivity : AppCompatActivity() {
             updPlayerMoney(gameManager.getPlayerByName(string)!!)
         }
 
-        /* buttonSuicide!!.setOnClickListener{view ->
-             gameManager.getCurrentPlayer().decision(PlayerActions.RETREAT)
+         buttonSuicide!!.setOnClickListener{view ->
              val myPlayerID = resources.getIdentifier("Player${gameManager.getCurrentPlayer().id}", "id", packageName)
              val player = findViewById<ImageView>(myPlayerID)
              player.visibility = View.INVISIBLE
-         } */
+             gameManager.getCurrentPlayer().decision(PlayerActions.RETREAT)
+         }
     }
 
     private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) { // LEFT = 1 RIGHT = 2 TOP = 3 BOTTOM = 4 START = 6 END = 7
@@ -357,12 +355,23 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun dataRestore(savedInstanceState: Bundle) {
+        gameManager.currentPlayerIndex = savedInstanceState.getInt("currentPlayerIndex")
+        moneyRestore(savedInstanceState)
+        cellsRestore(savedInstanceState)
+    }
+
+    private fun moneyRestore(savedInstanceState: Bundle) {
         for (i in 0 until savedInstanceState.getIntegerArrayList("playersMoney").size) {
             gameManager.players[i].money = savedInstanceState.getIntegerArrayList("playersMoney")[i]
             updPlayerMoney(gameManager.players[i])
             Log.d("[SAVE]", "Restored data -> " + gameManager.players[i].money)
         }
-        gameManager.currentPlayerIndex = savedInstanceState.getInt("currentPlayerIndex")
+    }
+
+    private fun cellsRestore(savedInstanceState: Bundle) {
+        for (i in 0 until gameManager.players.size) {
+            gameManager.players[i].addGameCell(savedInstanceState.getIntegerArrayList("playerCells" + i.toString()))
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -374,13 +383,21 @@ class GameActivity : AppCompatActivity() {
         val playersNum: Int = gameManager.players.size
         val playersPos = ArrayList<Int>(playersNum)
         val playersMoney = ArrayList<Int>(playersNum)
-        for (p in gameManager.players) {
-            playersPos.add(p.currentPosition)
-            playersMoney.add(p.money)
+        val playersOwnedCells: ArrayList<ArrayList<Int>> = arrayListOf(
+        ArrayList(), ArrayList(), ArrayList(), ArrayList())
+        for (i in 0 until playersNum) {
+            val player = gameManager.players[i]
+            playersPos.add(player.currentPosition)
+            playersMoney.add(player.money)
+            for (j in 0 until player.cells.size)
+                playersOwnedCells[i].add(player.cells[j].id.toInt())
         }
         outState?.putIntegerArrayList("playersPos", playersPos)
         outState?.putIntegerArrayList("playersMoney", playersMoney)
         outState?.putInt("currentPlayerIndex", gameManager.currentPlayerIndex)
+        for (i in 0 until playersNum) {
+            outState?.putIntegerArrayList("playerCells" + i.toString(), playersOwnedCells[i])
+        }
         super.onSaveInstanceState(outState)
     }
 
@@ -395,6 +412,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun endGameAction(winner: Player) {
-        //TODO swap to results activity
+        intent = Intent(this, WinScreenActivity::class.java)
+        intent.putExtra("winnerName", winner.name)
+        startActivity(intent)
+        CustomIntent.customType(this, "bottom-to-up")
     }
 }
