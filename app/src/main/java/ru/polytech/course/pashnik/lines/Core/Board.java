@@ -2,7 +2,7 @@ package ru.polytech.course.pashnik.lines.Core;
 
 import java.util.HashMap;
 
-import ru.polytech.course.pashnik.lines.MainContract;
+import ru.polytech.course.pashnik.lines.Presentation.MainContract;
 
 public class Board implements MainContract.Model {
 

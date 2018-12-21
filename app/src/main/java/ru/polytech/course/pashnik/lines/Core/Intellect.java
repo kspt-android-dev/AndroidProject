@@ -3,7 +3,7 @@ package ru.polytech.course.pashnik.lines.Core;
 import java.util.Random;
 
 import ru.polytech.course.pashnik.lines.Graphics.GameView;
-import ru.polytech.course.pashnik.lines.MainContract;
+import ru.polytech.course.pashnik.lines.Presentation.MainContract;
 
 public class Intellect {
 

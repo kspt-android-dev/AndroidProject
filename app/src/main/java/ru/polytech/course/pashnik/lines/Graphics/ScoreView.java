@@ -5,8 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.AttributeSet;
 import android.view.View;
+import android.widget.LinearLayout;
+
+import ru.polytech.course.pashnik.lines.Activities.GameActivity;
 
 public class ScoreView extends View {
 
@@ -17,21 +19,23 @@ public class ScoreView extends View {
 
     public ScoreView(Context context) {
         super(context);
-    }
-
-    public ScoreView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.setBackgroundColor(Color.BLUE);
+        this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
+        this.setBackgroundColor(Color.DKGRAY);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         if (this.canvas == null) {
-            int viewHeight = getWidth() / GameView.getCellNumber();
+            int viewHeight = getWidth() / 9;
             bitmap = Bitmap.createBitmap(getWidth(), viewHeight, Bitmap.Config.ARGB_8888);
             this.canvas = new Canvas(bitmap);
+
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
+            params.height = viewHeight;
+            this.setLayoutParams(params);
+            GameActivity.setScoreViewCanvas(canvas);
         }
         canvas.drawBitmap(bitmap, 0, 0, bitmapPaint);
     }
-
 }

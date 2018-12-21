@@ -1,4 +1,4 @@
-package ru.polytech.course.pashnik.lines;
+package ru.polytech.course.pashnik.lines.Presentation;
 
 import ru.polytech.course.pashnik.lines.Core.Cell;
 import ru.polytech.course.pashnik.lines.Core.ColorType;
@@ -9,6 +9,10 @@ public interface MainContract {
         void drawBallOnBoard(Cell cell, ColorType color);
 
         void clearBallOnBoard(Cell cell);
+
+        void drawBallOnScoreView(Cell cell, ColorType color);
+
+        void clearBallOnScoreView(Cell cell);
     }
 
     interface Presenter {

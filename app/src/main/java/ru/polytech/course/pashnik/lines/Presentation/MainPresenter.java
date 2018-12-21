@@ -1,6 +1,4 @@
-package ru.polytech.course.pashnik.lines;
-
-import android.util.Log;
+package ru.polytech.course.pashnik.lines.Presentation;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -32,38 +30,38 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void onCellWasClicked(float x, float y) {
-//       Cell definedCell = defineCell(x, y);
-//        if (isPressed) {
-//            if (model.haveCell(definedCell)) {
-//                pressedCell = definedCell;
-//            } else {
-//                view.drawBallOnBoard(definedCell, model.getColor(pressedCell));
-//                model.addCell(definedCell, model.getColor(pressedCell));
-//                view.clearBallOnBoard(pressedCell);
-//                model.removeCell(pressedCell);
-//                if (model.isWin(definedCell)) {
-//                    WinLines winLines = model.getWinLines();
-//                    for (int i = 0; i < winLines.getSize(); i++) {
-//                        Line line = winLines.getWinLine(i);
-//                        checkScore(line.getLength());
-//                    }
-//                    clearWinLines(winLines);
-//                }
-//                while (!queue.isEmpty()) {
-//                    ColorType colorType = queue.poll();
-//                    Cell nextCell = intellect.generateNextCell();
-//                    view.drawBallOnBoard(nextCell, colorType);
-//                    model.addCell(nextCell, colorType);
-//                }
-//                fillQueue();
-//                isPressed = false;
-//            }
-//        } else {
-//            if (model.haveCell(definedCell)) {
-//                isPressed = true;
-//                pressedCell = definedCell;
-//            }
-//        }
+        Cell definedCell = defineCell(x, y);
+        if (isPressed) {
+            if (model.haveCell(definedCell)) {
+                pressedCell = definedCell;
+            } else {
+                view.drawBallOnBoard(definedCell, model.getColor(pressedCell));
+                model.addCell(definedCell, model.getColor(pressedCell));
+                view.clearBallOnBoard(pressedCell);
+                model.removeCell(pressedCell);
+                if (model.isWin(definedCell)) {
+                    WinLines winLines = model.getWinLines();
+                    for (int i = 0; i < winLines.getSize(); i++) {
+                        Line line = winLines.getWinLine(i);
+                        checkScore(line.getLength());
+                    }
+                    clearWinLines(winLines);
+                }
+                while (!queue.isEmpty()) {
+                    ColorType colorType = queue.poll();
+                    Cell nextCell = intellect.generateNextCell();
+                    view.drawBallOnBoard(nextCell, colorType);
+                    model.addCell(nextCell, colorType);
+                }
+                fillQueue();
+                isPressed = false;
+            }
+        } else {
+            if (model.haveCell(definedCell)) {
+                isPressed = true;
+                pressedCell = definedCell;
+            }
+        }
     }
 
     @Override
@@ -73,6 +71,17 @@ public class MainPresenter implements MainContract.Presenter {
             ColorType nextColor = intellect.generateNextColor();
             view.drawBallOnBoard(nextCell, nextColor);
             model.addCell(nextCell, nextColor);
+        }
+        fillQueue();
+    }
+
+    private void drawNextBallsOnScoreView() {
+        Cell direction = new Cell(1, 0);
+        Cell start = new Cell(4, 0);
+        while (!queue.isEmpty()) {
+            ColorType colorType = queue.poll();
+            view.drawBallOnScoreView(start, colorType);
+            start.plus(direction);
         }
     }
 

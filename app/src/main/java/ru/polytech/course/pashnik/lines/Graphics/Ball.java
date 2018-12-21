@@ -39,7 +39,7 @@ public class Ball {
 
     public void clearBall(Canvas canvas) {
         Paint paint = new Paint();
-        paint.setColor(Color.parseColor("#C0C0C0"));
+        paint.setColor(Color.LTGRAY);
         canvas.drawCircle(x, y, radius, paint);
     }
 }

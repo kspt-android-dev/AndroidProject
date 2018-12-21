@@ -1,21 +1,17 @@
 package ru.polytech.course.pashnik.lines.Graphics;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import ru.polytech.course.pashnik.lines.MainActivity;
-import ru.polytech.course.pashnik.lines.MainContract;
-import ru.polytech.course.pashnik.lines.R;
+import ru.polytech.course.pashnik.lines.Activities.GameActivity;
+import ru.polytech.course.pashnik.lines.Presentation.MainContract;
 
-@SuppressLint("ViewConstructor")
 public class GameView extends View implements View.OnTouchListener {
 
     private static final int cellNumber = 9;
@@ -27,15 +23,14 @@ public class GameView extends View implements View.OnTouchListener {
     private MainContract.Presenter presenter;
 
 
-    public GameView(Context context, MainContract.Presenter presenter) {
+    public GameView(Context context) {
         super(context);
-        this.presenter = presenter;
-    }
-
-    public GameView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
+        this.setBackgroundColor(Color.LTGRAY);
         setOnTouchListener(this);
     }
+
 
     public static int getCellNumber() {
         return cellNumber;
@@ -69,8 +64,8 @@ public class GameView extends View implements View.OnTouchListener {
             this.canvas = new Canvas(bitmap);
             //drawing a board
             drawGameView();
-            MainActivity.setCanvas(this.canvas);
-           // presenter.initGameView();
+            GameActivity.setGameViewCanvas(this.canvas);
+            presenter.initGameView();
         }
         canvas.drawBitmap(bitmap, 0, 0, bitmapPaint);
         invalidate();
@@ -90,16 +85,19 @@ public class GameView extends View implements View.OnTouchListener {
     }
 
     private void setViewHeight(int viewSize) {
-        View view = findViewById(R.id.game_view);
+        // View view = findViewById(R.id.game_view);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
         params.height = viewSize;
-        view.setLayoutParams(params);
+        this.setLayoutParams(params);
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        System.out.println("x_coor:" + " " + v.getX());
-        System.out.println("y_coor:" + " " + v.getY());
+        presenter.onCellWasClicked(event.getX(), event.getY());
         return false;
+    }
+
+    public void setPresenter(MainContract.Presenter presenter) {
+        this.presenter = presenter;
     }
 }
