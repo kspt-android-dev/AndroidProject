@@ -9,15 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.objects.Note;
 import ru.gdcn.alex.whattodo.data.DBConnector;
-import ru.gdcn.alex.whattodo.recycler.SwipeDragHelperCallback;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class NotesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -26,7 +23,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     private static final String className = "NotesRecyclerAdapter";
 
     private List<Note> noteList;
-    private Context context;
+    private final Context context;
 
     public static final int  OTHER_NOTES_HEADER = 2;
     public static final int  OTHER_NOTES = 20;
@@ -115,7 +112,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public class CardViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView headerView;
+        private final TextView headerView;
 
         CardViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -130,7 +127,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-        TextView header;
+        final TextView header;
 
         HeaderViewHolder(@NonNull View itemView) {
             super(itemView);

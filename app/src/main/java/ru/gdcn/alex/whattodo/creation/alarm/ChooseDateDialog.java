@@ -16,7 +16,7 @@ import ru.gdcn.alex.whattodo.creation.CreationActivity;
 public class ChooseDateDialog extends DialogFragment {
 
     public interface OnSetDateIntoDateDialog {
-        public void onSetDate(int year, int month, int day);
+        void onSetDate(int year, int month, int day);
     }
 
     private OnSetDateIntoDateDialog onSetDateIntoDateDialog;

@@ -12,7 +12,7 @@ public class Item implements Serializable {
     public static final int DEFAULT_CHECKED = 0;
 
     private long id;
-    private long parentId;
+    private final long parentId;
     private int position;
     private String content;
     private int checked;

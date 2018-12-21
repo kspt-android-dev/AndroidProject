@@ -26,11 +26,6 @@ public class TrashFragment extends Fragment implements ActionMode.Callback,
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
     public void onItemClick(View view, int position) {
 
     }

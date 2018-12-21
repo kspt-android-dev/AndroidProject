@@ -7,7 +7,7 @@
         android:id="@+id/main_notes_recycler_header"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="Другие записи"
+        android:text="@string/other_notes"
         android:textSize="16sp"
         android:gravity="center_vertical|left"
         android:padding="5dp"/>

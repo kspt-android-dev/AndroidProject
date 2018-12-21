@@ -4,25 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.Collection;
 
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.creation.CreationActivity;
 import ru.gdcn.alex.whattodo.objects.Note;
-import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.recycler.RecyclerItemClickListener;
 import ru.gdcn.alex.whattodo.recycler.SwipeDragHelperCallback;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
@@ -32,7 +25,7 @@ public class NotesFragment extends Fragment implements
         SwipeDragHelperCallback.ActionCompletionContract {
 
     private static final String TAG = "ToDO_Logger";
-    public static final String className = "NotesFragment";
+    private static final String className = "NotesFragment";
 
 //    private ActionMode actionMode;
 //    private boolean isMultiSelect = false;

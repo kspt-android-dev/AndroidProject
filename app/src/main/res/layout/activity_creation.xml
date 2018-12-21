@@ -50,7 +50,8 @@
             android:visibility="invisible"
             android:background="@drawable/background_button"
             android:foreground="@drawable/ic_add_box_black_24dp"
-            android:foregroundGravity="center"/>
+            android:foregroundGravity="center"
+            android:contentDescription="@string/todo" />
         <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +63,8 @@
             android:onClick="onClick"
             android:background="@drawable/background_button"
             android:foreground="@drawable/ic_description_black_24dp"
-            android:foregroundGravity="center"/>
+            android:foregroundGravity="center"
+            android:contentDescription="@string/todo" />
         <ImageButton
             android:id="@+id/creation_bottom_menu_list"
             android:layout_width="56dp"
@@ -70,7 +72,8 @@
             android:onClick="onClick"
             android:background="@drawable/background_button"
             android:foreground="@drawable/ic_view_list_black_24dp"
-            android:foregroundGravity="center"/>
+            android:foregroundGravity="center"
+            android:contentDescription="@string/todo" />
         <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,7 +86,8 @@
             android:visibility="invisible"
             android:background="@drawable/background_button"
             android:foreground="@drawable/ic_more_vert_black_24dp"
-            android:foregroundGravity="center"/>
+            android:foregroundGravity="center"
+            android:contentDescription="@string/todo" />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimaryDark" tools:keep="@color/colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="main">#fff1a2</color>
@@ -13,7 +13,7 @@
     <color name="card_unpressed">#e3f2f0</color>
     <color name="card_pressed">#b5d1cd</color>
 
-    <color name="back">
+    <color name="back" tools:keep="@color/back">
         <selector xmlns:android="http://schemas.android.com/apk/res/android">
             <item
                 android:color="@android:color/darker_gray"

@@ -1,11 +1,7 @@
 package ru.gdcn.alex.whattodo.creation;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.inputmethodservice.Keyboard;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -15,14 +11,11 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Collection;
 import java.util.List;
@@ -34,15 +27,15 @@ import ru.gdcn.alex.whattodo.utilities.TextFormer;
 public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = "ToDO_Logger";
-    public static final String className = "ItemRecyclerAdapter";
+    private static final String className = "ItemRecyclerAdapter";
 
-    private CreationActivity activity;
+    private final CreationActivity activity;
 
-    private List<Item> itemList;
-    private List<Item> deleteItemList;
+    private final List<Item> itemList;
+    private final List<Item> deleteItemList;
 
-    public static final int TYPE_ITEM = 1;
-    public static final int TYPE_ADDBUTTON = 2;
+    private static final int TYPE_ITEM = 1;
+    private static final int TYPE_ADDBUTTON = 2;
 
 
     public ItemsRecyclerAdapter(Context context) {
@@ -51,7 +44,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         this.deleteItemList = activity.getNoteManager().getDeleteItems();
     }
 
-    public void addItem(Item item, int position) {
+    private void addItem(Item item, int position) {
         Log.d(TAG, TextFormer.getStartText(className) + "Добавление карточки в список...");
         itemList.add(position, item);
         notifyItemInserted(position);
@@ -67,7 +60,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         Log.d(TAG, TextFormer.getStartText(className) + "Карточки добавлены!");
     }
 
-    public void removeItem(Item item) {
+    private void removeItem(Item item) {
         Log.d(TAG, TextFormer.getStartText(className) + "Удаление карточки из списка...");
         int i = itemList.indexOf(item);
         itemList.remove(item);
@@ -77,7 +70,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         Log.d(TAG, TextFormer.getStartText(className) + "Карточка удалена из списка!");
     }
 
-    public Item getItem(int index) {
+    private Item getItem(int index) {
         return itemList.get(index);
     }
 
@@ -130,8 +123,8 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        private CheckBox checkBox;
-        private EditText editText;
+        private final CheckBox checkBox;
+        private final EditText editText;
         private ImageButton imageButton;
 
         ItemViewHolder(@NonNull final View itemView) {
@@ -240,8 +233,8 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     class AddButtonViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView imageView;
-        private TextView textView;
+        private final ImageView imageView;
+        private final TextView textView;
 
         AddButtonViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -249,7 +242,7 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onCLick(v);
+                    onCLick();
                 }
             });
 
@@ -257,12 +250,12 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onCLick(v);
+                    onCLick();
                 }
             });
         }
 
-        private void onCLick(View v) {
+        private void onCLick() {
             addItem(new Item(
                     Item.ADDING_ITEM,
                     activity.getNoteManager().getNote().getId(),

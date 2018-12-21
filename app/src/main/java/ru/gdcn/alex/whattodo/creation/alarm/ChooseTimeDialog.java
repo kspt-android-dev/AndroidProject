@@ -18,7 +18,7 @@ import ru.gdcn.alex.whattodo.creation.CreationActivity;
 public class ChooseTimeDialog extends DialogFragment {
 
     public interface OnSetTimeIntoDateDialog {
-        public void onSetTime(int hour, int minutes);
+        void onSetTime(int hour, int minutes);
     }
 
     private OnSetTimeIntoDateDialog onSetTimeIntoDateDialog;

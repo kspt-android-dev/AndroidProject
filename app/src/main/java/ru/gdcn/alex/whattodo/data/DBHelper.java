@@ -13,8 +13,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "DBHelper";
 
-    public static final int DATABASE_VERSION = 18;
-    public static final String DATABASE_NAME = "WhatToDO_DB";
+    private static final int DATABASE_VERSION = 18;
+    private static final String DATABASE_NAME = "WhatToDO_DB";
     public static final String TABLE_NOTES = "Notes";
     public static final String TABLE_ITEMS = "Items";
 

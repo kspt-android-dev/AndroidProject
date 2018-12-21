@@ -1,6 +1,5 @@
 package ru.gdcn.alex.whattodo.recycler;
 
-import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -14,7 +13,7 @@ public class SwipeDragHelperCallback extends ItemTouchHelper.Callback {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "SwipeDragHelperCallback";
 
-    private ActionCompletionContract contract;
+    private final ActionCompletionContract contract;
 
     public SwipeDragHelperCallback(ActionCompletionContract contract) {
         Log.d(TAG, TextFormer.getStartText(className) + "Установил слушателя для перемещения и свайпа!");
@@ -57,14 +56,6 @@ public class SwipeDragHelperCallback extends ItemTouchHelper.Callback {
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         contract.onViewSwiped(viewHolder.getAdapterPosition());
         Log.d(TAG, TextFormer.getStartText(className) + "Свайп отслежен!");
-    }
-
-    @Override
-    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        //TODO переделать чтоб при свайпе элемент не исчезал, если вдруг буду делать не удаление на это действие
-        //а так же хотелось сделать чтоб снизу при сдвиге отображалась картинка какое действие сейчас будет
-
-        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
 
     public interface ActionCompletionContract {

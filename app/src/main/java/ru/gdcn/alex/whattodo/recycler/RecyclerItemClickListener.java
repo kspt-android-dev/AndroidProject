@@ -13,10 +13,10 @@ import ru.gdcn.alex.whattodo.utilities.TextFormer;
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
 
     private static final String TAG = "ToDO_Logger";
-    public static final String className = "RecyclerItemClickListener";
+    private static final String className = "RecyclerItemClickListener";
 
-    private OnItemClickListener itemClickListener;
-    private GestureDetector gestureDetector;
+    private final OnItemClickListener itemClickListener;
+    private final GestureDetector gestureDetector;
 
     public RecyclerItemClickListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener) {
         this.itemClickListener = listener;

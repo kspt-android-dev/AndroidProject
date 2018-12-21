@@ -18,14 +18,13 @@ public class CreationManager {
     private static final String TAG = "ToDO_Logger";
     private static final String className = "CreationManager";
 
-    private Context activity;
+    private final Context activity;
 
     private Note note;
-    private int countNotes;
     private Notify notify;
 
     private List<Item> items;
-    private List<Item> deleteItems = new ArrayList<>();
+    private final List<Item> deleteItems = new ArrayList<>();
 
     public CreationManager(Context activity) {
         this.activity = activity;
@@ -33,7 +32,7 @@ public class CreationManager {
 
     public void init(Intent data) {
         Log.d(TAG, TextFormer.getStartText(className) + "Инициализирую данные...");
-        countNotes = DBConnector.loadNotes(activity).size();
+        int countNotes = DBConnector.loadNotes(activity).size();
 
         note = (Note) data.getSerializableExtra("note");
         if (note == null) {

@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import ru.gdcn.alex.whattodo.R;
-import ru.gdcn.alex.whattodo.objects.Item;
-import ru.gdcn.alex.whattodo.objects.Note;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class NoteFragment extends Fragment {

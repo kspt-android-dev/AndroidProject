@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="ru.gdcn.alex.whattodo">
 
     <application
@@ -23,8 +22,9 @@
         <activity android:name=".creation.CreationActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:screenOrientation="portrait"/>
-        <activity android:name=".AboutActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".AboutActivity"
+            android:screenOrientation="portrait" />
         <receiver android:name=".creation.AlarmBroadcastReceiver"
             android:screenOrientation="portrait"/>
     </application>

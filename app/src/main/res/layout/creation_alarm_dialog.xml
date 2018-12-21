@@ -19,7 +19,7 @@
             android:layout_weight="1"
             android:padding="3dp"
             android:gravity="center"
-            android:hint="Выбериете дату"
+            android:hint="@string/dialog_choose_date"
             android:textSize="16sp"
             android:background="@drawable/card_background"/>
 
@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:padding="3dp"
             android:gravity="center"
-            android:hint="Выбериете время"
+            android:hint="@string/dialog_choose_time"
             android:textSize="16sp"
             android:background="@drawable/card_background"/>
     </LinearLayout>
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:padding="3dp"
         android:gravity="center"
-        android:hint="Повтрять"
+        android:hint="@string/dialog_repeat"
         android:background="@drawable/card_background"
         android:textSize="16sp"/>
 

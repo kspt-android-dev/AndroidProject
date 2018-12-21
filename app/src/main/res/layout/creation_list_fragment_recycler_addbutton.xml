@@ -12,14 +12,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="3dp"
-        android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
+        android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/creation_list_fragment_recycler_addbutton_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="3dp"
-        android:text="Новый пункт"
+        android:text="@string/items_addbutton"
         android:gravity="start"
         android:textSize="16sp"
         android:textColor="@color/colorPrimary"

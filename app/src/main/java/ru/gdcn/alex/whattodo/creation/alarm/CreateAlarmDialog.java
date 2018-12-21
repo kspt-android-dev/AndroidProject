@@ -1,12 +1,9 @@
 package ru.gdcn.alex.whattodo.creation.alarm;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ru.gdcn.alex.whattodo.R;
-import ru.gdcn.alex.whattodo.creation.AlarmBroadcastReceiver;
 import ru.gdcn.alex.whattodo.creation.CreationActivity;
 import ru.gdcn.alex.whattodo.objects.Notify;
 
@@ -31,14 +27,13 @@ public class CreateAlarmDialog extends DialogFragment{
     }
 
     public interface OnAlarmDialogListener{
-        public void onSetAlarm();
-        public void onDeleteAlarm();
+        void onSetAlarm();
+        void onDeleteAlarm();
     }
 
     private TextView date, time;
 
     private OnAlarmDialogListener onAlarmDialogListener;
-    private Notify notify;
 
     @NonNull
     @Override
@@ -46,7 +41,7 @@ public class CreateAlarmDialog extends DialogFragment{
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.creation_alarm_dialog, null);
-        notify = ((CreationActivity)getContext()).getNoteManager().getNotify();
+        Notify notify = ((CreationActivity) getContext()).getNoteManager().getNotify();
         date = view
                 .findViewById(R.id.creation_alarm_dialog_choose_date);
         date.setText(String.format("%s:%s:%s", notify.getDay(), notify.getMonth() + 1, notify.getYear()));

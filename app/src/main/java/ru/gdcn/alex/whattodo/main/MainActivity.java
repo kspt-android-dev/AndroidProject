@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
@@ -22,15 +21,14 @@ import ru.gdcn.alex.whattodo.AboutActivity;
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.SettingsActivity;
 import ru.gdcn.alex.whattodo.creation.CreationActivity;
-import ru.gdcn.alex.whattodo.data.DBConnector;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "ToDO_Logger";
-    public static final String className = "MainActivity";
+    private static final String className = "MainActivity";
 
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
 
     NotesFragment notes;
     TrashFragment tasks;
@@ -52,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.main_space, notes)
                 .commit();
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.nav_view);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override

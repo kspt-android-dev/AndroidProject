@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class Notify {
 
-    private Calendar calendar;
+    private final Calendar calendar;
     private int year;
     private int month;
     private int day;
