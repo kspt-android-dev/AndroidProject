@@ -16,17 +16,21 @@ import ru.gdcn.beastmaster64revelations.R;
 
 public class CharacterCreationActivity extends AppCompatActivity {
 
+    //Игрок и его пол
     Player player;
     Gender gender;
 
+    //Аватарки персонажей
     ImageView manFace;
     ImageView womanFace;
 
+    //Переменные для отслеживания очков
     Integer points = 15;
     Integer stren = 5;
     Integer agili = 5;
     Integer intel = 5;
 
+    //Кнопочки для распределения очков
     Button strMin;
     Button agiMin;
     Button intMin;
@@ -34,8 +38,10 @@ public class CharacterCreationActivity extends AppCompatActivity {
     Button agiPlus;
     Button intPlus;
 
+    //Кнопка "продолжить"
     Button readyButton;
 
+    //Тексты которые нужно обновлять в соответствии кол-ву очков
     TextView strText;
     TextView agiText;
     TextView intText;
@@ -47,6 +53,8 @@ public class CharacterCreationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_creation);
+
+        //Достаём все нужные нам вьюшки
 
         strMin = findViewById(R.id.button_minus_str);
         agiMin = findViewById(R.id.button_minus_agi);
@@ -65,6 +73,8 @@ public class CharacterCreationActivity extends AppCompatActivity {
         womanFace = findViewById(R.id.activity_character_creation_char_face_woman);
 
         gender = Gender.FEMALE;
+
+        //Задаём события на кнопки
 
         readyButton = findViewById(R.id.activity_character_creation_proceedButton);
         readyButton.setOnClickListener(v -> {
@@ -136,11 +146,15 @@ public class CharacterCreationActivity extends AppCompatActivity {
             updateContent();
         });
 
+        //Обновляем контент активити в соответствии с внутренней логикой
         updateContent();
 
     }
 
     private void updateContent() {
+
+        //Вызываем это каждый раз когда чё-то меняем
+
         if (points > 0) {
             enableButton(strPlus);
             enableButton(agiPlus);
@@ -189,10 +203,11 @@ public class CharacterCreationActivity extends AppCompatActivity {
 
     }
 
+    //небольшой шорткат для удобства
     private void disableButton(Button button) {
         button.setEnabled(false);
     }
-
+    //это тоже
     private void enableButton(Button button) {
         button.setEnabled(true);
     }

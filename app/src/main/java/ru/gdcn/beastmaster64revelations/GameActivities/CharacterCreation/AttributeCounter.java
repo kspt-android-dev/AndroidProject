@@ -7,6 +7,8 @@ import java.util.List;
 
 public class AttributeCounter {
 
+    //НЕ ИСПОЛЬЗУЕТСЯ В ДАННОЙ ВЕРСИИ
+
     private int value;
     private List<AttributeChanger> changers = new ArrayList<>();
     private TextView visibleCounter;

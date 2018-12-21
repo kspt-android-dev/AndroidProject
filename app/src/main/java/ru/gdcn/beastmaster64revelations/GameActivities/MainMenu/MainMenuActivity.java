@@ -19,14 +19,12 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        GameLogger.log(getString(R.string.log_initialize));
         setContentView(R.layout.activity_main_menu);
 
-        GameLogger.log(getString(R.string.log_events));
+        //Задаём события кнопкам в менюшке
         initButtonEvents();
 
+        //Задаём картинку, которая растягивается по ширине экрана
         ImageView imageView = new ProportionalImageView(this);
         imageView.setAlpha(0.9f);
         imageView.setImageDrawable(imageView.getResources().getDrawable(R.drawable.main_menu_background));
@@ -36,25 +34,22 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void initButtonEvents() {
-        GameLogger.log(getString(R.string.log_buttons));
+        //Достаём кнопки из вьюшки
         Button playButton = findViewById(R.id.main_menu_button_play);
         Button settingsButton = findViewById(R.id.main_menu_button_settings);
         Button exitButton = findViewById(R.id.main_menu_button_exit);
 
-        GameLogger.log(getString(R.string.log_game_entry));
         playButton.setOnClickListener(v -> {
             Intent goToGameIntent = new Intent(getApplicationContext(), CharacterCreationActivity.class);
             startActivity(goToGameIntent);
         });
 
-        GameLogger.log(getString(R.string.log_settings_entry));
         settingsButton.setOnClickListener(v -> {
             Intent goToSettingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(goToSettingsIntent);
         });
         settingsButton.setEnabled(false);
 
-        GameLogger.log(getString(R.string.log_quit));
         exitButton.setOnClickListener(v -> finish());
 
     }

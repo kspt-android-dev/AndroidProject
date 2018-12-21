@@ -15,6 +15,8 @@ import ru.gdcn.beastmaster64revelations.R;
 
 public class CharacterCreationFragment extends Fragment {
 
+    //НЕ ИСПОЛЬЗУЕТСЯ В ДАННОЙ ВЕРСИИ
+
     String[] atributes;
     Integer totalPoints;
     AttributeChanger[] changers;

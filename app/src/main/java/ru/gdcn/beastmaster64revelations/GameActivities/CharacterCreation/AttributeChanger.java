@@ -20,6 +20,9 @@ public class AttributeChanger extends LinearLayout {
     private Integer currentPoints = 0;
 
     public AttributeChanger(final Context context, @Nullable AttributeSet attrs, String atributeName, final AttributeCounter counter) {
+
+        //НЕ ИСПОЛЬЗУЕТСЯ В ДАННОЙ ВЕРСИИ
+
         super(context, attrs);
         //AppCompatActivity mainActivity = (AppCompatActivity) context;
         this.attrName = atributeName;

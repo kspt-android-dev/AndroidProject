@@ -37,23 +37,33 @@ import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;
  */
 public class FightActivity extends AppCompatActivity {
 
+    //Все кнопочки, которые будут отключаться во время отката действий
     List<Button> allActionButtons = new ArrayList<>();
 
+    //фончик
     ImageView backImage;
 
+    //Костыль, чтобы атакующий персонаж всегда был поверх противника
+    //(Было придумано за 0.1 сек и осталось до сих пор)
     Integer currentZ = 10;
+
+    //таймеры для действий игрока и AI
     CountDownTimer AItimer;
     CountDownTimer playerTimer;
 
+    //текст и скролл консольки
     TextView fightConsoleText;
     NestedScrollView fightConsoleScroll;
 
+    //Кастомные вьюшки для отображения карточек игрока и врага
     CharacterCard playerCard;
     CharacterCard enemyCard;
 
+    //Холдеры для карточек
     FrameLayout cardHolderPlayer;
     FrameLayout cardHolderEnemy;
 
+    //Прогрессбары с кулдауном, игрок и враг
     Character player;
     NPC enemy;
     ImageView progressBar;
@@ -62,34 +72,41 @@ public class FightActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_fight);
 
+        //По умолчанию никто не умер и возврат будет "ничья"
         setResult(FightResult.ALL_ALIVE);
 
+        //Задаём фончик как в прошлом активити
         backImage = new ProportionalImageView(this);
         backImage.setAlpha(0.45f);
         FrameLayout mainFrame = findViewById(R.id.activity_fight_backFrame);
         mainFrame.addView(backImage, 0);
 
+        //Достаём наших персонажей из интента
         player = (PlayerClass) getIntent().getSerializableExtra("player");
         enemy = (DummyEnemy) getIntent().getSerializableExtra("enemy");
         setBackground((LocationType) getIntent().getSerializableExtra("locationType"));
 
+        //Создаём карточки наших персонажей
         playerCard = new CharacterCard(this, null, player);
         enemyCard = new CharacterCard(this, null, enemy);
 
+        //достаём холдеры
         cardHolderPlayer = findViewById(R.id.activity_fight_placeholder_left);
         cardHolderEnemy = findViewById(R.id.activity_fight_placeholder_right);
 
+        //Засовываем в холдеры наши карточки
         cardHolderPlayer.addView(playerCard);
         cardHolderEnemy.addView(enemyCard);
 
+        //Достаём прогрессбары и консольку
         progressBar = findViewById(R.id.activity_fight_progressBarPlayer);
         enemyProgressBar = findViewById(R.id.activity_fight_progressBarEnemy);
         fightConsoleText = findViewById(R.id.activity_fight_console);
         fightConsoleScroll = findViewById(R.id.activity_fight_consoleScroll);
 
+        //Отслеживаем добавление текста в консоль и проматываем наш скролл
         fightConsoleText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -107,29 +124,43 @@ public class FightActivity extends AppCompatActivity {
             }
         });
 
+        //Достаём кнопочки
         Button kickButton = findViewById(R.id.activity_fight_action_kick);
         Button healButton = findViewById(R.id.activity_fight_action_heal);
         Button magicButton = findViewById(R.id.activity_fight_action_magic);
         Button strongButton = findViewById(R.id.activity_fight_action_kick2);
 
+        //Она пока недоступна в игре (не придумали зачем она)
+        strongButton.setEnabled(false);
+
+        //Добавляем в отслеживание чтобы отключать их на время кулдауна
         allActionButtons.add(kickButton);
         allActionButtons.add(healButton);
         allActionButtons.add(magicButton);
-        allActionButtons.add(strongButton);
+//        allActionButtons.add(strongButton);
 
         runEnemyAI(1500);
 
+        //Криво-костыльно задаём на кнопки удары и кулдаун на них
         kickButton.setOnClickListener(v -> {
+            //проигрываем анимацию удара
             playKickAnimationPlayer();
+            //Создаём атаку
             BasicAttack basicAttack = new BasicAttack(getString(R.string.fight_log_kick), 1.1);
+            //Запоминаем HP
             int hpBefore = enemy.getHP();
+            //Бабах!
             basicAttack.use(player, enemy);
+            //Обновляем инфу на карточках
             playerCard.updateContent();
             enemyCard.updateContent();
+            //Задаём откат кнопочкам
             actionDelay(1200);
+            //Логируем в нашу консоль чё случилось
             logFightAction(player.getName() + getString(R.string.fight_log_kicked) + enemy.getName() + "!");
             logFightAction(hpBefore - enemy.getHP() + getString(R.string.fight_log_kicks));
 
+            //Проверяем не умер ли кто-нибудь наконец-то
             if (player.isDead()) {
                 onPlayerDead();
                 return;
@@ -141,6 +172,8 @@ public class FightActivity extends AppCompatActivity {
         });
 
         healButton.setOnClickListener(v -> {
+
+            //Аналогично прошлой кнопочке
 
             playBounceAnimation(cardHolderPlayer);
 
@@ -189,6 +222,8 @@ public class FightActivity extends AppCompatActivity {
 
     private void runEnemyAI(int millisDelay) {
 
+        //Ждём заданное время и спрашиваем у противника что он будет делать
+
         AItimer = new CountDownTimer(millisDelay, 5) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -199,14 +234,20 @@ public class FightActivity extends AppCompatActivity {
             public void onFinish() {
                 runOnUiThread(() -> enemyProgressBar.setScaleX(0f));
                 runOnUiThread(() -> {
+                    //Спрашиваем какое действие он совершит сейчас
                     Action enemyAction = enemy.makeNextFightTurn(player);
+                    //Костыльно проверяем какую анимацию произвести, хил или атака
                     if (enemyAction instanceof BasicAttack)
                         playKickAnimationEnemy();
                     if (enemyAction instanceof BasicHeal)
                         playBounceAnimation(cardHolderEnemy);
+                    //логируем
                     logFightAction(enemy.getName() + getString(R.string.fight_log_use) + enemyAction.getName() + "!!!");
+                    //запоминаем хп
                     int hpBefore = player.getHP();
+                    //совершаем действие
                     enemyAction.use(enemy, player);
+                    //логируем дамаг если противник юзал удар
                     if (enemyAction instanceof BasicAttack)
                         logFightAction(hpBefore - player.getHP() + getString(R.string.fight_log_kicks));
                     playerCard.updateContent();
@@ -223,10 +264,9 @@ public class FightActivity extends AppCompatActivity {
                 }
             }
         };
-
+        //Собсна стартуем таймер
         AItimer.start();
     }
-
 
     private void logFightAction(String text){
         fightConsoleText.append("\n" + text);
