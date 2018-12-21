@@ -1,15 +1,16 @@
 package com.dreamteam.monopoly.game.board.cell
 
+import android.graphics.Bitmap
 import android.util.Log
 import com.dreamteam.monopoly.game.player.Player
 
-open class GameCell(/*id: String, bitmap: Bitmap,*/ val info: GameCellInfo) : Cell(/*id, bitmap*/) {
+open class GameCell(id: String, val info: GameCellInfo) : Cell(id) {
 
     var state: CellState = CellState.FREE
     var owner: Player? = null
 
     fun buy(player: Player): Boolean {
-        Log.d("FindError" , "im in GameCell/buy")
+        Log.d("FindError", "im in GameCell/buy")
         return if (player.loseMoney(info.cost.costBuy)) {
             state = CellState.OWNED
             owner = player

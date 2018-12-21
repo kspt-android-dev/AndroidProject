@@ -8,6 +8,7 @@ import com.dreamteam.monopoly.game.board.cell.GameCell
 import com.dreamteam.monopoly.game.board.cell.GameCellInfo
 import com.dreamteam.monopoly.game.board.cell.GameCellType
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Player(val name: String, startMoney: Int, val type: PlayerType, private val board: Board) {
 
@@ -30,8 +31,8 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
 
     fun analyze(): PlayerMoveCondition {
         val currentCell: GameCell = board.gameWay[currentPosition]
-        Log.d ("TAG",board.gameWay[currentPosition].info.name )
-        Log.d ("TAG",currentPosition.toString() )
+        Log.d("TAG", board.gameWay[currentPosition].info.name)
+        Log.d("TAG", currentPosition.toString())
         when (currentCell.state) {
             CellState.FREE -> return if (currentCell.info.cellType == GameCellType.COMPANY &&
                     currentCell.checkBuyCost(money)) {
@@ -61,13 +62,13 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     }
 
     fun decision(action: PlayerActions): Boolean {
-        Log.d("FindError", board.gameWay[currentPosition ].info.name)
+        Log.d("FindError", board.gameWay[currentPosition].info.name)
         return when (action) {
-            PlayerActions.BUY -> board.gameWay[currentPosition ].info.cellType == GameCellType.COMPANY &&
-                    board.gameWay[currentPosition ].owner == null &&
-                    board.gameWay[currentPosition ].buy(this)
-            PlayerActions.PAY -> if (board.gameWay[currentPosition ].info.cellType == GameCellType.COMPANY) board.gameWay[currentPosition ].pay(this)
-                    else loseMoney(board.gameWay[currentPosition ].info.cost.costCharge)
+            PlayerActions.BUY -> board.gameWay[currentPosition].info.cellType == GameCellType.COMPANY &&
+                    board.gameWay[currentPosition].owner == null &&
+                    board.gameWay[currentPosition].buy(this)
+            PlayerActions.PAY -> if (board.gameWay[currentPosition].info.cellType == GameCellType.COMPANY) board.gameWay[currentPosition].pay(this)
+            else loseMoney(board.gameWay[currentPosition].info.cost.costCharge)
             PlayerActions.STAY -> stay()
             PlayerActions.RETREAT -> retreat()
         }
@@ -130,6 +131,19 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         cells.add(newCell)
         markOwnedCell(newCell)
     }
+
+    fun addGameCell(newCellIndexList: ArrayList<Int>) {
+        Log.d("FindError", "GameCell bought")
+        for (index in newCellIndexList)
+            addGameCell(index)
+    }
+
+    fun addGameCell(newCellIndex: Int) {
+        Log.d("FindError", "GameCell bought")
+        cells.add(board.gameWay[newCellIndex])
+        markOwnedCell(board.gameWay[newCellIndex])
+    }
+
 
     fun removeGameCell(rmCell: GameCell) {
         cells.remove(rmCell)
