@@ -15,9 +15,6 @@ class GameManager(private val activity: GameActivity) {
 
     fun resetSaveData(savedInstanceState: Bundle) {
         mainBoard.resetField(savedInstanceState.getIntegerArrayList("playersPos"))
-        val savedMoney = savedInstanceState.getIntegerArrayList("playersMoney")
-        for (i in 0 until players.size)
-            players[i].money = savedMoney[i]
     }
 
     fun nextPlayerMove() {
@@ -39,16 +36,11 @@ class GameManager(private val activity: GameActivity) {
     }
 
     fun addPlayer(name: String, type: PlayerType) {
-        players.add(Player(name, GameData.startMoney, type, mainBoard))
+        players.add(Player(name, startMoney, type, mainBoard))
     }
 
     fun addPlayer(name: String, startMoney: Int, type: PlayerType) {
         players.add(Player(name, startMoney, type, mainBoard))
-    }
-
-    fun addPlayersFullData(playersData: List<Pair<String, Int>>) {
-        for (data: Pair<String, Int> in playersData)
-            players.add(Player(data.first, data.second, PlayerType.AI, mainBoard))
     }
 
     fun removePlayer(player: Player) {

@@ -38,7 +38,7 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
 
     fun resetField(savedPositions: ArrayList<Int>) {
         if (savedPositions.size == activity.getGameManager().players.size)
-            for (i in 0 until activity.getGameManager().players.size - 1) {
+            for (i in 0 until activity.getGameManager().players.size) {
                 activity.getGameManager().players[i].currentPosition = savedPositions[i]
                 changeImagePlace(activity.getGameManager().players[i])
             }
