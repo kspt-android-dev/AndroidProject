@@ -36,11 +36,10 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
         player.earnMoney(GameData.loopMoney)
     }
 
-    fun resetField(outState: Bundle) {
-        val numCel = outState.getIntegerArrayList("numCell")
-        if (numCel.size == activity.getGameManager().players.size)
+    fun resetField(savedPositions: ArrayList<Int>) {
+        if (savedPositions.size == activity.getGameManager().players.size)
             for (i in 0 until activity.getGameManager().players.size - 1) {
-                activity.getGameManager().players[i].currentPosition = numCel[i]
+                activity.getGameManager().players[i].currentPosition = savedPositions[i]
                 changeImagePlace(activity.getGameManager().players[i])
             }
         else

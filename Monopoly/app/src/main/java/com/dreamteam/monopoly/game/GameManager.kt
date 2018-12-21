@@ -1,5 +1,6 @@
 package com.dreamteam.monopoly.game
 
+import android.os.Bundle
 import com.dreamteam.monopoly.GameActivity
 import com.dreamteam.monopoly.game.GameData.startMoney
 import com.dreamteam.monopoly.game.board.Board
@@ -11,6 +12,10 @@ class GameManager(private val activity: GameActivity) {
     var players: ArrayList<Player> = ArrayList()
     var currentPlayerIndex: Int = 0
     var isEndGame: Boolean = false
+
+    fun resetSaveData(savedInstanceState: Bundle) {
+        mainBoard.resetField(savedInstanceState.getIntegerArrayList("playersPos"))
+    }
 
     fun nextPlayerMove() {
         players[currentPlayerIndex].isActive = false
