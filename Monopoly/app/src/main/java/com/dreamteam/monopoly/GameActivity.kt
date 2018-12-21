@@ -73,8 +73,11 @@ class GameActivity : AppCompatActivity() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
             horizontalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels)
         else {
-            horizontalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels / 2)   // TODO
-            verticalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.widthPixels / 2)
+            horizontalGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)   // TODO
+            verticalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.widthPixels)
+            val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
+            verticalGuideline2.setGuidelinePercent((cellHeight.toFloat() + (4.5f * cellWidth.toFloat())) / metrics.widthPixels)
+
         }
         createBoard(constraintLayout, cellHeight, cellWidth)
         startAssignment(playersNames)
