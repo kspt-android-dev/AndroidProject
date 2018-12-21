@@ -59,9 +59,10 @@ class GameActivity : AppCompatActivity() {
         val intent = intent
         val playersNames: ArrayList<String> = intent.getStringArrayListExtra("PlayersNames") //get info from AmountOfPlayers Activity
 
+        /*if (lastNonConfigurationInstance != null)
+            gameManager = lastNonConfigurationInstance as GameManager*/
 
         val metrics = DisplayMetrics()
-
         windowManager.defaultDisplay.getMetrics(metrics)
 
         val boardSize: Int = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) metrics.widthPixels else metrics.heightPixels
@@ -73,11 +74,10 @@ class GameActivity : AppCompatActivity() {
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
             horizontalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels)
         else {
-            horizontalGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)   // TODO
+            horizontalGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
             verticalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.widthPixels)
             val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
             verticalGuideline2.setGuidelinePercent((cellHeight.toFloat() + (4.5f * cellWidth.toFloat())) / metrics.widthPixels)
-
         }
         createBoard(constraintLayout, cellHeight, cellWidth)
         startAssignment(playersNames)
@@ -119,7 +119,7 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun init() {
+    private fun init(){
 
     }
 
@@ -130,12 +130,12 @@ class GameActivity : AppCompatActivity() {
             handler.postDelayed({
                 playersSwap()
             }, GameData.swapDicesDelay)
-        } else  playerActionRequest()
+        } else playerActionRequest()
     }
 
     private fun playerActionRequest() {
         if (gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition].info.cellType == GameCellType.COMPANY && //высвечивать купить/нет только если есть возможность купить
-                gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition ].owner == null) {
+                gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition].owner == null) {
             yesButton!!.visibility = View.VISIBLE
             noButton!!.visibility = View.VISIBLE
             question!!.visibility = View.VISIBLE
@@ -219,7 +219,7 @@ class GameActivity : AppCompatActivity() {
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
         gradientDrawable.setColor(resources.getColor(R.color.cellBackground))
-        cellButtons[index ].background = shape
+        cellButtons[index].background = shape
     }
 
     @Override
@@ -249,12 +249,6 @@ class GameActivity : AppCompatActivity() {
             gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
             updPlayerMoney(gameManager.getPlayerByName(string)!!)
         }
-
-
-    }
-
-    private fun initPlayersPositions() {
-
     }
 
     private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) { // LEFT = 1 RIGHT = 2 TOP = 3 BOTTOM = 4 START = 6 END = 7
@@ -326,33 +320,45 @@ class GameActivity : AppCompatActivity() {
         sellSpace.text = "Sell: $costSell"
         chargeSpace.text = "Charge: $charge"
 
-        if (GameData.boardGameCells[i].owner == gameManager.getCurrentPlayer())
-        {
+        if (GameData.boardGameCells[i].owner == gameManager.getCurrentPlayer()) {
             sellButton!!.visibility = View.VISIBLE
             sellButton!!.isClickable = true
-            sellButton!!.setOnClickListener{view ->
+            sellButton!!.setOnClickListener {
                 GameData.boardGameCells[i].sell()
                 sellButton!!.visibility = View.INVISIBLE
                 sellButton!!.isClickable = false
                 updPlayerMoney(gameManager.getCurrentPlayer())
             }
-        } else if (sellButton!!.visibility == View.VISIBLE && sellButton!!.isClickable == true )
-        {
+        } else if (sellButton!!.visibility == View.VISIBLE && sellButton!!.isClickable) {
             sellButton!!.visibility = View.INVISIBLE
             sellButton!!.isClickable = false
         }
     }
 
-    fun resetfield(outState: Bundle) {
+    /*fun resetfield(outState: Bundle) {
         gameManager.mainBoard.resetField(outState)
+    }*/
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        gameManager.resetSaveData(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        val playersPos = ArrayList<Int>(gameManager.players.size)
-        for (p in gameManager.players)
+        val playersNum: Int = gameManager.players.size
+        val playersPos = ArrayList<Int>(playersNum)
+        val playersMoney = ArrayList<Int>(playersNum)
+        for (p in gameManager.players) {
             playersPos.add(p.currentPosition)
-        outState?.putIntegerArrayList("numCell", playersPos)
+            playersMoney.add(p.money)
+        }
+        outState?.putIntegerArrayList("playersPos", playersPos)
+        outState?.putIntegerArrayList("playersMoney", playersMoney)
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): Any {
+        return gameManager
     }
 
     private fun updPlayerMoney(player: Player) {

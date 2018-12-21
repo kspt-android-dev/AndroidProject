@@ -36,11 +36,10 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
         player.earnMoney(GameData.loopMoney)
     }
 
-    fun resetField(outState: Bundle) {
-        val numCel = outState.getIntegerArrayList("numCell")
-        if (numCel.size == activity.getGameManager().players.size)
+    fun resetField(savedPositions: ArrayList<Int>) {
+        if (savedPositions.size == activity.getGameManager().players.size)
             for (i in 0 until activity.getGameManager().players.size - 1) {
-                activity.getGameManager().players[i].currentPosition = numCel[i]
+                activity.getGameManager().players[i].currentPosition = savedPositions[i]
                 changeImagePlace(activity.getGameManager().players[i])
             }
         else
@@ -53,7 +52,6 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
         val constraintSet = ConstraintSet()
         val constraintLayout: ConstraintLayout = activity.findViewById(R.id.ConstraintLayout)
         constraintSet.clone(constraintLayout)
-
 
         val myPlayer = activity.resources.getIdentifier("Player${currentPlayerIndex + 1}", "id", activity.packageName)
         // while (player.currentPosition != player.targetPosition &&  player.currentPosition <= player.targetPosition) {
