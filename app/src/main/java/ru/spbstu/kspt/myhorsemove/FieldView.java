@@ -1,14 +1,13 @@
 package ru.spbstu.kspt.myhorsemove;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,43 +25,38 @@ public class FieldView extends View {
     private Bitmap imBlack;
     private Bitmap imHorse;
     private Bitmap imButStart;
-    private Matr matr;
+    private Data data;
     private final int LEFT = 70; //35х2 - отступ сверху в пикселях
     private final int UP = 70;
     final int sz = 8;
     private final int CELL = 70; //размер ячейки(картинки) в пикселях
     private String alphabet[] = {"a", "b", "c", "d", "e", "f", "g", "h"};
-    private int count = 0; //количество сделанных ходов
-    private int oldi, oldj; //старое значение клетки, где стоял конь (чтобы выводить туда count)
     private boolean fgame = true; //идёт или не идёт игра (true по умолчанию - чтобы при начальной отрисовке не выводить count)
     private Cell cell = new Cell();
-    //координаты кнопок
-    private Point verticButStartLeft, verticButStartRight, horizButStartLeft, horizButStartRight; //300x100 мм - размер
     private int max = 1; //лучший результат
     private boolean frec = false; //был ли рекорд
-    //координаты текста
-    private Point verticTxt, horizTxt, txt;
 
     public FieldView(Context context) {
-        super(context);
+        this(context,null);
+    }
+
+    public FieldView(Context context, AttributeSet attrs) {
+        super(context, attrs);
         field = (FieldActivity) context;
         paint = new Paint();
         text = new Paint();
-        matr = new Matr();
-        verticTxt = new Point(0, 900);
-        horizTxt = new Point(LEFT+8*CELL+20, UP+300);
-        txt = new Point(0,0);
         Resources res = getContext().getResources();
         colField = res.getColor(R.color.colorField);
-        imBlack = BitmapFactory.decodeResource(field.getResources(), R.drawable.black35);
+        imBlack = BitmapFactory.decodeResource( field.getResources(), R.drawable.black35);
         imWhite = BitmapFactory.decodeResource(field.getResources(), R.drawable.white35);
         imHorse = BitmapFactory.decodeResource(field.getResources(), R.drawable.horse);
         imButStart = BitmapFactory.decodeResource(field.getResources(), R.drawable.start);
-        verticButStartLeft = new Point(LEFT+5*CELL, UP+8*CELL+100);
-        verticButStartRight = new Point(verticButStartLeft.x+imButStart.getWidth(), verticButStartLeft.y+imButStart.getHeight());
-        horizButStartLeft = new Point(LEFT+8*CELL+300, UP+100);
-        horizButStartRight = new Point(horizButStartLeft.x+imButStart.getWidth(), horizButStartLeft.y+imButStart.getHeight());
-        newGame();
+        if (data == null)
+            data = new Data();
+        else
+            data = field.getData();
+        if (data.count == 0)
+            newGame();
         setEnabled(true);
         setClickable(true);
     }
@@ -87,7 +81,7 @@ public class FieldView extends View {
 
         for (int i = 0; i < sz; i++) {
             for (int j = 0; j < sz; j++) {
-                cell = matr.get(i, j);
+                cell = data.matr.get(i, j);
                 if (!cell.isBlack()) {
                     canvas.drawBitmap(imWhite, LEFT + j * CELL, UP + i * CELL, paint);
                 } else {
@@ -103,24 +97,13 @@ public class FieldView extends View {
                 }
             }
         }
-        //кнопки и текст, зависят от ориентации
-        if (field.getScreenOrientation()) { //вертикальная
-            canvas.drawBitmap(imButStart, verticButStartLeft.x, verticButStartLeft.y, paint); //кнопка
-            txt = verticTxt; //вертикальная ориентация текста
-        }
-        else {
-            canvas.drawBitmap(imButStart, horizButStartLeft.x, horizButStartLeft.y, paint); //кнопка
-            txt = horizTxt; //горизонтальная ориентация текста
-        }
-        if (!fgame) {
-            String str = field.getString(R.string.yourResMes) + Integer.toString(count) + " ";
-            if (frec)
-                str += field.getString(R.string.newRecordMes);
-            canvas.drawText(str, txt.x, txt.y, text);
-        }
-        canvas.drawText(field.getString(R.string.currentRecordMes) + Integer.toString(max), txt.x+120, txt.y+200, text);
+        String str = field.getString(R.string.yourResMes) + Integer.toString(data.count) + " ";
+        if (frec)
+            str += field.getString(R.string.newRecordMes);
+        field.textView1.setText(str);
+        field.textView2.setText(field.getString(R.string.currentRecordMes) + Integer.toString(max));
     }
-
+//
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int x, y; //координаты клика
@@ -130,31 +113,19 @@ public class FieldView extends View {
         if (action == MotionEvent.ACTION_UP) { //отпускание
             x = (int)event.getX();
             y = (int)event.getY();
-            if (field.getScreenOrientation()) {
-                if (x >= verticButStartLeft.x && x <= verticButStartRight.x && y >= verticButStartLeft.y && y <= verticButStartRight.y) {
-                    newGame();
-                    return true;
-                }
-            }
-            else {
-                if (x >= horizButStartLeft.x && x <= horizButStartRight.x && y >= horizButStartLeft.y && y <= horizButStartRight.y) {
-                    newGame();
-                    return true;
-                }
-            }
             if (!fgame) //игра закончена
                 return false;
             if (!fieldToMatr(x,y)) { //некорректный ход
-                if (count < 64) //игра не закончена
+                if (data.count < 64) //игра не закончена
                     return true;
-            }
+                }
         }
         invalidate(); //перерисовка после хода
 
         //проверка, если после этого хода некуда ходить
-        if (count > 0) {
-            if (!matr.isSteps(oldi, oldj) && fgame) { //если ходов нет и игра еще идёт
-                if (count < 64)
+        if (data.count > 0) {
+            if (!data.matr.isSteps(data.oldi, data.oldj) && fgame) { //если ходов нет и игра еще идёт
+                if (data.count < 64)
                     stop(0);
                 else
                     stop(1);
@@ -170,27 +141,27 @@ public class FieldView extends View {
             return false;
         int i = (y-UP)/CELL;
         int j = (x-LEFT)/CELL;
-        if (count > 0) { //не первый код выставления коня (потому что первый всегда возможен)
-            if (!matr.step(i, j)) //некорректный ход
+        if (data.count > 0) { //не первый код выставления коня (потому что первый всегда возможен)
+            if (!data.matr.step(i, j)) //некорректный ход
                 return false;
         }
-        matr.setHorse(i, j);
-        oldi = i;
-        oldj = j;
-        count++; //ход сделан
-        matr.set(i, j, count);
-        if (count == 64) //заполнено всё поле
+        data.matr.setHorse(i, j);
+        data.oldi = i;
+        data.oldj = j;
+        data.count++; //ход сделан
+        data.matr.set(i, j, data.count);
+        if (data.count == 64) //заполнено всё поле
             return false;
         return true;
     }
 
     void newGame () {
-        matr.clear();
+        data.matr.clear();
         fgame = true;
         frec = false;
-        count = 0;
-        oldi = -1;
-        oldj = -1;
+        data.count = 0;
+        data.oldi = -1;
+        data.oldj = -1;
         if (max == 1)
             max = field.getMax();
         this.requestFocus();
@@ -215,11 +186,19 @@ public class FieldView extends View {
             pict.setImageResource(R.drawable.win);
         toastContainer.addView(pict,0);
         dlg.show();
-        if (count > max) {
-            max = count;
+        if (data.count > max) {
+            max = data.count;
             frec = true;
             field.saveRes(max);
         }
         invalidate();
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
     }
 }

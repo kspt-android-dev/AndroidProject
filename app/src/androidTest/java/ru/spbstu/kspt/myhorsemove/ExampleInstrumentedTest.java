@@ -24,3 +24,4 @@ public class ExampleInstrumentedTest {
         assertEquals("ru.spbstu.kspt.myhorsemove", appContext.getPackageName());
     }
 }
+

@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Intent intent = null; //второе окно с доской
     static String fileName = "result"; //имя файла для сохн=ранения рекорда
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void start() {
         startActivity(intent);
+
     }
 
     void about() {

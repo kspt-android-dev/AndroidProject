@@ -16,8 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FieldActivity"
-            android:configChanges = "keyboardHidden|orientation|screenSize"> </activity>
+        <activity android:name=".FieldActivity"> </activity>
+        <service android:name=".MyService" android:enabled="true" />
     </application>
 
 </manifest>

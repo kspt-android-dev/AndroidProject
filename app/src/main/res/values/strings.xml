@@ -16,7 +16,10 @@
     <string name="menuRecordMes">Рекорд был сброшен!</string>
     <string name="noMoreMes">К сожалению, ходов больше нет :с</string>
     <string name="winMes">Ура! Вы победили! :D </string>
-    <string name="currentRecordMes">Текущий рекорд: </string>
+    <string name="currentRecordMes">Рекорд: </string>
     <string name="yourResMes">Результат: </string>
     <string name="newRecordMes"> Это рекорд!</string>
+    <string name="button">Button</string>
+    <string name="textview">Текущий</string>
+    <string name="textView">Рекорд</string>
 </resources>
