@@ -18,8 +18,8 @@
         android:gravity="center"
         android:text="@string/throw_dices"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/VerticalGuideline"
-        app:layout_constraintStart_toStartOf="@+id/VerticalGuideline"
+        app:layout_constraintEnd_toStartOf="@+id/VerticalGuideline2"
+        app:layout_constraintStart_toStartOf="@+id/VerticalGuideline2"
         app:layout_constraintTop_toBottomOf="@id/UnderTopPartGuideline" />
 
     <ImageView
@@ -31,7 +31,7 @@
         android:layout_marginEnd="8dp"
         android:contentDescription="@string/dices"
         app:layout_constraintEnd_toEndOf="@+id/buttonThrowCubes"
-        app:layout_constraintStart_toStartOf="@+id/VerticalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/VerticalGuideline2"
         app:layout_constraintTop_toBottomOf="@+id/buttonThrowCubes" />
 
     <ImageView
@@ -41,7 +41,7 @@
         android:layout_marginTop="68dp"
         android:layout_marginEnd="8dp"
         android:contentDescription="@string/dices"
-        app:layout_constraintEnd_toStartOf="@+id/VerticalGuideline"
+        app:layout_constraintEnd_toStartOf="@+id/VerticalGuideline2"
         app:layout_constraintStart_toStartOf="@+id/DialogView"
         app:layout_constraintTop_toBottomOf="@+id/buttonThrowCubes" />
 
@@ -53,7 +53,7 @@
         android:layout_marginTop="15dp"
         android:text=""
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
         app:layout_constraintTop_toBottomOf="@+id/HorizontalGuideline" />
 
     <TextView
@@ -63,7 +63,7 @@
         android:layout_marginTop="15dp"
         android:text=""
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
         app:layout_constraintTop_toBottomOf="@+id/playerMoney1" />
 
     <TextView
@@ -74,7 +74,7 @@
         android:layout_marginTop="15dp"
         android:text=""
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
         app:layout_constraintTop_toBottomOf="@+id/playerMoney2" />
 
     <TextView
@@ -84,7 +84,7 @@
         android:layout_marginTop="15dp"
         android:text=""
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
         app:layout_constraintTop_toBottomOf="@+id/playerMoney3" />
 
     <TextView
@@ -94,7 +94,7 @@
         android:layout_marginTop="8dp"
         android:text=""
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
         app:layout_constraintTop_toBottomOf="@+id/playerStats1" />
 
     <TextView
@@ -104,7 +104,7 @@
         android:layout_marginTop="8dp"
         android:text=""
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
         app:layout_constraintTop_toBottomOf="@+id/playerStats2" />
 
     <TextView
@@ -114,7 +114,7 @@
         android:layout_marginTop="8dp"
         android:text=""
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
         app:layout_constraintTop_toBottomOf="@+id/playerStats3" />
 
     <TextView
@@ -124,7 +124,7 @@
         android:layout_marginTop="8dp"
         android:text=""
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
         app:layout_constraintTop_toBottomOf="@+id/playerStats4" />
 
     <android.support.constraint.Guideline
@@ -141,85 +141,65 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.85" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/VerticalGuideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
     <TextView
         android:id="@+id/cellName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginEnd="120dp"
         android:layout_marginTop="15dp"
         android:text=""
-        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HorizontalGuideline" />
 
     <TextView
         android:id="@+id/cellCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginEnd="120dp"
         android:layout_marginTop="8dp"
         android:text=""
-        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cellName" />
 
     <TextView
         android:id="@+id/cellSell"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginEnd="120dp"
         android:layout_marginTop="8dp"
         android:text=""
-        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cellCost" />
 
     <TextView
         android:id="@+id/cellCharge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginEnd="120dp"
         android:layout_marginTop="8dp"
         android:text=""
-        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cellSell" />
 
-    <TextView
-        android:id="@+id/cellHouseOne"
+    <Button
+        android:id="@+id/sellButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:text="Sell"
         android:layout_marginTop="8dp"
-        android:text=""
-        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/cellCharge" />
+        app:layout_constraintStart_toStartOf="@+id/cellCharge"
+        app:layout_constraintTop_toBottomOf="@+id/cellCharge"
+        android:visibility="invisible"
+        android:clickable="false"/>
 
-    <TextView
-        android:id="@+id/cellHouseTwo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="8dp"
-        android:text=""
-        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/cellHouseOne" />
 
-    <TextView
-        android:id="@+id/cellHouseThree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="8dp"
-        android:text=""
-        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/cellHouseTwo" />
-
-    <TextView
-        android:id="@+id/cellHotel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="8dp"
-        android:text=""
-        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/cellHouseThree" />
 
     <android.support.constraint.Guideline
         android:id="@+id/UnderTopPartGuideline"
