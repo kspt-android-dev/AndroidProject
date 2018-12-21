@@ -95,7 +95,7 @@
     <string name="character_stats_text_intellect">ИНТ:\u00A0</string>
     <string name="character_create">СОЗДАТЬ</string>
     <string name="fight_text_kick">УДАР</string>
-    <string name="fight_text_heal">ЛЕЧЕНИЕ</string>
+    <string name="fight_text_heal">БИНТ</string>
     <string name="fight_text_magic">МАГИЯ</string>
     <string name="fight_text_hardKick">СИЛЬНО УДАРИТЬ</string>
     <string name="fight_text_todo">TODO</string>
