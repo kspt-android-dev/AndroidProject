@@ -1,6 +1,7 @@
 package com.dreamteam.monopoly.game.player
 
 import android.util.Log
+import android.widget.TextView
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.board.cell.CellState
 import com.dreamteam.monopoly.game.board.cell.GameCell
@@ -80,6 +81,9 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         while (cells.size > 0)
             cells.last().reset()
         board.activity.getGameManager().removePlayer(this)
+        val playerMoneyId = board.activity.resources.getIdentifier("playerMoney${this.id}", "id", board.activity.packageName)
+        val playerMoney: TextView = board.activity.findViewById(playerMoneyId)
+        playerMoney.text = "[DEAD :)]"
         return true
     }
 

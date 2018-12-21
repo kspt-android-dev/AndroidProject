@@ -1,5 +1,6 @@
 package com.dreamteam.monopoly
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.LayerDrawable
@@ -33,7 +34,7 @@ import com.dreamteam.monopoly.game.player.PlayerType
 class GameActivity : AppCompatActivity() {
 
     private var buttonThrowDices: Button? = null
-    //private var buttonSuicide: Button? = null
+    private var buttonSuicide: Button? = null
     private var yesButton: Button? = null
     private var noButton: Button? = null
     private var sellButton: Button? = null
@@ -52,7 +53,7 @@ class GameActivity : AppCompatActivity() {
         noButton = findViewById(R.id.NoButton)
         question = findViewById(R.id.DialogView)
         sellButton = findViewById(R.id.sellButton)
-        //buttonSuicide = findViewById(R.id.buttonSuicide)
+        buttonSuicide = findViewById(R.id.buttonSuicide)
         val constraintLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayout)
         val underTopLineGuideline = findViewById<Guideline>(R.id.UnderTopPartGuideline)
         val horizontalGuideline = findViewById<Guideline>(R.id.HorizontalGuideline)
@@ -260,12 +261,12 @@ class GameActivity : AppCompatActivity() {
             updPlayerMoney(gameManager.getPlayerByName(string)!!)
         }
 
-       /* buttonSuicide!!.setOnClickListener{view ->
-            gameManager.getCurrentPlayer().decision(PlayerActions.RETREAT)
+       buttonSuicide!!.setOnClickListener{view ->
             val myPlayerID = resources.getIdentifier("Player${gameManager.getCurrentPlayer().id}", "id", packageName)
             val player = findViewById<ImageView>(myPlayerID)
             player.visibility = View.INVISIBLE
-        } */
+            gameManager.getCurrentPlayer().decision(PlayerActions.RETREAT)
+        }
     }
 
     private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) { // LEFT = 1 RIGHT = 2 TOP = 3 BOTTOM = 4 START = 6 END = 7
@@ -385,6 +386,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun endGameAction(winner: Player) {
-        //TODO swap to results activity
+        intent = Intent(this, WinScreenActivity::class.java)
+        intent.putExtra("winnerName", winner.name)
+        startActivity(intent)
+        CustomIntent.customType(this, "bottom-to-up")
     }
 }

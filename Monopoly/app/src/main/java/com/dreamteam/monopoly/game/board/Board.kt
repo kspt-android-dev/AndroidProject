@@ -48,26 +48,26 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
     }
 
     private fun changeImagePlace(player: Player) {
-        val currentPlayerIndex = activity.getGameManager().currentPlayerIndex
+        val currentPlayerID = activity.getGameManager().getCurrentPlayer().id
         val constraintSet = ConstraintSet()
         val constraintLayout: ConstraintLayout = activity.findViewById(R.id.ConstraintLayout)
         constraintSet.clone(constraintLayout)
 
-        val myPlayer = activity.resources.getIdentifier("Player${currentPlayerIndex + 1}", "id", activity.packageName)
+        val myPlayer = activity.resources.getIdentifier("Player${currentPlayerID}", "id", activity.packageName)
         // while (player.currentPosition != player.targetPosition &&  player.currentPosition <= player.targetPosition) {
         //player.currentPosition++
         Log.d("CURR POS", player.currentPosition.toString())
         val myId = activity.resources.getIdentifier("cell${player.currentPosition + 1}", "id", activity.packageName)
-        if (currentPlayerIndex == 0 || currentPlayerIndex == 2) {
+        if (currentPlayerID == 1 || currentPlayerID == 3) {
             constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
             constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
-            if (currentPlayerIndex == 0) constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
+            if (currentPlayerID == 1) constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
             else constraintSet.connect(myPlayer, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
         }
-        if (currentPlayerIndex == 1 || currentPlayerIndex == 3) {
+        if (currentPlayerID == 2 || currentPlayerID == 4) {
             constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
             constraintSet.connect(myPlayer, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
-            if (currentPlayerIndex == 1) constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
+            if (currentPlayerID == 2) constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
             else constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
         }
         constraintSet.applyTo(constraintLayout)

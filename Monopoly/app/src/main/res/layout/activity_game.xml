@@ -254,10 +254,11 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:text="Suicide"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="invisible"
-        android:clickable="false"/>
+        android:visibility="visible"
+        android:clickable="true"/>
 
 
 </android.support.constraint.ConstraintLayout>
