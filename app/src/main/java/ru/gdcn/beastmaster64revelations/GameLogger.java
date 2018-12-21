@@ -9,7 +9,7 @@ public class GameLogger {
     };
 
     public static void logError(String log){
-        Log.d("GDCN", log);
+        Log.e("GDCN", log);
     };
 
 }

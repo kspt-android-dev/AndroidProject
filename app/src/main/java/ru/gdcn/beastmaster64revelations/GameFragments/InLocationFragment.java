@@ -1,4 +1,4 @@
-package ru.gdcn.beastmaster64revelations.GameActivities.InLocation;
+package ru.gdcn.beastmaster64revelations.GameFragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import ru.gdcn.beastmaster64revelations.GameActivities.InLocation.InLocationActivity;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.MapDirection;
 import ru.gdcn.beastmaster64revelations.R;

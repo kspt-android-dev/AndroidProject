@@ -1,4 +1,4 @@
-package ru.gdcn.beastmaster64revelations;
+package ru.gdcn.beastmaster64revelations.GameActivities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

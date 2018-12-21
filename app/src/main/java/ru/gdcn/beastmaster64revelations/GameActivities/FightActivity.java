@@ -1,4 +1,4 @@
-package ru.gdcn.beastmaster64revelations;
+package ru.gdcn.beastmaster64revelations.GameActivities;
 
 import android.os.CountDownTimer;
 import android.support.v4.widget.NestedScrollView;
@@ -27,6 +27,7 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Interactions.Fight.FightResult;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.NPC;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.LocationType;
+import ru.gdcn.beastmaster64revelations.R;
 import ru.gdcn.beastmaster64revelations.UIElements.CharacterCard;
 import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;
 

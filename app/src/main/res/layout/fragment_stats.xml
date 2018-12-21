@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StatsFragment"
+    tools:context=".GameFragments.StatsFragment"
     android:background="@drawable/my_border_dark">
 
     <LinearLayout

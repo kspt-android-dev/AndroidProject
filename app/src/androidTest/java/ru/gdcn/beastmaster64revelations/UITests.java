@@ -8,7 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import ru.gdcn.beastmaster64revelations.MainMenu.MainMenuActivity;
+import ru.gdcn.beastmaster64revelations.GameActivities.MainMenu.MainMenuActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
@@ -48,9 +48,6 @@ public class UITests {
         onView(withId(R.id.button_plus_int)).perform(click());
         onView(withId(R.id.button_plus_int)).perform(click());
         onView(withId(R.id.button_plus_int)).perform(click());
-        onView(withId(R.id.button_plus_int)).perform(click());
-        onView(withId(R.id.button_plus_int)).perform(click());
-        onView(withId(R.id.button_plus_int)).perform(click());
 
         onView(withId(R.id.activity_character_creation_proceedButton)).perform(click());
 
@@ -84,7 +81,6 @@ public class UITests {
         pressBack();
         pressBack();
         //Выходим в меню
-        pressBack();
 
     }
 

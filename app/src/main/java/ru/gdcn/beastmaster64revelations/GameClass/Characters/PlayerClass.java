@@ -1,6 +1,6 @@
 package ru.gdcn.beastmaster64revelations.GameClass.Characters;
 
-import ru.gdcn.beastmaster64revelations.CharacterCreation.Gender;
+import ru.gdcn.beastmaster64revelations.GameActivities.CharacterCreation.Gender;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
 import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;

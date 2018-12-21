@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#050505"
-    tools:context=".CharacterCreation.CharacterCreationActivity">
+    tools:context=".GameActivities.CharacterCreation.CharacterCreationActivity">
 
     <ImageView
         style="@style/BMRButtonSmall"

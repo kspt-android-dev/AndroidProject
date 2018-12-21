@@ -2,23 +2,18 @@ package ru.gdcn.beastmaster64revelations.UIElements;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ru.gdcn.beastmaster64revelations.CharacterCreation.AttributeCounter;
-import ru.gdcn.beastmaster64revelations.CharacterCreation.Gender;
+import ru.gdcn.beastmaster64revelations.GameActivities.CharacterCreation.Gender;
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.PlayerClass;
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.TestCharacters.DummyEnemy;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
-import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
 import ru.gdcn.beastmaster64revelations.R;
 
 

@@ -1,4 +1,4 @@
-package ru.gdcn.beastmaster64revelations.Settings;
+package ru.gdcn.beastmaster64revelations.GameActivities.Settings;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -21,7 +21,7 @@ import android.view.MenuItem;
 
 import java.util.List;
 
-import ru.gdcn.beastmaster64revelations.AppCompatPreferenceActivity;
+import ru.gdcn.beastmaster64revelations.GameActivities.AppCompatPreferenceActivity;
 import ru.gdcn.beastmaster64revelations.R;
 
 /**

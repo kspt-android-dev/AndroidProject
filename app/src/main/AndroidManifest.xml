@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainMenu.MainMenuActivity"
+        <activity android:name=".GameActivities.MainMenu.MainMenuActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,16 +18,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Settings.SettingsActivity"
+            android:name=".GameActivities.Settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".CharacterCreation.CharacterCreationActivity" />
+        <activity android:name=".GameActivities.CharacterCreation.CharacterCreationActivity" />
         <activity
             android:name=".GameActivities.InLocation.InLocationActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_in_location"
             android:theme="@style/FullscreenTheme" />
         <activity
-            android:name=".FightActivity"
+            android:name=".GameActivities.FightActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fight"
             android:theme="@style/FullscreenTheme"></activity>

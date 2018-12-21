@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapFragment"
+    tools:context=".GameFragments.MapFragment.MapFragment"
     android:background="@drawable/my_border">
 
     <GridLayout

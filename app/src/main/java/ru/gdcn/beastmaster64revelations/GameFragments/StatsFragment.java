@@ -1,4 +1,4 @@
-package ru.gdcn.beastmaster64revelations;
+package ru.gdcn.beastmaster64revelations.GameFragments;
 
 
 import android.os.Bundle;
@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import ru.gdcn.beastmaster64revelations.CharacterCreation.Gender;
+import ru.gdcn.beastmaster64revelations.GameActivities.CharacterCreation.Gender;
 import ru.gdcn.beastmaster64revelations.GameActivities.InLocation.InLocationActivity;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
+import ru.gdcn.beastmaster64revelations.R;
 
 public class StatsFragment extends Fragment {
 

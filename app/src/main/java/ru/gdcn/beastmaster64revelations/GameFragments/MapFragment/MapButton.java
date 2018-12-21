@@ -1,4 +1,4 @@
-package ru.gdcn.beastmaster64revelations;
+package ru.gdcn.beastmaster64revelations.GameFragments.MapFragment;
 
 import android.content.Context;
 import android.view.Gravity;

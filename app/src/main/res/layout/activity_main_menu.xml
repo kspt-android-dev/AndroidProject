@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/holo_red_dark"
-    tools:context=".MainMenu.MainMenuActivity">
+    tools:context=".GameActivities.MainMenu.MainMenuActivity">
 
 
     <LinearLayout

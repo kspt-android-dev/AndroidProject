@@ -1,4 +1,4 @@
-package ru.gdcn.beastmaster64revelations;
+package ru.gdcn.beastmaster64revelations.GameFragments.MapFragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import ru.gdcn.beastmaster64revelations.GameInterface.World.GameMap;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.MapPoint;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.World;
+import ru.gdcn.beastmaster64revelations.R;
 
 
 public class MapFragment extends Fragment {

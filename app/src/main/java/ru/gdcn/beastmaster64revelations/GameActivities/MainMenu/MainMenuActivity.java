@@ -1,19 +1,16 @@
-package ru.gdcn.beastmaster64revelations.MainMenu;
+package ru.gdcn.beastmaster64revelations.GameActivities.MainMenu;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import ru.gdcn.beastmaster64revelations.CharacterCreation.CharacterCreationActivity;
+import ru.gdcn.beastmaster64revelations.GameActivities.CharacterCreation.CharacterCreationActivity;
 import ru.gdcn.beastmaster64revelations.GameLogger;
 import ru.gdcn.beastmaster64revelations.R;
-import ru.gdcn.beastmaster64revelations.Settings.SettingsActivity;
+import ru.gdcn.beastmaster64revelations.GameActivities.Settings.SettingsActivity;
 import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;
 
 
@@ -23,10 +20,6 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         GameLogger.log(getString(R.string.log_initialize));
         setContentView(R.layout.activity_main_menu);

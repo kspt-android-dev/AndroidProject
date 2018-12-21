@@ -1,4 +1,4 @@
-package ru.gdcn.beastmaster64revelations.CharacterCreation;
+package ru.gdcn.beastmaster64revelations.GameActivities.CharacterCreation;
 
 import android.widget.TextView;
 
