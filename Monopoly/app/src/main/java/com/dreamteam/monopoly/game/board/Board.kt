@@ -1,9 +1,5 @@
 package com.dreamteam.monopoly.game.board
 
-import android.app.Activity
-import android.graphics.Color.GREEN
-import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import com.dreamteam.monopoly.game.GameData
 import com.dreamteam.monopoly.game.board.cell.Cell
@@ -14,7 +10,6 @@ import android.support.constraint.ConstraintSet
 import com.dreamteam.monopoly.R
 import android.support.constraint.ConstraintLayout
 import com.dreamteam.monopoly.GameActivity
-import kotlin.math.log
 
 
 class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {

@@ -1,7 +1,6 @@
 package com.dreamteam.monopoly.game.board.cell
 
-import android.graphics.Bitmap
-import android.util.Log
+
 import com.dreamteam.monopoly.game.player.Player
 
 open class GameCell(id: String, val info: GameCellInfo) : Cell(id) {
@@ -10,7 +9,6 @@ open class GameCell(id: String, val info: GameCellInfo) : Cell(id) {
     var owner: Player? = null
 
     fun buy(player: Player): Boolean {
-        Log.d("FindError", "im in GameCell/buy")
         return if (player.loseMoney(info.cost.costBuy)) {
             setupOwner(player)
             true
@@ -49,6 +47,4 @@ open class GameCell(id: String, val info: GameCellInfo) : Cell(id) {
     }
 
     fun checkBuyCost(money: Int): Boolean = money >= info.cost.costBuy
-
-    fun checkChargeCost(money: Int): Boolean = money >= info.cost.costCharge
 }

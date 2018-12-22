@@ -138,14 +138,12 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     }
 
     fun restoreGameCells(newCellIndexList: ArrayList<Int>) {
-        Log.d("FindError", "GameCell bought")
         for (index in newCellIndexList) {
             board.gameWay[index].setupOwner(this)
         }
     }
 
     fun addGameCell(newCell: GameCell) {
-        Log.d("FindError", "GameCell bought")
         cells.add(newCell)
         markOwnedCell(newCell)
     }
