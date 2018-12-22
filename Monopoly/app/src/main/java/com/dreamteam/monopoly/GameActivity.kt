@@ -140,7 +140,6 @@ class GameActivity : AppCompatActivity() {
 
     private fun playerStartMoveAction() {
         playerStartMove()
-        actionState = ActionState.IN_PROCESS
         if (gameManager.getCurrentPlayer().analyze() == PlayerMoveCondition.COMPLETED) {
             val handler = Handler()
             handler.postDelayed({
@@ -152,7 +151,7 @@ class GameActivity : AppCompatActivity() {
     private fun playerActionRequest() {
         if (gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition].info.cellType == GameCellType.COMPANY && //высвечивать купить/нет только если есть возможность купить
                 gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition].owner == null) {
-            actionState = ActionState.BUY
+            actionState = if (actionState == ActionState.SELL) ActionState.BUY_SELL else ActionState.BUY
             activateBuyChoice(true)
         } else {
             playersSwap()
@@ -419,12 +418,12 @@ class GameActivity : AppCompatActivity() {
 
     private fun restoreActionState(savedInstanceState: Bundle) {
         when (savedInstanceState.getInt("actionState")) {
-            2 -> {
+            1 -> {
                 activateThrowButton(false)
                 reactivateBuyChoice()
             }
-            3 -> reactivateSellChoice()
-            4 -> {
+            2 -> reactivateSellChoice()
+            3 -> {
                 activateThrowButton(false)
                 reactivateBuyChoice()
                 reactivateSellChoice()
@@ -484,7 +483,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private enum class ActionState(val state: Int) {
-        IDLE(0), IN_PROCESS(1), BUY(2),
-        SELL(3), BUY_SELL(4)
+        IDLE(0), BUY(1),
+        SELL(2), BUY_SELL(3)
     }
 }
