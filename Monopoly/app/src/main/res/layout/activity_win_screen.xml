@@ -30,7 +30,7 @@
         android:layout_marginBottom="10dp"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:text="Monopoly King:"/>
+        android:text="@string/winnerTitle"/>
 
     <Button
         android:id="@+id/buttonMenu"
@@ -38,7 +38,7 @@
         android:layout_height="60dp"
         android:background="#7d20f5"
         android:textColor="#ffffff"
-        android:text="Menu"
+        android:text="@string/menu"
         android:textSize="30sp"
         android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
