@@ -22,7 +22,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         hideTopBar()
 
         //getting the button
@@ -65,9 +66,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 .duration(700)
                 .repeat(5)
                 .playOn(buttonPlay)
-        //showToast(v, resources.getString(R.string.startGameToast))
         Toasty.normal(this, resources.getString(R.string.startGameToast),
-                Toast.LENGTH_SHORT, resources.getDrawable(R.drawable.dice6)).show()
+                Toast.LENGTH_SHORT, resources.getDrawable(R.drawable.dice6, null)).show()
         intent = Intent(this, AmountOfPlayersActivity::class.java)
         startActivity(intent)
         customType(this, "bottom-to-up")
