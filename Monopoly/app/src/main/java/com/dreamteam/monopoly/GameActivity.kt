@@ -3,14 +3,16 @@ package com.dreamteam.monopoly
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.support.constraint.ConstraintLayout
-import android.support.constraint.ConstraintLayout.*
+import android.support.constraint.ConstraintLayout.LayoutParams
 import android.support.constraint.ConstraintSet
 import android.support.constraint.Guideline
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
@@ -21,15 +23,11 @@ import com.dreamteam.monopoly.game.board.cell.GameCellType
 import com.dreamteam.monopoly.game.player.Player
 import com.dreamteam.monopoly.game.player.PlayerActions
 import com.dreamteam.monopoly.game.player.PlayerMoveCondition
+import com.dreamteam.monopoly.game.player.PlayerType
 import com.tapadoo.alerter.Alerter
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
-import android.graphics.drawable.GradientDrawable
-import android.media.Image
-import android.os.Debug
-import com.dreamteam.monopoly.game.GameData.boardSizeModifier
-import com.dreamteam.monopoly.game.player.PlayerType
 
 
 class GameActivity : AppCompatActivity() {
@@ -43,6 +41,7 @@ class GameActivity : AppCompatActivity() {
 
     private var gameManager: GameManager = GameManager(this)
     private var cellButtons: ArrayList<ImageButton> = ArrayList(gameManager.mainBoard.gameWayLength)
+    private var suicidePlayers: ArrayList<Int> = ArrayList()
 
     private var actionState: ActionState = ActionState.IDLE
     private var currentInfo: Int = 0
@@ -52,8 +51,6 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
-
-
 
         buttonThrowDices = findViewById(R.id.buttonThrowCubes)
         yesButton = findViewById(R.id.YesButton)
@@ -72,6 +69,13 @@ class GameActivity : AppCompatActivity() {
         buttonThrowDices!!.setOnClickListener {
             playerStartMoveAction()
         }
+    }
+
+    @Override
+    override fun finish() {
+        super.finish()
+        Alerter.hide()
+        CustomIntent.customType(this, "up-to-bottom")
     }
 
     private fun init() {
@@ -109,7 +113,7 @@ class GameActivity : AppCompatActivity() {
         for (i in 1..playersNames.size) {
             val myPlayerID = resources.getIdentifier("Player$i", "id", packageName)
             val playerImage = resources.getDrawable(resources
-                    .getIdentifier("player$i", "drawable", packageName))
+                    .getIdentifier("player$i", "drawable", packageName), null)
             val player = ImageView(this)
             player.layoutParams = LayoutParams(cellWidth / 2, cellWidth / 2)
             player.id = (myPlayerID)
@@ -225,26 +229,28 @@ class GameActivity : AppCompatActivity() {
         cube1.setImageDrawable(drawCube1)  //draw this pics
         cube2.setImageDrawable(drawCube2)
 
-        buttonThrowDices!!.isEnabled = false    //make button throw dices unusable
-        buttonThrowDices!!.visibility = View.INVISIBLE
+        activateThrowButton(false)
     }
 
-    private fun playersSwap() {
+    private fun activateThrowButton(value: Boolean) {
+        buttonThrowDices!!.visibility = if (value) View.VISIBLE else View.INVISIBLE
+        buttonThrowDices!!.isEnabled = value
+    }
+
+    private fun playersSwap(withMoneyUpdate: Boolean = true) {
         actionState = ActionState.IDLE
         if (sellButton!!.visibility == View.VISIBLE && sellButton!!.isClickable) {
-            sellButton!!.visibility = View.INVISIBLE
-            sellButton!!.isClickable = false
+            activateSellChoice(false)
         }
         cube1.setImageDrawable(null) //delete images dices pics
         cube2.setImageDrawable(null)
-        updPlayerMoney(gameManager.getCurrentPlayer())
+        if (withMoneyUpdate) updPlayerMoney(gameManager.getCurrentPlayer())
         gameManager.nextPlayerMove() //this code should be after action after throwing dice #Player.decision
-        buttonThrowDices!!.isEnabled = true
-        buttonThrowDices!!.visibility = View.VISIBLE
+        activateThrowButton(true)
         if (gameManager.getCurrentPlayer().type == PlayerType.AI) {
             playerStartMoveAction()
         }
-        Toasty.info(this, gameManager.getCurrentPlayer().name + " move", Toast.LENGTH_SHORT, true).show()
+        showCurrentPlayerName()
     }
 
     fun playerSetCellMark(index: Int, player: Player) {
@@ -252,10 +258,10 @@ class GameActivity : AppCompatActivity() {
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
         when (player.id) {
-            1 -> gradientDrawable.setColor(resources.getColor(R.color.Player1BackgroundColor))//neededCell.setBackgroundResource(R.drawable.player1cell)
-            2 -> gradientDrawable.setColor(resources.getColor(R.color.Player2BackgroundColor))
-            3 -> gradientDrawable.setColor(resources.getColor(R.color.Player3BackgroundColor))
-            4 -> gradientDrawable.setColor(resources.getColor(R.color.Player4BackgroundColor))
+            1 -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player1BackgroundColor))
+            2 -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player2BackgroundColor))
+            3 -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player3BackgroundColor))
+            4 -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player4BackgroundColor))
         }
         cellButtons[index].background = shape
     }
@@ -264,15 +270,8 @@ class GameActivity : AppCompatActivity() {
         val shape = cellButtons[index].background as LayerDrawable
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
-        gradientDrawable.setColor(resources.getColor(R.color.cellBackground))
+        gradientDrawable.setColor(ContextCompat.getColor(this, R.color.cellBackground))
         cellButtons[index].background = shape
-    }
-
-    @Override
-    override fun finish() {
-        super.finish()
-        Alerter.hide()
-        CustomIntent.customType(this, "up-to-bottom")
     }
 
     fun getGameManager(): GameManager = gameManager
@@ -289,11 +288,21 @@ class GameActivity : AppCompatActivity() {
         }
 
         buttonSuicide!!.setOnClickListener {
-            val myPlayerID = resources.getIdentifier("Player${gameManager.getCurrentPlayer().id}", "id", packageName)
-            val player = findViewById<ImageView>(myPlayerID)
-            player.visibility = View.INVISIBLE
-            gameManager.getCurrentPlayer().decision(PlayerActions.RETREAT)
+            suicideAction(gameManager.getCurrentPlayer())
         }
+    }
+
+    private fun suicideAction(playerToSuicide: Player, withPlayerSwap: Boolean = true) {
+        val myPlayerID = resources.getIdentifier("Player${playerToSuicide.id}", "id", packageName)
+        val player = findViewById<ImageView>(myPlayerID)
+        player.visibility = View.INVISIBLE
+        suicidePlayers.add(playerToSuicide.id)
+        playerToSuicide.decision(PlayerActions.RETREAT)
+        if (withPlayerSwap) {
+            gameManager.currentPlayerIndex--
+            playersSwap(false)
+        }
+        showCurrentPlayerName()
     }
 
     private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) { // LEFT = 1 RIGHT = 2 TOP = 3 BOTTOM = 4 START = 6 END = 7
@@ -327,8 +336,8 @@ class GameActivity : AppCompatActivity() {
         button.id = (thisButtonID)
         button.setOnClickListener(showInfoClick)
         val shape = resources.getDrawable(resources
-                .getIdentifier("cellbglayer", "drawable", packageName)) as LayerDrawable
-        val bitmap = resources.getDrawable(resources.getIdentifier("cellimage${indexForBoard + 1}", "drawable", packageName)) as BitmapDrawable
+                .getIdentifier("cellbglayer", "drawable", packageName), null) as LayerDrawable
+        val bitmap = resources.getDrawable(resources.getIdentifier("cellimage${indexForBoard + 1}", "drawable", packageName), null) as BitmapDrawable
         shape.setDrawableByLayerId(R.id.celllogo, bitmap)
         button.background = shape
         layout.addView(button)
@@ -346,7 +355,7 @@ class GameActivity : AppCompatActivity() {
             constraintSet.connect(button.id, From3, previousButtonID, To3, 0)
         }
         constraintSet.applyTo(layout)
-        playerRemoveCellMark(indexForBoard) // TODO check background on restore
+        playerRemoveCellMark(indexForBoard)
         indexForBoard++
     }
 
@@ -380,11 +389,19 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun dataRestore(savedInstanceState: Bundle) {
+        restoreSuicidePlayers(savedInstanceState)
         gameManager.currentPlayerIndex = savedInstanceState.getInt("currentPlayerIndex")
         restoreMoney(savedInstanceState)
         restoreCells(savedInstanceState)
         restoreActionState(savedInstanceState)
         restoreCurrentInfo(savedInstanceState)
+    }
+
+    private fun restoreSuicidePlayers(savedInstanceState: Bundle) {
+        suicidePlayers.clear()
+        val playersToSuicide: ArrayList<Int> = savedInstanceState.getIntegerArrayList("playersSuicideIds")
+        for (i in 0 until playersToSuicide.size)
+            suicideAction(gameManager.getPlayerById(playersToSuicide[i]), false)
     }
 
     private fun restoreMoney(savedInstanceState: Bundle) {
@@ -402,16 +419,20 @@ class GameActivity : AppCompatActivity() {
 
     private fun restoreActionState(savedInstanceState: Bundle) {
         when (savedInstanceState.getInt("actionState")) {
-            2 -> reactivateBuyChoice()
+            2 -> {
+                activateThrowButton(false)
+                reactivateBuyChoice()
+            }
             3 -> reactivateSellChoice()
             4 -> {
+                activateThrowButton(false)
                 reactivateBuyChoice()
                 reactivateSellChoice()
             }
         }
     }
 
-    private fun restoreCurrentInfo(savedInstanceState: Bundle){
+    private fun restoreCurrentInfo(savedInstanceState: Bundle) {
         showInfo(savedInstanceState.getInt("currentInfo"))
     }
 
@@ -433,6 +454,7 @@ class GameActivity : AppCompatActivity() {
             for (j in 0 until player.cells.size)
                 playersOwnedCells[i].add(player.cells[j].id.toInt())
         }
+        outState?.putIntegerArrayList("playersSuicideIds", suicidePlayers)
         outState?.putIntegerArrayList("playersPos", playersPos)
         outState?.putIntegerArrayList("playersMoney", playersMoney)
         outState?.putInt("currentPlayerIndex", gameManager.currentPlayerIndex)
@@ -455,6 +477,10 @@ class GameActivity : AppCompatActivity() {
         intent.putExtra("winnerName", winner.name)
         startActivity(intent)
         CustomIntent.customType(this, "bottom-to-up")
+    }
+
+    private fun showCurrentPlayerName() {
+        Toasty.info(this, gameManager.getCurrentPlayer().name + " move", Toast.LENGTH_LONG, true).show()
     }
 
     private enum class ActionState(val state: Int) {

@@ -17,7 +17,6 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     var currentPosition: Int = 0
     var money: Int = startMoney
     var cells: ArrayList<GameCell> = ArrayList()
-    var isActive: Boolean = false
     var id: Int = 0
 
     fun throwDices(): Pair<Int, Int> {

@@ -1,6 +1,7 @@
 package com.dreamteam.monopoly.game
 
 import android.os.Bundle
+import android.util.Log
 import com.dreamteam.monopoly.GameActivity
 import com.dreamteam.monopoly.game.GameData.startMoney
 import com.dreamteam.monopoly.game.board.Board
@@ -18,13 +19,19 @@ class GameManager(private val activity: GameActivity) {
     }
 
     fun nextPlayerMove() {
-        players[currentPlayerIndex].isActive = false
         if (currentPlayerIndex < players.size - 1) currentPlayerIndex++
         else currentPlayerIndex = 0
-        players[currentPlayerIndex].isActive = true
     }
 
     fun getCurrentPlayer(): Player = players[currentPlayerIndex]
+
+    fun getPlayerById(id: Int): Player {
+        for (p in players)
+            if (p.id == id)
+                return p
+        Log.d("PLAYER", "player doesn't exist")
+        return getCurrentPlayer()
+    }
 
     fun addPlayer(name: String) {
         players.add(Player(name, startMoney, PlayerType.PERSON, mainBoard))
