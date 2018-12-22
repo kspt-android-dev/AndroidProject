@@ -2,60 +2,24 @@ package com.example.danila.minerandroid;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class GameActivity extends Activity {
+    static int minesNumber;
 
 
-    @SuppressLint("WrongViewCast")
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        settings();
-
-
-    }
-
-
-    void settings() {
-        setContentView(R.layout.choose_level_activity);
-
-
-        Button easy_button = findViewById(R.id.easy);
-        Button medium_button = findViewById(R.id.medium);
-        Button hard_button = findViewById(R.id.hard);
-
-        easy_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                game(6);
-            }
-        });
-
-        medium_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                game(9);
-            }
-        });
-
-        hard_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                game(12);
-            }
-        });
-
-    }
-
-    @SuppressLint("SetTextI18n")
-    void game(int minesNumber) {
-        setContentView(R.layout.game_activity);
+        setContentView(R.layout.game_layout);
 
 
         Logic logic = new Logic(6, 8, minesNumber);
@@ -76,7 +40,7 @@ public class MainActivity extends Activity {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                settings();
+                goToSettingsActivity();
             }
         });
 
@@ -85,7 +49,9 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 logic.reload();
                 graphic.reload();
-                chronometer.start();
+                minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
+                chronometer.setBase(SystemClock.elapsedRealtime());
+
             }
         });
 
@@ -95,11 +61,20 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 logic.reloadLast();
                 graphic.reload();
-                chronometer.start();
+                minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
+                chronometer.setBase(SystemClock.elapsedRealtime());
+
             }
         });
 
+
     }
 
+    void goToSettingsActivity() {
+        startActivity(new Intent(this, ChooseLevelActivity.class));
+    }
 
+    public static void setMinesNumber(int minesNumber) {
+        GameActivity.minesNumber = minesNumber;
+    }
 }

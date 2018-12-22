@@ -80,18 +80,19 @@ public class LogicTest {
 
 
     @Test
-    public void isGameOver() throws Exception {
+    public void checkGameCondition() throws Exception {
         int numbersOfMines[] = {2, 3};
         logic = new Logic(2, 2, numbersOfMines);
-        assertFalse(logic.isGameOver());
+        assertEquals(logic.checkGameCondition(), 0);
         logic.getLogicCells()[0].setChecked(true);
-        assertFalse(logic.isGameOver());
+        assertEquals(logic.checkGameCondition(), 0);
+
         logic.getLogicCells()[1].setChecked(true);
-        assertFalse(logic.isGameOver());
+        assertEquals(logic.checkGameCondition(), 0);
         logic.getLogicCells()[2].setFlag(true);
-        assertFalse(logic.isGameOver());
+        assertEquals(logic.checkGameCondition(), 0);
         logic.getLogicCells()[3].setFlag(true);
-        assertTrue(logic.isGameOver());
+        assertEquals(logic.checkGameCondition(), 1);
 
 
     }

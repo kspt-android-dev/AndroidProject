@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 class Graphic {
     private GraphicCell[] graphicCells;
-    private Chronometer chronometer;
-    private TextView minesNumberView;
 
     @SuppressLint("SetTextI18n")
     Graphic(Activity gameActivity, GridLayout gameField, TextView minesNumberView, Logic logic) {
@@ -41,7 +39,7 @@ class Graphic {
         for (GraphicCell graphicCell : graphicCells) {
             graphicCell.setBackgroundColor(GraphicCell.CLOSED_COLOR);
             graphicCell.setText("");
-        }
+         }
 
     }
 
@@ -65,11 +63,7 @@ class Graphic {
         for (GraphicCell graphicCell : graphicCells)
             graphicCell.update();
 
-
     }
-
-
-    //Геттеры
 
 
 }

@@ -40,17 +40,24 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!logic.isGameOver()) {
-                    logic.checkCell(logicCell.getNumberInArray());
-                    if (logic.isGameOver()) {
+
+                switch (logic.checkGameCondition()) {
+                    case 0:
+                        logic.checkCell(logicCell.getNumberInArray());
+                        graphic.update();
+                        minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
+                        break;
+                    case -1:
                         logic.checkAll();
                         graphic.checkAll();
-                    }
-                    graphic.update();
-                    minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
-                } else {
-                    graphic.checkAll();
-                }//TODO
+                        break;
+                    case 1:
+                        logic.checkAll();
+                        graphic.checkAll();
+                        break;
+
+                }
+
             }
 
 
@@ -59,7 +66,7 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
         setOnLongClickListener(new OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (!logic.isGameOver()) {
+                if (logic.checkGameCondition() == 0) {
                     logic.changeFlag(logicCell.getNumberInArray());
                     changeFlag();
                     minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));

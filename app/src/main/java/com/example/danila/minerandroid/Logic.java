@@ -126,9 +126,9 @@ class Logic {
             }
         for (LogicCell logicCell : logicCells) {
             logicCell.setFlag(false);
-            findedBombs--;
             logicCell.setChecked(false);
         }
+        findedBombs = 0;
 
         addCondition();
 
@@ -169,10 +169,10 @@ class Logic {
     }
 
     void changeFlag(int numberOfCell) {
-
-        logicCells[numberOfCell].changeFlag();
-        findedBombs = logicCells[numberOfCell].isFlag() ? findedBombs + 1 : findedBombs - 1;
-
+        if (!logicCells[numberOfCell].isChecked()) {
+            logicCells[numberOfCell].changeFlag();
+            findedBombs = logicCells[numberOfCell].isFlag() ? findedBombs + 1 : findedBombs - 1;
+        }
 
     }
 
@@ -206,14 +206,16 @@ class Logic {
         return bombs;
     }
 
-    boolean isGameOver() {
+    int checkGameCondition() {
+
         for (LogicCell bomb : bombs)
             if (bomb.isChecked())
-                return true;
+                return -1;
 
 
         int checkedCell = 0;
-        int findedBombs = 0;
+        findedBombs = 0;
+
         for (LogicCell cell : logicCells) {
             if (cell.isFlag())
                 findedBombs++;
@@ -221,9 +223,9 @@ class Logic {
                 checkedCell++;
         }
 
-        this.findedBombs = findedBombs;
 
-        return findedBombs + checkedCell == logicCells.length;
+        return findedBombs + checkedCell == logicCells.length ? 1 : 0;
+
 
 
     }
@@ -246,7 +248,7 @@ class Logic {
         return findedBombs + checkedCell == logicCells.length;
     }
 
-    public int getFindedMinesDigit() {
+    int getFindedMinesDigit() {
         return findedBombs;
     }
 
