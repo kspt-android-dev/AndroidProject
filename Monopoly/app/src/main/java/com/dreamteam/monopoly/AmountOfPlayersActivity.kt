@@ -18,7 +18,6 @@ import kotlin.collections.ArrayList
 
 
 class AmountOfPlayersActivity : AppCompatActivity() {
-
     private var maxPlayers: Int = 4
     private var buttonEnter: Button? = null
     private var buttonBack: Button? = null
@@ -124,8 +123,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             val players: ArrayList<String> = ArrayList()
             val bots: ArrayList<String> = ArrayList()
             val names = HashMap<String, ArrayList<String>>()
-            for (i in 1..numberOfPlayers)
-            {
+            for (i in 1..numberOfPlayers) {
                 val buttonID = this.resources.getIdentifier("aiButton${i}", "id", packageName)
                 val aiButton = findViewById<Button>(buttonID)
                 if (aiButton.text.toString() == "AI: OFF")
@@ -139,7 +137,6 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             intent.putExtra("Map", names)
             startActivity(intent)
             CustomIntent.customType(this, "bottom-to-up")
-
 
 
         }
@@ -168,6 +165,9 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             if (numberOfPlayers < 4) buttonEnter!!.isEnabled = true
         }
 
+        if (savedInstanceState != null) {
+            dataRestore(savedInstanceState)
+        }
     }
 
     override fun onResume() {
@@ -227,5 +227,18 @@ class AmountOfPlayersActivity : AppCompatActivity() {
                 aiButton.isClickable = false
             }
         }
+    }
+
+    private fun dataRestore(savedInstanceState: Bundle) {
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        val playersNames: ArrayList<String> = ArrayList(maxPlayers)
+        val playersTypes: ArrayList<Int> = ArrayList(maxPlayers)
+
+        outState?.putStringArrayList("playersNames", playersNames)
+        outState?.putIntegerArrayList("playersTypes", playersTypes)
+        super.onSaveInstanceState(outState)
     }
 }
