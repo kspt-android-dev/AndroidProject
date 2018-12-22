@@ -31,7 +31,7 @@ enum class GameCellInfo(val cellType: GameCellType, val companyType: CompanyType
     NEWYORKER(GameCellType.COMPANY, CompanyType.CLOTHES, Cost(2700, 1200, 380)),
 
     VK(GameCellType.COMPANY, CompanyType.SOCIALNETW, Cost(4700, 2500, 700)),
-    FACEBOOk(GameCellType.COMPANY, CompanyType.SOCIALNETW, Cost(5000, 3000, 800)),
+    FACEBOOK(GameCellType.COMPANY, CompanyType.SOCIALNETW, Cost(5000, 3000, 800)),
 
     YOUTUBE(GameCellType.COMPANY, CompanyType.VIDEO, Cost(1000, 450, 50)),
     TWTICH(GameCellType.COMPANY, CompanyType.VIDEO, Cost(1250, 500, 60)),
