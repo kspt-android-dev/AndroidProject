@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.widget.Button
 import android.widget.EditText
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -33,7 +32,6 @@ class AmountOfPlayersActivity : AppCompatActivity() {
     private var namespace: EditText? = null
     private var numberOfPlayers: Int = 0
     private var playersNames: ArrayList<String> = ArrayList(maxPlayers)
-    private var playersTypes: ArrayList<Boolean> = ArrayList(maxPlayers)
     private var deleteList: ArrayList<TextView> = ArrayList()
     private var arrayOfTextViews: ArrayList<TextView> = ArrayList()
 
@@ -93,7 +91,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT, true).show()
                 return@setOnClickListener
             }
-            addNewPlayer(content)
+            countNewPlayer(content)
 
             Toasty.success(this, resources.getString(R.string.newPlayer) + content,
                     Toast.LENGTH_SHORT, true).show()
@@ -165,6 +163,10 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             if (numberOfPlayers < minPlayers) buttonStart!!.isEnabled = false
             if (numberOfPlayers < maxPlayers) buttonEnter!!.isEnabled = true
         }
+
+        if (savedInstanceState != null) {
+            dataRestore(savedInstanceState)
+        }
     }
 
     override fun onResume() {
@@ -177,12 +179,10 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         hideTopBar()
     }
 
-    private fun addNewPlayer(content: String) {
+    private fun countNewPlayer(content: String) {
         numberOfPlayers++
         playersNames.add(content)
-        playersTypes.add(PlayerType.PERSON.value)
     }
-
 
 
     private fun hideTopBar() {
@@ -234,14 +234,49 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         }
     }
 
-    private fun dataRestore(savedInstanceState: Bundle) {
+    private fun restorePlayersList(savedInstanceState: Bundle) {
+        val pNames: ArrayList<String> = savedInstanceState.getStringArrayList("playersNames")
+        val pDells: ArrayList<String> = savedInstanceState.getStringArrayList("deletePlayersNames")
+        val pTypes: BooleanArray = savedInstanceState.getBooleanArray("playersTypes")
 
+        for (i in 1..pNames.size) {
+            val textViewID = this.resources.getIdentifier("PlayerName$i", "id", packageName)
+            val names = findViewById<TextView>(textViewID)
+            names.text = pNames[i - 1]
+
+            val aiButtonID = this.resources.getIdentifier("aiButton$i", "id", packageName)
+            val buttons = findViewById<Button>(aiButtonID)
+            if (pTypes[i - 1]) buttons.text = resources.getString(R.string.onAI)
+            else buttons.text = resources.getString(R.string.offAI)
+        }
+    }
+
+    private fun dataRestore(savedInstanceState: Bundle) {
+        namespace!!.setText(savedInstanceState.getString("keyboardText"))
+        restorePlayersList(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
+        val deletePlayersNames: ArrayList<String> = ArrayList()
+        for (p in deleteList)
+            deletePlayersNames.add(p.text.toString())
 
         outState?.putStringArrayList("playersNames", playersNames)
-        outState?.putBooleanArray("playersTypes", playersTypes.toBooleanArray())
+        outState?.putStringArrayList("deletePlayersNames", deletePlayersNames)
+        outState?.putBooleanArray("playersTypes", loadPlayersTypes())
+        outState?.putString("keyboardText", namespace!!.text.toString())
         super.onSaveInstanceState(outState)
+    }
+
+    private fun loadPlayersTypes(): BooleanArray {
+        val playersTypes: ArrayList<Boolean> = ArrayList()
+        for (i in 1..numberOfPlayers) {
+            val aiButton = findViewById<Button>(resources.getIdentifier("aiButton$i", "id", packageName))
+            if (aiButton.text.toString() == "AI: OFF")
+                playersTypes.add(false)
+            else
+                playersTypes.add(true)
+        }
+        return playersTypes.toBooleanArray()
     }
 }

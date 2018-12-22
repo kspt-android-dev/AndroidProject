@@ -371,7 +371,7 @@ class GameActivity : AppCompatActivity() {
         val shape = resources.getDrawable(resources
                 .getIdentifier("cellbglayer", "drawable", packageName), null) as LayerDrawable
         val bitmap = resources.getDrawable(resources.getIdentifier("cellimage${indexForBoard + 1}", "drawable", packageName), null) as BitmapDrawable
-        shape.setDrawableByLayerId(R.id.celllogo, bitmap)
+        shape.setDrawableByLayerId(R.id.cellLogo, bitmap)
         button.background = shape
         layout.addView(button)
         cellButtons.add(button)
