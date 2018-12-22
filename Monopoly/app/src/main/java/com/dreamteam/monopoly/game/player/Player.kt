@@ -8,7 +8,6 @@ import com.dreamteam.monopoly.game.GameData.minChanceMoney
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.board.cell.CellState
 import com.dreamteam.monopoly.game.board.cell.GameCell
-import com.dreamteam.monopoly.game.board.cell.GameCellInfo
 import com.dreamteam.monopoly.game.board.cell.GameCellType
 import java.util.*
 import kotlin.collections.ArrayList
@@ -16,7 +15,6 @@ import kotlin.collections.ArrayList
 class Player(val name: String, startMoney: Int, val type: PlayerType, private val board: Board) {
 
     var currentPosition: Int = 0
-    var targetPosition: Int = currentPosition
     var money: Int = startMoney
     var cells: ArrayList<GameCell> = ArrayList()
     var isActive: Boolean = false

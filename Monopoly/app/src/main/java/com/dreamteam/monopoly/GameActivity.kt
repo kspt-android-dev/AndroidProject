@@ -45,6 +45,7 @@ class GameActivity : AppCompatActivity() {
     private var cellButtons: ArrayList<ImageButton> = ArrayList(gameManager.mainBoard.gameWayLength)
 
     private var actionState: ActionState = ActionState.IDLE
+    private var currentInfo: Int = 0
     private var indexForBoard: Int = 0
 
 
@@ -148,26 +149,57 @@ class GameActivity : AppCompatActivity() {
         if (gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition].info.cellType == GameCellType.COMPANY && //высвечивать купить/нет только если есть возможность купить
                 gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition].owner == null) {
             actionState = ActionState.BUY
-            yesButton!!.visibility = View.VISIBLE
-            noButton!!.visibility = View.VISIBLE
-            question!!.visibility = View.VISIBLE
-
-            yesButton!!.isClickable = true
-            noButton!!.isClickable = true
+            activateBuyChoice(true)
         } else {
             playersSwap()
         }
+    }
 
-        yesButton!!.setOnClickListener {
-            performBuyAction()
-            yesNoButtonListener()
-            Log.d("FindError", "yesPressed")
-        }
+    private fun activateBuyChoice(value: Boolean) {
+        val visibility = if (value) View.VISIBLE else View.INVISIBLE
+        yesButton!!.visibility = visibility
+        noButton!!.visibility = visibility
+        question!!.visibility = visibility
 
-        noButton!!.setOnClickListener {
-            performStayAction()
-            yesNoButtonListener()
+        yesButton!!.isClickable = value
+        noButton!!.isClickable = value
+
+        if (value) {
+            yesButton!!.setOnClickListener {
+                performBuyAction()
+                yesNoButtonListener()
+            }
+            noButton!!.setOnClickListener {
+                performStayAction()
+                yesNoButtonListener()
+            }
         }
+    }
+
+    private fun yesNoButtonListener() {
+        activateBuyChoice(false)
+    }
+
+    private fun activateSellChoice(value: Boolean, index: Int = -1) {
+        sellButton!!.visibility = if (value) View.VISIBLE else View.INVISIBLE
+        sellButton!!.isClickable = value
+        if (value) {
+            sellButton!!.setOnClickListener {
+                gameManager.mainBoard.gameWay[index].sell()
+                activateSellChoice(false)
+                updPlayerMoney(gameManager.getCurrentPlayer())
+            }
+        }
+    }
+
+    private fun reactivateBuyChoice() {
+        activateBuyChoice(false)
+        activateBuyChoice(true)
+    }
+
+    private fun reactivateSellChoice() {
+        activateSellChoice(false)
+        activateSellChoice(true, currentInfo)
     }
 
     private fun performBuyAction() {
@@ -245,14 +277,6 @@ class GameActivity : AppCompatActivity() {
 
     fun getGameManager(): GameManager = gameManager
 
-    private fun yesNoButtonListener() {
-        yesButton!!.visibility = View.INVISIBLE
-        noButton!!.visibility = View.INVISIBLE
-        question!!.visibility = View.INVISIBLE
-        yesButton!!.isClickable = false
-        noButton!!.isClickable = false
-    }
-
     private fun startAssignment(playersNames: ArrayList<String>) //adding text/players on map
     {
         for (string in playersNames) {
@@ -264,7 +288,7 @@ class GameActivity : AppCompatActivity() {
             updPlayerMoney(gameManager.getPlayerByName(string)!!)
         }
 
-        buttonSuicide!!.setOnClickListener { view ->
+        buttonSuicide!!.setOnClickListener {
             val myPlayerID = resources.getIdentifier("Player${gameManager.getCurrentPlayer().id}", "id", packageName)
             val player = findViewById<ImageView>(myPlayerID)
             player.visibility = View.INVISIBLE
@@ -328,10 +352,22 @@ class GameActivity : AppCompatActivity() {
 
     private val showInfoClick = View.OnClickListener { view ->
         val i = cellButtons.indexOf(view)
-        val name: String = GameData.boardGameCells[i].info.name
-        val costBuy = GameData.boardGameCells[i].info.cost.costBuy
-        val costSell = GameData.boardGameCells[i].info.cost.costSell
-        val charge = GameData.boardGameCells[i].info.cost.costCharge
+        showInfo(i)
+
+        if (gameManager.mainBoard.gameWay[i].owner == gameManager.getCurrentPlayer()) {
+            actionState = if (actionState == ActionState.BUY) ActionState.BUY_SELL else ActionState.SELL
+            activateSellChoice(true, i)
+        } else if (sellButton!!.visibility == View.VISIBLE && sellButton!!.isClickable) {
+            activateSellChoice(false)
+        }
+    }
+
+    private fun showInfo(i: Int) {
+        currentInfo = i
+        val name: String = gameManager.mainBoard.gameWay[i].info.name
+        val costBuy = gameManager.mainBoard.gameWay[i].info.cost.costBuy
+        val costSell = gameManager.mainBoard.gameWay[i].info.cost.costSell
+        val charge = gameManager.mainBoard.gameWay[i].info.cost.costCharge
         val nameSpace: TextView = findViewById(R.id.cellName)
         val buySpace: TextView = findViewById(R.id.cellCost)
         val sellSpace: TextView = findViewById(R.id.cellSell)
@@ -341,38 +377,24 @@ class GameActivity : AppCompatActivity() {
         buySpace.text = "Buy: $costBuy"
         sellSpace.text = "Sell: $costSell"
         chargeSpace.text = "Charge: $charge"
-
-        if (GameData.boardGameCells[i].owner == gameManager.getCurrentPlayer()) {
-            actionState = if (actionState == ActionState.BUY) ActionState.BUY_SELL else ActionState.SELL
-            sellButton!!.visibility = View.VISIBLE
-            sellButton!!.isClickable = true
-            sellButton!!.setOnClickListener {
-                GameData.boardGameCells[i].sell()
-                sellButton!!.visibility = View.INVISIBLE
-                sellButton!!.isClickable = false
-                updPlayerMoney(gameManager.getCurrentPlayer())
-            }
-        } else if (sellButton!!.visibility == View.VISIBLE && sellButton!!.isClickable) {
-            sellButton!!.visibility = View.INVISIBLE
-            sellButton!!.isClickable = false
-        }
     }
 
     private fun dataRestore(savedInstanceState: Bundle) {
         gameManager.currentPlayerIndex = savedInstanceState.getInt("currentPlayerIndex")
-        moneyRestore(savedInstanceState)
-        cellsRestore(savedInstanceState)
+        restoreMoney(savedInstanceState)
+        restoreCells(savedInstanceState)
         restoreActionState(savedInstanceState)
+        restoreCurrentInfo(savedInstanceState)
     }
 
-    private fun moneyRestore(savedInstanceState: Bundle) {
+    private fun restoreMoney(savedInstanceState: Bundle) {
         for (i in 0 until savedInstanceState.getIntegerArrayList("playersMoney").size) {
             gameManager.players[i].money = savedInstanceState.getIntegerArrayList("playersMoney")[i]
             updPlayerMoney(gameManager.players[i])
         }
     }
 
-    private fun cellsRestore(savedInstanceState: Bundle) {
+    private fun restoreCells(savedInstanceState: Bundle) {
         for (i in 0 until gameManager.players.size) {
             gameManager.players[i].restoreGameCells(savedInstanceState.getIntegerArrayList("playerCells" + i.toString()))
         }
@@ -380,12 +402,17 @@ class GameActivity : AppCompatActivity() {
 
     private fun restoreActionState(savedInstanceState: Bundle) {
         when (savedInstanceState.getInt("actionState")) {
-            0 -> TODO()
-            1 -> TODO()
-            2 -> TODO()
-            3 -> TODO()
-            4 -> TODO()
+            2 -> reactivateBuyChoice()
+            3 -> reactivateSellChoice()
+            4 -> {
+                reactivateBuyChoice()
+                reactivateSellChoice()
+            }
         }
+    }
+
+    private fun restoreCurrentInfo(savedInstanceState: Bundle){
+        showInfo(savedInstanceState.getInt("currentInfo"))
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -410,6 +437,7 @@ class GameActivity : AppCompatActivity() {
         outState?.putIntegerArrayList("playersMoney", playersMoney)
         outState?.putInt("currentPlayerIndex", gameManager.currentPlayerIndex)
         outState?.putInt("actionState", actionState.state)
+        outState?.putInt("currentInfo", currentInfo)
         for (i in 0 until playersNum) {
             outState?.putIntegerArrayList("playerCells" + i.toString(), playersOwnedCells[i])
         }
@@ -430,6 +458,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private enum class ActionState(val state: Int) {
-        IDLE(0), IN_PROCESS(1), BUY(2), SELL(3), BUY_SELL(4)
+        IDLE(0), IN_PROCESS(1), BUY(2),
+        SELL(3), BUY_SELL(4)
     }
 }
