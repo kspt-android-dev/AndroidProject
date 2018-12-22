@@ -13,6 +13,9 @@ object GameData {
     const val boardSizeModifier: Float = 0.95f
     const val cellSidesModifier: Float = 1.75f
 
+    const val minChanceMoney: Int = 1
+    const val maxChanceMoney: Int = 2500
+
 
     val boardGameCells: ArrayList<GameCell> = arrayListOf(
             GameCell("0", info = GameCellInfo.START),  //START

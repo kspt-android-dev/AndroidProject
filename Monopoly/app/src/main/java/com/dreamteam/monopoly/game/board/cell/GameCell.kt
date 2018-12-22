@@ -12,31 +12,40 @@ open class GameCell(id: String, val info: GameCellInfo) : Cell(id) {
     fun buy(player: Player): Boolean {
         Log.d("FindError", "im in GameCell/buy")
         return if (player.loseMoney(info.cost.costBuy)) {
-            state = CellState.OWNED
-            owner = player
-            player.addGameCell(this)
+            setupOwner(player)
             true
         } else false
     }
 
     fun pay(player: Player): Boolean {
         return if (player.loseMoney(info.cost.costCharge)) {
-            owner!!.earnMoney(info.cost.costCharge)
+            owner?.earnMoney(info.cost.costCharge)
             true
         } else false
     }
 
     fun sell() {
         state = CellState.FREE
-        owner!!.removeGameCell(this)
-        owner!!.earnMoney(info.cost.costSell)
+        owner?.removeGameCell(this)
+        owner?.earnMoney(info.cost.costSell)
         owner = null
     }
 
     fun reset() {
         state = CellState.FREE
-        owner!!.removeGameCell(this)
+        owner?.removeGameCell(this)
         owner = null
+    }
+
+    fun setupOwner(player: Player) {
+        state = CellState.OWNED
+        owner = player
+        player.addGameCell(this)
+    }
+
+    fun changeOwner(newOwner: Player) {
+        owner?.removeGameCell(this)
+        setupOwner(newOwner)
     }
 
     fun checkBuyCost(money: Int): Boolean = money >= info.cost.costBuy

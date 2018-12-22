@@ -16,4 +16,5 @@
     <string name="dices">Dices</string>
     <string name="throw_dices">Throw dices</string>
     <string name="title_activity_win_screen">WinScreenActivity</string>
+    <string name="deathMoneyInfo">[DEAD :)]</string>
 </resources>

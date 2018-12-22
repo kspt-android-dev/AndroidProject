@@ -2,6 +2,9 @@ package com.dreamteam.monopoly.game.player
 
 import android.util.Log
 import android.widget.TextView
+import com.dreamteam.monopoly.R
+import com.dreamteam.monopoly.game.GameData.maxChanceMoney
+import com.dreamteam.monopoly.game.GameData.minChanceMoney
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.board.cell.CellState
 import com.dreamteam.monopoly.game.board.cell.GameCell
@@ -38,7 +41,7 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
                     currentCell.checkBuyCost(money)) {
                 buyOpportunity()
             } else if (currentCell.info.cellType == GameCellType.CHANCE)
-                chanceResult(currentCell)
+                chanceResult()
             else {
                 if ((currentCell.info.cellType == GameCellType.BANK) &&
                         !decision(PlayerActions.PAY))
@@ -84,7 +87,7 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         board.activity.getGameManager().removePlayer(this)
         val playerMoneyId = board.activity.resources.getIdentifier("playerMoney${this.id}", "id", board.activity.packageName)
         val playerMoney: TextView = board.activity.findViewById(playerMoneyId)
-        playerMoney.text = "[DEAD :)]"
+        playerMoney.text = board.activity.getString(R.string.deathMoneyInfo)
         return true
     }
 
@@ -96,19 +99,30 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         }
     }
 
-    private fun chanceResult(cell: GameCell): PlayerMoveCondition {
-        when ((0..4).random()) {
-            0, 1 -> if (!loseMoney((1..2500).random())) loseMoney(money)
-            2, 3 -> earnMoney((1..2500).random())
-            4 -> if (!cells.isEmpty()) cells[(0 until cells.size).random()].reset()
-            //4 earn random cell
-            //5 lose random cell
+    private fun chanceResult(): PlayerMoveCondition {
+        when ((0..8).random()) {
+            0, 1, 2 -> if (!loseMoney((minChanceMoney..maxChanceMoney).random())) loseMoney(money)
+            3, 4, 5 -> earnMoney((minChanceMoney..maxChanceMoney).random())
+            6 -> if (!cells.isEmpty()) cells[(0 until cells.size).random()].reset()
+            7 -> board.gameWay[(0 until board.gameWayLength).random()].changeOwner(this)
+            8 -> {
+                var charge = 0
+                for (cell in cells)
+                    charge += cell.info.cost.costCharge
+                if (!loseMoney(charge)) loseMoney(money)
+            }
+            9 -> {
+                var profit = 0
+                for (cell in cells)
+                    profit += cell.info.cost.costCharge
+                earnMoney(profit)
+            }
         }
         return PlayerMoveCondition.COMPLETED
     }
 
     private fun markOwnedCell(newCell: GameCell) {
-        board.activity.playerSetCellMark(board.gameWay.indexOf(newCell))
+        board.activity.playerSetCellMark(board.gameWay.indexOf(newCell), this)
     }
 
     private fun removeMark(rmCell: GameCell) {
@@ -126,24 +140,18 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         } else false
     }
 
+    fun restoreGameCells(newCellIndexList: ArrayList<Int>) {
+        Log.d("FindError", "GameCell bought")
+        for (index in newCellIndexList) {
+            board.gameWay[index].setupOwner(this)
+        }
+    }
+
     fun addGameCell(newCell: GameCell) {
         Log.d("FindError", "GameCell bought")
         cells.add(newCell)
         markOwnedCell(newCell)
     }
-
-    fun addGameCell(newCellIndexList: ArrayList<Int>) {
-        Log.d("FindError", "GameCell bought")
-        for (index in newCellIndexList)
-            addGameCell(index)
-    }
-
-    fun addGameCell(newCellIndex: Int) {
-        Log.d("FindError", "GameCell bought")
-        cells.add(board.gameWay[newCellIndex])
-        markOwnedCell(board.gameWay[newCellIndex])
-    }
-
 
     fun removeGameCell(rmCell: GameCell) {
         cells.remove(rmCell)

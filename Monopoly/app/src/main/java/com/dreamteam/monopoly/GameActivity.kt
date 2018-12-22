@@ -213,7 +213,7 @@ class GameActivity : AppCompatActivity() {
         Toasty.info(this, gameManager.getCurrentPlayer().name + " move", Toast.LENGTH_SHORT, true).show()
     }
 
-    fun playerSetCellMark(index: Int , player: Player) {
+    fun playerSetCellMark(index: Int, player: Player) {
         val shape = cellButtons[index].background as LayerDrawable
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
@@ -262,12 +262,12 @@ class GameActivity : AppCompatActivity() {
             updPlayerMoney(gameManager.getPlayerByName(string)!!)
         }
 
-         buttonSuicide!!.setOnClickListener{view ->
-             val myPlayerID = resources.getIdentifier("Player${gameManager.getCurrentPlayer().id}", "id", packageName)
-             val player = findViewById<ImageView>(myPlayerID)
-             player.visibility = View.INVISIBLE
-             gameManager.getCurrentPlayer().decision(PlayerActions.RETREAT)
-         }
+        buttonSuicide!!.setOnClickListener { view ->
+            val myPlayerID = resources.getIdentifier("Player${gameManager.getCurrentPlayer().id}", "id", packageName)
+            val player = findViewById<ImageView>(myPlayerID)
+            player.visibility = View.INVISIBLE
+            gameManager.getCurrentPlayer().decision(PlayerActions.RETREAT)
+        }
     }
 
     private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) { // LEFT = 1 RIGHT = 2 TOP = 3 BOTTOM = 4 START = 6 END = 7
@@ -320,6 +320,7 @@ class GameActivity : AppCompatActivity() {
             constraintSet.connect(button.id, From3, previousButtonID, To3, 0)
         }
         constraintSet.applyTo(layout)
+        playerRemoveCellMark(indexForBoard) // TODO check background on restore
         indexForBoard++
     }
 
@@ -370,7 +371,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun cellsRestore(savedInstanceState: Bundle) {
         for (i in 0 until gameManager.players.size) {
-            gameManager.players[i].addGameCell(savedInstanceState.getIntegerArrayList("playerCells" + i.toString()))
+            gameManager.players[i].restoreGameCells(savedInstanceState.getIntegerArrayList("playerCells" + i.toString()))
         }
     }
 
@@ -384,7 +385,7 @@ class GameActivity : AppCompatActivity() {
         val playersPos = ArrayList<Int>(playersNum)
         val playersMoney = ArrayList<Int>(playersNum)
         val playersOwnedCells: ArrayList<ArrayList<Int>> = arrayListOf(
-        ArrayList(), ArrayList(), ArrayList(), ArrayList())
+                ArrayList(), ArrayList(), ArrayList(), ArrayList())
         for (i in 0 until playersNum) {
             val player = gameManager.players[i]
             playersPos.add(player.currentPosition)
