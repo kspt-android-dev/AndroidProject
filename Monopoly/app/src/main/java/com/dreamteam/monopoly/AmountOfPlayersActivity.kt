@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import com.dreamteam.monopoly.game.player.PlayerType
 import es.dmoral.toasty.Toasty
 import maes.tech.intentanim.CustomIntent
 import kotlin.collections.ArrayList
@@ -17,7 +18,10 @@ import kotlin.collections.ArrayList
 
 class AmountOfPlayersActivity : AppCompatActivity() {
 
-    private var maxPlayers: Int = 4
+    private val minPlayers: Int = 2
+    private val maxPlayers: Int = 4
+    private val maxNameLength = 15
+
     private var buttonEnter: Button? = null
     private var buttonBack: Button? = null
     private var buttonStart: Button? = null
@@ -28,7 +32,8 @@ class AmountOfPlayersActivity : AppCompatActivity() {
     private var buttonAIfourth: Button? = null
     private var namespace: EditText? = null
     private var numberOfPlayers: Int = 0
-    private var playersNames: ArrayList<String> = ArrayList()
+    private var playersNames: ArrayList<String> = ArrayList(maxPlayers)
+    private var playersTypes: ArrayList<Boolean> = ArrayList(maxPlayers)
     private var deleteList: ArrayList<TextView> = ArrayList()
     private var arrayOfTextViews: ArrayList<TextView> = ArrayList()
 
@@ -60,19 +65,19 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         buttonAIfourth!!.isClickable = false
 
         buttonAIfirst!!.setOnClickListener {
-            buttonAiListner(buttonAIfirst!!)
+            buttonAiListener(buttonAIfirst!!)
         }
         buttonAIsecond!!.setOnClickListener {
-            buttonAiListner(buttonAIsecond!!)
+            buttonAiListener(buttonAIsecond!!)
         }
         buttonAIthird!!.setOnClickListener {
-            buttonAiListner(buttonAIthird!!)
+            buttonAiListener(buttonAIthird!!)
         }
         buttonAIfourth!!.setOnClickListener {
-            buttonAiListner(buttonAIfourth!!)
+            buttonAiListener(buttonAIfourth!!)
         }
 
-        if (numberOfPlayers < 2) buttonStart!!.isEnabled = false
+        if (numberOfPlayers < minPlayers) buttonStart!!.isEnabled = false
 
         for (i in 1..maxPlayers) {
             val textViewId = resources.getIdentifier("PlayerName$i", "id", packageName)
@@ -82,14 +87,14 @@ class AmountOfPlayersActivity : AppCompatActivity() {
 
         buttonEnter!!.setOnClickListener {
             val content = namespace!!.text.toString() //gets you the contents of edit text
-            if (content.isEmpty() || content.length > 15 || playersNames.contains(content)) {
+            if (content.isEmpty() || content.length > maxNameLength || playersNames.contains(content)) {
                 //showToast(v, resources.getString(R.string.nameSize))
                 Toasty.error(this, resources.getString(R.string.nameSize),
                         Toast.LENGTH_SHORT, true).show()
                 return@setOnClickListener
             }
-            numberOfPlayers++
-            playersNames.add(content)
+            addNewPlayer(content)
+
             Toasty.success(this, resources.getString(R.string.newPlayer) + content,
                     Toast.LENGTH_SHORT, true).show()
             val textViewId = resources.getIdentifier("PlayerName$numberOfPlayers", "id", packageName)
@@ -109,20 +114,19 @@ class AmountOfPlayersActivity : AppCompatActivity() {
                 }
             }
 
-            aiButtonsAppearence(true)
+            aiButtonsAppearance(true)
 
 
             if (numberOfPlayers == maxPlayers) buttonEnter!!.isEnabled = false
-            if (numberOfPlayers >= 2) buttonStart!!.isEnabled = true
+            if (numberOfPlayers >= minPlayers) buttonStart!!.isEnabled = true
             moveAllNames()
         }
 
         buttonStart!!.setOnClickListener {
             val players: ArrayList<String> = ArrayList()
             val bots: ArrayList<String> = ArrayList()
-            val names = HashMap<String, ArrayList<String>>()
-            for (i in 1..numberOfPlayers)
-            {
+            val names = HashMap<PlayerType, ArrayList<String>>()
+            for (i in 1..numberOfPlayers) {
                 val buttonID = this.resources.getIdentifier("aiButton$i", "id", packageName)
                 val aiButton = findViewById<Button>(buttonID)
                 if (aiButton.text.toString() == "AI: OFF")
@@ -130,15 +134,12 @@ class AmountOfPlayersActivity : AppCompatActivity() {
                 else
                     bots.add(playersNames[i - 1])
             }
-            names["OFF"] = bots
-            names["OFF"] = players
+            names[PlayerType.AI] = bots
+            names[PlayerType.PERSON] = players
             intent = Intent(this, GameActivity::class.java)
             intent.putExtra("Map", names)
             startActivity(intent)
             CustomIntent.customType(this, "bottom-to-up")
-
-
-
         }
 
         buttonBack!!.setOnClickListener {
@@ -157,14 +158,13 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             }
             deleteList.clear()
             moveAllNames()
-            setUnclickble()
+            setUnClickable()
 
-            aiButtonsAppearence(false)
+            aiButtonsAppearance(false)
 
-            if (numberOfPlayers < 2) buttonStart!!.isEnabled = false
-            if (numberOfPlayers < 4) buttonEnter!!.isEnabled = true
+            if (numberOfPlayers < minPlayers) buttonStart!!.isEnabled = false
+            if (numberOfPlayers < maxPlayers) buttonEnter!!.isEnabled = true
         }
-
     }
 
     override fun onResume() {
@@ -176,6 +176,14 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         super.onWindowFocusChanged(hasFocus)
         hideTopBar()
     }
+
+    private fun addNewPlayer(content: String) {
+        numberOfPlayers++
+        playersNames.add(content)
+        playersTypes.add(PlayerType.PERSON.value)
+    }
+
+
 
     private fun hideTopBar() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -195,7 +203,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUnclickble() {
+    private fun setUnClickable() {
         for (text in arrayOfTextViews) {
             if (text.text == "")
                 text.isClickable = false
@@ -203,13 +211,12 @@ class AmountOfPlayersActivity : AppCompatActivity() {
     }
 
 
-    private fun buttonAiListner(button: Button) {
-        Log.d("CHECKTEXT", button.text.toString())
+    private fun buttonAiListener(button: Button) {
         if (button.text == "AI: ON") button.text = resources.getString(R.string.offAI)
         else button.text = resources.getString(R.string.onAI)
     }
 
-    private fun aiButtonsAppearence(on: Boolean) {
+    private fun aiButtonsAppearance(on: Boolean) {
         if (on) {
             for (i in 1..numberOfPlayers) {
                 val buttonID = this.resources.getIdentifier("aiButton$i", "id", packageName)
@@ -225,5 +232,16 @@ class AmountOfPlayersActivity : AppCompatActivity() {
                 aiButton.isClickable = false
             }
         }
+    }
+
+    private fun dataRestore(savedInstanceState: Bundle) {
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+
+        outState?.putStringArrayList("playersNames", playersNames)
+        outState?.putBooleanArray("playersTypes", playersTypes.toBooleanArray())
+        super.onSaveInstanceState(outState)
     }
 }

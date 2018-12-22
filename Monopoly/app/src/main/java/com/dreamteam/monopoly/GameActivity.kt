@@ -24,7 +24,6 @@ import com.dreamteam.monopoly.game.player.Player
 import com.dreamteam.monopoly.game.player.PlayerActions
 import com.dreamteam.monopoly.game.player.PlayerMoveCondition
 import com.dreamteam.monopoly.game.player.PlayerType
-import com.tapadoo.alerter.Alerter
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
@@ -54,6 +53,8 @@ class GameActivity : AppCompatActivity() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
+        hideTopBar()
+
         buttonThrowDices = findViewById(R.id.buttonThrowCubes)
         yesButton = findViewById(R.id.YesButton)
         noButton = findViewById(R.id.NoButton)
@@ -76,8 +77,22 @@ class GameActivity : AppCompatActivity() {
     @Override
     override fun finish() {
         super.finish()
-        Alerter.hide()
         CustomIntent.customType(this, "up-to-bottom")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideTopBar()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        hideTopBar()
+    }
+
+    private fun hideTopBar() {
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        actionBar?.hide()
     }
 
     private fun init() {
@@ -86,11 +101,9 @@ class GameActivity : AppCompatActivity() {
         val horizontalGuideline = findViewById<Guideline>(R.id.HorizontalGuideline)
         val verticalGuideline = findViewById<Guideline>(R.id.VerticalGuideline)
 
-
         val intent = this.intent
         val bundle: Bundle = intent.extras
-        val playersNames: HashMap<String , ArrayList<String>>
-                = bundle.getSerializable("Map") as HashMap<String, ArrayList<String>>
+        val playersNames: HashMap<PlayerType, ArrayList<String>> = bundle.getSerializable("Map") as HashMap<PlayerType, ArrayList<String>>
 
         val metrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(metrics)
@@ -113,11 +126,11 @@ class GameActivity : AppCompatActivity() {
         createBoard(constraintLayout, cellHeight, cellWidth)
         startAssignment(playersNames)
 
-        val namesize:Int
+        val namesize: Int
         namesize = when {
-            playersNames["ON"]?.size == null -> playersNames["OFF"]!!.size
-            playersNames["OFF"]?.size == null -> playersNames["ON"]!!.size
-            else -> playersNames["OFF"]!!.size + playersNames["ON"]!!.size
+            playersNames[PlayerType.PERSON]?.size == null -> playersNames[PlayerType.AI]!!.size
+            playersNames[PlayerType.AI]?.size == null -> playersNames[PlayerType.PERSON]!!.size
+            else -> playersNames[PlayerType.AI]!!.size + playersNames[PlayerType.PERSON]!!.size
         }
         for (i in 1..namesize) {
             val myPlayerID = resources.getIdentifier("Player$i", "id", packageName)
@@ -284,10 +297,10 @@ class GameActivity : AppCompatActivity() {
 
     fun getGameManager(): GameManager = gameManager
 
-    private fun startAssignment(playersNames: HashMap<String, ArrayList<String>>) //adding text/players on map
+    private fun startAssignment(playersNames: HashMap<PlayerType, ArrayList<String>>) //adding text/players on map
     {
-        if (playersNames["ON"] != null) {
-            for (string in playersNames["ON"]!!) {
+        if (playersNames[PlayerType.AI] != null) {
+            for (string in playersNames[PlayerType.AI]!!) {
                 gameManager.addPlayer(string, PlayerType.AI)
                 val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
                 val playerStats: TextView = findViewById(playerStatsId)
@@ -296,8 +309,8 @@ class GameActivity : AppCompatActivity() {
                 updPlayerMoney(gameManager.getPlayerByName(string)!!)
             }
         }
-        if (playersNames["OFF"] != null) {
-            for (string in playersNames["OFF"]!!) {
+        if (playersNames[PlayerType.PERSON] != null) {
+            for (string in playersNames[PlayerType.PERSON]!!) {
                 gameManager.addPlayer(string, PlayerType.PERSON)
                 val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
                 val playerStats: TextView = findViewById(playerStatsId)
@@ -405,7 +418,7 @@ class GameActivity : AppCompatActivity() {
         nameSpace.text = String.format(resources.getString(R.string.namespace), name)
         buySpace.text = String.format(resources.getString(R.string.buyspace), costBuy)
         sellSpace.text = String.format(resources.getString(R.string.sellspace), costSell)
-        chargeSpace.text = String.format(resources.getString(R.string.chargespace),charge)
+        chargeSpace.text = String.format(resources.getString(R.string.chargespace), charge)
     }
 
     private fun dataRestore(savedInstanceState: Bundle) {
