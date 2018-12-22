@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import java.io.IOException;
 
 public class GameStart extends Activity {
     EditText firtsPlayer;
@@ -19,6 +16,7 @@ public class GameStart extends Activity {
         firtsPlayer = (EditText) findViewById(R.id.firstPlayer);
         secondPlayer = (EditText) findViewById(R.id.secondPlayer);
     }
+
     public void onClickStartGame(View view) {
         Intent intent = new Intent(this, Game.class);
         intent.putExtra("firstPlayer", firtsPlayer.getText().toString());

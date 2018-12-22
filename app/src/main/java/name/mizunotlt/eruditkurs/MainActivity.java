@@ -1,14 +1,10 @@
 package name.mizunotlt.eruditkurs;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,7 +12,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setOrientationLayout();
+    }
+    private void setOrientationLayout() {
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_main_land);
+
+        } else {
+            if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                setContentView(R.layout.activity_main);
+            }
+        }
     }
 
     public void onClickNewGame(View view) {
@@ -29,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickAbout(View view){
-
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
     }
 }

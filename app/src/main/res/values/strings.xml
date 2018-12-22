@@ -4,8 +4,12 @@
     <string name="button">Button</string>
     <string name="newGame">Новая игра</string>
     <string name="exit">Выход</string>
-    <string name="rules">Правила</string>
+    <string name="aboutButton">Об Игре</string>
     <string name="startGame">Старт игры</string>
     <string name="nextTurn">Конец хода</string>
     <string name="newWord">Новое слово</string>
+    <string name="about">Игра эрудит!!
+                         Версия игры: 1.0
+                         Автор: Архиреев Дмитрий
+                         P.S ОЧЕНЬ УСТАЛ</string>
 </resources>

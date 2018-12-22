@@ -3,14 +3,10 @@ package name.mizunotlt.eruditkurs;
 import android.graphics.Path;
 import android.graphics.Point;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Cell {
 
     private Point startPoint;
     private Path path;
-
     private boolean x2Word = false;
     private boolean x3Word = false;
     private boolean x2Letter = false;
@@ -21,26 +17,31 @@ public class Cell {
     private boolean useErly = false;
     private boolean state = false;
     private int numCell;
-    private final int SIZE = 70;
-    Cell(Point startPoint, int numCell){
+    private int size;
+
+    Cell(Point startPoint, int numCell,int size){
         this.startPoint = startPoint;
         this.numCell = numCell;
+        this.size = size;
         this.setPath();
     }
+
     public boolean getIsLetter(){
         if (letter == ' ')
             return false;
         else return true;
     }
+
     private void setPath(){
         path = new Path();
         path.moveTo(startPoint.x, startPoint.y);
-        path.rLineTo(SIZE,0);
-        path.rLineTo(0, SIZE);
-        path.rLineTo(-SIZE,0);
-        path.rLineTo(0, -SIZE);
+        path.rLineTo(size,0);
+        path.rLineTo(0, size);
+        path.rLineTo(-size,0);
+        path.rLineTo(0, -size);
         path.close();
     }
+
     public void setDefCell(){
         this.defCell = true;
         this.startPosition = false;
@@ -49,6 +50,7 @@ public class Cell {
         this.x2Letter = false;
         this.x3Letter = false;
     }
+
     public int typeCell(){
 
         if (startPosition){
@@ -69,6 +71,7 @@ public class Cell {
         else
             return 1;
     }
+
     public Path getPath(){
         return path;
     }
@@ -91,18 +94,22 @@ public class Cell {
         this.defCell = false;
        this.x2Word = true;
     }
+
     public void setTrueX3Word(){
         this.defCell = false;
         this.x3Word = true;
     }
+
     public void setTrueX2Letter(){
         this.defCell = false;
         this.x2Letter = true;
     }
+
     public void setTrueX3Letter(){
         this.defCell = false;
         this.x3Letter = true;
     }
+
     public boolean isStartPosition() {
         return startPosition;
     }
@@ -110,6 +117,7 @@ public class Cell {
         this.defCell = false;
         this.startPosition = true;
     }
+
     public int getNumCell() {
         return numCell;
     }

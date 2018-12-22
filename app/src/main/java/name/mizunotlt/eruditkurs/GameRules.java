@@ -20,6 +20,7 @@ public class GameRules {
     private final int countCells = 225;
 
     private ArrayList<Integer> countFreeLetter = new ArrayList<>();
+
     private void initListLetter(){
         listLetter.add(0, new Letter('А', 1, 10));
         listLetter.add(1, new Letter('Б', 3, 3));
@@ -55,8 +56,9 @@ public class GameRules {
         listLetter.add(31, new Letter('Я', 3, 3));
         listLetter.add(32, new Letter('*', 0, 3));
     }
+
     @SuppressLint("StaticFieldLeak")
-    private class MyAsyncTask extends AsyncTask<String, Void, Boolean> {
+    public static class MyAsyncTask extends AsyncTask<String, Void, Boolean> {
         boolean result;
         @Override
         protected Boolean doInBackground(String... word) {
@@ -73,9 +75,11 @@ public class GameRules {
             super.onPostExecute(result);
         }
     }
+
     GameRules(){
         initListLetter();
     }
+
     private Letter findLetter(char letter){
         for (Letter templet: listLetter){
             if (templet.getLetter() == letter)
@@ -83,6 +87,7 @@ public class GameRules {
         }
         return new Letter(' ', 0, 0);
     }
+
     private void countScore(Cell cell){
         int incScore = findLetter(cell.getLetter()).getCountScore();
         switch (cell.typeCell()){
@@ -117,28 +122,20 @@ public class GameRules {
         }
         score += incScore;
     }
+
     private String makeWord(Player player, ArrayList<Cell> workList){
         StringBuilder result = new StringBuilder();
         int first = player.getFirstTap();
         int startMakeWord = 0;
         int index = first;
-
-        if ((workList.get(first + cellsInRow).getIsLetter())|(workList.get(first - cellsInRow).getIsLetter())){
-            if (!(workList.get(first + 1).getIsLetter()) & (!workList.get(first - 1 ).getIsLetter())){
-                while (index > 0){
-                    if ((!workList.get(index).getIsLetter()) || (index - cellsInRow < 0)){
-                        startMakeWord = index;
-                        break;
-                    }
-                    index -=cellsInRow;
-                }
-                startMakeWord += cellsInRow;
-                while (startMakeWord < countCells){
-                    if (workList.get(startMakeWord).getIsLetter()){
+        if ((first < cellsInRow) | (first + cellsInRow > countCells)) {
+            if ((first < cellsInRow)) {
+                startMakeWord = first;
+                while (startMakeWord < countCells) {
+                    if (workList.get(startMakeWord).getIsLetter()) {
                         result.append(workList.get(startMakeWord).getLetter());
                         countScore(workList.get(startMakeWord));
-                    }
-                    else {
+                    } else {
                         break;
                     }
                     startMakeWord += cellsInRow;
@@ -146,10 +143,60 @@ public class GameRules {
                 if (flagx3Word)
                     score *= 3;
                 if (flagx2Word)
-                    score *=2;
+                    score *= 2;
             }
-            else
+            if  (first + cellsInRow > countCells){
+                while (index > 0) {
+                    if ((!workList.get(index).getIsLetter()) || (index - cellsInRow < 0)) {
+                        startMakeWord = index;
+                        break;
+                    }
+                    index -= cellsInRow;
+                }
+                startMakeWord += cellsInRow;
+                while (startMakeWord < countCells) {
+                    if (workList.get(startMakeWord).getIsLetter()) {
+                        result.append(workList.get(startMakeWord).getLetter());
+                        countScore(workList.get(startMakeWord));
+                    } else {
+                        break;
+                    }
+                    startMakeWord += cellsInRow;
+                }
+                if (flagx3Word)
+                    score *= 3;
+                if (flagx2Word)
+                    score *= 2;
+            } else
                 return result.toString();
+        }
+        else {
+            if ((workList.get(first + cellsInRow).getIsLetter()) | (workList.get(first - cellsInRow).getIsLetter())) {
+                if (!(workList.get(first + 1).getIsLetter()) & (!workList.get(first - 1).getIsLetter())) {
+                    while (index > 0) {
+                        if ((!workList.get(index).getIsLetter()) || (index - cellsInRow < 0)) {
+                            startMakeWord = index;
+                            break;
+                        }
+                        index -= cellsInRow;
+                    }
+                    startMakeWord += cellsInRow;
+                    while (startMakeWord < countCells) {
+                        if (workList.get(startMakeWord).getIsLetter()) {
+                            result.append(workList.get(startMakeWord).getLetter());
+                            countScore(workList.get(startMakeWord));
+                        } else {
+                            break;
+                        }
+                        startMakeWord += cellsInRow;
+                    }
+                    if (flagx3Word)
+                        score *= 3;
+                    if (flagx2Word)
+                        score *= 2;
+                } else
+                    return result.toString();
+            }
         }
         if ((workList.get(first - 1).getIsLetter()) | (workList.get(first + 1).getIsLetter())){
             if (!(workList.get(first - cellsInRow).getIsLetter()) & (!workList.get(first + cellsInRow ).getIsLetter())){
@@ -188,6 +235,7 @@ public class GameRules {
         try {
             MyAsyncTask asTask = new MyAsyncTask();
             test = asTask.execute(word).get();
+            asTask.cancel(true);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -205,6 +253,7 @@ public class GameRules {
         else
             return "";
     }
+
     public void addLetters(Player play){
         List<Character> lettWordList = new ArrayList<>();
         Random rand = new Random();
@@ -219,6 +268,7 @@ public class GameRules {
         }
         play.setListLetter(lettWordList);
     }
+
     //Метод восстановления букв после хода
     public void resetLetter(Player play){
         Random rand = new Random();
@@ -240,26 +290,26 @@ public class GameRules {
             }
         }
     }
+
     //Метод замены и сброса букв
     public void recycleLetter(Player play, List<Integer> list){
         List<Character> listLet = play.getListLetter();
         Random rand = new Random();
         int index = 0;
-        if (list.size() != 0){
-            for (int i = 0; i < list.size(); i++){
+        if (list.size() != 0) {
+            for (int i = 0; i < list.size(); i++) {
                 play.deletLetter(list.get(i));
             }
-            while (play.getCountLetter() < COUNT_LETTER_PLAYER){
-                int next =rand.nextInt(COUNT_LETTER);
+            while (play.getCountLetter() < COUNT_LETTER_PLAYER) {
+                int next = rand.nextInt(COUNT_LETTER);
                 if (listLetter.get(next).getCount() != 0) {
                     listLetter.get(next).setCount(listLetter.get(next).getCount() - 1);
-                    play.addLetter(list.get(index),listLetter.get(next).getLetter());
+                    play.addLetter(list.get(index), listLetter.get(next).getLetter());
                     index++;
                 }
             }
-        }
-        else{
-            for(Character let: listLet){
+        } else {
+            for (Character let : listLet) {
                 int oldCount = findLetter(let).getCount();
                 findLetter(let).setCount(oldCount + 1);
             }
@@ -274,6 +324,7 @@ public class GameRules {
         }
         return countFreeLetter;
     }
+
     public  void setCountFreeLetter(ArrayList<Integer> countList){
         for (int i = 0; i < listLetter.size(); i++){
             listLetter.get(i).setCount(countList.get(i));

@@ -9,6 +9,7 @@ public class CellForLetter {
     private int numCell;
     private boolean isSelect = false;
     private final int SIZE = 60;
+
     CellForLetter(Point startPoint, int numCell){
         this.startPoint = startPoint;
         this.numCell = numCell;

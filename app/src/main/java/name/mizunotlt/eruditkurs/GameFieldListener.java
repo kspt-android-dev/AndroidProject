@@ -33,7 +33,7 @@ public class GameFieldListener implements View.OnTouchListener {
                 startX = motionEvent.getX();
                 startY = motionEvent.getY();
 
-                for(Cell cell: gameField.getWorkListCells()){
+                for(Cell cell: gameField.getGames().getWorkListCells()){
                     startPointCell = cell.getStartPoint();
                     if (((int) startX  >= startPointCell.x) & ((int)startX <= startPointCell.x + SIZE)
                             &((int) startY  >= startPointCell.y) & ((int)startY <= startPointCell.y + SIZE)){
@@ -42,7 +42,7 @@ public class GameFieldListener implements View.OnTouchListener {
                         break;
                     }
                 }
-                for (CellForLetter cell : gameField.getListCellLetter()){
+                for (CellForLetter cell : gameField.getGames().getListCellLetter()){
                     startPointLetter = cell.getStartPoint();
                     if (((int) startX  >= startPointLetter.x) & ((int)startX <= startPointLetter.x + SIZE)
                         &((int) startY  >= startPointLetter.y) & ((int)startY <= startPointLetter.y + SIZE)){
