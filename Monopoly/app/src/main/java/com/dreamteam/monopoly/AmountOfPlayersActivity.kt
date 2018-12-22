@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.text.InputFilter
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -13,7 +14,7 @@ import com.dreamteam.monopoly.helpers.InputFilterMinMax
 import com.dreamteam.monopoly.helpers.showToast
 import es.dmoral.toasty.Toasty
 import maes.tech.intentanim.CustomIntent
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 
 class AmountOfPlayersActivity : AppCompatActivity() {
@@ -23,11 +24,16 @@ class AmountOfPlayersActivity : AppCompatActivity() {
     private var buttonBack: Button? = null
     private var buttonStart: Button? = null
     private var buttonDelete: Button? = null
+    private var buttonAI_first: Button? = null
+    private var buttonAI_second: Button? = null
+    private var buttonAI_third: Button? = null
+    private var buttonAI_fourth: Button? = null
     private var namespace: EditText? = null
     private var numberOfPlayers: Int = 0
     var playersNames: ArrayList<String> = ArrayList()
     var deleteList: ArrayList<TextView> = ArrayList()
     var arrayOfTextViews: ArrayList<TextView> = ArrayList()
+    var maxPlayer: Int = 4
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +46,32 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         buttonStart = findViewById(R.id.buttonStart)
         buttonDelete = findViewById(R.id.buttonDelete)
         namespace = findViewById(R.id.Namespace)
+        buttonAI_first = findViewById(R.id.aiButton1)
+        buttonAI_second = findViewById(R.id.aiButton2)
+        buttonAI_third = findViewById(R.id.aiButton3)
+        buttonAI_fourth = findViewById(R.id.aiButton4)
 
-        //namespace!!.setFilters(arrayOf<InputFilter>(InputFilterMinMax(0, 15)))
+        buttonAI_first!!.visibility = View.INVISIBLE
+        buttonAI_first!!.isClickable = false
+        buttonAI_second!!.visibility = View.INVISIBLE
+        buttonAI_second!!.isClickable = false
+        buttonAI_third!!.visibility = View.INVISIBLE
+        buttonAI_third!!.isClickable = false
+        buttonAI_fourth!!.visibility = View.INVISIBLE
+        buttonAI_fourth!!.isClickable = false
+
+        buttonAI_first!!.setOnClickListener {
+            buttonAiListner(buttonAI_first!!)
+        }
+        buttonAI_second!!.setOnClickListener {
+            buttonAiListner(buttonAI_second!!)
+        }
+        buttonAI_third!!.setOnClickListener {
+            buttonAiListner(buttonAI_third!!)
+        }
+        buttonAI_fourth!!.setOnClickListener {
+            buttonAiListner(buttonAI_fourth!!)
+        }
 
         if (numberOfPlayers < 2) buttonStart!!.isEnabled = false
 
@@ -78,7 +108,11 @@ class AmountOfPlayersActivity : AppCompatActivity() {
                     textView.setBackgroundResource(android.R.color.transparent)
                     deleteList.remove(textView)
                 }
+
+
             }
+
+            aiButtonsAppearence(true)
 
 
             if (numberOfPlayers == 4) buttonEnter!!.isEnabled = false
@@ -87,12 +121,27 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         }
 
         buttonStart!!.setOnClickListener {
-            Toasty.normal(this, resources.getString(R.string.startGameToast),
-                    Toast.LENGTH_SHORT, resources.getDrawable(R.drawable.dice6)).show()
+            val players: ArrayList<String> = ArrayList()
+            val bots: ArrayList<String> = ArrayList()
+            val names = HashMap<String, ArrayList<String>>()
+            for (i in 1..numberOfPlayers)
+            {
+                val buttonID = this.resources.getIdentifier("aiButton${i}", "id", packageName)
+                val aiButton = findViewById<Button>(buttonID)
+                if (aiButton.text.toString() == "AI: OFF")
+                    players.add(playersNames[i - 1])
+                else
+                    bots.add(playersNames[i - 1])
+            }
+            names.set("ON", bots!!)
+            names.set("OFF", players!!)
             intent = Intent(this, GameActivity::class.java)
-            intent.putExtra("PlayersNames", playersNames)
+            intent.putExtra("Map", names)
             startActivity(intent)
             CustomIntent.customType(this, "bottom-to-up")
+
+
+
         }
 
         buttonBack!!.setOnClickListener {
@@ -112,9 +161,13 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             deleteList.clear()
             moveAllNames()
             setUnclickble()
+
+            aiButtonsAppearence(false)
+
             if (numberOfPlayers < 2) buttonStart!!.isEnabled = false
             if (numberOfPlayers < 4) buttonEnter!!.isEnabled = true
         }
+
     }
 
     override fun onResume() {
@@ -149,6 +202,30 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         for (text in arrayOfTextViews) {
             if (text.text == "")
                 text.isClickable = false
+        }
+    }
+
+    private fun buttonAiListner(button: Button) {
+        Log.d("CHECKTEXT", button.text.toString())
+        if (button.text.toString() == "AI: ON") button.setText("AI: OFF")
+        else button.setText("AI: ON")
+    }
+
+    private fun aiButtonsAppearence(on: Boolean) {
+        if (on) {
+            for (i in 1..numberOfPlayers) {
+                val buttonID = this.resources.getIdentifier("aiButton${i}", "id", packageName)
+                val aiButton = findViewById<Button>(buttonID)
+                aiButton.visibility = View.VISIBLE
+                aiButton.isClickable = true
+            }
+        } else {
+            for (i in numberOfPlayers + 1..maxPlayers) {
+                val buttonID = this.resources.getIdentifier("aiButton${i}", "id", packageName)
+                val aiButton = findViewById<Button>(buttonID)
+                aiButton.visibility = View.INVISIBLE
+                aiButton.isClickable = false
+            }
         }
     }
 }

@@ -28,6 +28,7 @@ import com.tapadoo.alerter.Alerter
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
+import java.io.Serializable
 
 
 class GameActivity : AppCompatActivity() {
@@ -85,8 +86,9 @@ class GameActivity : AppCompatActivity() {
         val verticalGuideline = findViewById<Guideline>(R.id.VerticalGuideline)
 
 
-        val intent = intent
-        val playersNames: ArrayList<String> = intent.getStringArrayListExtra("PlayersNames") //get info from AmountOfPlayers Activity
+        val intent = this.intent
+        val bundle: Bundle = intent.extras
+        val playersNames: HashMap<String , ArrayList<String>> = bundle.getSerializable("Map") as HashMap<String, ArrayList<String>> //get info from AmountOfPlayers Activity
 
         val metrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(metrics)
@@ -110,7 +112,7 @@ class GameActivity : AppCompatActivity() {
         startAssignment(playersNames)
 
         // players pos and marks setup
-        for (i in 1..playersNames.size) {
+        for (i in 1..playersNames.get("ON")!!.size + playersNames.get("OFF")!!.size) {
             val myPlayerID = resources.getIdentifier("Player$i", "id", packageName)
             val playerImage = resources.getDrawable(resources
                     .getIdentifier("player$i", "drawable", packageName), null)
@@ -276,15 +278,27 @@ class GameActivity : AppCompatActivity() {
 
     fun getGameManager(): GameManager = gameManager
 
-    private fun startAssignment(playersNames: ArrayList<String>) //adding text/players on map
+    private fun startAssignment(playersNames: HashMap<String, ArrayList<String>>) //adding text/players on map
     {
-        for (string in playersNames) {
-            gameManager.addPlayer(string, PlayerType.PERSON)
-            val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
-            val playerStats: TextView = findViewById(playerStatsId)
-            playerStats.text = string
-            gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
-            updPlayerMoney(gameManager.getPlayerByName(string)!!)
+        if (playersNames.get("ON") != null) {
+            for (string in playersNames.get("ON")!!) {
+                gameManager.addPlayer(string, PlayerType.AI)
+                val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
+                val playerStats: TextView = findViewById(playerStatsId)
+                playerStats.text = string
+                gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
+                updPlayerMoney(gameManager.getPlayerByName(string)!!)
+            }
+        }
+        if (playersNames.get("OFF") != null) {
+            for (string in playersNames.get("OFF")!!) {
+                gameManager.addPlayer(string, PlayerType.PERSON)
+                val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
+                val playerStats: TextView = findViewById(playerStatsId)
+                playerStats.text = string
+                gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
+                updPlayerMoney(gameManager.getPlayerByName(string)!!)
+            }
         }
 
         buttonSuicide!!.setOnClickListener {
