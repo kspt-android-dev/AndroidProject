@@ -56,5 +56,5 @@ object GameData {
             GameCell("36", info = GameCellInfo.CHANCE),
             GameCell("37", info = GameCellInfo.VK),
             GameCell("38", info = GameCellInfo.BANK),
-            GameCell("39", info = GameCellInfo.FACEBOOk))
+            GameCell("39", info = GameCellInfo.FACEBOOK))
 }

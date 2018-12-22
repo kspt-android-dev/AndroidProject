@@ -4,7 +4,7 @@
             <solid android:color="@color/cellBackground" />
         </shape>
     </item>
-    <item android:id = "@+id/celllogo">
+    <item android:id = "@+id/cellLogo">
         <bitmap
             android:src="@drawable/borders_in_vis_rectangle"
             android:tileMode="repeat" />

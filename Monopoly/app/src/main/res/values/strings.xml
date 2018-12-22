@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Best Monopoly Ever!</string>
+    <string name="winnerTitle">Monopoly King:</string>
+    <string name="menu">Menu</string>
     <string name="sell">Sell</string>
     <string name="suicide">Suicide</string>
     <string name="yesAnswer">Yes</string>
