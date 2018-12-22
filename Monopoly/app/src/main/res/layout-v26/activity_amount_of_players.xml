@@ -81,7 +81,7 @@
 
     <TextView
         android:id="@+id/PlayerName1"
-        android:layout_width="130dp"
+        android:layout_width="125dp"
         android:layout_height="30dp"
         android:layout_below="@id/Players"
         android:layout_marginTop="10dp"
@@ -91,17 +91,17 @@
 
     <Button
         android:id="@+id/aiButton1"
-        android:layout_width="60dp"
+        android:layout_width="65dp"
         android:layout_height="35dp"
         android:layout_marginStart="10dp"
         android:layout_alignTop="@+id/PlayerName1"
         android:layout_toEndOf="@+id/PlayerName1"
-        android:textSize="10dp"
-        android:text="AI: OFF" />
+        android:textSize="12sp"
+        android:text="@string/offAI" />
 
     <TextView
         android:id="@+id/PlayerName2"
-        android:layout_width="130dp"
+        android:layout_width="125dp"
         android:layout_height="30dp"
         android:layout_below="@id/PlayerName1"
         android:layout_marginTop="10dp"
@@ -111,17 +111,17 @@
 
     <Button
         android:id="@+id/aiButton2"
-        android:layout_width="60dp"
+        android:layout_width="65dp"
         android:layout_height="35dp"
         android:layout_marginStart="10dp"
         android:layout_alignTop="@+id/PlayerName2"
         android:layout_toEndOf="@+id/PlayerName2"
-        android:textSize="10dp"
-        android:text="AI: OFF" />
+        android:textSize="12sp"
+        android:text="@string/offAI" />
 
     <TextView
         android:id="@+id/PlayerName3"
-        android:layout_width="130dp"
+        android:layout_width="125dp"
         android:layout_height="30dp"
         android:layout_below="@id/PlayerName2"
         android:layout_marginTop="10dp"
@@ -131,17 +131,17 @@
 
     <Button
         android:id="@+id/aiButton3"
-        android:layout_width="60dp"
+        android:layout_width="65dp"
         android:layout_height="35dp"
         android:layout_marginStart="10dp"
         android:layout_alignTop="@+id/PlayerName3"
         android:layout_toEndOf="@+id/PlayerName3"
-        android:textSize="10dp"
-        android:text="AI: OFF" />
+        android:textSize="12sp"
+        android:text="@string/offAI" />
 
     <TextView
         android:id="@+id/PlayerName4"
-        android:layout_width="130dp"
+        android:layout_width="125dp"
         android:layout_height="30dp"
         android:layout_below="@id/PlayerName3"
         android:layout_marginTop="10dp"
@@ -151,13 +151,13 @@
 
     <Button
         android:id="@+id/aiButton4"
-        android:layout_width="60dp"
+        android:layout_width="65dp"
         android:layout_height="35dp"
         android:layout_alignTop="@+id/PlayerName4"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/PlayerName4"
-        android:textSize="10dp"
-        android:text="AI: OFF" />
+        android:textSize="12sp"
+        android:text="@string/offAI" />
 
 
 </RelativeLayout>

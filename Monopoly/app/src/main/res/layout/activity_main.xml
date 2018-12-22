@@ -6,46 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:gravity="center"
-        android:text="BestMonopolyEver"
-        android:textColor="#000000"
-        android:textSize="20dp"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <ImageView
-        android:id="@+id/PlayBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/playButton"
-        android:gravity="center"
-        android:layout_marginTop="100dp"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
-
-    <Button
-        android:id="@+id/buttonPlay"
-        android:layout_width="@+id/PlayBtn"
-        android:layout_height="@+id/PlayBtn"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text=""
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/PlayBtn"
-        app:layout_constraintEnd_toEndOf="@+id/PlayBtn"
-        app:layout_constraintStart_toStartOf="@+id/PlayBtn"
-        app:layout_constraintTop_toTopOf="@+id/PlayBtn" />
-        -->
     <com.tomer.fadingtextview.FadingTextView
         android:layout_width="114dp"
         android:layout_height="71dp"
@@ -82,7 +42,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="#7d20f5"
-        android:contentDescription="TODO"
         android:text="@string/buttonPlay"
         android:textColor="#ffffff"
         android:textSize="30sp"
@@ -101,7 +60,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="#7d20f5"
-        android:contentDescription="TODO"
         android:text="@string/buttonExit"
         android:textColor="#ffffff"
         android:textSize="30sp"

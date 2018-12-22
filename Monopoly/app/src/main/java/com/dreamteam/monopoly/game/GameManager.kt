@@ -12,7 +12,7 @@ class GameManager(private val activity: GameActivity) {
     var mainBoard: Board = Board(GameData.boardGameCells, activity)
     var players: ArrayList<Player> = ArrayList()
     var currentPlayerIndex: Int = 0
-    var isEndGame: Boolean = false
+    private var isEndGame: Boolean = false
 
     fun resetSaveData(savedInstanceState: Bundle) {
         mainBoard.resetField(savedInstanceState.getIntegerArrayList("playersPos"))

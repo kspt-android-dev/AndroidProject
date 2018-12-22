@@ -6,11 +6,10 @@ import com.dreamteam.monopoly.game.board.cell.GameCellInfo
 object GameData {
     const val startMoney: Int = 15000
     const val loopMoney: Int = 2000
-    const val startEnterMoney: Int = 1000
+
 
     const val swapDicesDelay: Long = 2000
 
-    const val boardSizeModifier: Float = 0.95f
     const val cellSidesModifier: Float = 1.75f
 
     const val minChanceMoney: Int = 1

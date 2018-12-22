@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Best Monopoly Ever!</string>
+    <string name="sell">Sell</string>
+    <string name="suicide">Suicide</string>
+    <string name="yesAnswer">Yes</string>
+    <string name="buyQuestion">Buy this cell?</string>
+    <string name="noAnswer">No</string>
     <string name="onAI">AI: ON</string>
     <string name="offAI">AI: OFF</string>
     <string name="namespace">Name: %2$s</string>
