@@ -28,7 +28,6 @@ import com.tapadoo.alerter.Alerter
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
-import java.io.Serializable
 
 
 class GameActivity : AppCompatActivity() {
@@ -52,6 +51,8 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         buttonThrowDices = findViewById(R.id.buttonThrowCubes)
         yesButton = findViewById(R.id.YesButton)
@@ -88,7 +89,8 @@ class GameActivity : AppCompatActivity() {
 
         val intent = this.intent
         val bundle: Bundle = intent.extras
-        val playersNames: HashMap<String , ArrayList<String>> = bundle.getSerializable("Map") as HashMap<String, ArrayList<String>> //get info from AmountOfPlayers Activity
+        val playersNames: HashMap<String , ArrayList<String>>
+                = bundle.getSerializable("Map") as HashMap<String, ArrayList<String>>
 
         val metrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(metrics)
@@ -111,8 +113,13 @@ class GameActivity : AppCompatActivity() {
         createBoard(constraintLayout, cellHeight, cellWidth)
         startAssignment(playersNames)
 
-        // players pos and marks setup
-        for (i in 1..playersNames.get("ON")!!.size + playersNames.get("OFF")!!.size) {
+        val namesize:Int
+        namesize = when {
+            playersNames["ON"]?.size == null -> playersNames["OFF"]!!.size
+            playersNames["OFF"]?.size == null -> playersNames["ON"]!!.size
+            else -> playersNames["OFF"]!!.size + playersNames["ON"]!!.size
+        }
+        for (i in 1..namesize) {
             val myPlayerID = resources.getIdentifier("Player$i", "id", packageName)
             val playerImage = resources.getDrawable(resources
                     .getIdentifier("player$i", "drawable", packageName), null)
@@ -279,8 +286,8 @@ class GameActivity : AppCompatActivity() {
 
     private fun startAssignment(playersNames: HashMap<String, ArrayList<String>>) //adding text/players on map
     {
-        if (playersNames.get("ON") != null) {
-            for (string in playersNames.get("ON")!!) {
+        if (playersNames["ON"] != null) {
+            for (string in playersNames["ON"]!!) {
                 gameManager.addPlayer(string, PlayerType.AI)
                 val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
                 val playerStats: TextView = findViewById(playerStatsId)
@@ -289,8 +296,8 @@ class GameActivity : AppCompatActivity() {
                 updPlayerMoney(gameManager.getPlayerByName(string)!!)
             }
         }
-        if (playersNames.get("OFF") != null) {
-            for (string in playersNames.get("OFF")!!) {
+        if (playersNames["OFF"] != null) {
+            for (string in playersNames["OFF"]!!) {
                 gameManager.addPlayer(string, PlayerType.PERSON)
                 val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
                 val playerStats: TextView = findViewById(playerStatsId)
@@ -395,10 +402,10 @@ class GameActivity : AppCompatActivity() {
         val sellSpace: TextView = findViewById(R.id.cellSell)
         val chargeSpace: TextView = findViewById(R.id.cellCharge)
 
-        nameSpace.text = "Name: $name"
-        buySpace.text = "Buy: $costBuy"
-        sellSpace.text = "Sell: $costSell"
-        chargeSpace.text = "Charge: $charge"
+        nameSpace.text = String.format(resources.getString(R.string.namespace), name)
+        buySpace.text = String.format(resources.getString(R.string.buyspace), costBuy)
+        sellSpace.text = String.format(resources.getString(R.string.sellspace), costSell)
+        chargeSpace.text = String.format(resources.getString(R.string.chargespace),charge)
     }
 
     private fun dataRestore(savedInstanceState: Bundle) {
