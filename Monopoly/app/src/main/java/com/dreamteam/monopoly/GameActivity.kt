@@ -14,12 +14,17 @@ import android.support.constraint.Guideline
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import android.widget.*
 import com.dreamteam.monopoly.game.GameData
+import com.dreamteam.monopoly.game.GameData.bottomSideIndexesModifier
+import com.dreamteam.monopoly.game.GameData.leftSideIndexesModifier
 import com.dreamteam.monopoly.game.GameData.numberOfCommonCellsPerSide
 import com.dreamteam.monopoly.game.GameData.numberOfCornersPerSide
 import com.dreamteam.monopoly.game.GameData.numberOfSides
+import com.dreamteam.monopoly.game.GameData.rightSideIndexesModifier
+import com.dreamteam.monopoly.game.GameData.upSideIndexesModifier
 import com.dreamteam.monopoly.game.GameManager
 import com.dreamteam.monopoly.game.board.cell.GameCellType
 import com.dreamteam.monopoly.game.player.*
@@ -350,26 +355,45 @@ class GameActivity : AppCompatActivity() {
         showCurrentPlayerName()
     }
 
-    private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) { // LEFT = 1 RIGHT = 2 TOP = 3 BOTTOM = 4 START = 6 END = 7
-        createCell(cellHeight, cellHeight, constraintLayout, 3, 3, 6, 6, 3, 3, true)
+    private fun createBoard(constraintLayout: ConstraintLayout, cellHeight: Int, cellWidth: Int) {
+        createCell(cellHeight, cellHeight, constraintLayout, Direction.TOP.value, Direction.TOP.value, Direction.START.value, Direction.START.value, Direction.TOP.value, Direction.TOP.value, true)
 
-        while (indexForBoard < gameManager.mainBoard.gameWayLength / 4) {
-            createCell(cellWidth, cellHeight, constraintLayout, 6, 7, 3, 3, 4, 4)
+        // top side creation
+        while (indexForBoard < gameManager.mainBoard.gameWayLength / upSideIndexesModifier) {
+            createCell(cellWidth, cellHeight, constraintLayout,
+                    Direction.START.value, Direction.END.value, Direction.TOP.value,
+                    Direction.TOP.value, Direction.BOTTOM.value, Direction.BOTTOM.value)
         }
-        createCell(cellHeight, cellHeight, constraintLayout, 6, 7, 3, 3, 4, 4)
+        createCell(cellHeight, cellHeight, constraintLayout,
+                Direction.START.value, Direction.END.value, Direction.TOP.value,
+                Direction.TOP.value, Direction.BOTTOM.value, Direction.BOTTOM.value)
 
-        while (indexForBoard < gameManager.mainBoard.gameWayLength / 2) {
-            createCell(cellHeight, cellWidth, constraintLayout, 6, 6, 3, 4, 7, 7)
+        // right side creation
+        while (indexForBoard < gameManager.mainBoard.gameWayLength / rightSideIndexesModifier) {
+            createCell(cellHeight, cellWidth, constraintLayout,
+                    Direction.START.value, Direction.START.value, Direction.TOP.value,
+                    Direction.BOTTOM.value, Direction.END.value, Direction.END.value)
         }
-        createCell(cellHeight, cellHeight, constraintLayout, 6, 6, 3, 4, 7, 7)
+        createCell(cellHeight, cellHeight, constraintLayout,
+                Direction.START.value, Direction.START.value, Direction.TOP.value,
+                Direction.BOTTOM.value, Direction.END.value, Direction.END.value)
 
-        while (indexForBoard < 3 * gameManager.mainBoard.gameWayLength / 4) {
-            createCell(cellWidth, cellHeight, constraintLayout, 7, 6, 3, 3, 4, 4)
+        // bottom side creation
+        while (indexForBoard < gameManager.mainBoard.gameWayLength / bottomSideIndexesModifier) {
+            createCell(cellWidth, cellHeight, constraintLayout,
+                    Direction.END.value, Direction.START.value, Direction.TOP.value,
+                    Direction.TOP.value, Direction.BOTTOM.value, Direction.BOTTOM.value)
         }
-        createCell(cellHeight, cellHeight, constraintLayout, 7, 6, 3, 3, 4, 4)
+        Log.d("board", indexForBoard.toString())
+        createCell(cellHeight, cellHeight, constraintLayout,
+                Direction.END.value, Direction.START.value, Direction.TOP.value,
+                Direction.TOP.value, Direction.BOTTOM.value, Direction.BOTTOM.value)
 
-        while (indexForBoard < gameManager.mainBoard.gameWayLength) {
-            createCell(cellHeight, cellWidth, constraintLayout, 6, 6, 4, 3, 7, 7)
+        // left side creation
+        while (indexForBoard < gameManager.mainBoard.gameWayLength / leftSideIndexesModifier) {
+            createCell(cellHeight, cellWidth, constraintLayout,
+                    Direction.START.value, Direction.START.value, Direction.BOTTOM.value,
+                    Direction.TOP.value, Direction.END.value, Direction.END.value)
         }
     }
 

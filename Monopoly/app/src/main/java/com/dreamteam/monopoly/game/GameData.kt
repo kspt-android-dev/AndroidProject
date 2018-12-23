@@ -15,6 +15,10 @@ object GameData {
 
     // Board settings
     const val numberOfSides: Int = 4
+    const val upSideIndexesModifier: Int = numberOfSides
+    const val rightSideIndexesModifier: Int = numberOfSides / 2
+    const val bottomSideIndexesModifier: Float = numberOfSides / 3f
+    const val leftSideIndexesModifier: Int = numberOfSides / 4
     const val numberOfCornersPerSide = 2
     const val numberOfCommonCellsPerSide = 9
     const val swapDicesDelay: Long = 2000
