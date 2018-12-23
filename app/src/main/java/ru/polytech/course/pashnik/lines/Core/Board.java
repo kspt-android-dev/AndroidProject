@@ -69,6 +69,11 @@ public class Board implements MainContract.Model {
         map.remove(cell);
     }
 
+    @Override
+    public boolean isFull() {
+        return map.size() >= 79;
+    }
+
     private boolean isWinLength(int currentLength) {
         return currentLength > 4;
     }

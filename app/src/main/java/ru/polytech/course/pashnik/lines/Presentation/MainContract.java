@@ -12,11 +12,15 @@ public interface MainContract {
 
         void drawBallOnScoreView(Cell cell, ColorType color);
 
-        void clearBallOnScoreView(Cell cell);
+        void setScore(String score);
+
+        void createDialog();
     }
 
     interface Presenter {
         void onCellWasClicked(float x, float y);
+
+        void setWinnerName(String name);
 
         void initGameView();
     }
@@ -33,6 +37,8 @@ public interface MainContract {
         WinLines getWinLines();
 
         void removeCell(Cell cell);
+
+        boolean isFull();
     }
 
 }

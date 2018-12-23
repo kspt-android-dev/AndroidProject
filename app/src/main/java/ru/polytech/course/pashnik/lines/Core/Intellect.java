@@ -19,6 +19,7 @@ public class Intellect {
     /*
     Dummy intellect will generate a cell in which there is no ball
      */
+
     public Cell generateNextCell() {
         while (true) {
             int x = random.nextInt(cellNumber);

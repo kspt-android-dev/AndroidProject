@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import ru.polytech.course.pashnik.lines.DataBase.Contact;
 import ru.polytech.course.pashnik.lines.DataBase.DataBaseHandler;
 import ru.polytech.course.pashnik.lines.R;
 
@@ -29,10 +28,6 @@ public class RecordsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_records);
         listView = findViewById(R.id.list_records);
         dbHelper = new DataBaseHandler(this);
-
-        /*Testing DataBase*/
-        dbHelper.addContact(new Contact("Pasha", 23));
-        dbHelper.addContact(new Contact("Valentin", 125));
 
         registerForContextMenu(listView);
     }

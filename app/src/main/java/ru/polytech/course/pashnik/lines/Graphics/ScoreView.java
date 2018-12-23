@@ -21,21 +21,23 @@ public class ScoreView extends View {
         super(context);
         this.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
-        this.setBackgroundColor(Color.DKGRAY);
+        this.setBackgroundColor(Color.BLACK);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         if (this.canvas == null) {
             int viewHeight = getWidth() / 9;
-            bitmap = Bitmap.createBitmap(getWidth(), viewHeight, Bitmap.Config.ARGB_8888);
+            bitmap = Bitmap.createBitmap(getWidth() / 3, viewHeight, Bitmap.Config.ARGB_8888);
             this.canvas = new Canvas(bitmap);
 
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
             params.height = viewHeight;
+            params.width = getWidth() / 3;
             this.setLayoutParams(params);
-            GameActivity.setScoreViewCanvas(canvas);
+            GameActivity.setScoreViewCanvas(this.canvas);
         }
         canvas.drawBitmap(bitmap, 0, 0, bitmapPaint);
+        invalidate();
     }
 }

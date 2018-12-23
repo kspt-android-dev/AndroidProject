@@ -20,7 +20,7 @@ public class MainPresenter implements MainContract.Presenter {
     private Cell pressedCell;
     private Queue<ColorType> queue = new ArrayDeque<>();
     private Intellect intellect;
-    private int score;
+    private int score = 0;
 
     public MainPresenter(MainContract.ViewInterface view) {
         this.view = view;
@@ -31,6 +31,7 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void onCellWasClicked(float x, float y) {
         Cell definedCell = defineCell(x, y);
+        if (model.isFull()) view.createDialog();
         if (isPressed) {
             if (model.haveCell(definedCell)) {
                 pressedCell = definedCell;
@@ -46,14 +47,11 @@ public class MainPresenter implements MainContract.Presenter {
                         checkScore(line.getLength());
                     }
                     clearWinLines(winLines);
+                    view.setScore(String.valueOf(score));
                 }
-                while (!queue.isEmpty()) {
-                    ColorType colorType = queue.poll();
-                    Cell nextCell = intellect.generateNextCell();
-                    view.drawBallOnBoard(nextCell, colorType);
-                    model.addCell(nextCell, colorType);
-                }
+                drawThreeBalls();
                 fillQueue();
+                drawNextBallsOnScoreView();
                 isPressed = false;
             }
         } else {
@@ -65,23 +63,33 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
+    public void setWinnerName(String name) {
+        // TODO: 23/12/2018
+    }
+
+    @Override
     public void initGameView() {
-        for (int i = 0; i < 3; i++) {
-            Cell nextCell = intellect.generateNextCell();
-            ColorType nextColor = intellect.generateNextColor();
-            view.drawBallOnBoard(nextCell, nextColor);
-            model.addCell(nextCell, nextColor);
-        }
         fillQueue();
+        drawThreeBalls();
+        fillQueue();
+        drawNextBallsOnScoreView();
+    }
+
+    private void drawThreeBalls() {
+        while (!queue.isEmpty()) {
+            ColorType colorType = queue.poll();
+            Cell nextCell = intellect.generateNextCell();
+            view.drawBallOnBoard(nextCell, colorType);
+            model.addCell(nextCell, colorType);
+        }
     }
 
     private void drawNextBallsOnScoreView() {
         Cell direction = new Cell(1, 0);
-        Cell start = new Cell(4, 0);
-        while (!queue.isEmpty()) {
-            ColorType colorType = queue.poll();
-            view.drawBallOnScoreView(start, colorType);
-            start.plus(direction);
+        Cell start = new Cell(0, 0);
+        for (ColorType color : queue) {
+            view.drawBallOnScoreView(start, color);
+            start = start.plus(direction);
         }
     }
 
@@ -115,6 +123,4 @@ public class MainPresenter implements MainContract.Presenter {
             queue.add(nextColor);
         }
     }
-
-
 }

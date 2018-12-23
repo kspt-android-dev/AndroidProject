@@ -6,18 +6,4 @@
     android:background="#000"
     android:gravity="center_horizontal"
     android:orientation="vertical">
-
-    <!--<ru.polytech.course.pashnik.lines.Graphics.ScoreView-->
-    <!--android:id="@+id/score_view"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="50dp"-->
-    <!--android:background="#000" />-->
-
-    <!--<ru.polytech.course.pashnik.lines.Graphics.GameView-->
-    <!--android:id="@+id/game_view"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="fill_parent"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:background="#C0C0C0" />-->
-
 </LinearLayout>
