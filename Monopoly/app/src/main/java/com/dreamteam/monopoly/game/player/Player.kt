@@ -168,7 +168,7 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         return true
     }
 
-    private fun findCellWithLowestSellCost(): GameCell {
+    fun findCellWithLowestSellCost(): GameCell {
         var resCell: GameCell = cells[0]
         for (c in cells)
             if (c.info.cost.costSell < resCell.info.cost.costSell)

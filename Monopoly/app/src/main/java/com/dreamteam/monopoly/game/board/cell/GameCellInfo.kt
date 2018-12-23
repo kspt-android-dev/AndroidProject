@@ -14,7 +14,7 @@ enum class GameCellInfo(val cellType: GameCellType, val companyType: CompanyType
     VALVE(GameCellType.COMPANY, CompanyType.GAMEDEV, Cost(4200, 2500, 600)),
     ROCKSTART(GameCellType.COMPANY, CompanyType.GAMEDEV, Cost(3900, 2000, 520)),
 
-    MCDONALDS(GameCellType.COMPANY, CompanyType.FOOD, Cost(2300, 100,320 )),
+    MCDONALDS(GameCellType.COMPANY, CompanyType.FOOD, Cost(2300, 1000,320 )),
     KFC(GameCellType.COMPANY, CompanyType.FOOD, Cost(2500, 1200, 350)),
     BURGERKING(GameCellType.COMPANY, CompanyType.FOOD, Cost(1900, 800, 290)),
 
@@ -39,10 +39,10 @@ enum class GameCellInfo(val cellType: GameCellType, val companyType: CompanyType
     WATER(GameCellType.COMPANY, CompanyType.SERVICE, Cost(2000, 1000, 400)), //set dice count * /something/ cost
     ELECTRICITY(GameCellType.COMPANY, CompanyType.SERVICE, Cost(1500, 750, 350)),
 
-    OTHER(GameCellType.DEFAULT, CompanyType.DEFAULT, Cost(0, 0, 0)),
-    START(GameCellType.START, CompanyType.DEFAULT, Cost(0, 0, 0)),
-    CHANCE(GameCellType.CHANCE, CompanyType.DEFAULT, Cost(0, 0, 0)),
-    PRISON(GameCellType.PRISON, CompanyType.DEFAULT, Cost(0, 0, 500)),
-    BANK(GameCellType.BANK, CompanyType.DEFAULT, Cost(0, 0, 2000)),
-    TAX(GameCellType.BANK, CompanyType.DEFAULT, Cost(0, 0, 1500))
+    OTHER(GameCellType.DEFAULT, CompanyType.DEFAULT, Cost(Int.MAX_VALUE, Int.MAX_VALUE, Int.MAX_VALUE)),
+    START(GameCellType.START, CompanyType.DEFAULT, Cost(Int.MAX_VALUE, Int.MAX_VALUE, Int.MAX_VALUE)),
+    CHANCE(GameCellType.CHANCE, CompanyType.DEFAULT, Cost(Int.MAX_VALUE, Int.MAX_VALUE, Int.MAX_VALUE)),
+    PRISON(GameCellType.PRISON, CompanyType.DEFAULT, Cost(Int.MAX_VALUE, Int.MAX_VALUE, 500)),
+    BANK(GameCellType.BANK, CompanyType.DEFAULT, Cost(Int.MAX_VALUE, Int.MAX_VALUE, 2000)),
+    TAX(GameCellType.BANK, CompanyType.DEFAULT, Cost(Int.MAX_VALUE, Int.MAX_VALUE, 1500))
 }

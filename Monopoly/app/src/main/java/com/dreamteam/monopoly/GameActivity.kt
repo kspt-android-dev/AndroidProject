@@ -229,13 +229,11 @@ class GameActivity : AppCompatActivity() {
 
     private fun performBuyAction() {
         gameManager.getCurrentPlayer().decision(PlayerActions.BUY)
-        Log.d("FindError", "im in gameAct/performBuy")
         playersSwap()
     }
 
     private fun performStayAction() {
         gameManager.getCurrentPlayer().decision(PlayerActions.STAY)
-        Log.d("FindError", "im in gameAct/performStay")
         playersSwap()
     }
 
