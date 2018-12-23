@@ -31,8 +31,6 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
 
     fun analyze(): PlayerMoveCondition {
         val currentCell: GameCell = board.gameWay[currentPosition]
-        Log.d("TAG", board.gameWay[currentPosition].info.name)
-        Log.d("TAG", currentPosition.toString())
         when (currentCell.state) {
             CellState.FREE -> return if (currentCell.info.cellType == GameCellType.COMPANY &&
                     currentCell.checkBuyCost(money)) {
@@ -62,7 +60,6 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
     }
 
     fun decision(action: PlayerActions): Boolean {
-        Log.d("FindError", board.gameWay[currentPosition].info.name)
         return when (action) {
             PlayerActions.BUY -> board.gameWay[currentPosition].info.cellType == GameCellType.COMPANY &&
                     board.gameWay[currentPosition].owner == null &&
