@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="winnerName">winnerName</string>
+    <string name="id">id</string>
+    <string name="playersMap">Map</string>
+    <string name="playersNames">playersNames</string>
+    <string name="deletePlayersNames">deletePlayersNames</string>
+    <string name="playersTypes">playersTypes</string>
+    <string name="keyboardText">keyboardText</string>
+</resources>

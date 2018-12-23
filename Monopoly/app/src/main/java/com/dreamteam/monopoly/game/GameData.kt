@@ -4,20 +4,31 @@ import com.dreamteam.monopoly.game.board.cell.GameCell
 import com.dreamteam.monopoly.game.board.cell.GameCellInfo
 
 object GameData {
+    // Economy settings
     const val startMoney: Int = 15000
     const val loopMoney: Int = 2000
 
+    // Players settings settings
+    const val minPlayers: Int = 2
+    const val maxPlayers: Int = 4
+    const val maxNameLength = 15
 
+    // Board settings
     const val swapDicesDelay: Long = 2000
-
     const val cellSidesModifier: Float = 1.75f
 
+    /// Special cells settings
     const val minChanceMoney: Int = 1
     const val maxChanceMoney: Int = 2500
 
+    // Effects settings
+    const val alertDuration: Long = 1500
+    const val shakeEffectDuration: Long = 750
+    const val shakeRepeatCount: Int = 1
 
+    // All board cells list
     val boardGameCells: ArrayList<GameCell> = arrayListOf(
-            GameCell("0", info = GameCellInfo.START),  //START
+            GameCell("0", info = GameCellInfo.START),
             GameCell("1", info = GameCellInfo.YOUTUBE),
             GameCell("2", info = GameCellInfo.OTHER),
             GameCell("3", info = GameCellInfo.TWTICH),
@@ -47,7 +58,7 @@ object GameData {
             GameCell("27", info = GameCellInfo.BLIZZARD),
             GameCell("28", info = GameCellInfo.WATER),
             GameCell("29", info = GameCellInfo.VALVE),
-            GameCell("30", info = GameCellInfo.PRISON),  //PRISON
+            GameCell("30", info = GameCellInfo.PRISON),
             GameCell("31", info = GameCellInfo.QUARTUS),
             GameCell("32", info = GameCellInfo.KOTLIN),
             GameCell("33", info = GameCellInfo.OTHER),
