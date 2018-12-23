@@ -106,9 +106,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             playerTextListener(textView)
 
             aiButtonsAppearance(true)
-
-            if (numberOfPlayers == maxPlayers) buttonEnter!!.isEnabled = false
-            if (numberOfPlayers >= minPlayers) buttonStart!!.isEnabled = true
+            updateButtonStates()
             moveAllNames()
             shakeEffect(buttonEnter!!)
         }
@@ -155,9 +153,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             setUnClickable()
 
             aiButtonsAppearance(false)
-
-            if (numberOfPlayers < minPlayers) buttonStart!!.isEnabled = false
-            if (numberOfPlayers < maxPlayers) buttonEnter!!.isEnabled = true
+            updateButtonStates()
             shakeEffect(buttonDelete!!)
         }
     }
@@ -176,6 +172,11 @@ class AmountOfPlayersActivity : AppCompatActivity() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         hideTopBar()
+    }
+
+    private fun updateButtonStates() {
+        buttonStart!!.isEnabled = numberOfPlayers >= minPlayers
+        buttonEnter!!.isEnabled = numberOfPlayers < maxPlayers
     }
 
     private fun countNewPlayer(content: String) {
@@ -240,19 +241,20 @@ class AmountOfPlayersActivity : AppCompatActivity() {
     private fun aiButtonsAppearance(on: Boolean) {
         if (on) {
             for (i in 1..numberOfPlayers) {
-                val buttonID = this.resources.getIdentifier(getString(R.string.aiButton) + i, getString(R.string.id), packageName)
-                val aiButton = findViewById<Button>(buttonID)
-                aiButton.visibility = View.VISIBLE
-                aiButton.isClickable = true
+                changeAiButtonAppearance(i, true)
             }
         } else {
             for (i in numberOfPlayers + 1..maxPlayers) {
-                val buttonID = this.resources.getIdentifier(getString(R.string.aiButton) + i, getString(R.string.id), packageName)
-                val aiButton = findViewById<Button>(buttonID)
-                aiButton.visibility = View.INVISIBLE
-                aiButton.isClickable = false
+                changeAiButtonAppearance(i, false)
             }
         }
+    }
+
+    private fun changeAiButtonAppearance(i: Int, value: Boolean) {
+        val buttonID = this.resources.getIdentifier(getString(R.string.aiButton) + i, getString(R.string.id), packageName)
+        val aiButton = findViewById<Button>(buttonID)
+        aiButton.visibility = if (value) View.VISIBLE else View.INVISIBLE
+        aiButton.isClickable = value
     }
 
     private fun restorePlayersList(savedInstanceState: Bundle) {

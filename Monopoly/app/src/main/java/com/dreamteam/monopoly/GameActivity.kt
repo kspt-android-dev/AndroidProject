@@ -76,7 +76,7 @@ class GameActivity : AppCompatActivity() {
     @Override
     override fun finish() {
         super.finish()
-        CustomIntent.customType(this, "up-to-bottom")
+        CustomIntent.customType(this, getString(R.string.up_to_bottom))
     }
 
     override fun onResume() {
@@ -116,7 +116,7 @@ class GameActivity : AppCompatActivity() {
             horizontalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels)
             underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
         } else {
-            underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / boardSize /*metrics.heightPixels*/)
+            underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / boardSize)
             horizontalGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
             verticalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.widthPixels)
             val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
@@ -132,7 +132,7 @@ class GameActivity : AppCompatActivity() {
             else -> playersNames[PlayerType.AI]!!.size + playersNames[PlayerType.PERSON]!!.size
         }
         for (i in 1..namesize) {
-            val myPlayerID = resources.getIdentifier("Player$i", "id", packageName)
+            val myPlayerID = resources.getIdentifier("Player$i", getString(R.string.id), packageName)
             val playerImage = resources.getDrawable(resources
                     .getIdentifier("player$i", "drawable", packageName), null)
             val player = ImageView(this)
@@ -142,7 +142,7 @@ class GameActivity : AppCompatActivity() {
             constraintLayout.addView(player)
             val constraintSet = ConstraintSet()
             constraintSet.clone(constraintLayout)
-            val myId = resources.getIdentifier("cell${1}", "id", packageName)
+            val myId = resources.getIdentifier("cell${1}", getString(R.string.id), packageName)
             if (i == 1 || i == 3) {
                 constraintSet.connect(player.id, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
                 constraintSet.connect(player.id, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
@@ -299,7 +299,7 @@ class GameActivity : AppCompatActivity() {
         if (playersNames[PlayerType.AI] != null) {
             for (string in playersNames[PlayerType.AI]!!) {
                 gameManager.addPlayer(string, PlayerType.AI)
-                val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
+                val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", getString(R.string.id), packageName)
                 val playerStats: TextView = findViewById(playerStatsId)
                 playerStats.text = string
                 gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
@@ -309,7 +309,7 @@ class GameActivity : AppCompatActivity() {
         if (playersNames[PlayerType.PERSON] != null) {
             for (string in playersNames[PlayerType.PERSON]!!) {
                 gameManager.addPlayer(string, PlayerType.PERSON)
-                val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", "id", packageName)
+                val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", getString(R.string.id), packageName)
                 val playerStats: TextView = findViewById(playerStatsId)
                 playerStats.text = string
                 gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
@@ -323,7 +323,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun suicideAction(playerToSuicide: Player, withPlayerSwap: Boolean = true) {
-        val myPlayerID = resources.getIdentifier("Player${playerToSuicide.id}", "id", packageName)
+        val myPlayerID = resources.getIdentifier("Player${playerToSuicide.id}", getString(R.string.id), packageName)
         val player = findViewById<ImageView>(myPlayerID)
         player.visibility = View.INVISIBLE
         suicidePlayers.add(playerToSuicide.id)
@@ -359,8 +359,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun createCell(width: Int, height: Int, layout: ConstraintLayout, From1: Int, To1: Int, From2: Int, To2: Int, From3: Int, To3: Int, start: Boolean = false) {
-        val thisButtonID = resources.getIdentifier("cell${indexForBoard + 1}", "id", packageName)
-        val previousButtonID = resources.getIdentifier("cell$indexForBoard", "id", packageName)
+        val thisButtonID = resources.getIdentifier("cell${indexForBoard + 1}", getString(R.string.id), packageName)
+        val previousButtonID = resources.getIdentifier("cell$indexForBoard", getString(R.string.id), packageName)
         val button = ImageButton(this)
         button.layoutParams = LayoutParams(width, height)
         button.id = (thisButtonID)
@@ -497,16 +497,16 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun updPlayerMoney(player: Player) {
-        val playerMoneyId = resources.getIdentifier("playerMoney${gameManager.getPlayerByName(player.name)!!.id}", "id", packageName)
+        val playerMoneyId = resources.getIdentifier("playerMoney${gameManager.getPlayerByName(player.name)!!.id}", getString(R.string.id), packageName)
         val playerMoney: TextView = findViewById(playerMoneyId)
         playerMoney.text = gameManager.getPlayerByName(player.name)!!.money.toString()
     }
 
     fun endGameAction(winner: Player) {
         intent = Intent(this, WinScreenActivity::class.java)
-        intent.putExtra("winnerName", winner.name)
+        intent.putExtra(getString(R.string.winnerName), winner.name)
         startActivity(intent)
-        CustomIntent.customType(this, "bottom-to-up")
+        CustomIntent.customType(this, getString(R.string.bottom_to_up))
     }
 
     private fun showCurrentPlayerName() {
@@ -516,5 +516,11 @@ class GameActivity : AppCompatActivity() {
     private enum class ActionState(val state: Int) {
         IDLE(0), BUY(1),
         SELL(2), BUY_SELL(3)
+    }
+
+    private enum class Direction(val value: Int) {
+        LEFT(1), RIGHT(2),
+        TOP(3), BOTTOM(4),
+        START(6), END(7)
     }
 }

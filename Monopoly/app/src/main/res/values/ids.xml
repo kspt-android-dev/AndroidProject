@@ -48,6 +48,7 @@
     <item name="Player2" type="id" />
     <item name="Player3" type="id" />
     <item name="Player4" type="id" />
+
     <string name="playerName">PlayerName</string>
     <string name="aiButton">aiButton</string>
 </resources>
