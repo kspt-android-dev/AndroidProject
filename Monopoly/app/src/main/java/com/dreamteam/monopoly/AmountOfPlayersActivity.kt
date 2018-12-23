@@ -89,8 +89,15 @@ class AmountOfPlayersActivity : AppCompatActivity() {
 
         buttonEnter!!.setOnClickListener {
             val content = namespace!!.text.toString() //gets you the contents of edit text
-            if (content.isEmpty() || content.length > maxNameLength || playersNames.contains(content)) {
+            if (content.isEmpty() || content.length > maxNameLength ) {
                 Toasty.error(this, resources.getString(R.string.nameSize),
+                        Toast.LENGTH_SHORT, true).show()
+                return@setOnClickListener
+            }
+
+            if (playersNames.contains(content))
+            {
+                Toasty.error(this, resources.getString(R.string.containtsString),
                         Toast.LENGTH_SHORT, true).show()
                 return@setOnClickListener
             }
