@@ -52,7 +52,7 @@ class MonopolyUnitTest {
         assertEquals(4, gameManager.players.size)
         gameManager.removePlayer(gameManager.players.last())
         assertEquals(3, gameManager.players.size)
-        gameManager.removePlayer(gameManager.players[gameManager.players.lastIndex])
+        gameManager.removePlayer(gameManager.players.lastIndex)
         assertEquals(2, gameManager.players.size)
     }
 

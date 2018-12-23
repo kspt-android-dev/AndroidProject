@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
 import android.view.View
-import com.dreamteam.monopoly.R.string.namespace
+import com.dreamteam.monopoly.helpers.makeTinyAlert
 import maes.tech.intentanim.CustomIntent
 
 class WinScreenActivity : AppCompatActivity() {
@@ -24,9 +24,10 @@ class WinScreenActivity : AppCompatActivity() {
 
         val intent = intent
         winnerNamespace = findViewById(R.id.winerName)
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
             winnerNamespace?.text = intent.getStringExtra("winnerName")
-        else
+            makeTinyAlert(this, resources.getString(R.string.congratulation) + winnerNamespace?.text)
+        } else
             dataRestore(savedInstanceState)
 
         menuButton = findViewById(R.id.buttonMenu)
