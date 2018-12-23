@@ -30,7 +30,7 @@ public class MainActivityTest {
     @Test
     public void onClickStartLand() throws Exception {
         mActivityRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        onView(withId(R.id.buttonStart)).perform(click());
+        onView(withId(R.id.buttonStart)).perform(click()); 
     }
 
     @Test
