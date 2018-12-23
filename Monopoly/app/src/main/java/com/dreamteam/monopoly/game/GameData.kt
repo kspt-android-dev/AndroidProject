@@ -30,8 +30,9 @@ object GameData {
 
     // Effects settings
     const val alertDuration: Long = 1500
-    const val shakeEffectDuration: Long = 750
+    const val shakeEffectDuration: Long = 500
     const val shakeRepeatCount: Int = 0
+    const val splashScreenDuration: Int = 4000
 
     // All board cells list
     val boardGameCells: ArrayList<GameCell> = arrayListOf(
