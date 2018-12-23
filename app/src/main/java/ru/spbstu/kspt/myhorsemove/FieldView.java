@@ -17,22 +17,19 @@ import android.widget.Toast;
 
 public class FieldView extends View {
 
-    private FieldActivity field;
-    private Paint paint;
-    private Paint text;
-    private int colField;
-    private Bitmap imWhite;
-    private Bitmap imBlack;
-    private Bitmap imHorse;
-    private Bitmap imButStart;
+    private final FieldActivity field;
+    private final Paint paint;
+    private final Paint text;
+    private final int colField;
+    private final Bitmap imWhite;
+    private final Bitmap imBlack;
+    private final Bitmap imHorse;
     private Data data;
     private final int LEFT = 70; //35х2 - отступ сверху в пикселях
     private final int UP = 70;
-    final int sz = 8;
     private final int CELL = 70; //размер ячейки(картинки) в пикселях
-    private String alphabet[] = {"a", "b", "c", "d", "e", "f", "g", "h"};
+    private final String alphabet[] = {"a", "b", "c", "d", "e", "f", "g", "h"};
     private boolean fgame = true; //идёт или не идёт игра (true по умолчанию - чтобы при начальной отрисовке не выводить count)
-    private Cell cell = new Cell();
     private int max = 1; //лучший результат
     private boolean frec = false; //был ли рекорд
 
@@ -50,7 +47,6 @@ public class FieldView extends View {
         imBlack = BitmapFactory.decodeResource( field.getResources(), R.drawable.black35);
         imWhite = BitmapFactory.decodeResource(field.getResources(), R.drawable.white35);
         imHorse = BitmapFactory.decodeResource(field.getResources(), R.drawable.horse);
-        imButStart = BitmapFactory.decodeResource(field.getResources(), R.drawable.start);
         if (data == null)
             data = new Data();
         else
@@ -72,6 +68,7 @@ public class FieldView extends View {
         text.setColor(Color.BLACK);
         text.setTextSize(50); //размер текста в пикселях
 
+        int sz = 8;
         for (int i = 0; i < sz; i++) {
             canvas.drawText(alphabet[i], LEFT + 20 + i * CELL, UP - 10, text);
         }
@@ -81,7 +78,7 @@ public class FieldView extends View {
 
         for (int i = 0; i < sz; i++) {
             for (int j = 0; j < sz; j++) {
-                cell = data.matr.get(i, j);
+                Cell cell = data.matr.get(i, j);
                 if (!cell.isBlack()) {
                     canvas.drawBitmap(imWhite, LEFT + j * CELL, UP + i * CELL, paint);
                 } else {
@@ -136,7 +133,7 @@ public class FieldView extends View {
     }
 
     //вернёт то, корректный ли клик - по доске ли
-    boolean fieldToMatr (int x, int y) { //перевод координат экрана в индексы матрицы и заполнение её соответствующей ячейки
+    private boolean fieldToMatr(int x, int y) { //перевод координат экрана в индексы матрицы и заполнение её соответствующей ячейки
         if (x < LEFT || x > LEFT+8*CELL || y<UP || y>UP+8*CELL) //клик не по доске
             return false;
         int i = (y-UP)/CELL;
@@ -150,9 +147,7 @@ public class FieldView extends View {
         data.oldj = j;
         data.count++; //ход сделан
         data.matr.set(i, j, data.count);
-        if (data.count == 64) //заполнено всё поле
-            return false;
-        return true;
+        return data.count != 64;
     }
 
     void newGame () {
@@ -169,7 +164,7 @@ public class FieldView extends View {
         invalidate(); //перерисовка
     }
 
-    void stop (int k) { //нет ходов - k=0, победа - k=1
+    private void stop(int k) { //нет ходов - k=0, победа - k=1
         fgame = false;
         String msg = "";
         if (k == 0)

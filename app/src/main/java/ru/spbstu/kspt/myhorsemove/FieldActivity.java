@@ -19,7 +19,6 @@ public class FieldActivity extends Activity  implements View.OnClickListener{
     private FieldView fieldView = null;
     private Data data = new Data();
     private int max = 1; //считанный из файла рекорд
-    private Button buttonStart;
     TextView textView1, textView2;
 
     private Intent intentMus=null;
@@ -31,7 +30,7 @@ public class FieldActivity extends Activity  implements View.OnClickListener{
         setContentView(R.layout.activity_field);
         fieldView = new FieldView(this); //передаю текущую активити вьюеру
         fieldView = (FieldView)findViewById(R.id.FV2);
-        buttonStart = (Button)findViewById(R.id.button2);
+        Button buttonStart = (Button) findViewById(R.id.button2);
         buttonStart.setOnClickListener(this);
         textView1 = (TextView)findViewById(R.id.textView1);
         textView2 = (TextView)findViewById(R.id.textView2);

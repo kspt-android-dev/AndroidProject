@@ -2,7 +2,6 @@ package ru.spbstu.kspt.myhorsemove;
 
 import android.content.pm.ActivityInfo;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -15,36 +14,32 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 public class MainActivityTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
+    public final ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
             MainActivity.class);
 
-    @Before
-    public void setUp() throws Exception {
-    }
-
     @Test
-    public void onClickStart() throws Exception {
+    public void onClickStart() {
         onView(withId(R.id.buttonStart)).perform(click());
     }
 
     @Test
-    public void onClickStartLand() throws Exception {
+    public void onClickStartLand() {
         mActivityRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        onView(withId(R.id.buttonStart)).perform(click()); 
+        onView(withId(R.id.buttonStart)).perform(click());
     }
 
     @Test
-    public void onClickAbout() throws Exception {
+    public void onClickAbout() {
         onView(withId(R.id.buttonAbout)).perform(click());
     }
 
     @Test
-    public void onClickReset() throws Exception {
+    public void onClickReset() {
         onView(withId(R.id.buttonReset)).perform(click());
     }
 
     @Test
-    public void onClickExit() throws Exception {
+    public void onClickExit() {
         onView(withId(R.id.buttonExit)).perform(click());
     }
 }

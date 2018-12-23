@@ -12,25 +12,20 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button buttonStart;
-    private Button buttonAbout;
-    private Button buttonReset;
-    private Button buttonExit;
     private Intent intent = null; //второе окно с доской
-    static String fileName = "result"; //имя файла для сохн=ранения рекорда
+    static final String fileName = "result"; //имя файла для сохн=ранения рекорда
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        buttonStart = (Button)findViewById(R.id.buttonStart);
-        buttonAbout = (Button)findViewById(R.id.buttonAbout);
-        buttonReset = (Button)findViewById(R.id.buttonReset);
-        buttonExit = (Button)findViewById(R.id.buttonExit);
+        Button buttonStart = (Button) findViewById(R.id.buttonStart);
+        Button buttonAbout = (Button) findViewById(R.id.buttonAbout);
+        Button buttonReset = (Button) findViewById(R.id.buttonReset);
+        Button buttonExit = (Button) findViewById(R.id.buttonExit);
         buttonStart.setOnClickListener(this);
         buttonAbout.setOnClickListener(this);
         buttonReset.setOnClickListener(this);
@@ -47,12 +42,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    void start() {
+    private void start() {
         startActivity(intent);
 
     }
 
-    void about() {
+    private void about() {
         String str = getString(R.string.aboutMes);
         AlertDialog.Builder dlg = new AlertDialog.Builder(this);
         dlg.setTitle(getString(R.string.rulesMes))
@@ -67,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //Андроид сохраняет свои файлы в каталоге /data/data/<название пакета>
-    void reset() {
+    private void reset() {
         try {
             FileOutputStream out = openFileOutput(fileName, Context.MODE_PRIVATE);//если не было файла - создаст
             out.write(Integer.toString(1).getBytes()); //сброс лучшего результата, хранящегося в файле "result", до 1
@@ -80,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dlg.show();
     }
 
-    void exit() {
+    private void exit() {
         finish();
     }
 }

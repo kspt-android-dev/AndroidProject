@@ -3,7 +3,6 @@ package ru.spbstu.kspt.myhorsemove;
 import android.content.pm.ActivityInfo;
 import android.view.View;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -23,18 +22,11 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 public class FieldActivityTest {
 
-    private FieldActivity testFieldActivity;
-
     @Rule
-    public ActivityTestRule<FieldActivity> myFieldTest = new ActivityTestRule<>(FieldActivity.class);
-
-    @Before
-    public void setUp() throws Exception {
-        testFieldActivity = myFieldTest.getActivity();
-    }
+    public final ActivityTestRule<FieldActivity> myFieldTest = new ActivityTestRule<>(FieldActivity.class);
 
     @Test
-    public void testButtonAndText() throws Exception {
+    public void testButtonAndText() {
         onView(withId(R.id.textView1)).check(matches(isDisplayed()));
         onView(withId(R.id.textView2)).check(matches(isDisplayed()));
         onView(withId(R.id.button2)).check(matches(isEnabled()));
@@ -42,7 +34,7 @@ public class FieldActivityTest {
     }
 
     @Test
-    public void testGameWin() throws Exception {
+    public void testGameWin() {
         onView(withId(R.id.FV2)).perform(clickBoard(400, 470));
         onView(withId(R.id.FV2)).perform(clickBoard(470, 610));
         onView(withId(R.id.FV2)).perform(clickBoard(610, 540));
@@ -111,7 +103,7 @@ public class FieldActivityTest {
     }
 
     @Test
-    public void testGameLose() throws Exception {
+    public void testGameLose() {
         onView(withId(R.id.FV2)).perform(clickBoard(470, 330));
         onView(withId(R.id.FV2)).perform(clickBoard(330, 260));
         onView(withId(R.id.FV2)).perform(clickBoard(470, 190));
@@ -123,7 +115,7 @@ public class FieldActivityTest {
     }
 
     @Test
-    public void testGameStart() throws Exception {
+    public void testGameStart() {
         onView(withId(R.id.FV2)).perform(clickBoard(470, 330));
         onView(withId(R.id.FV2)).perform(clickBoard(330, 260));
         onView(withId(R.id.FV2)).perform(clickBoard(470, 190));
@@ -133,7 +125,7 @@ public class FieldActivityTest {
     }
 
     @Test
-    public void testGameOrientation() throws Exception {
+    public void testGameOrientation() {
         onView(withId(R.id.FV2)).perform(clickBoard(610, 610));
         onView(withId(R.id.FV2)).perform(clickBoard(540, 470));
         onView(withId(R.id.FV2)).perform(clickBoard(610, 330));

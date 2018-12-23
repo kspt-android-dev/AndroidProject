@@ -1,7 +1,7 @@
 package ru.spbstu.kspt.myhorsemove;
 
 public class Data {
-    Matr matr;
+   final Matr matr;
     int count,  //количество сделанных ходов
         oldi, oldj; //старое значение клетки, где стоял конь (чтобы выводить туда count)
 

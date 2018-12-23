@@ -1,6 +1,6 @@
 package ru.spbstu.kspt.myhorsemove;
 
-public class Cell {
+class Cell {
 
     private boolean black; //false = white
     private int num;

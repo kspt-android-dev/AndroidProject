@@ -4,11 +4,11 @@ import android.graphics.Point;
 
 import java.util.ArrayList;
 
-public class Matr {
-    final int sz = 8;
-    Cell m[][];
-    Point oldCell; // предыдущая ячейка
-    ArrayList<Point> list = new ArrayList<Point>(); //список возможных ходов (новый для каждого хода)
+class Matr {
+    private final int sz = 8;
+    private final Cell m[][];
+    private final Point oldCell; // предыдущая ячейка
+    private final ArrayList<Point> list = new ArrayList<>(); //список возможных ходов (новый для каждого хода)
 
     public Matr() {
         m = new Cell[sz][sz];
@@ -24,10 +24,7 @@ public class Matr {
         boolean startBlack = false; //первая клетка в левом верхнем углу белая
         for (int i=0; i<sz; i++) {
             f=!f;
-            if (!f)
-                startBlack = false; //белая клетка
-            else
-                startBlack = true; //черная клетка
+            startBlack = f;
             for (int j=0; j<sz; j++) {
                 m[i][j].setBlack(startBlack);
                 startBlack = !startBlack;
@@ -82,9 +79,7 @@ public class Matr {
 
     boolean step (int curi, int curj) { //сравнивает ход со списком корректных ходов
         Point p = new Point(curj, curi);
-        if (!list.contains(p))
-            return false;
-        return true;
+        return list.contains(p);
     }
 
     Cell get(int i, int j) {
