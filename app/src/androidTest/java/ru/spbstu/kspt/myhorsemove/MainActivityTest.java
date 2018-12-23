@@ -1,5 +1,7 @@
 package ru.spbstu.kspt.myhorsemove;
 
+import android.content.pm.ActivityInfo;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,6 +24,12 @@ public class MainActivityTest {
 
     @Test
     public void onClickStart() throws Exception {
+        onView(withId(R.id.buttonStart)).perform(click());
+    }
+
+    @Test
+    public void onClickStartLand() throws Exception {
+        mActivityRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         onView(withId(R.id.buttonStart)).perform(click());
     }
 

@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
         android:layout_marginTop="90dp"
-        android:text="@string/textview"
+        android:text="@string/textView1"
         android:textSize="25sp" />
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
         android:layout_marginTop="130dp"
-        android:text="@string/textView"
+        android:text="@string/textView2"
         android:textSize="25sp" />
 
     <Button

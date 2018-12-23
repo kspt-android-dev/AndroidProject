@@ -20,6 +20,6 @@
     <string name="yourResMes">Результат: </string>
     <string name="newRecordMes"> Это рекорд!</string>
     <string name="button">Button</string>
-    <string name="textview">Текущий</string>
-    <string name="textView">Рекорд</string>
+    <string name="textView1">Результат:</string>
+    <string name="textView2">Рекорд</string>
 </resources>
