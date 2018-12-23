@@ -6,19 +6,14 @@ import org.junit.Test
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.ViewInteraction
 import androidx.test.rule.ActivityTestRule
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import android.support.test.uiautomator.UiDevice
-import com.dreamteam.monopoly.game.GameManager
 import android.content.Intent
-import android.util.Log
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.ViewInteractionComponent
-import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
+import android.view.View
+import android.widget.Button
+
 
 import com.dreamteam.monopoly.game.player.PlayerType
 import org.junit.Before
@@ -27,12 +22,8 @@ import org.junit.Before
 
 class GameActivityTest{
     @get:Rule
-    public val mActivityRule: ActivityTestRule<GameActivity>  = ActivityTestRule(GameActivity::class.java,false,false)
+     val mActivityRule: ActivityTestRule<GameActivity>  = ActivityTestRule(GameActivity::class.java,false,false)
 
-    @Before
-    fun setUp() {
-
-    }
 
     @Test
     @Throws(Exception::class)
@@ -49,30 +40,45 @@ class GameActivityTest{
         mActivityRule.launchActivity(intent)
 
         val ga = mActivityRule.activity
-        val gm = GameManager(ga)
 
         onView(withId(R.id.buttonThrowCubes)).perform(click())
         Thread.sleep(1500)
-        Log.d("TESTUI", (withId(R.id.DialogView).matches(isDisplayed())).toString())
-        Espresso.onView(ViewMatchers.withId(R.id.DialogView)).check(matches(isDisplayed()))
+        if (ga.findViewById<Button>(R.id.YesButton).visibility == View.VISIBLE)
         {
             onView(withId(R.id.YesButton)).perform(click())
         }
         Thread.sleep(1500)
         onView(withId(R.id.buttonThrowCubes)).perform(click())
         Thread.sleep(1500)
-        if (withId(R.id.DialogView).matches(isDisplayed()))
+        if (ga.findViewById<Button>(R.id.YesButton).visibility == View.VISIBLE)
         {
             onView(withId(R.id.YesButton)).perform(click())
         }
         Thread.sleep(1500)
-        if (gm.getCurrentPlayer().cells != null)
+        onView(withId(R.id.buttonThrowCubes)).perform(click())
+        Thread.sleep(1500)
+        if (ga.findViewById<Button>(R.id.NoButton).visibility == View.VISIBLE)
         {
-            val myId =ga.resources.getIdentifier("cell${gm.getCurrentPlayer().cells.last().id}", "id", ga.packageName)
-            onView(withId(R.id.YesButton)).perform(click())
+            onView(withId(R.id.NoButton)).perform(click())
         }
-
-
+        Thread.sleep(1500)
+        onView(withId(R.id.buttonThrowCubes)).perform(click())
+        Thread.sleep(1500)
+        if (ga.findViewById<Button>(R.id.NoButton).visibility == View.VISIBLE)
+        {
+            onView(withId(R.id.NoButton)).perform(click())
+        }
+        Thread.sleep(1500)
+        onView(withId(R.id.cell32)).perform(click())
+        Thread.sleep(1500)
+        onView(withId(R.id.cell25)).perform(click())
+        Thread.sleep(1500)
+        device.setOrientationLeft()
+        Thread.sleep(10000)
+        device.setOrientationNatural()
+        Thread.sleep(1500)
+        onView(withId(R.id.buttonSuicide)).perform(click())
+        Thread.sleep(3000)
 
 
     }
