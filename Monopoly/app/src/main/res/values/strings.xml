@@ -9,10 +9,10 @@
     <string name="noAnswer">No</string>
     <string name="onAI">AI: ON</string>
     <string name="offAI">AI: OFF</string>
-    <string name="namespace">Name: %2$s</string>
-    <string name="buyspace">Buy: %2$d</string>
-    <string name="sellspace">Sell: %2$d</string>
-    <string name="chargespace">Charge: %2$d</string>
+    <string name="namespace">Name: %1$s</string>
+    <string name="buyspace">Buy: %1$d</string>
+    <string name="sellspace">Sell: %1$d</string>
+    <string name="chargespace">Charge: %1$d</string>
     <string name="buttonPlay">Play</string>
     <string name="buttonExit">Exit</string>
     <string name="buttonBack">Back</string>
