@@ -17,12 +17,12 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.widget.*
 import com.dreamteam.monopoly.game.GameData
+import com.dreamteam.monopoly.game.GameData.numberOfCommonCellsPerSide
+import com.dreamteam.monopoly.game.GameData.numberOfCornersPerSide
+import com.dreamteam.monopoly.game.GameData.numberOfSides
 import com.dreamteam.monopoly.game.GameManager
 import com.dreamteam.monopoly.game.board.cell.GameCellType
-import com.dreamteam.monopoly.game.player.Player
-import com.dreamteam.monopoly.game.player.PlayerActions
-import com.dreamteam.monopoly.game.player.PlayerMoveCondition
-import com.dreamteam.monopoly.game.player.PlayerType
+import com.dreamteam.monopoly.game.player.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
@@ -107,20 +107,26 @@ class GameActivity : AppCompatActivity() {
         val metrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(metrics)
 
-        val boardSize: Int = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) metrics.widthPixels else metrics.heightPixels
-        val cellWidth: Int = (boardSize / ((gameManager.mainBoard.gameWayLength / 4 - 1) + 2 * GameData.cellSidesModifier)).toInt()
+        val boardSize: Int =
+                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+                    metrics.widthPixels
+                else
+                    metrics.heightPixels
+        val cellWidth: Int = (boardSize / ((gameManager.mainBoard.gameWayLength / numberOfSides - 1) +
+                numberOfCornersPerSide * GameData.cellSidesModifier)).toInt()
         val cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
 
-
+        val fullSideLength = numberOfCornersPerSide * cellHeight.toFloat() +
+                numberOfCommonCellsPerSide * cellWidth.toFloat()
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            horizontalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.heightPixels)
+            horizontalGuideline.setGuidelinePercent(fullSideLength / metrics.heightPixels)
             underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
         } else {
             underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / boardSize)
             horizontalGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
-            verticalGuideline.setGuidelinePercent((2 * cellHeight.toFloat() + 9 * cellWidth.toFloat()) / metrics.widthPixels)
+            verticalGuideline.setGuidelinePercent(fullSideLength / metrics.widthPixels)
             val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
-            verticalGuideline2.setGuidelinePercent((cellHeight.toFloat() + (4.5f * cellWidth.toFloat())) / metrics.widthPixels)
+            verticalGuideline2.setGuidelinePercent((fullSideLength / 2) / metrics.widthPixels)
         }
         createBoard(constraintLayout, cellHeight, cellWidth)
         startAssignment(playersNames)
@@ -132,9 +138,9 @@ class GameActivity : AppCompatActivity() {
             else -> playersNames[PlayerType.AI]!!.size + playersNames[PlayerType.PERSON]!!.size
         }
         for (i in 1..namesize) {
-            val myPlayerID = resources.getIdentifier("Player$i", getString(R.string.id), packageName)
+            val myPlayerID = resources.getIdentifier(getString(R.string.Player) + i.toString(), getString(R.string.id), packageName)
             val playerImage = resources.getDrawable(resources
-                    .getIdentifier("player$i", "drawable", packageName), null)
+                    .getIdentifier(getString(R.string.player) + i.toString(), getString(R.string.drawable), packageName), null)
             val player = ImageView(this)
             player.layoutParams = LayoutParams(cellWidth / 2, cellWidth / 2)
             player.id = (myPlayerID)
@@ -142,17 +148,17 @@ class GameActivity : AppCompatActivity() {
             constraintLayout.addView(player)
             val constraintSet = ConstraintSet()
             constraintSet.clone(constraintLayout)
-            val myId = resources.getIdentifier("cell${1}", getString(R.string.id), packageName)
-            if (i == 1 || i == 3) {
+            val myId = resources.getIdentifier(getString(R.string.cell) + Order.FIRST.value.toString(), getString(R.string.id), packageName)
+            if (i == Order.FIRST.value || i == Order.THIRD.value) {
                 constraintSet.connect(player.id, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
                 constraintSet.connect(player.id, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
-                if (i == 1) constraintSet.connect(player.id, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
+                if (i == Order.FIRST.value) constraintSet.connect(player.id, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
                 else constraintSet.connect(player.id, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
             }
-            if (i == 2 || i == 4) {
+            if (i == Order.SECOND.value || i == Order.FOURTH.value) {
                 constraintSet.connect(player.id, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
                 constraintSet.connect(player.id, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
-                if (i == 2) constraintSet.connect(player.id, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
+                if (i == Order.SECOND.value) constraintSet.connect(player.id, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
                 else constraintSet.connect(player.id, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
             }
             constraintSet.applyTo(constraintLayout)
@@ -170,7 +176,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun playerActionRequest() {
-        if (gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition].info.cellType == GameCellType.COMPANY && //высвечивать купить/нет только если есть возможность купить
+        //высвечивать купить/нет только если есть возможность купить
+        if (gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition].info.cellType == GameCellType.COMPANY &&
                 gameManager.mainBoard.gameWay[gameManager.getCurrentPlayer().currentPosition].owner == null) {
             actionState = if (actionState == ActionState.SELL) ActionState.BUY_SELL else ActionState.BUY
             activateBuyChoice(true)
@@ -240,10 +247,14 @@ class GameActivity : AppCompatActivity() {
         val dices: Pair<Int, Int> = gameManager.getCurrentPlayer().throwDices()
         val cube1: ImageView = findViewById(R.id.cube1)
         val cube2: ImageView = findViewById(R.id.cube2)
+        //getting first cube image
         val drawCube1 = resources.getDrawable(resources
-                .getIdentifier("dice${dices.first}", "drawable", packageName), null)      //gettind first cube image
+                .getIdentifier(getString(R.string.dice) + (dices.first).toString(),
+                        getString(R.string.drawable), packageName), null)
+        //getting second cube image
         val drawCube2 = resources.getDrawable(resources
-                .getIdentifier("dice${dices.second}", "drawable", packageName), null)     //gettind second cube image
+                .getIdentifier(getString(R.string.dice) + (dices.second).toString(),
+                        getString(R.string.drawable), packageName), null)
         cube1.setImageDrawable(drawCube1)  //draw this pics
         cube2.setImageDrawable(drawCube2)
 
@@ -260,10 +271,11 @@ class GameActivity : AppCompatActivity() {
         if (sellButton!!.visibility == View.VISIBLE && sellButton!!.isClickable) {
             activateSellChoice(false)
         }
-        cube1.setImageDrawable(null) //delete images dices pics
+        //delete images dices pics
+        cube1.setImageDrawable(null)
         cube2.setImageDrawable(null)
         if (withMoneyUpdate) updPlayerMoney(gameManager.getCurrentPlayer())
-        gameManager.nextPlayerMove() //this code should be after action after throwing dice #Player.decision
+        gameManager.nextPlayerMove()
         activateThrowButton(true)
         if (gameManager.getCurrentPlayer().type == PlayerType.AI) {
             playerStartMoveAction()
@@ -276,10 +288,10 @@ class GameActivity : AppCompatActivity() {
         val gradientDrawable = shape
                 .findDrawableByLayerId(R.id.backgroundColor) as GradientDrawable
         when (player.id) {
-            1 -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player1BackgroundColor))
-            2 -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player2BackgroundColor))
-            3 -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player3BackgroundColor))
-            4 -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player4BackgroundColor))
+            Order.FIRST.value -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player1BackgroundColor))
+            Order.SECOND.value -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player2BackgroundColor))
+            Order.THIRD.value -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player3BackgroundColor))
+            Order.FOURTH.value -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player4BackgroundColor))
         }
         cellButtons[index].background = shape
     }
@@ -299,7 +311,8 @@ class GameActivity : AppCompatActivity() {
         if (playersNames[PlayerType.AI] != null) {
             for (string in playersNames[PlayerType.AI]!!) {
                 gameManager.addPlayer(string, PlayerType.AI)
-                val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", getString(R.string.id), packageName)
+                val playerStatsId = resources.getIdentifier(getString(R.string.playerStats) +
+                        gameManager.players.size.toString(), getString(R.string.id), packageName)
                 val playerStats: TextView = findViewById(playerStatsId)
                 playerStats.text = string
                 gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
@@ -309,7 +322,8 @@ class GameActivity : AppCompatActivity() {
         if (playersNames[PlayerType.PERSON] != null) {
             for (string in playersNames[PlayerType.PERSON]!!) {
                 gameManager.addPlayer(string, PlayerType.PERSON)
-                val playerStatsId = resources.getIdentifier("playerStats${gameManager.players.size}", getString(R.string.id), packageName)
+                val playerStatsId = resources.getIdentifier(getString(R.string.playerStats) +
+                        gameManager.players.size.toString(), getString(R.string.id), packageName)
                 val playerStats: TextView = findViewById(playerStatsId)
                 playerStats.text = string
                 gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
@@ -323,7 +337,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun suicideAction(playerToSuicide: Player, withPlayerSwap: Boolean = true) {
-        val myPlayerID = resources.getIdentifier("Player${playerToSuicide.id}", getString(R.string.id), packageName)
+        val myPlayerID = resources.getIdentifier(getString(R.string.Player) + playerToSuicide.id.toString(),
+                getString(R.string.id), packageName)
         val player = findViewById<ImageView>(myPlayerID)
         player.visibility = View.INVISIBLE
         suicidePlayers.add(playerToSuicide.id)
@@ -359,15 +374,17 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun createCell(width: Int, height: Int, layout: ConstraintLayout, From1: Int, To1: Int, From2: Int, To2: Int, From3: Int, To3: Int, start: Boolean = false) {
-        val thisButtonID = resources.getIdentifier("cell${indexForBoard + 1}", getString(R.string.id), packageName)
-        val previousButtonID = resources.getIdentifier("cell$indexForBoard", getString(R.string.id), packageName)
+        val thisButtonID = resources.getIdentifier(getString(R.string.cell) + (indexForBoard + 1).toString(), getString(R.string.id), packageName)
+        val previousButtonID = resources.getIdentifier(getString(R.string.cell) + indexForBoard.toString(), getString(R.string.id), packageName)
         val button = ImageButton(this)
         button.layoutParams = LayoutParams(width, height)
         button.id = (thisButtonID)
         button.setOnClickListener(showInfoClick)
         val shape = resources.getDrawable(resources
-                .getIdentifier("cellbglayer", "drawable", packageName), null) as LayerDrawable
-        val bitmap = resources.getDrawable(resources.getIdentifier("cellimage${indexForBoard + 1}", "drawable", packageName), null) as BitmapDrawable
+                .getIdentifier(getString(R.string.cellBackgroundLayer), getString(R.string.drawable), packageName), null) as LayerDrawable
+        val bitmap = resources.getDrawable(resources.getIdentifier(getString(R.string.cellImage) +
+                (indexForBoard + 1).toString(), getString(R.string.drawable), packageName), null)
+                as BitmapDrawable
         shape.setDrawableByLayerId(R.id.cellLogo, bitmap)
         button.background = shape
         layout.addView(button)
@@ -420,7 +437,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun dataRestore(savedInstanceState: Bundle) {
         restoreSuicidePlayers(savedInstanceState)
-        gameManager.currentPlayerIndex = savedInstanceState.getInt("currentPlayerIndex")
+        gameManager.currentPlayerIndex = savedInstanceState.getInt(getString(R.string.currentPlayerIndex))
         restoreMoney(savedInstanceState)
         restoreCells(savedInstanceState)
         restoreActionState(savedInstanceState)
@@ -429,32 +446,34 @@ class GameActivity : AppCompatActivity() {
 
     private fun restoreSuicidePlayers(savedInstanceState: Bundle) {
         suicidePlayers.clear()
-        val playersToSuicide: ArrayList<Int> = savedInstanceState.getIntegerArrayList("playersSuicideIds")
+        val playersToSuicide: ArrayList<Int> = savedInstanceState.getIntegerArrayList(getString(R.string.playersSuicideIds))
         for (i in 0 until playersToSuicide.size)
             suicideAction(gameManager.getPlayerById(playersToSuicide[i]), false)
     }
 
     private fun restoreMoney(savedInstanceState: Bundle) {
-        for (i in 0 until savedInstanceState.getIntegerArrayList("playersMoney").size) {
-            gameManager.players[i].money = savedInstanceState.getIntegerArrayList("playersMoney")[i]
+        val pMoney = savedInstanceState.getIntegerArrayList(getString(R.string.playerMoney))
+        for (i in 0 until pMoney.size) {
+            gameManager.players[i].money = pMoney[i]
             updPlayerMoney(gameManager.players[i])
         }
     }
 
     private fun restoreCells(savedInstanceState: Bundle) {
         for (i in 0 until gameManager.players.size) {
-            gameManager.players[i].restoreGameCells(savedInstanceState.getIntegerArrayList("playerCells" + i.toString()))
+            gameManager.players[i].restoreGameCells(
+                    savedInstanceState.getIntegerArrayList(getString(R.string.playerCells) + i.toString()))
         }
     }
 
     private fun restoreActionState(savedInstanceState: Bundle) {
-        when (savedInstanceState.getInt("actionState")) {
-            1 -> {
+        when (savedInstanceState.getInt(getString(R.string.actionState))) {
+            ActionState.BUY.state -> {
                 activateThrowButton(false)
                 reactivateBuyChoice()
             }
-            2 -> reactivateSellChoice()
-            3 -> {
+            ActionState.SELL.state -> reactivateSellChoice()
+            ActionState.BUY_SELL.state -> {
                 activateThrowButton(false)
                 reactivateBuyChoice()
                 reactivateSellChoice()
@@ -463,7 +482,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun restoreCurrentInfo(savedInstanceState: Bundle) {
-        showInfo(savedInstanceState.getInt("currentInfo"))
+        showInfo(savedInstanceState.getInt(getString(R.string.currentInfo)))
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -484,20 +503,21 @@ class GameActivity : AppCompatActivity() {
             for (j in 0 until player.cells.size)
                 playersOwnedCells[i].add(player.cells[j].id.toInt())
         }
-        outState?.putIntegerArrayList("playersSuicideIds", suicidePlayers)
-        outState?.putIntegerArrayList("playersPos", playersPos)
-        outState?.putIntegerArrayList("playersMoney", playersMoney)
-        outState?.putInt("currentPlayerIndex", gameManager.currentPlayerIndex)
-        outState?.putInt("actionState", actionState.state)
-        outState?.putInt("currentInfo", currentInfo)
+        outState?.putIntegerArrayList(getString(R.string.playersSuicideIds), suicidePlayers)
+        outState?.putIntegerArrayList(getString(R.string.playersPositions), playersPos)
+        outState?.putIntegerArrayList(getString(R.string.playerMoney), playersMoney)
+        outState?.putInt(getString(R.string.currentPlayerIndex), gameManager.currentPlayerIndex)
+        outState?.putInt(getString(R.string.actionState), actionState.state)
+        outState?.putInt(getString(R.string.currentInfo), currentInfo)
         for (i in 0 until playersNum) {
-            outState?.putIntegerArrayList("playerCells" + i.toString(), playersOwnedCells[i])
+            outState?.putIntegerArrayList(getString(R.string.playerCells) + i.toString(), playersOwnedCells[i])
         }
         super.onSaveInstanceState(outState)
     }
 
     private fun updPlayerMoney(player: Player) {
-        val playerMoneyId = resources.getIdentifier("playerMoney${gameManager.getPlayerByName(player.name)!!.id}", getString(R.string.id), packageName)
+        val playerMoneyId = resources.getIdentifier(getString(R.string.playerMoney) +
+                gameManager.getPlayerByName(player.name)!!.id, getString(R.string.id), packageName)
         val playerMoney: TextView = findViewById(playerMoneyId)
         playerMoney.text = gameManager.getPlayerByName(player.name)!!.money.toString()
     }
@@ -510,7 +530,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun showCurrentPlayerName() {
-        Toasty.info(this, gameManager.getCurrentPlayer().name + " move", Toast.LENGTH_LONG, true).show()
+        Toasty.info(this, gameManager.getCurrentPlayer().name +
+                getString(R.string.move), Toast.LENGTH_SHORT, true).show()
     }
 
     private enum class ActionState(val state: Int) {

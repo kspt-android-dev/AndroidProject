@@ -14,6 +14,9 @@ object GameData {
     const val maxNameLength = 15
 
     // Board settings
+    const val numberOfSides: Int = 4
+    const val numberOfCornersPerSide = 2
+    const val numberOfCommonCellsPerSide = 9
     const val swapDicesDelay: Long = 2000
     const val cellSidesModifier: Float = 1.75f
 

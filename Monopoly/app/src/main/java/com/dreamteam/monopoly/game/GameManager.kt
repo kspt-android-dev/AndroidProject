@@ -1,8 +1,8 @@
 package com.dreamteam.monopoly.game
 
 import android.os.Bundle
-import android.util.Log
 import com.dreamteam.monopoly.GameActivity
+import com.dreamteam.monopoly.R
 import com.dreamteam.monopoly.game.GameData.startMoney
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.player.Player
@@ -15,7 +15,7 @@ class GameManager(private val activity: GameActivity) {
     private var isEndGame: Boolean = false
 
     fun resetSaveData(savedInstanceState: Bundle) {
-        mainBoard.resetField(savedInstanceState.getIntegerArrayList("playersPos"))
+        mainBoard.resetField(savedInstanceState.getIntegerArrayList(activity.getString(R.string.playersPositions)))
     }
 
     fun nextPlayerMove() {
@@ -29,7 +29,6 @@ class GameManager(private val activity: GameActivity) {
         for (p in players)
             if (p.id == id)
                 return p
-        Log.d("PLAYER", "player doesn't exist")
         return getCurrentPlayer()
     }
 

@@ -31,4 +31,5 @@
     <string name="title_activity_win_screen">WinScreenActivity</string>
     <string name="deathMoneyInfo">[DEAD :)]</string>
     <string name="congratulation">Congratulation to player  </string>
+    <string name="move">move</string>
 </resources>

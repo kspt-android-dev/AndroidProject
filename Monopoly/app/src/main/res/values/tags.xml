@@ -7,4 +7,12 @@
     <string name="deletePlayersNames">deletePlayersNames</string>
     <string name="playersTypes">playersTypes</string>
     <string name="keyboardText">keyboardText</string>
+    <string name="playersSuicideIds">playersSuicideIds</string>
+    <string name="playersPositions">playersPos</string>
+    <string name="playerMoney">playerMoney</string>
+    <string name="currentPlayerIndex">currentPlayerIndex</string>
+    <string name="actionState">actionState</string>
+    <string name="currentInfo">currentInfo</string>
+    <string name="playerCells">playerCells</string>
+    <string name="dice">dice</string>
 </resources>

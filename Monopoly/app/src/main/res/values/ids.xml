@@ -51,4 +51,11 @@
 
     <string name="playerName">PlayerName</string>
     <string name="aiButton">aiButton</string>
+    <string name="drawable">drawable</string>
+    <string name="cellBackgroundLayer">cellbglayer</string>
+    <string name="cellImage">cellimage</string>
+    <string name="playerStats">playerStats</string>
+    <string name="cell">cell</string>
+    <string name="Player">Player</string>
+    <string name="player">player</string>
 </resources>

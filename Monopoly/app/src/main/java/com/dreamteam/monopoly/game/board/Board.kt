@@ -1,6 +1,5 @@
 package com.dreamteam.monopoly.game.board
 
-import android.util.Log
 import com.dreamteam.monopoly.game.GameData
 import com.dreamteam.monopoly.game.board.cell.Cell
 import com.dreamteam.monopoly.game.board.cell.GameCell
@@ -10,6 +9,7 @@ import android.support.constraint.ConstraintSet
 import com.dreamteam.monopoly.R
 import android.support.constraint.ConstraintLayout
 import com.dreamteam.monopoly.GameActivity
+import com.dreamteam.monopoly.game.player.Order
 
 
 class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
@@ -37,8 +37,6 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
                 activity.getGameManager().players[i].currentPosition = savedPositions[i]
                 changeImagePlace(activity.getGameManager().players[i])
             }
-        else
-            Log.d("[Save]", " players setup position error")
 
     }
 
@@ -48,25 +46,23 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
         val constraintLayout: ConstraintLayout = activity.findViewById(R.id.ConstraintLayout)
         constraintSet.clone(constraintLayout)
 
-        val myPlayer = activity.resources.getIdentifier("Player$currentPlayerID", "id", activity.packageName)
-        // while (player.currentPosition != player.targetPosition &&  player.currentPosition <= player.targetPosition) {
-        //player.currentPosition++
-        Log.d("CURR POS", player.currentPosition.toString())
-        val myId = activity.resources.getIdentifier("cell${player.currentPosition + 1}", "id", activity.packageName)
-        if (currentPlayerID == 1 || currentPlayerID == 3) {
+        val myPlayer = activity.resources.getIdentifier(activity.getString(R.string.Player) +
+                currentPlayerID.toString(), activity.getString(R.string.id), activity.packageName)
+        val myId = activity.resources.getIdentifier(activity.getString(R.string.cell) +
+                (player.currentPosition + 1).toString(), activity.getString(R.string.id), activity.packageName)
+        if (currentPlayerID == Order.FIRST.value || currentPlayerID == Order.THIRD.value) {
             constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
             constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
-            if (currentPlayerID == 1) constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
+            if (currentPlayerID == Order.FIRST.value) constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
             else constraintSet.connect(myPlayer, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
         }
-        if (currentPlayerID == 2 || currentPlayerID == 4) {
+        if (currentPlayerID == Order.SECOND.value || currentPlayerID == Order.FOURTH.value) {
             constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
             constraintSet.connect(myPlayer, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
-            if (currentPlayerID == 2) constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
+            if (currentPlayerID == Order.SECOND.value) constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
             else constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
         }
         constraintSet.applyTo(constraintLayout)
     }
-    // }
 }
 
