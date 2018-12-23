@@ -7,13 +7,13 @@ import android.view.View
 import android.widget.Button
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
+import com.dreamteam.monopoly.helpers.shakeEffect
 import maes.tech.intentanim.CustomIntent
 import maes.tech.intentanim.CustomIntent.customType
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    //image buttons
     private var buttonPlay: Button? = null
     private var buttonExit: Button? = null
 
@@ -25,28 +25,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         hideTopBar()
 
-        //getting the button
         buttonPlay = findViewById(R.id.buttonPlay)
         buttonExit = findViewById(R.id.buttonExit)
 
-        //adding a click listener
-        buttonPlay!!.setOnClickListener(this)
+        buttonPlay?.setOnClickListener(this)
 
-        buttonExit!!.setOnClickListener {
-            YoYo.with(Techniques.Tada)
-                    .duration(700)
-                    .repeat(5)
-                    .playOn(buttonExit)
+        buttonExit?.setOnClickListener {
+            shakeEffect(buttonExit!!)
             finish()
             System.exit(0)
         }
-
     }
 
     @Override
     override fun finish() {
         super.finish()
-        CustomIntent.customType(this, "up-to-bottom")
+        CustomIntent.customType(this, getString(R.string.up_to_bottom))
     }
 
     override fun onResume() {
@@ -66,13 +60,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     @Override
     override fun onClick(v: View) {
-        //starting game activity
-        YoYo.with(Techniques.Tada)
-                .duration(700)
-                .repeat(5)
-                .playOn(buttonPlay)
+        //starting setup players activity
+        shakeEffect(buttonPlay!!)
         intent = Intent(this, AmountOfPlayersActivity::class.java)
         startActivity(intent)
-        customType(this, "bottom-to-up")
+        customType(this, getString(R.string.bottom_to_up))
     }
 }

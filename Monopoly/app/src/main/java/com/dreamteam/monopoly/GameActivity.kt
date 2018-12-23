@@ -14,7 +14,6 @@ import android.support.constraint.Guideline
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.View
 import android.widget.*
 import com.dreamteam.monopoly.game.GameData
@@ -103,7 +102,7 @@ class GameActivity : AppCompatActivity() {
 
         val intent = this.intent
         val bundle: Bundle = intent.extras
-        val playersNames: HashMap<PlayerType, ArrayList<String>> = bundle.getSerializable("Map") as HashMap<PlayerType, ArrayList<String>>
+        val playersNames: HashMap<PlayerType, ArrayList<String>> = bundle.getSerializable(getString(R.string.playersMap)) as HashMap<PlayerType, ArrayList<String>>
 
         val metrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(metrics)

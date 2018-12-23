@@ -15,7 +15,6 @@
     <string name="chargespace">Charge: %1$d</string>
     <string name="buttonPlay">Play</string>
     <string name="buttonExit">Exit</string>
-    <string name="buttonBack">Back</string>
     <string name="buttonEnter">Enter</string>
     <string name="buttonStart">Start</string>
     <string name="buttonDelete">Delete</string>
@@ -31,4 +30,5 @@
     <string name="throw_dices">Throw dices</string>
     <string name="title_activity_win_screen">WinScreenActivity</string>
     <string name="deathMoneyInfo">[DEAD :)]</string>
+    <string name="congratulation">Congratulation to player  </string>
 </resources>

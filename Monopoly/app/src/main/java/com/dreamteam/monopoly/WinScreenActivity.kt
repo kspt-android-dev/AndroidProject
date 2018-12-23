@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
 import android.view.View
-import com.dreamteam.monopoly.R.string.namespace
+import com.dreamteam.monopoly.helpers.makeTinyAlert
 import maes.tech.intentanim.CustomIntent
 
 class WinScreenActivity : AppCompatActivity() {
@@ -24,16 +24,17 @@ class WinScreenActivity : AppCompatActivity() {
 
         val intent = intent
         winnerNamespace = findViewById(R.id.winerName)
-        if (savedInstanceState == null)
-            winnerNamespace?.text = intent.getStringExtra("winnerName")
-        else
+        if (savedInstanceState == null) {
+            winnerNamespace?.text = intent.getStringExtra(getString(R.string.winnerName))
+            makeTinyAlert(this, resources.getString(R.string.congratulation) + winnerNamespace?.text)
+        } else
             dataRestore(savedInstanceState)
 
         menuButton = findViewById(R.id.buttonMenu)
         menuButton?.setOnClickListener {
             val newIntent = Intent(this, MainActivity::class.java)
             startActivity(newIntent)
-            CustomIntent.customType(this, "up-to-bottom")
+            CustomIntent.customType(this, getString(R.string.up_to_bottom))
         }
     }
 
@@ -42,7 +43,7 @@ class WinScreenActivity : AppCompatActivity() {
         super.finish()
         val newIntent = Intent(this, MainActivity::class.java)
         startActivity(newIntent)
-        CustomIntent.customType(this, "up-to-bottom")
+        CustomIntent.customType(this, getString(R.string.up_to_bottom))
     }
 
     override fun onResume() {
@@ -61,12 +62,11 @@ class WinScreenActivity : AppCompatActivity() {
     }
 
     private fun dataRestore(savedInstanceState: Bundle) {
-        winnerNamespace?.text = savedInstanceState.getString("winnerName")
+        winnerNamespace?.text = savedInstanceState.getString(getString(R.string.winnerName))
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putString("winnerName", winnerNamespace!!.text.toString())
+        outState?.putString(getString(R.string.winnerName), winnerNamespace!!.text.toString())
         super.onSaveInstanceState(outState)
     }
-
 }
