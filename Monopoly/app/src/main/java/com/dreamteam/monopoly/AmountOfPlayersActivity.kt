@@ -62,6 +62,10 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         buttonAIfourth!!.visibility = View.INVISIBLE
         buttonAIfourth!!.isClickable = false
 
+        if (savedInstanceState != null) {
+            dataRestore(savedInstanceState)
+        }
+
         buttonAIfirst!!.setOnClickListener {
             buttonAiListener(buttonAIfirst!!)
         }
@@ -86,7 +90,6 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         buttonEnter!!.setOnClickListener {
             val content = namespace!!.text.toString() //gets you the contents of edit text
             if (content.isEmpty() || content.length > maxNameLength || playersNames.contains(content)) {
-                //showToast(v, resources.getString(R.string.nameSize))
                 Toasty.error(this, resources.getString(R.string.nameSize),
                         Toast.LENGTH_SHORT, true).show()
                 return@setOnClickListener
@@ -127,7 +130,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             for (i in 1..numberOfPlayers) {
                 val buttonID = this.resources.getIdentifier("aiButton$i", "id", packageName)
                 val aiButton = findViewById<Button>(buttonID)
-                if (aiButton.text.toString() == "AI: OFF")
+                if (aiButton.text.toString() == resources.getString(R.string.offAI))
                     players.add(playersNames[i - 1])
                 else
                     bots.add(playersNames[i - 1])
@@ -162,10 +165,6 @@ class AmountOfPlayersActivity : AppCompatActivity() {
 
             if (numberOfPlayers < minPlayers) buttonStart!!.isEnabled = false
             if (numberOfPlayers < maxPlayers) buttonEnter!!.isEnabled = true
-        }
-
-        if (savedInstanceState != null) {
-            dataRestore(savedInstanceState)
         }
     }
 
@@ -212,7 +211,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
 
 
     private fun buttonAiListener(button: Button) {
-        if (button.text == "AI: ON") button.text = resources.getString(R.string.offAI)
+        if (button.text == resources.getString(R.string.onAI)) button.text = resources.getString(R.string.offAI)
         else button.text = resources.getString(R.string.onAI)
     }
 
@@ -235,19 +234,26 @@ class AmountOfPlayersActivity : AppCompatActivity() {
     }
 
     private fun restorePlayersList(savedInstanceState: Bundle) {
-        val pNames: ArrayList<String> = savedInstanceState.getStringArrayList("playersNames")
+        playersNames = savedInstanceState.getStringArrayList("playersNames")
         val pDells: ArrayList<String> = savedInstanceState.getStringArrayList("deletePlayersNames")
         val pTypes: BooleanArray = savedInstanceState.getBooleanArray("playersTypes")
-
-        for (i in 1..pNames.size) {
+        numberOfPlayers = playersNames.size
+        for (i in 1..numberOfPlayers) {
             val textViewID = this.resources.getIdentifier("PlayerName$i", "id", packageName)
-            val names = findViewById<TextView>(textViewID)
-            names.text = pNames[i - 1]
+            val pName = findViewById<TextView>(textViewID)
+            pName.text = playersNames[i - 1]
+
+            if (pDells.contains(playersNames[i - 1])) {
+                pName.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGrey))
+                deleteList.add(pName)
+            }
 
             val aiButtonID = this.resources.getIdentifier("aiButton$i", "id", packageName)
-            val buttons = findViewById<Button>(aiButtonID)
-            if (pTypes[i - 1]) buttons.text = resources.getString(R.string.onAI)
-            else buttons.text = resources.getString(R.string.offAI)
+            val aiButton = findViewById<Button>(aiButtonID)
+            if (pTypes[i - 1]) aiButton.text = resources.getString(R.string.onAI)
+            else aiButton.text = resources.getString(R.string.offAI)
+            aiButton.visibility = View.VISIBLE
+            aiButton.isClickable = true
         }
     }
 
@@ -270,9 +276,9 @@ class AmountOfPlayersActivity : AppCompatActivity() {
 
     private fun loadPlayersTypes(): BooleanArray {
         val playersTypes: ArrayList<Boolean> = ArrayList()
-        for (i in 1..numberOfPlayers) {
+        for (i in 1..playersNames.size) {
             val aiButton = findViewById<Button>(resources.getIdentifier("aiButton$i", "id", packageName))
-            if (aiButton.text.toString() == "AI: OFF")
+            if (aiButton.text.toString() == resources.getString(R.string.offAI))
                 playersTypes.add(false)
             else
                 playersTypes.add(true)
