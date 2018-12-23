@@ -7,12 +7,13 @@ import android.view.View
 import android.widget.Button
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
+import maes.tech.intentanim.CustomIntent
 import maes.tech.intentanim.CustomIntent.customType
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    //image button
+    //image buttons
     private var buttonPlay: Button? = null
     private var buttonExit: Button? = null
 
@@ -40,6 +41,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             System.exit(0)
         }
 
+    }
+
+    @Override
+    override fun finish() {
+        super.finish()
+        CustomIntent.customType(this, "up-to-bottom")
     }
 
     override fun onResume() {

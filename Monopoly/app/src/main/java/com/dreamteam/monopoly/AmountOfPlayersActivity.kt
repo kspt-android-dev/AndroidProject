@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.view.View
@@ -89,14 +90,13 @@ class AmountOfPlayersActivity : AppCompatActivity() {
 
         buttonEnter!!.setOnClickListener {
             val content = namespace!!.text.toString() //gets you the contents of edit text
-            if (content.isEmpty() || content.length > maxNameLength ) {
+            if (content.isEmpty() || content.length > maxNameLength) {
                 Toasty.error(this, resources.getString(R.string.nameSize),
                         Toast.LENGTH_SHORT, true).show()
                 return@setOnClickListener
             }
 
-            if (playersNames.contains(content))
-            {
+            if (playersNames.contains(content)) {
                 Toasty.error(this, resources.getString(R.string.containtsString),
                         Toast.LENGTH_SHORT, true).show()
                 return@setOnClickListener
@@ -111,19 +111,9 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             textView.text = content
             textView.isClickable = true
 
-
-            textView!!.setOnClickListener {
-                if (!deleteList.contains(textView)) {
-                    textView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGrey))
-                    deleteList.add(textView)
-                } else {
-                    textView.setBackgroundResource(android.R.color.transparent)
-                    deleteList.remove(textView)
-                }
-            }
+            playerTextListener(textView)
 
             aiButtonsAppearance(true)
-
 
             if (numberOfPlayers == maxPlayers) buttonEnter!!.isEnabled = false
             if (numberOfPlayers >= minPlayers) buttonStart!!.isEnabled = true
@@ -175,6 +165,12 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         }
     }
 
+    @Override
+    override fun finish() {
+        super.finish()
+        CustomIntent.customType(this, "up-to-bottom")
+    }
+
     override fun onResume() {
         super.onResume()
         hideTopBar()
@@ -216,6 +212,17 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         }
     }
 
+    private fun playerTextListener(playerView: TextView) {
+        playerView.setOnClickListener {
+            if (!deleteList.contains(playerView)) {
+                playerView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGrey))
+                deleteList.add(playerView)
+            } else {
+                playerView.setBackgroundResource(android.R.color.transparent)
+                deleteList.remove(playerView)
+            }
+        }
+    }
 
     private fun buttonAiListener(button: Button) {
         if (button.text == resources.getString(R.string.onAI)) button.text = resources.getString(R.string.offAI)
@@ -245,10 +252,13 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         val pDells: ArrayList<String> = savedInstanceState.getStringArrayList("deletePlayersNames")
         val pTypes: BooleanArray = savedInstanceState.getBooleanArray("playersTypes")
         numberOfPlayers = playersNames.size
+        deleteList.clear()
         for (i in 1..numberOfPlayers) {
             val textViewID = this.resources.getIdentifier("PlayerName$i", "id", packageName)
             val pName = findViewById<TextView>(textViewID)
             pName.text = playersNames[i - 1]
+
+            playerTextListener(pName)
 
             if (pDells.contains(playersNames[i - 1])) {
                 pName.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGrey))

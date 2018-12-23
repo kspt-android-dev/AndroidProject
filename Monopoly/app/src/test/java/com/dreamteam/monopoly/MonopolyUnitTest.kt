@@ -2,6 +2,7 @@ package com.dreamteam.monopoly
 
 import com.dreamteam.monopoly.game.GameData
 import com.dreamteam.monopoly.game.GameManager
+import com.dreamteam.monopoly.game.board.cell.CellState
 import com.dreamteam.monopoly.game.player.PlayerActions
 import com.dreamteam.monopoly.game.player.PlayerMoveCondition
 import com.dreamteam.monopoly.game.player.PlayerType
@@ -207,5 +208,24 @@ class MonopolyUnitTest {
         gameManager.nextPlayerMove()
         currentPlayer = gameManager.getCurrentPlayer()
         assertEquals(GameData.startMoney + currentPlayerCell.info.cost.costCharge, currentPlayer.money)
+    }
+
+    @Test
+    fun gameCellSetupState() {
+        val gameManager = GameManager(gameActivity)
+        gameManager.mainBoard.gameWay[37].state = CellState.OWNED
+        gameManager.mainBoard.gameWay[39].state = CellState.SLEEPING
+        assertEquals(CellState.OWNED, gameManager.mainBoard.gameWay[37].state)
+        assertEquals(CellState.SLEEPING, gameManager.mainBoard.gameWay[39].state)
+    }
+
+    @Test
+    fun findCellWithLowestSellCost() {
+        val gameManager = GameManager(gameActivity)
+        gameManager.addPlayer("BestEverPlayer")
+        val player = gameManager.getCurrentPlayer()
+        player.cells.addAll(gameManager.mainBoard.gameWay)
+        assertEquals(gameManager.mainBoard.gameWay[1], player.findCellWithLowestSellCost())
+        assertEquals(gameManager.mainBoard.gameWay[1].info.cost.costSell, player.findCellWithLowestSellCost().info.cost.costSell)
     }
 }
