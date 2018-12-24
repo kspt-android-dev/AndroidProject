@@ -107,6 +107,7 @@ class GameActivity : AppCompatActivity() {
 
         val intent = this.intent
         val bundle: Bundle = intent.extras
+        @Suppress("UNCHECKED_CAST")
         val playersNames: HashMap<PlayerType, ArrayList<String>> = bundle.getSerializable(getString(R.string.playersMap)) as HashMap<PlayerType, ArrayList<String>>
 
         val metrics = DisplayMetrics()
