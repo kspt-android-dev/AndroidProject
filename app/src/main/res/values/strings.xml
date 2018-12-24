@@ -1,22 +1,24 @@
 <resources>
     <string name="app_name" translatable="false">S&amp;HMinesweeper</string>
 
-    <string name="settings">settings</string>
-    <string name="flag">flag</string>
-    <string name="question">question</string>
-    <string name="touch">touch</string>
-    <string name="title_activity_settings">Settings</string>
-    <string name="cancel">Cancel</string>
-    <string name="save">Save</string>
+    <!-- Settings -->
+    <string name="field">Field</string>
+    <string name="field_mode">Mode</string>
+    <string name="choose_field_mode">Choose field mode</string>
     <string name="number_of_mines">Number of mines</string>
-    <string name="height">Height</string>
-    <string name="width">Width</string>
-    <string name="mode">Mode</string>
+    <string name="set_number_of_mines">Set number of mines</string>
+    <string name="set_mines_dialog">Set number of mines (2–100)</string>
+    <string name="field_height">Height</string>
+    <string name="set_field_height">Set field height</string>
+    <string name="set_field_height_dialog">Set field height (2–25 mines)</string>
+    <string name="field_width">Width</string>
+    <string name="set_field_width">Set field width</string>
+    <string name="set_field_width_dialog">Set field width (2–25 mines)</string>
+    <string name="insturcion">Instruction</string>
+    <string name="watch_instruction">Watch instruction</string>
     <string name="hexagonal">Hexagonal</string>
     <string name="square">Square</string>
-    <string name="insturcion">Instruction</string>
-    <string name="back">Back</string>
-    <string name="watch_instruction">Watch instruction</string>
+
     <string name="html">
         <![CDATA[
         <p> «<b>Minesweeper</b>» – simple game that, nevertheless, develops attention, memory and logic.
@@ -39,9 +41,15 @@
     </string>
 
 
+    <!-- Notification -->
+    <string name="notification_title">Minesweeper</string>
+    <string name="notification_text">Нou have not been in the game for a long time. We need a sapper!</string>
+
     <!-- Dialogs strings-->
     <string name="overview">Overview</string>
     <string name="you_lose">You lose.</string>
     <string name="you_won">You won!</string>
     <string name="new_game">New game</string>
+
+    <string name="playing_field" translatable="false">playing_field</string>
 </resources>

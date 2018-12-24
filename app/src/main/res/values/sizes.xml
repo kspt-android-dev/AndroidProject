@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="hexagonal_cell_width">60dp</dimen> <!-- 2/3 from height required-->
+    <dimen name="hexagonal_cell_height">90dp</dimen>
+    <dimen name="square_cell_size">45dp</dimen>
+</resources>

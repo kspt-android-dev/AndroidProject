@@ -1,174 +1,189 @@
 package com.shminesweeper.shminesweeper;
 
-import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 public class Cell {
 
+    private FieldLogic.FieldMode fieldMode;
+
     private Point startPoint;
 
-    private boolean containsFlag;
-    private boolean containsQuestion;
-    private boolean containsMine;
-    private boolean isOpen;
+    enum CellCondition {FLAG, QUESTION, OPEN, CLOSED_EMPTY}
+    private CellCondition condition;
 
-    private Cell eastBrother;
-    private Cell southeastBrother;
-    private Cell southwesternBrother;
-    private Cell westBrother;
-    private Cell northwesternBrother;
-    private Cell northeasternBrother;
+    private boolean containsMine;
+
+    private ArrayList<Cell> brothers;
 
     private Path path;
 
-    Cell(Point point) {
+    private int offset;
+
+    public Cell(Point point,int offset, FieldLogic.FieldMode fieldMode) {
 
         // точка, с которой начинается рисование ячейчи
         this.startPoint = point;
 
-        this.containsFlag = false;
-        this.containsQuestion = false;
+        condition = CellCondition.CLOSED_EMPTY;
+
         this.containsMine = false;
-        this.isOpen = false;
 
         // соседние ячейки
-        this.eastBrother = null;
-        this.southeastBrother = null;
-        this.southwesternBrother = null;
-        this.westBrother = null;
-        this.northwesternBrother = null;
-        this.northeasternBrother = null;
+        this.brothers = new ArrayList<>();
 
-        this.setPath();
+        this.fieldMode = fieldMode;
+
+        this.offset = offset;
+
+//        if (fieldMode.equals(FieldLogic.FieldMode.HEXAGONAL)) this.setHexagonalPath();
+//        else this.setSquarePath();
     }
 
     // построение пути, по которому на игровом поле будет нарисована данная ячейка
     // путь каждой ячейки зависит от точки startPoint(она уникальна для каждой ячейки и передаётся при создании ячейки)
-    private void setPath(){
-        path = new Path();
+    private Path setHexagonalPath() {
 
+        path = new Path();
         path.moveTo(startPoint.x, startPoint.y);
-        path.rLineTo(100, -100);
-        path.rLineTo(100, 100);
-        path.rLineTo(0,100);
-        path.rLineTo(-100, 100);
-        path.rLineTo(-100, -100);
-        path.rLineTo(0, -100);
+        path.rLineTo(offset, -offset);
+        path.rLineTo(offset, offset);
+        path.rLineTo(0, offset);
+        path.rLineTo(-offset, offset);
+        path.rLineTo(-offset, -offset);
+        path.rLineTo(0, -offset);
         path.close();
+
+        return path;
+    }
+
+    private Path setSquarePath() {
+
+        path = new Path();
+        path.moveTo(startPoint.x, startPoint.y);
+        path.rLineTo(offset, 0);
+        path.rLineTo(0, offset);
+        path.rLineTo(-offset, 0);
+        path.rLineTo(0, -offset);
+        path.close();
+
+        return path;
+    }
+
+
+    public boolean isContainsPoint(Point point) {
+        if (fieldMode.equals(FieldLogic.FieldMode.HEXAGONAL)) return isContainsPointForHexagonal(point);
+        else return isContainsPointForSquare(point);
+    }
+    // определение принадлежности координат, полученных с экрана, данной ячейке.
+    // для шестигранной ячейки проверка происходит при помощи разбиения на квадрат и 4 треугольника.
+    // проверка принадлежности точки треугольнику происходит следующим образом:
+    //   если сумма площадей 2ух треугольников меньше площади рассматриваемого, то точка принадлежит рассматриваемому треугольнику;
+    //   1ый треугольник: основание - катет рассматриваемого, высота - перпендикуляр от рассматриваемой точки до основания
+    //   2ой треугольник: основание - другой катет рассматриваемого треугольника, высота - перпендикуляр от рассматриваемой точки до основания
+    private boolean isContainsPointForHexagonal(Point point) {
+
+        //top-left triangle
+        if ((point.x <= startPoint.x + offset) && (point.y <= startPoint.y)) {
+            return ((((startPoint.x + offset) - point.x) * offset / 2) +
+                    ((startPoint.y - point.y) * offset / 2) <= offset);
+        }
+        //top-right triangle
+        if ((point.x >= startPoint.x + offset) && (point.y <= startPoint.y)) {
+            return (((point.x - (startPoint.x + offset)) * offset / 2) +
+                    ((startPoint.y - point.y) * offset / 2) <= offset);
+        }
+        //bottom-left triangle
+        if ((point.x <= startPoint.x + offset) && (point.y >= startPoint.y + offset)) {
+            return ((((startPoint.x + offset) - point.x) * offset / 2) +
+                    ((point.y - (startPoint.y + offset)) * offset / 2) <= offset);
+        }
+        //bottom-right triangle
+        if (point.x >= startPoint.x + offset && point.y >= startPoint.y + offset) {
+            return ((point.x - (startPoint.x + offset)) * offset / 2 +
+                    (point.y - (startPoint.y + offset)) * offset / 2 <= offset);
+        }
+        //cube
+        return (point.x >= startPoint.x && point.x <= startPoint.x + offset * 2 &&
+                point.y >= startPoint.y && point.y <= startPoint.y + offset);
     }
 
     // определение принадлежности координат, полученных с экрана, данной ячейке
-    // для шестигранной ячейки проверка происходит при помощи разбиения на квадрат и 4 треугольника
-    public boolean isContainsPoint(Point point){
-        //top-left triangle
-        if ((point.x <= startPoint.x + 100) && (point.y <= startPoint.y)) {
-            return ((((startPoint.x + 100) - point.x)*50) + ((startPoint.y - point.y)*50) <= 5000);
-        }
-        //top-right triangle
-        if ((point.x >= startPoint.x + 100) && (point.y <= startPoint.y)) {
-            return (((point.x - (startPoint.x + 100))*50) + ((startPoint.y - point.y)*50) <= 5000);
-        }
-        //bottom-left triangle
-        if ((point.x <= startPoint.x+100) && (point.y >= startPoint.y+100)){
-            return ((((startPoint.x + 100) - point.x)*50) + ((point.y - (startPoint.y + 100))*50) <= 5000);
-        }
-        //bottom-right triangle
-        if (point.x >= startPoint.x+100 && point.y >= startPoint.y+100){
-            return ((point.x - (startPoint.x + 100))*50 + (point.y - (startPoint.y + 100))*50 <= 5000);
-        }
-        //cube
-        return (point.x >= startPoint.x && point.x <= startPoint.x+200 &&
-                point.y >= startPoint.y && point.y <= startPoint.y+100);
+    public boolean isContainsPointForSquare(Point point) {
+        return (point.x >= startPoint.x && point.x <= startPoint.x + offset) &&
+                (point.y >= startPoint.y && point.y <= startPoint.y + offset);
     }
 
-    public boolean isContainsMine(){
-        return containsMine;
+    public boolean isContainsMine() {
+        return this.containsMine;
     }
 
-    public boolean isContainsFlag() { return containsFlag; }
+    public boolean isContainsFlag() {
+        return condition.equals(CellCondition.FLAG);
+    }
 
-    public boolean isContainsQuestion() { return containsQuestion; }
+    public boolean isContainsQuestion() {
+        return condition.equals(CellCondition.QUESTION);
+    }
 
-    public boolean isOpen() { return isOpen; }
+    public boolean isOpen() {
+        return condition.equals(CellCondition.OPEN);
+    }
 
     // --------------- getters -----------------
 
-    public Point getStartPoint(){ return this.startPoint;}
-
-    public Path getPath(){ return path; }
-
-    // получение цвета ячейки в зависимости от её состояния (открыта / закрыта)
-    public int getColor() {
-        if (this.isOpen) return Color.argb(0, 0, 0, 0);
-        else return Color.argb(255,121, 121, 121);
+    public Point getStartPoint() {
+        return this.startPoint;
     }
 
-    public int getBorderColor(){
-        return R.color.gray400;
+    public Path getPath() {
+        if (fieldMode.equals(FieldLogic.FieldMode.HEXAGONAL)) return setHexagonalPath();
+        else return setSquarePath();
     }
 
-    public int getMinesBeside(){
+
+    public int getMinesBeside() {
         int result = 0;
-        result += westBrother == null ? 0 : westBrother.isContainsMine() ? 1 : 0;
-        result += northwesternBrother == null ? 0 : northwesternBrother.isContainsMine() ? 1 : 0;
-        result += northeasternBrother == null ? 0 : northeasternBrother.isContainsMine() ? 1 : 0;
-        result += eastBrother == null ? 0 : eastBrother.isContainsMine() ? 1 : 0;
-        result += southeastBrother == null ? 0 : southeastBrother.isContainsMine() ? 1 : 0;
-        result += southwesternBrother == null ? 0 : southwesternBrother.isContainsMine() ? 1 : 0;
-
+        for (Cell brother : brothers) {
+            result += (brother.isContainsMine()) ? 1 : 0;
+        }
         return result;
     }
 
-    public ArrayList<Cell> getBrothers(){
-        ArrayList<Cell> brothers = new ArrayList<>();
-
-        if (westBrother !=null) brothers.add(westBrother);
-        if (northwesternBrother != null) brothers.add(northwesternBrother);
-        if (northeasternBrother != null) brothers.add(northeasternBrother);
-        if (eastBrother != null) brothers.add(eastBrother);
-        if (southeastBrother != null) brothers.add(southeastBrother);
-        if (southwesternBrother != null) brothers.add(southwesternBrother);
-
+    // c "западного" по часовой
+    public ArrayList<Cell> getBrothers() {
         return brothers;
     }
 
 
     // ----------- setters -------------
 
-    public void setIsOpen(boolean condition){ this.isOpen = condition;}
+    public void setIsOpen() {
+        this.condition = Cell.CellCondition.OPEN;
+    }
 
     public void setContainsMine(boolean condition) {
         containsMine = condition;
     }
 
-    public void setContainsFlag(boolean condition) { containsFlag = condition; }
-
-    public void setContainsQuestion(boolean condition) {
-        containsQuestion = condition;
+    public void setContainsFlag() {
+        this.condition = CellCondition.FLAG;
     }
 
-    public void setEastBrother(Cell brother) { eastBrother = brother; }
-
-    public void setSoutheastBrother(Cell brother) {
-        southeastBrother = brother;
+    public void setContainsQuestion() {
+        this.condition = CellCondition.QUESTION;
     }
 
-    public void setSouthwesternBrother(Cell brother) {
-        southwesternBrother = brother;
+    public void setContainsNothing() {
+        this.condition = CellCondition.CLOSED_EMPTY;
     }
 
-    public void setWestBrother(Cell brother) {
-        westBrother = brother;
+    public void setBrother(Cell cell) {
+        this.brothers.add(cell);
     }
 
-    public void setNorthwesternBrother(Cell brother) {
-        northwesternBrother = brother;
-    }
-
-    public void setNortheasternBrother(Cell brother) {
-        northeasternBrother = brother;
-    }
 }

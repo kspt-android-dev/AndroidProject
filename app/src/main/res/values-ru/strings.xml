@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SHMinesweeper</string>
-    <string name="settings">настройки</string>
-    <string name="flag">флаг</string>
-    <string name="question">вопрос</string>
-    <string name="touch">касание</string>
-    <string name="save">Сохранить</string>
-    <string name="cancel">Закрыть</string>
-    <string name="title_activity_settings">Настройки</string>
     <string name="number_of_mines">Количество мин</string>
-    <string name="height">Высота</string>
-    <string name="width">Ширина</string>
-    <string name="mode">Режим</string>
-    <string name="hexagonal">Шестигранный</string>
-    <string name="square">Квадратный</string>
     <string name="you_lose">Вы проиграли.</string>
     <string name="you_won">Вы выиграли!</string>
     <string name="new_game">Новая игра</string>
     <string name="overview">Обзор</string>
     <string name="insturcion">Инструкция</string>
-    <string name="back">назад</string>
     <string name="watch_instruction">Открыть инструкцию</string>
     <string name="html">
         <![CDATA[
@@ -41,4 +28,19 @@
         <p> Если игрок сомневается в наличии мины в данной ячейке, то может поставить в неё "вопрос"
         ]]>
     </string>
+    <string name="notification_title">Сапёр</string>
+    <string name="notification_text">Вы не заходили в игру долгое время. Нам нужен сапёр!</string>
+    <string name="set_field_width_dialog">Установите ширину поля (2-25 мин)</string>
+    <string name="set_field_width">Установите ширину поля</string>
+    <string name="field_width">Ширина</string>
+    <string name="set_field_height_dialog">Установите высоту поля (2-25 мин)</string>
+    <string name="set_field_height">Установите высоту поля</string>
+    <string name="field_height">Высота</string>
+    <string name="set_mines_dialog">Установите количество мин (2-100)</string>
+    <string name="set_number_of_mines">Установите количество мин</string>
+    <string name="choose_field_mode">Выберите режим поля</string>
+    <string name="field_mode">Режим</string>
+    <string name="field">Поле</string>
+    <string name="square">Квадратный</string>
+    <string name="hexagonal">Шестигранный</string>
 </resources>

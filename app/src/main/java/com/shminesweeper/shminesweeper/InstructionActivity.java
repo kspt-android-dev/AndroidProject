@@ -17,16 +17,6 @@ public class InstructionActivity extends Activity {
 
         setText();
 
-        setListenerForBackButton();
-    }
-
-    private void setListenerForBackButton() {
-        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     // получение текста инструкции, записанного в html формате, из ресурсов
