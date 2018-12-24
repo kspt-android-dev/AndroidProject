@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main_menu_mainFrame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/holo_red_dark"
+    tools:context=".GameActivities.MainMenu.MainMenuActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="40sp"
+        android:alpha="0.85">
+
+        <TextView
+        android:id="@+id/main_menu_text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+            android:fontFamily="@font/thin"
+        android:text="@string/main_name_of_the_greatest_game_ever"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/main_menu_button_play"
+            style="@style/BMRButton"
+            android:layout_width="180dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:text="@string/main_menu_text_play" />
+
+        <Button
+            android:id="@+id/main_menu_button_settings"
+            style="@style/BMRButton"
+            android:layout_width="180dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:text="@string/main_menu_text_settings" />
+
+        <Button
+            android:id="@+id/main_menu_button_exit"
+            style="@style/BMRButton"
+            android:layout_width="180dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="0dp"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/main_menu_text_exit" /></LinearLayout>
+
+
+
+</FrameLayout>

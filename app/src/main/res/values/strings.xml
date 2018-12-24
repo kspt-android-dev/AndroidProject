@@ -1,0 +1,142 @@
+<resources>
+    <string name="app_name">BeastMaster64: Revelations</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+
+    <string name="title_activity_in_location">InLocationActivity</string>
+
+    <string name="title_activity_fight">FightActivity</string>
+    <string name="arrow_down">\\/</string>
+    <string name="arrow_right"><![CDATA[>]]></string>
+    <string name="arrow_left"><![CDATA[<]]></string>
+    <string name="arrow_up">/\\</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_character_name">Персонаж</string>
+    <string name="input_main_character_name">Введите имя персонажа</string>
+    <string name="character_stat_points">Очки:</string>
+    <string name="character_stats_firstpoints">5</string>
+    <string name="text_minus">-</string>
+    <string name="character_stats_text_strength">СИЛ:\u00A0</string>
+    <string name="text_plus">+</string>
+    <string name="character_stats_text_agility">ЛОВ:\u00A0</string>
+    <string name="character_stats_text_intellect">ИНТ:\u00A0</string>
+    <string name="character_create">СОЗДАТЬ</string>
+    <string name="fight_text_kick">УДАР</string>
+    <string name="fight_text_heal">БИНТ</string>
+    <string name="fight_text_magic">МАГИЯ</string>
+    <string name="fight_text_hardKick">СИЛЬНО УДАРИТЬ</string>
+    <string name="fight_text_todo">TODO</string>
+    <string name="fight_text_fight">В БОЙ!</string>
+    <string name="in_location_text_menu">МЕНЮ</string>
+    <string name="in_location_text_loc">ЛОК</string>
+    <string name="in_location_text_stats">СТАТЫ</string>
+    <string name="in_location_text_map">КАРТА</string>
+    <string name="main_name_of_the_greatest_game_ever">BM64:REV</string>
+    <string name="main_menu_text_play">Играть</string>
+    <string name="main_menu_text_settings">Настройки</string>
+    <string name="main_menu_text_exit">Выход</string>
+    <string name="text_zero">0</string>
+    <string name="in_location_text_name">Название</string>
+    <string name="in_location_text_description">Описание</string>
+    <string name="in_location_text_textview">TextView</string>
+    <string name="in_location_text_npc">NPC</string>
+    <string name="in_location_text_difficulty">Сложность:</string>
+    <string name="in_location_text_medium_difficulty">Средняя</string>
+    <string name="in_location_text_attack">Напасть!</string>
+    <string name="in_location_text_talk">Говорить</string>
+    <string name="stats_text_points">Очки:</string>
+    <string name="stats_text_newpoints">5</string>
+    <string name="log_initialize">Инициализация главного меню.</string>
+    <string name="log_events">Задаём кнопкам события</string>
+    <string name="log_buttons">Вытаскиваем все кнопки по id</string>
+    <string name="log_game_entry">Добавляем событие входа в игру</string>
+    <string name="log_settings_entry">Добавляем событие входа в настройки</string>
+    <string name="log_quit">Добавляем событие выхода из игры</string>
+    <string name="character_creation_extraname">player</string>
+    <string name="text_plusText">plus</string>
+    <string name="text_dots">:</string>
+    <string name="character_creation_text_attributeNames">atributeNames</string>
+    <string name="character_creation_text_totalPoints">totalPoints</string>
+    <string name="fight_log_kick">Удар</string>
+    <string name="fight_log_kicked">\u00A0ударил</string>
+    <string name="fight_log_kicks">\u00A0урона!</string>
+    <string name="fight_log_just_healed">\u00A0только что вылечился!</string>
+    <string name="fight_log_used_magic">\u00A0использовал магию!</string>
+    <string name="fight_log_use">\u00A0использует\u00A0;</string>
+    <string name="fight_log_you_lose">Ты проиграл, парень :с</string>
+    <string name="fight_log_you_win">Ты победил!</string>
+    <string name="text_slash">/</string>
+</resources>

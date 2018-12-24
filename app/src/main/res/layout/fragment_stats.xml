@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameFragments.StatsFragment"
+    android:background="@drawable/my_border_dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_margin="15dp">
+        <TextView
+            android:id="@+id/fragment_stats_char_name"
+            style="@style/BMRTextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:text="@string/main_character_name"
+            android:textColor="#ffe2a6"
+            android:textSize="40sp"
+            tools:layout_margin="6dp" />
+        <ImageView
+            android:id="@+id/fragment_stats_char_face"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fragment_stats_pointsText"
+                style="@style/BMRTextSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="@string/stats_text_points"
+                android:textColor="#ffe2a6"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/fragment_stats_points"
+                style="@style/BMRTextSmall"
+                android:gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/stats_text_newpoints"
+                android:textColor="#ffe2a6"
+                android:textSize="38sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fragment_stats_strengthText"
+                style="@style/BMRTextSmall"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/character_stats_text_strength"
+                android:textColor="#ffe2a6"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/fragment_stats_plus_str"
+                style="@style/BMRButtonSmall"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:text="@string/text_plus"
+                android:textSize="23sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fragment_stats_agilityText"
+                style="@style/BMRTextSmall"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/character_stats_text_agility"
+                android:textColor="#ffe2a6"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/fragment_stats_plus_agi"
+                style="@style/BMRButtonSmall"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:text="@string/text_plus"
+                android:textSize="23sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fragment_stats_intellectText"
+                style="@style/BMRTextSmall"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/character_stats_text_intellect"
+                android:textColor="#ffe2a6"
+                android:textSize="26sp" />
+
+            <Button
+                android:id="@+id/fragment_stats_plus_int"
+                style="@style/BMRButtonSmall"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:text="@string/text_plus"
+                android:textSize="23sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

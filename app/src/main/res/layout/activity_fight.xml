@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_fight_backFrame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333"
+    tools:context=".GameActivities.FightActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/activity_fight_placeholder_left"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:layout_weight="1"
+                android:background="#208888FF"
+                android:foregroundGravity="center">
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/activity_fight_placeholder_right"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:layout_weight="1"
+                android:background="#20FF8888">
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/activity_fight_progressBarEnemy"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            app:srcCompat="@android:color/holo_red_light" />
+
+        <ImageView
+            android:id="@+id/activity_fight_progressBarPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_weight="0"
+            app:srcCompat="@android:color/holo_blue_bright" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="34"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/activity_fight_action_kick"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                style="@style/BMRButtonSmall"
+                android:text="@string/fight_text_kick" />
+
+            <Button
+                android:id="@+id/activity_fight_action_heal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                style="@style/BMRButtonSmall"
+                android:text="@string/fight_text_heal" />
+
+            <Button
+                android:id="@+id/activity_fight_action_magic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                style="@style/BMRButtonSmall"
+                android:text="@string/fight_text_magic" />
+
+            <Button
+                android:id="@+id/activity_fight_action_kick2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                style="@style/BMRButtonSmall"
+                android:textSize="17sp"
+                android:text="@string/fight_text_hardKick" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="34"
+            android:elevation="0dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/activity_fight_action_5"
+                style="@style/BMRButton"
+                android:text="@string/fight_text_todo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                 />
+
+            <Button
+                android:id="@+id/activity_fight_action_6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                style="@style/BMRButton"
+                android:text="@string/fight_text_todo" />
+
+            <Button
+                android:id="@+id/activity_fight_action_7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                style="@style/BMRButton"
+                android:text="@string/fight_text_todo" />
+
+            <Button
+                android:id="@+id/activity_fight_action_8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                style="@style/BMRButton"
+                android:text="@string/fight_text_todo" />
+        </LinearLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/activity_fight_consoleScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="32"
+            android:background="#60000000"
+            android:fillViewport="true">
+
+            <TextView
+                android:id="@+id/activity_fight_console"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/fight_text_fight"
+                style="@style/BMRTextSmall"
+                android:textAlignment="center"
+                android:textColor="@color/colorButtonText"
+                android:textSize="22sp" />
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</FrameLayout>

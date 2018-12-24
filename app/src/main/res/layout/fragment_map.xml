@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameFragments.MapFragment.MapFragment"
+    android:background="@drawable/my_border">
+
+    <GridLayout
+        android:id="@+id/fragment_map_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="4"
+        android:layout_gravity="center"
+        android:layout_margin="5dp">
+    </GridLayout>
+
+
+
+</FrameLayout>
