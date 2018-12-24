@@ -41,10 +41,6 @@ public class CellForLetter {
     }
 
     public void changeSelect(){
-        if (isSelect){
-            isSelect = false;
-        }
-        else
-            isSelect = true;
+        isSelect = !isSelect;
     }
 }

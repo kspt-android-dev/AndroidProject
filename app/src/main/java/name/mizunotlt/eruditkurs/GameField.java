@@ -36,7 +36,8 @@ public class GameField extends View {
     private List<Bitmap> bitmapListLetter = new ArrayList<>();
     private List<Bitmap> bitmapListLetterBoard = new ArrayList<>();
     private GameMechanic games;
-
+    private final int indent = 100;
+    private final int indentY = 5;
     Bitmap x2Letterpict;
     Bitmap x2Wordpict;
     Bitmap x3Letterpict;
@@ -183,12 +184,13 @@ public class GameField extends View {
     public void setStartPoint(){
         if (!orientation){
             int startX = (sizeScreen.x - sizeCell*NUMBER_CELL_IN_ROW) / 2;
-            games.setStartPoint( new Point(startX,100), new Point(100, 1900));
+            games.setStartPoint( new Point(startX,indent), new Point(indent, sizeScreen.y - indent));
             games.setIncPointX(startX);
             games.setIncPointY(sizeCell);
         }
         else {
-            games.setStartPoint(new Point(0, 5),new Point(1200, 10));
+            games.setStartPoint(new Point(0, indentY),new Point(sizeCell * NUMBER_CELL_IN_ROW + indent,
+                    indentY*2));
             games.setIncPointX(0);
             games.setIncPointY(sizeCell);
         }
@@ -265,7 +267,6 @@ public class GameField extends View {
             games.setListCellLetter();
         }
         //восстановление переменных поля
-        games.setFlag((boolean) savedInstanceState.get("flag"));
         games.setTurn((boolean) savedInstanceState.get("turn"));
         games.setNextTurn((boolean) savedInstanceState.get("nextTurn"));
         //Восстановление элементов на поле
@@ -323,7 +324,7 @@ public class GameField extends View {
                     tempListLetter.add(games.getFirstPlayer().getListLetter().get(listSelectLetter.get(0)));
                     games.getFirstPlayer().setFirstTap(num - 1);
                     tempListNumCells.add(num - 1);
-                    games.getFirstPlayer().deletLetter(listSelectLetter.get(0));
+                    games.getFirstPlayer().deleteLetter(listSelectLetter.get(0));
                     games.getListCellLetter().get(listSelectLetter.get(0)).changeSelect();
                 }
             }
@@ -333,7 +334,7 @@ public class GameField extends View {
                     tempListLetter.add(games.getSecondPlayer().getListLetter().get(listSelectLetter.get(0)));
                     games.getSecondPlayer().setFirstTap(num - 1);
                     tempListNumCells.add(num - 1);
-                    games.getSecondPlayer().deletLetter(listSelectLetter.get(0));
+                    games.getSecondPlayer().deleteLetter(listSelectLetter.get(0));
                     games.getListCellLetter().get(listSelectLetter.get(0)).changeSelect();
                 }
             }

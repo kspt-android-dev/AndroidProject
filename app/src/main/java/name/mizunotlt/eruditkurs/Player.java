@@ -57,8 +57,8 @@ public class Player {
 
     public void setListLetterAfterReset(char[] array){
         List<Character> list = new ArrayList<>();
-        for(int i = 0; i < array.length; i++){
-            list.add(array[i]);
+        for (char anArray : array) {
+            list.add(anArray);
         }
         this.listLetter = list;
         this.countLetter = list.size();
@@ -84,7 +84,7 @@ public class Player {
     public  int getCountLetter(){
         return countLetter;
     }
-    public void deletLetter(int index){
+    public void deleteLetter(int index){
         listLetter.set(index,' ');
         countLetter--;
     }

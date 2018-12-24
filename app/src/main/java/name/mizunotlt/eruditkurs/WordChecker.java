@@ -46,8 +46,7 @@ class WordChecker implements WordCheckerInterface {
 
     public JSONObject connectYandexDicApi(URL forApi) throws IOException {
         JSONObject jsobj = new JSONObject();
-        URL Api = forApi;
-        HttpsURLConnection conn = (HttpsURLConnection) Api.openConnection();
+        HttpsURLConnection conn = (HttpsURLConnection) forApi.openConnection();
         conn.setRequestMethod("POST");
         conn.setDoOutput(true);
         conn.setDoInput(true);

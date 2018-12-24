@@ -8,7 +8,7 @@ public class Cell {
     private Point startPoint;
     private Path path;
     private char letter = ' ';
-    private boolean useErly = false;
+    private boolean useEarly = false;
     private StateCellEnum.State state;
     private int numCell;
     private int size;
@@ -29,9 +29,7 @@ public class Cell {
     }
 
     public boolean getIsLetter(){
-        if (letter == ' ')
-            return false;
-        else return true;
+        return letter != ' ';
     }
 
     private void setPath(){
@@ -53,11 +51,11 @@ public class Cell {
     public char getLetter(){
         return letter;
     }
-    public void changeUseErly(){
-        useErly = true;
+    public void changeUseEarly(){
+        useEarly = true;
     }
-    public boolean getUseErly(){
-        return useErly;
+    public boolean getUseEarly(){
+        return useEarly;
     }
     public Point getStartPoint(){
         return startPoint;

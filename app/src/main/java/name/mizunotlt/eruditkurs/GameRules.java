@@ -12,8 +12,8 @@ import java.util.concurrent.ExecutionException;
 public class GameRules {
     private List<Letter> listLetter = new ArrayList<>();
     private int score = 0;
-    private boolean flagx2Word = false;
-    private boolean flagx3Word = false;
+    private boolean flagX2Word = false;
+    private boolean flagX3Word = false;
     private final int COUNT_LETTER = 33;
     private final int COUNT_LETTER_PLAYER = 7;
     private final int cellsInRow = 15;
@@ -81,9 +81,9 @@ public class GameRules {
     }
 
     private Letter findLetter(char letter){
-        for (Letter templet: listLetter){
-            if (templet.getLetter() == letter)
-                return templet;
+        for (Letter tempLetter: listLetter){
+            if (tempLetter.getLetter() == letter)
+                return tempLetter;
         }
         return new Letter(' ', 0, 0);
     }
@@ -92,30 +92,30 @@ public class GameRules {
         int incScore = findLetter(cell.getLetter()).getCountScore();
         switch (cell.getState()){
             case X2LETTER:{
-                if(!cell.getUseErly()){
+                if(!cell.getUseEarly()){
                     incScore = 2 * incScore;
-                    cell.changeUseErly();
+                    cell.changeUseEarly();
                 }
                 break;
             }
             case X3LETTER:{
-                if(!cell.getUseErly()){
+                if(!cell.getUseEarly()){
                     incScore += 3 * incScore;
-                    cell.changeUseErly();
+                    cell.changeUseEarly();
                 }
                 break;
             }
             case X2WORD:{
-                if(!cell.getUseErly()){
-                    cell.changeUseErly();
-                    flagx2Word = true;
+                if(!cell.getUseEarly()){
+                    cell.changeUseEarly();
+                    flagX2Word = true;
                 }
                 break;
             }
             case X3WORD:{
-                if(!cell.getUseErly()){
-                    cell.changeUseErly();
-                    flagx3Word =true;
+                if(!cell.getUseEarly()){
+                    cell.changeUseEarly();
+                    flagX3Word =true;
                 }
                 break;
             }
@@ -140,9 +140,9 @@ public class GameRules {
                     }
                     startMakeWord += cellsInRow;
                 }
-                if (flagx3Word)
+                if (flagX3Word)
                     score *= 3;
-                if (flagx2Word)
+                if (flagX2Word)
                     score *= 2;
             }
             if  (first + cellsInRow > countCells){
@@ -163,9 +163,9 @@ public class GameRules {
                     }
                     startMakeWord += cellsInRow;
                 }
-                if (flagx3Word)
+                if (flagX3Word)
                     score *= 3;
-                if (flagx2Word)
+                if (flagX2Word)
                     score *= 2;
             } else
                 return result.toString();
@@ -190,9 +190,9 @@ public class GameRules {
                         }
                         startMakeWord += cellsInRow;
                     }
-                    if (flagx3Word)
+                    if (flagX3Word)
                         score *= 3;
-                    if (flagx2Word)
+                    if (flagX2Word)
                         score *= 2;
                 } else
                     return result.toString();
@@ -218,9 +218,9 @@ public class GameRules {
                     }
                     startMakeWord += 1;
                 }
-                if (flagx3Word)
+                if (flagX3Word)
                     score *= 3;
-                if (flagx2Word)
+                if (flagX2Word)
                     score *=2;
         }
         else
@@ -249,8 +249,8 @@ public class GameRules {
                     else
                         player.appScore(score);
                     score = 0;
-                    flagx2Word = false;
-                    flagx3Word = false;
+                    flagX2Word = false;
+                    flagX3Word = false;
                     return word;
                 }
         }
@@ -259,18 +259,18 @@ public class GameRules {
     }
 
     public void addLetters(Player play){
-        List<Character> lettWordList = new ArrayList<>();
+        List<Character> letterWordList = new ArrayList<>();
         Random rand = new Random();
         int countLet = 0;
         while (countLet < COUNT_LETTER_PLAYER){
             int next =rand.nextInt(COUNT_LETTER);
             if (listLetter.get(next).getCount() != 0) {
-                lettWordList.add(listLetter.get(next).getLetter());
+                letterWordList.add(listLetter.get(next).getLetter());
                 countLet++;
                 listLetter.get(next).setCount(listLetter.get(next).getCount() - 1);
             }
         }
-        play.setListLetter(lettWordList);
+        play.setListLetter(letterWordList);
     }
 
     //Метод восстановления букв после хода
@@ -302,7 +302,7 @@ public class GameRules {
         int index = 0;
         if (list.size() != 0) {
             for (int i = 0; i < list.size(); i++) {
-                play.deletLetter(list.get(i));
+                play.deleteLetter(list.get(i));
             }
             while (play.getCountLetter() < COUNT_LETTER_PLAYER) {
                 int next = rand.nextInt(COUNT_LETTER);
@@ -323,8 +323,8 @@ public class GameRules {
     }
 
     public ArrayList<Integer> getCountFreeLetter() {
-        for(Letter lett: listLetter){
-            countFreeLetter.add(lett.getCount());
+        for(Letter letter: listLetter){
+            countFreeLetter.add(letter.getCount());
         }
         return countFreeLetter;
     }

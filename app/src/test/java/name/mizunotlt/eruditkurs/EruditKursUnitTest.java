@@ -83,7 +83,7 @@ public class EruditKursUnitTest {
         testList1.add('Ц');
 
         testPlayer1.setListLetter(testList1);
-        testPlayer1.deletLetter(0);
+        testPlayer1.deleteLetter(0);
         testList1.remove(0);
         assertEquals(testList1, testPlayer1.getListLetter());
         assertEquals(6, testPlayer1.getCountLetter());
@@ -154,7 +154,7 @@ public class EruditKursUnitTest {
     }
 
     @Test
-    public void tetsAddLetterToBoard(){
+    public void testAddLetterToBoard(){
         List<Character> testList1 = new ArrayList<>();
         testList1.add('Б');
         testList1.add('А');
@@ -191,11 +191,11 @@ public class EruditKursUnitTest {
         tempNumCellsLetter.add(114);
         tempNumCellsLetter.add(115);
         tempNumCellsLetter.add(116);
-        mechanicTest.getFirstPlayer().deletLetter(0);
-        mechanicTest.getFirstPlayer().deletLetter(1);
-        mechanicTest.getFirstPlayer().deletLetter(2);
-        mechanicTest.getFirstPlayer().deletLetter(3);
-        mechanicTest.getFirstPlayer().deletLetter(4);
+        mechanicTest.getFirstPlayer().deleteLetter(0);
+        mechanicTest.getFirstPlayer().deleteLetter(1);
+        mechanicTest.getFirstPlayer().deleteLetter(2);
+        mechanicTest.getFirstPlayer().deleteLetter(3);
+        mechanicTest.getFirstPlayer().deleteLetter(4);
 
         StringBuilder sb = new StringBuilder();
         sb.append(mechanicTest.getWorkListCells().get(112).getLetter());

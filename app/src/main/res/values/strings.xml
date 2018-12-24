@@ -12,4 +12,15 @@
                          Версия игры: 1.0
                          Автор: Архиреев Дмитрий
                          P.S ОЧЕНЬ УСТАЛ</string>
+    <string name="buttonWidth">140dp</string>
+    <string name="buttonHeight">40dp</string>
+    <string name="marginBottomNextTurn">190dp</string>
+    <string name="marginEndNextTurn">8dp</string>
+    <string name="marginStartNextTurn">8dp</string>
+    <string name="marginBottomNewWord">140dp</string>
+    <string name="marginEndNewWord">8dp</string>
+    <string name="marginStartNewWord">8dp</string>
+    <string name="marginBottomStartGame">80dp</string>
+    <string name="marginEndStartGame">8dp</string>
+    <string name="marginStartStartGame">250dp</string>
 </resources>

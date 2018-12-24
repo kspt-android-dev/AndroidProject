@@ -18,7 +18,6 @@ public class GameMechanic {
     private boolean nextTurn = true;
     private boolean turn = false;
     private boolean firstTurn = false;
-    private boolean flag = false;
     private final int COUNTCELL_X = 15;
     private final int COUNTCELL_Y = 15;
     private final int COUNT_LETTER = 7;
@@ -60,7 +59,8 @@ public class GameMechanic {
     public void setListCellLetter(){
         for (int i = 0; i < COUNT_LETTER; i++){
             listCellLetter.add(i,new CellForLetter(new Point(startBorderLetterPoint.x, startBorderLetterPoint.y),i,sizeCell));
-            startBorderLetterPoint.x += 95;
+            //1.5 это коэффициент расстояния между буквами
+            startBorderLetterPoint.x += 1.5 * sizeCell;
         }
     }
 
@@ -202,9 +202,6 @@ public class GameMechanic {
     }
     public void setNextTurn(boolean t){
         this.nextTurn = t;
-    }
-    public void setFlag(boolean flag){
-        this.flag = flag;
     }
     public void setFirstTurn(boolean firstTurn){
         this.firstTurn = firstTurn;

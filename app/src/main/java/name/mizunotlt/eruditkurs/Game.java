@@ -39,6 +39,7 @@ public class Game extends Activity {
             size = new Point();
             Display display = getWindowManager().getDefaultDisplay();
             display.getSize(size);
+            //Округление в сторону нуля
             sizeCell = ((size.y / CELLS_IN_ROW) / 10) * 10;
             orientation = true;
         }
@@ -46,6 +47,7 @@ public class Game extends Activity {
             size = new Point();
             Display display = getWindowManager().getDefaultDisplay();
             display.getSize(size);
+            //Округление в сторону 0
             sizeCell = ((size.x / CELLS_IN_ROW) / 10) * 10;
             orientation = false;
         }
@@ -62,17 +64,15 @@ public class Game extends Activity {
             gameField.resetGameField(savedInstanceState);
             if(gameField.getGames().getFirstTurn()) {
                 if (!gameField.getGames().getTurn()) {
-                    StringBuilder str = new StringBuilder();
-                    str.append(gameField.getGames().getFirstPlayer().getName());
-                    str.append("\n");
-                    str.append(gameField.getGames().getFirstPlayer().getScore());
-                    textView.setText(str.toString());
+                    String str = gameField.getGames().getFirstPlayer().getName() +
+                            "\n" +
+                            gameField.getGames().getFirstPlayer().getScore();
+                    textView.setText(str);
                 } else {
-                    StringBuilder str = new StringBuilder();
-                    str.append(gameField.getGames().getSecondPlayer().getName());
-                    str.append("\n");
-                    str.append(gameField.getGames().getSecondPlayer().getScore());
-                    textView.setText(str.toString());
+                    String str = gameField.getGames().getSecondPlayer().getName() +
+                            "\n" +
+                            gameField.getGames().getSecondPlayer().getScore();
+                    textView.setText(str);
                 }
             }
         }
@@ -91,7 +91,6 @@ public class Game extends Activity {
         }
         //сохрание переменных поля
         saveState.putBoolean("firstTurn", gameField.getGames().getFirstTurn());
-        saveState.putBoolean("flag", gameField.getOrientation());
         saveState.putBoolean("turn", gameField.getGames().getTurn());
         saveState.putBoolean("nextTurn", gameField.getGames().getNextTurn());
 
@@ -111,19 +110,17 @@ public class Game extends Activity {
     public void onClickNextTurn(View view) {
 
         if (!gameField.getGames().getTurn()) {
-            StringBuilder str = new StringBuilder();
-            str.append(gameField.getGames().getSecondPlayer().getName());
-            str.append("\n");
-            str.append(gameField.getGames().getSecondPlayer().getScore());
-            textView.setText(str.toString());
+            String str = gameField.getGames().getSecondPlayer().getName() +
+                    "\n" +
+                    gameField.getGames().getSecondPlayer().getScore();
+            textView.setText(str);
             gameField.changeTurn();
             gameField.getGames().resetTurn();
         } else {
-            StringBuilder str = new StringBuilder();
-            str.append(gameField.getGames().getFirstPlayer().getName());
-            str.append("\n");
-            str.append(gameField.getGames().getFirstPlayer().getScore());
-            textView.setText(str.toString());
+            String str = gameField.getGames().getFirstPlayer().getName() +
+                    "\n" +
+                    gameField.getGames().getFirstPlayer().getScore();
+            textView.setText(str);
             gameField.changeTurn();
             gameField.getGames().resetTurn();
         }
@@ -132,19 +129,17 @@ public class Game extends Activity {
     public void onClickRecycle(View view) {
         if (gameField.isTempListNumCells()) {
             if (!gameField.getGames().getTurn()) {
-                StringBuilder str = new StringBuilder();
-                str.append(gameField.getGames().getSecondPlayer().getName());
-                str.append("\n");
-                str.append(gameField.getGames().getSecondPlayer().getScore());
-                textView.setText(str.toString());
+                String str = gameField.getGames().getSecondPlayer().getName() +
+                        "\n" +
+                        gameField.getGames().getSecondPlayer().getScore();
+                textView.setText(str);
                 gameField.changeTurnResetLetter();
                 gameField.getGames().resetTurn();
             } else {
-                StringBuilder str = new StringBuilder();
-                str.append(gameField.getGames().getFirstPlayer().getName());
-                str.append("\n");
-                str.append(gameField.getGames().getFirstPlayer().getScore());
-                textView.setText(str.toString());
+                String str = gameField.getGames().getFirstPlayer().getName() +
+                        "\n" +
+                        gameField.getGames().getFirstPlayer().getScore();
+                textView.setText(str);
                 gameField.changeTurnResetLetter();
                 gameField.getGames().resetTurn();
             }
