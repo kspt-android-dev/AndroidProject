@@ -8,21 +8,22 @@ public class CellForLetter {
     private Path path;
     private int numCell;
     private boolean isSelect = false;
-    private final int SIZE = 60;
+    private int size;
 
-    CellForLetter(Point startPoint, int numCell){
+    CellForLetter(Point startPoint, int numCell, int size){
         this.startPoint = startPoint;
         this.numCell = numCell;
+        this.size = size - 10;
         this.setPath();
     }
 
     private void setPath(){
         path = new Path();
         path.moveTo(startPoint.x, startPoint.y);
-        path.rLineTo(SIZE,0);
-        path.rLineTo(0, SIZE);
-        path.rLineTo(-SIZE,0);
-        path.rLineTo(0, -SIZE);
+        path.rLineTo(size,0);
+        path.rLineTo(0, size);
+        path.rLineTo(-size,0);
+        path.rLineTo(0, -size);
         path.close();
     }
     public Path getPath(){

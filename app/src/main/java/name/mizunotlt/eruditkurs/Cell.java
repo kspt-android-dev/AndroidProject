@@ -7,15 +7,9 @@ public class Cell {
 
     private Point startPoint;
     private Path path;
-    private boolean x2Word = false;
-    private boolean x3Word = false;
-    private boolean x2Letter = false;
-    private boolean x3Letter = false;
-    private boolean startPosition = false;
-    private boolean defCell = false;
     private char letter = ' ';
     private boolean useErly = false;
-    private boolean state = false;
+    private StateCellEnum.State state;
     private int numCell;
     private int size;
 
@@ -24,6 +18,14 @@ public class Cell {
         this.numCell = numCell;
         this.size = size;
         this.setPath();
+    }
+
+    public void setState(StateCellEnum.State state){
+        this.state = state;
+    }
+
+    public StateCellEnum.State getState(){
+        return state;
     }
 
     public boolean getIsLetter(){
@@ -40,36 +42,6 @@ public class Cell {
         path.rLineTo(-size,0);
         path.rLineTo(0, -size);
         path.close();
-    }
-
-    public void setDefCell(){
-        this.defCell = true;
-        this.startPosition = false;
-        this.x3Word = false;
-        this.x2Word = false;
-        this.x2Letter = false;
-        this.x3Letter = false;
-    }
-
-    public int typeCell(){
-
-        if (startPosition){
-            return 2;
-        }
-        if (x2Letter){
-            return 3;
-        }
-        if (x3Letter){
-            return 4;
-        }
-        if (x2Word){
-            return 5;
-        }
-        if (x3Word){
-            return 6;
-        }
-        else
-            return 1;
     }
 
     public Path getPath(){
@@ -90,34 +62,6 @@ public class Cell {
     public Point getStartPoint(){
         return startPoint;
     }
-    public void setTrueX2Word(){
-        this.defCell = false;
-       this.x2Word = true;
-    }
-
-    public void setTrueX3Word(){
-        this.defCell = false;
-        this.x3Word = true;
-    }
-
-    public void setTrueX2Letter(){
-        this.defCell = false;
-        this.x2Letter = true;
-    }
-
-    public void setTrueX3Letter(){
-        this.defCell = false;
-        this.x3Letter = true;
-    }
-
-    public boolean isStartPosition() {
-        return startPosition;
-    }
-    public void setStartPosition() {
-        this.defCell = false;
-        this.startPosition = true;
-    }
-
     public int getNumCell() {
         return numCell;
     }

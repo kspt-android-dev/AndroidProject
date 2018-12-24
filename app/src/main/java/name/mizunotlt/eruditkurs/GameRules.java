@@ -62,7 +62,7 @@ public class GameRules {
         boolean result;
         @Override
         protected Boolean doInBackground(String... word) {
-            final CheckWordImp checker = new CheckWordImp(word[0]);
+            final WordChecker checker = new WordChecker(word[0]);
                 try {
                     result = checker.checkCorrectWord(checker.connectYandexDicApi(checker.buildUrl()));
                 } catch (IOException e) {
@@ -90,29 +90,29 @@ public class GameRules {
 
     private void countScore(Cell cell){
         int incScore = findLetter(cell.getLetter()).getCountScore();
-        switch (cell.typeCell()){
-            case 3:{
+        switch (cell.getState()){
+            case X2LETTER:{
                 if(!cell.getUseErly()){
                     incScore = 2 * incScore;
                     cell.changeUseErly();
                 }
                 break;
             }
-            case 4:{
+            case X3LETTER:{
                 if(!cell.getUseErly()){
                     incScore += 3 * incScore;
                     cell.changeUseErly();
                 }
                 break;
             }
-            case 5:{
+            case X2WORD:{
                 if(!cell.getUseErly()){
                     cell.changeUseErly();
                     flagx2Word = true;
                 }
                 break;
             }
-            case 6:{
+            case X3WORD:{
                 if(!cell.getUseErly()){
                     cell.changeUseErly();
                     flagx3Word =true;

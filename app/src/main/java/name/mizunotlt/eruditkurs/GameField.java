@@ -28,7 +28,7 @@ public class GameField extends View {
     private ArrayList<Integer> tempListNumCells= new ArrayList<>();
     //false если портретная, true если альбомная
     private Point sizeScreen = new Point();
-    public boolean flag = false;
+    public boolean orientation = false;
     private final int COUNT_LETTER = 7;
     private final int NUMBER_CELL_IN_ROW = 15;
     private  int SIZE_CELL_LETTER;
@@ -181,18 +181,16 @@ public class GameField extends View {
     }
 
     public void setStartPoint(){
-        if (!flag){
+        if (!orientation){
             int startX = (sizeScreen.x - sizeCell*NUMBER_CELL_IN_ROW) / 2;
             games.setStartPoint( new Point(startX,100), new Point(100, 1900));
             games.setIncPointX(startX);
             games.setIncPointY(sizeCell);
         }
         else {
-            if (flag) {
-                games.setStartPoint(new Point(0, 5),new Point(1200, 10));
-                games.setIncPointX(0);
-                games.setIncPointY(sizeCell);
-            }
+            games.setStartPoint(new Point(0, 5),new Point(1200, 10));
+            games.setIncPointX(0);
+            games.setIncPointY(sizeCell);
         }
         setPictures();
         initBitmapListLetter();
@@ -213,9 +211,9 @@ public class GameField extends View {
         return sizeScreen;
     }
 
-    public void setFlag(boolean flg) {
+    public void setOrientation(boolean orient) {
 
-        flag = flg;
+        orientation = orient;
     }
 
     public void setSizeScreen(Point screen){
@@ -285,8 +283,8 @@ public class GameField extends View {
     public GameMechanic getGames(){
         return games;
     }
-    public boolean getFlag(){
-        return flag;
+    public boolean getOrientation(){
+        return orientation;
     }
 
     public boolean isTempListNumCells(){
@@ -370,28 +368,28 @@ public class GameField extends View {
                 canvas.drawBitmap(bitmapListLetterBoard.get(games.findLetter(games.getWorkListCells().get(i).getLetter())),matrix,paint);
             }
             else {
-                switch (games.getWorkListCells().get(i).typeCell()) {
-                    case 1: {
+                switch (games.getWorkListCells().get(i).getState()) {
+                    case DEF_CELL: {
                         canvas.drawBitmap(defpict, matrix, paint);
                         break;
                     }
-                    case 2: {
+                    case START_POSITION: {
                         canvas.drawBitmap(startpict, matrix, paint);
                         break;
                     }
-                    case 3: {
+                    case X2LETTER: {
                         canvas.drawBitmap(x2Letterpict, matrix, paint);
                         break;
                     }
-                    case 4: {
+                    case X3LETTER: {
                         canvas.drawBitmap(x3Letterpict, matrix, paint);
                         break;
                     }
-                    case 5: {
+                    case X2WORD: {
                         canvas.drawBitmap(x2Wordpict, matrix, paint);
                         break;
                     }
-                    case 6: {
+                    case X3WORD: {
                         canvas.drawBitmap(x3Wordpict, matrix, paint);
                         break;
                     }

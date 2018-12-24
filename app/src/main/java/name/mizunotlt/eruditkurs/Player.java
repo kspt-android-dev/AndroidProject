@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Player {
-
+    //Число букв всего
+    private final int COUNTER_LETTER = 7;
     private Set<String> baseWord = new HashSet<>();
     private List<Character> listLetter;
     private int  score;
@@ -45,7 +46,7 @@ public class Player {
         this.score = score;
     }
     public char[] getLetter(){
-        char[] charLetter = new char[7];
+        char[] charLetter = new char[COUNTER_LETTER];
         int i = 0;
         for(Character ch: listLetter){
             charLetter[i] = ch;
