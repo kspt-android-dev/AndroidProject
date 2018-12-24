@@ -23,6 +23,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 public class UITests {
 
+    /* Здесь в скором времени появятся проверки */
+
     @Rule
     public ActivityTestRule<MainMenuActivity> mActivityRule = new ActivityTestRule<>(
             MainMenuActivity.class);

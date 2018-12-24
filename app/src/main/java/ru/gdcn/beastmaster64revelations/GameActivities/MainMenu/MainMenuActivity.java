@@ -16,6 +16,8 @@ import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;
 
 public class MainMenuActivity extends AppCompatActivity {
 
+    /* В скором времени будет добавлено сохранение состояний*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
