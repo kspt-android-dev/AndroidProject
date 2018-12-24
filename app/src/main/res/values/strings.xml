@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">sudOKu</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_game">GameActivity</string>
+
+    <string name="title_activity_records">RecordsActivity</string>
+
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="checkButton">Проверить</string>
+    <string name="tip">Подсказка</string>
+    <string name="load">Загрузка...</string>
+    <string name="aboutAuthor">Об авторе</string>
+    <string name="aboutActivityContent">Проект создан студенткой самого лучшего вуза на свете Санкт-Петербургского политехнического университета имени Петра первого. Автор очень любит свой вуз.</string>
+    <string name="sudoku">sudOKu</string>
+    <string name="play">Играть</string>
+    <string name="records">Рекорды</string>
+    <string name="exit">Выход</string>
+    <string name="time">Время:</string>
+    <string name="tipsCount">Подсказок:</string>
+</resources>

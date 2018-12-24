@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="black_overlay">#66000000</color>
+    <color name="button_enabled">#FAFAFF</color>
+    <color name="button_disabled">#FFCCCC</color>
+    <color name="button_pressed">#74748e</color>
+    <color name="button_helped">#CCFFCC</color>
+    <color name="total_black">#000000</color>
+    <color name="loading_text">#111119</color>
+    <color name="loading_background">#FAEEFF</color>
+    <color name="list_element">#88FFDD</color>
+    <color name="list_background">#DDEEFF</color>
+</resources>

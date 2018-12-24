@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0099cc"
+    tools:context=".MainMenuActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:fontFamily="casual"
+            android:text="@string/sudoku"
+            android:textSize="60sp" />
+
+        <Button
+            android:id="@+id/a_menu_PLAY"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_margin="7dp"
+            android:backgroundTint="@android:color/background_light"
+            android:text="@string/play"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/a_menu_RECORDS"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_margin="7dp"
+            android:backgroundTint="@android:color/background_light"
+            android:text="@string/records"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/a_menu_ABOUT"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_margin="7dp"
+            android:backgroundTint="@android:color/background_light"
+            android:text="@string/aboutAuthor"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/a_menu_EXIT"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_margin="7dp"
+            android:backgroundTint="@android:color/holo_red_light"
+            android:text="@string/exit"
+            android:textSize="20sp" />
+    </LinearLayout>
+</FrameLayout>
