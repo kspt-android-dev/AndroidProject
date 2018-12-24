@@ -240,15 +240,19 @@ public class GameRules {
             e.printStackTrace();
         }
         if (test){
-            player.addWord(word);
-            if(player.getCountLetter() == 0)
-                player.appScore(score + 15);
-            else
-                player.appScore(score);
-            score = 0;
-            flagx2Word = false;
-            flagx3Word = false;
-            return word;
+            if (player.addWord(word).equals("ERROR")){
+                return "";
+            }
+            else{
+                    if (player.getCountLetter() == 0)
+                        player.appScore(score + 15);
+                    else
+                        player.appScore(score);
+                    score = 0;
+                    flagx2Word = false;
+                    flagx3Word = false;
+                    return word;
+                }
         }
         else
             return "";

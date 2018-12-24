@@ -101,12 +101,12 @@ public class EruditKursUnitTest {
         String word4 = "ЧАЙ";
         String word5 = "ЧАщшд";
         String word6 = "БЕГАТЬ";
-        CheckWordImp checker1 =  new CheckWordImp(word1);
-        CheckWordImp checker2 =  new CheckWordImp(word2);
-        CheckWordImp checker3 =  new CheckWordImp(word3);
-        CheckWordImp checker4 =  new CheckWordImp(word4);
-        CheckWordImp checker5 =  new CheckWordImp(word5);
-        CheckWordImp checker6 =  new CheckWordImp(word6);
+        WordChecker checker1 =  new WordChecker(word1);
+        WordChecker checker2 =  new WordChecker(word2);
+        WordChecker checker3 =  new WordChecker(word3);
+        WordChecker checker4 =  new WordChecker(word4);
+        WordChecker checker5 =  new WordChecker(word5);
+        WordChecker checker6 =  new WordChecker(word6);
 
         try {
             assertEquals(true,checker1.checkCorrectWord(checker1.connectYandexDicApi(checker1.buildUrl())));
@@ -145,12 +145,12 @@ public class EruditKursUnitTest {
         mechanicTest.setStartPoint(new Point(15,100), new Point (1900,100));
         mechanicTest.startGame();
 
-        assertEquals(6, mechanicTest.getWorkListCells().get(0).typeCell());
-        assertEquals(1, mechanicTest.getWorkListCells().get(1).typeCell());
-        assertEquals(3, mechanicTest.getWorkListCells().get(3).typeCell());
-        assertEquals(5, mechanicTest.getWorkListCells().get(16).typeCell());
-        assertEquals(4, mechanicTest.getWorkListCells().get(20).typeCell());
-        assertEquals(2, mechanicTest.getWorkListCells().get(112).typeCell());
+        assertEquals(StateCellEnum.State.X3WORD, mechanicTest.getWorkListCells().get(0).getState());
+        assertEquals(StateCellEnum.State.DEF_CELL, mechanicTest.getWorkListCells().get(1).getState());
+        assertEquals(StateCellEnum.State.X2LETTER, mechanicTest.getWorkListCells().get(3).getState());
+        assertEquals(StateCellEnum.State.X2WORD, mechanicTest.getWorkListCells().get(16).getState());
+        assertEquals(StateCellEnum.State.X3LETTER, mechanicTest.getWorkListCells().get(20).getState());
+        assertEquals(StateCellEnum.State.START_POSITION, mechanicTest.getWorkListCells().get(112).getState());
     }
 
     @Test
@@ -205,7 +205,7 @@ public class EruditKursUnitTest {
         sb.append(mechanicTest.getWorkListCells().get(116).getLetter());
 
 
-        CheckWordImp checker =  new CheckWordImp(sb.toString());
+        WordChecker checker =  new WordChecker(sb.toString());
         try {
             assertTrue(checker.checkCorrectWord(checker.connectYandexDicApi(checker.buildUrl())));
         } catch (IOException e) {
