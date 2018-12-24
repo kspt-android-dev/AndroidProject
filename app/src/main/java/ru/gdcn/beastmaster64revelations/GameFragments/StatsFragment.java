@@ -113,9 +113,12 @@ public class StatsFragment extends Fragment {
         }
 
         pointsText.setText(String.valueOf(activity.getUpgradePoints()));
-        strText.setText("СИЛ: " + player.getStrength());
-        agiText.setText("ЛОВ: " + player.getAgility());
-        intText.setText("ИНТ: " + player.getIntellect());
+        String text = getResources().getString(R.string.character_stats_text_strength) + player.getStrength() ;
+        strText.setText(text);
+        text = getResources().getString(R.string.character_stats_text_agility) + player.getAgility() ;
+        agiText.setText(text);
+        text = getResources().getString(R.string.character_stats_text_intellect) + player.getIntellect() ;
+        intText.setText(text);
 
     }
 
