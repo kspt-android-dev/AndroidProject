@@ -12,6 +12,7 @@ public class Letter {
         this.count = count;
     }
 
+
     public char getLetter() {
         return letter;
     }

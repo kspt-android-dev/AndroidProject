@@ -7,6 +7,7 @@ import java.util.Set;
 
 public class Player {
 
+
     private Set<String> baseWord = new HashSet<>();
     private List<Character> listLetter;
     private int  score;
