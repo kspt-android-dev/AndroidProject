@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="cell1" type="id" />
+    <item name="cell2" type="id" />
+    <item name="cell3" type="id" />
+    <item name="cell4" type="id" />
+    <item name="cell5" type="id" />
+    <item name="cell6" type="id" />
+    <item name="cell7" type="id" />
+    <item name="cell8" type="id" />
+    <item name="cell9" type="id" />
+    <item name="cell10" type="id" />
+    <item name="cell11" type="id" />
+    <item name="cell12" type="id" />
+    <item name="cell13" type="id" />
+    <item name="cell14" type="id" />
+    <item name="cell15" type="id" />
+    <item name="cell16" type="id" />
+    <item name="cell17" type="id" />
+    <item name="cell18" type="id" />
+    <item name="cell19" type="id" />
+    <item name="cell20" type="id" />
+    <item name="cell21" type="id" />
+    <item name="cell22" type="id" />
+    <item name="cell23" type="id" />
+    <item name="cell24" type="id" />
+    <item name="cell25" type="id" />
+    <item name="cell26" type="id" />
+    <item name="cell27" type="id" />
+    <item name="cell28" type="id" />
+    <item name="cell29" type="id" />
+    <item name="cell30" type="id" />
+    <item name="cell31" type="id" />
+    <item name="cell32" type="id" />
+    <item name="cell33" type="id" />
+    <item name="cell34" type="id" />
+    <item name="cell35" type="id" />
+    <item name="cell36" type="id" />
+    <item name="cell37" type="id" />
+    <item name="cell38" type="id" />
+    <item name="cell39" type="id" />
+    <item name="cell40" type="id" />
+    <item name="cell41" type="id" />
+    <item name="cell42" type="id" />
+    <item name="cell43" type="id" />
+    <item name="cell44" type="id" />
+    <item name="Player1" type="id" />
+    <item name="Player2" type="id" />
+    <item name="Player3" type="id" />
+    <item name="Player4" type="id" />
+
+    <string name="playerName">PlayerName</string>
+    <string name="aiButton">aiButton</string>
+    <string name="drawable">drawable</string>
+    <string name="cellBackgroundLayer">cellbglayer</string>
+    <string name="cellImage">cellimage</string>
+    <string name="playerStats">playerStats</string>
+    <string name="cell">cell</string>
+    <string name="Player">Player</string>
+    <string name="player">player</string>
+</resources>

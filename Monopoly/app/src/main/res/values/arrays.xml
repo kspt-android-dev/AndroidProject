@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="doItFadingText">
+        <item>DO</item>
+        <item>IT</item>
+        <item>JUST</item>
+        <item>DO IT</item>
+    </string-array>
+</resources>
