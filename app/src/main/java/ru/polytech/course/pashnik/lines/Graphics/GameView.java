@@ -14,7 +14,8 @@ import ru.polytech.course.pashnik.lines.Presentation.MainContract;
 
 public class GameView extends View implements View.OnTouchListener {
 
-    private static final int cellNumber = 9;
+    public static final int CELL_NUMBER = 9;
+    private static final float LINE_THICKNESS = 5f;
     private static int cellSize;
 
     private Paint bitmapPaint = new Paint();
@@ -31,11 +32,6 @@ public class GameView extends View implements View.OnTouchListener {
         setOnTouchListener(this);
     }
 
-
-    public static int getCellNumber() {
-        return cellNumber;
-    }
-
     public static int getCellSize() {
         return cellSize;
     }
@@ -45,9 +41,9 @@ public class GameView extends View implements View.OnTouchListener {
         Paint paint = new Paint();
         setPaintSettings(paint);
         // drawing a board
-        for (int i = 0; i <= cellNumber; i++) {
-            drawLine(canvas, i, 0, i, cellNumber, paint); // vertical line
-            drawLine(canvas, 0, i, cellNumber, i, paint); // horizontal line
+        for (int i = 0; i <= CELL_NUMBER; i++) {
+            drawLine(canvas, i, 0, i, CELL_NUMBER, paint); // vertical line
+            drawLine(canvas, 0, i, CELL_NUMBER, i, paint); // horizontal line
         }
     }
 
@@ -60,7 +56,7 @@ public class GameView extends View implements View.OnTouchListener {
             // creating a Bitmap and setting Bitmap on Canvas
             bitmap = Bitmap.createBitmap(viewSize, viewSize, Bitmap.Config.ARGB_8888);
 
-            cellSize = viewSize / cellNumber;
+            cellSize = viewSize / CELL_NUMBER;
             this.canvas = new Canvas(bitmap);
             //drawing a board
             drawGameView();
@@ -81,7 +77,7 @@ public class GameView extends View implements View.OnTouchListener {
         paint.setAntiAlias(true); // smoothing edges
         paint.setDither(true); // does not reduce color
         paint.setColor(Color.DKGRAY); // color DARK_GREY
-        paint.setStrokeWidth(5f); // line thickness
+        paint.setStrokeWidth(LINE_THICKNESS); // line thickness
     }
 
     private void setViewHeight(int viewSize) {

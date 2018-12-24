@@ -6,7 +6,6 @@ public class Contact {
     private int id;
 
     public Contact() {
-
     }
 
 

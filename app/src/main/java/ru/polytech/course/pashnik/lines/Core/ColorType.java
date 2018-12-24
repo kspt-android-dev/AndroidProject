@@ -5,6 +5,8 @@ import android.graphics.Color;
 public enum ColorType {
     BROWN, LAGOON, RED, YELLOW, GREEN, BLUE, PURPLE;
 
+    private static final int EXIT_CODE = -1;
+
     public static int chooseColor(ColorType color) {
         switch (color) {
             case RED:
@@ -22,7 +24,7 @@ public enum ColorType {
             case YELLOW:
                 return Color.parseColor("#FFFF00");
         }
-        return -1;
+        return EXIT_CODE;
     }
 
     public static ColorType getColorType(int index) {

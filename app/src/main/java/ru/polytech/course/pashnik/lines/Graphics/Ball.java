@@ -7,8 +7,9 @@ import android.graphics.Paint;
 import ru.polytech.course.pashnik.lines.Core.Cell;
 import ru.polytech.course.pashnik.lines.Core.ColorType;
 
-
 public class Ball {
+
+    private static final double RADIUS_COEFFICIENT = 0.3;
 
     private int radius;
     private final float x;
@@ -20,7 +21,7 @@ public class Ball {
         this.x = cellSize / 2 + x * cellSize;
         this.y = cellSize / 2 + y * cellSize;
         this.color = color;
-        radius = (int) (cellSize * 0.3);
+        radius = (int) (cellSize * RADIUS_COEFFICIENT);
     }
 
     public Ball(Cell cell, ColorType color) {

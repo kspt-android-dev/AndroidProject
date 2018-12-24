@@ -13,6 +13,10 @@ import ru.polytech.course.pashnik.lines.Graphics.GameView;
 
 public class MainPresenter implements MainContract.Presenter {
 
+    private int score = 0;
+    private static final int MIN_BALLS = 5;
+    private static final int NEXT_BALLS_NUMBER = 3;
+
     private MainContract.Model model;
     private MainContract.ViewInterface view;
 
@@ -20,7 +24,6 @@ public class MainPresenter implements MainContract.Presenter {
     private Cell pressedCell;
     private Queue<ColorType> queue = new ArrayDeque<>();
     private Intellect intellect;
-    private int score = 0;
 
     public MainPresenter(MainContract.ViewInterface view) {
         this.view = view;
@@ -63,8 +66,8 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void setWinnerName(String name) {
-        // TODO: 24/12/2018
+    public int getScore() {
+        return score;
     }
 
     @Override
@@ -98,10 +101,10 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     private void checkScore(int length) {
-        if (length != 5) {
-            int scoreMinus = length - 5;
-            this.score += (5 + scoreMinus) * (scoreMinus + 1);
-        } else this.score += 5;
+        if (length != MIN_BALLS) {
+            int scoreMinus = length - MIN_BALLS;
+            this.score += (MIN_BALLS + scoreMinus) * (scoreMinus + 1);
+        } else this.score += MIN_BALLS;
     }
 
     private void clearWinLines(WinLines winLines) {
@@ -118,7 +121,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     private void fillQueue() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < NEXT_BALLS_NUMBER; i++) {
             ColorType nextColor = intellect.generateNextColor();
             queue.add(nextColor);
         }

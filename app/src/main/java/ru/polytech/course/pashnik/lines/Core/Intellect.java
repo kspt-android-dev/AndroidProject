@@ -7,13 +7,15 @@ import ru.polytech.course.pashnik.lines.Presentation.MainContract;
 
 public class Intellect {
 
+    private static final int MAX_BOUNDS = 7;
+
     private Random random = new Random();
     private MainContract.Model model;
     private int cellNumber;
 
     public Intellect(MainContract.Model model) {
         this.model = model;
-        cellNumber = GameView.getCellNumber();
+        cellNumber = GameView.CELL_NUMBER;
     }
 
     /*
@@ -30,6 +32,6 @@ public class Intellect {
     }
 
     public ColorType generateNextColor() {
-        return ColorType.getColorType(random.nextInt(7));
+        return ColorType.getColorType(random.nextInt(MAX_BOUNDS));
     }
 }

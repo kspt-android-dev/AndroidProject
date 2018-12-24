@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_width">250dp</dimen>
+    <dimen name="btw_buttons">50dp</dimen>
+    <dimen name="start_item">100dp</dimen>
+    <dimen name="size_text">16sp</dimen>
+    <dimen name="button_width_large">350dp</dimen>
+    <dimen name="exit_status">1</dimen>
+</resources>

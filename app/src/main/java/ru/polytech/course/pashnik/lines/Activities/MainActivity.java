@@ -11,6 +11,7 @@ import static java.lang.System.exit;
 
 
 public class MainActivity extends AppCompatActivity {
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
@@ -27,6 +28,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickExit(View view) {
-        exit(1);
+        exit(R.dimen.exit_status);
     }
 }

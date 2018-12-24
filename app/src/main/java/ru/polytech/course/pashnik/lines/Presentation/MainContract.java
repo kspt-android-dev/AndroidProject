@@ -20,7 +20,7 @@ public interface MainContract {
     interface Presenter {
         void onCellWasClicked(float x, float y);
 
-        void setWinnerName(String name);
+        int getScore();
 
         void initGameView();
     }

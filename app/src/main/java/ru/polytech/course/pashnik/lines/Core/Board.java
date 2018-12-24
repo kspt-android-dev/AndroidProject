@@ -6,6 +6,9 @@ import ru.polytech.course.pashnik.lines.Presentation.MainContract;
 
 public class Board implements MainContract.Model {
 
+    private static final int MIN_FULL_SIZE = 79;
+    private static final int WIN_LENGTH = 5;
+
     private final HashMap<Cell, ColorType> map = new HashMap<>();
     private final WinLines winLines = new WinLines();
 
@@ -71,10 +74,10 @@ public class Board implements MainContract.Model {
 
     @Override
     public boolean isFull() {
-        return map.size() >= 79;
+        return map.size() >= MIN_FULL_SIZE;
     }
 
     private boolean isWinLength(int currentLength) {
-        return currentLength > 4;
+        return currentLength >= WIN_LENGTH;
     }
 }

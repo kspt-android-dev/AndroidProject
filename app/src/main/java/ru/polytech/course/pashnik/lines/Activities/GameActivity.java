@@ -1,7 +1,9 @@
 package ru.polytech.course.pashnik.lines.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 
 import ru.polytech.course.pashnik.lines.Core.Cell;
 import ru.polytech.course.pashnik.lines.Core.ColorType;
+import ru.polytech.course.pashnik.lines.DataBase.Contact;
+import ru.polytech.course.pashnik.lines.DataBase.DataBaseHandler;
 import ru.polytech.course.pashnik.lines.Graphics.Ball;
 import ru.polytech.course.pashnik.lines.Graphics.GameView;
 import ru.polytech.course.pashnik.lines.Graphics.ScoreView;
@@ -22,10 +26,12 @@ import ru.polytech.course.pashnik.lines.R;
 
 public class GameActivity extends AppCompatActivity implements MainContract.ViewInterface {
 
+    private static final int TEXT_SIZE = 25;
+
     private static Canvas gameViewCanvas;
     private static Canvas scoreViewCanvas;
     private MainContract.Presenter presenter;
-
+    private DataBaseHandler dataBaseHandler = new DataBaseHandler(this);
     private TextView textView;
 
     @Override
@@ -49,23 +55,25 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
 
         textView = new TextView(this);
         textView.setTextColor(Color.RED);
-        textView.setTextSize(25);
+        textView.setTextSize(TEXT_SIZE);
         textView.setLayoutParams(lpView);
         linearLayout.addView(textView);
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
         final EditText valueKey = view.findViewById(R.id.edit_text);
-        builder.setTitle("Enter your name")
+        builder.setTitle(R.string.enter_name)
                 .setView(view)
                 .setCancelable(false)
-                .setNegativeButton("Save",
+                .setNegativeButton(R.string.save,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                presenter.setWinnerName(String.valueOf(valueKey.getText()));
+                                final String name = String.valueOf(valueKey.getText());
+                                dataBaseHandler.addContact(new Contact(name, presenter.getScore()));
                                 dialog.dismiss();
                             }
                         });

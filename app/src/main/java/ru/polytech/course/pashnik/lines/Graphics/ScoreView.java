@@ -27,13 +27,14 @@ public class ScoreView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         if (this.canvas == null) {
-            int viewHeight = getWidth() / 9;
-            bitmap = Bitmap.createBitmap(getWidth() / 3, viewHeight, Bitmap.Config.ARGB_8888);
+            int viewHeight = getWidth() / GameView.CELL_NUMBER;
+            int bitmapWidth = getWidth() / 3;
+            bitmap = Bitmap.createBitmap(bitmapWidth, viewHeight, Bitmap.Config.ARGB_8888);
             this.canvas = new Canvas(bitmap);
 
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
             params.height = viewHeight;
-            params.width = getWidth() / 3;
+            params.width = bitmapWidth;
             this.setLayoutParams(params);
             GameActivity.setScoreViewCanvas(this.canvas);
         }
