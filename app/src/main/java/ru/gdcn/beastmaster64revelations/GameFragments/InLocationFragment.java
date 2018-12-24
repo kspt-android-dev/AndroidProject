@@ -11,8 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import ru.gdcn.beastmaster64revelations.GameActivities.InLocation.InLocationActivity;
+import ru.gdcn.beastmaster64revelations.GameClass.WorldElemets.SimpleLocationClass;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.MapDirection;
+import ru.gdcn.beastmaster64revelations.GameLogger;
 import ru.gdcn.beastmaster64revelations.R;
 
 public class InLocationFragment extends Fragment {

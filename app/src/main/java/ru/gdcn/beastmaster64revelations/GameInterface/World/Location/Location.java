@@ -6,9 +6,10 @@ import ru.gdcn.beastmaster64revelations.GameInterface.World.MapDirection;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.MapPoint;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.World;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface Location {
+public interface Location extends Serializable {
 
     /**
      * Возвращает имя локации

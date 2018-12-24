@@ -24,6 +24,7 @@ import ru.gdcn.beastmaster64revelations.GameInterface.World.MapDirection;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.World;
 import ru.gdcn.beastmaster64revelations.GameActivities.MainMenu.MainMenuActivity;
 import ru.gdcn.beastmaster64revelations.GameFragments.MapFragment.MapFragment;
+import ru.gdcn.beastmaster64revelations.GameLogger;
 import ru.gdcn.beastmaster64revelations.R;
 import ru.gdcn.beastmaster64revelations.GameFragments.StatsFragment;
 import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;
@@ -45,6 +46,12 @@ public class InLocationActivity extends AppCompatActivity {
 
     //Мир (внутренняя логика)
     private World gameWorld = SimpleWorldClass.generateWorld();
+
+    //Ключи для сохранения в Bundle
+    static final String IN_LOC_WORLD_ID = "world";
+    static final String IN_LOC_PLAYER_ID = "player";
+    static final String IN_LOC_LOCATION_ID = "location";
+    static final String IN_LOC_UPG_ID = "upgrade points";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +91,26 @@ public class InLocationActivity extends AppCompatActivity {
         Button toStats = findViewById(R.id.activity_in_location_menu_statistics);
         toStats.setOnClickListener(v -> changeFragment(statsFragment));
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putSerializable(IN_LOC_WORLD_ID, gameWorld);
+        savedInstanceState.putSerializable(IN_LOC_LOCATION_ID, location);
+        savedInstanceState.putSerializable(IN_LOC_PLAYER_ID, player);
+        savedInstanceState.putInt(IN_LOC_UPG_ID, upgradePoints);
+        GameLogger.log("GDCN", "InLocation instance Saved");
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        gameWorld = (SimpleWorldClass) savedInstanceState.getSerializable(IN_LOC_WORLD_ID);
+        location = (SimpleLocationClass) savedInstanceState.getSerializable(IN_LOC_LOCATION_ID);
+        player = (PlayerClass)savedInstanceState.getSerializable(IN_LOC_PLAYER_ID);
+        upgradePoints = savedInstanceState.getInt(IN_LOC_UPG_ID);
+        GameLogger.log("GDCN", "InLocation instance Restored");
     }
 
     @Override

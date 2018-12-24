@@ -4,7 +4,7 @@ import android.util.Log;
 
 public class GameLogger {
 
-    public static void log(String log){
+    public static void log(String gdcn, String log){
         Log.d("GDCN", log);
     };
 

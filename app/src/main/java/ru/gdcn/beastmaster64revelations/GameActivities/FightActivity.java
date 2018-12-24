@@ -27,6 +27,7 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Interactions.Fight.FightResult;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.NPC;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.LocationType;
+import ru.gdcn.beastmaster64revelations.GameLogger;
 import ru.gdcn.beastmaster64revelations.R;
 import ru.gdcn.beastmaster64revelations.UIElements.CharacterCard;
 import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;
@@ -68,6 +69,10 @@ public class FightActivity extends AppCompatActivity {
     NPC enemy;
     ImageView progressBar;
     ImageView enemyProgressBar;
+
+    //Ключи для сохранения в Bundle
+    static final String FIGHT_PLAYER_ID = "player";
+    static final String FIGHT_ENEMY_ID = "enemy";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,6 +223,22 @@ public class FightActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putSerializable(FIGHT_ENEMY_ID, enemy);
+        savedInstanceState.putSerializable(FIGHT_PLAYER_ID, player);
+        GameLogger.log("GDCN", "Fight instance Saved");
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        enemy = (DummyEnemy) savedInstanceState.getSerializable(FIGHT_ENEMY_ID);
+        player = (PlayerClass) savedInstanceState.getSerializable(FIGHT_PLAYER_ID);
+        GameLogger.log("GDCN", "Fight instance Restored");
     }
 
     private void runEnemyAI(int millisDelay) {
