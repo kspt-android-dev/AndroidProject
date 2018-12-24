@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">checkers</string>
+    <string name="Save">Save</string>
+    <string name="notification_title">Chechers</string>
+    <string name="notification_text">We are waiting for you</string>
+    <string name="insturcion">Instruction</string>
+
+</resources>

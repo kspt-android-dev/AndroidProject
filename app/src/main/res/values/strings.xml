@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">checkers</string>
+    <string name="Save">Save</string>
+    <string name="notification_title">Chechers</string>
+    <string name="notification_text">We are waiting for you</string>
+    <string name="insturcion">Instruction</string>
+
+    <string name="html">
+        <![CDATA[
+        <p> «<b>Checkers</b>» – This is a very interesting, dynamic and intellectual game
+        <p><b>Its main goal</b> — cut down all opponents checkers.
+                  You have to be smart and trained to succeed</p>
+        <p><h2>Rules</h2></p>
+        <p>The game has two types of playing field: <u>hex</u> and <u>square</u>.
+        Checkers go to one cell s move and only on the black cells that are close diagonally
+        and go checkers only forward, back checkers do not go.<p>
+        ]]>
+    </string>
+</resources>
