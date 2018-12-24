@@ -14,7 +14,7 @@ public class DataBaseHandler extends SQLiteOpenHelper implements IDataBaseHandle
     private static final int DATABASE_VERSION = 1;
     public static final String TABLE_CONTACTS = "contacts";
     private static final String DATABASE_NAME = "contactsManager";
-    public static final String KEY_ID = "_id";
+    private static final String KEY_ID = "_id";
     public static final String KEY_NAME = "name";
     public static final String KEY_SCORE = "score";
 

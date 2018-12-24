@@ -64,7 +64,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void setWinnerName(String name) {
-        // TODO: 23/12/2018
+        // TODO: 24/12/2018
     }
 
     @Override
@@ -123,4 +123,6 @@ public class MainPresenter implements MainContract.Presenter {
             queue.add(nextColor);
         }
     }
+
+
 }
