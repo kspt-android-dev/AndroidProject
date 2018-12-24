@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 public class GameStart extends Activity {
+
     EditText firtsPlayer;
     EditText secondPlayer;
     @Override

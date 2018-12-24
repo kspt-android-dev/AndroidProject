@@ -54,6 +54,7 @@ public class Game extends Activity {
 
     }
 
+
     private void initGameField() {
         Intent initIntent = getIntent();
         player1 = new Player(initIntent.getStringExtra("firstPlayer"));
