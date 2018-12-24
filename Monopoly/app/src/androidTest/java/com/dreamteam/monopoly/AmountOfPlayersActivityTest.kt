@@ -25,13 +25,10 @@ class AmountOfPlayersActivityTest {
         val device = UiDevice.getInstance(getInstrumentation())
 
         onView(withId(R.id.Namespace)).perform(typeText("TheBestPlayer")).perform(closeSoftKeyboard())
-        Thread.sleep(250)
         onView(withId(R.id.buttonEnter)).perform(click())
         onView(withId(R.id.Namespace)).perform(typeText("WillBeDeleted")).perform(closeSoftKeyboard())
-        Thread.sleep(250)
         onView(withId(R.id.buttonEnter)).perform(click())
         onView(withId(R.id.Namespace)).perform(typeText("TheWorstPlayer")).perform(closeSoftKeyboard())
-        Thread.sleep(250)
         onView(withId(R.id.buttonEnter)).perform(click())
         onView(withId(R.id.aiButton1)).perform(click())
         onView(withId(R.id.aiButton1)).check(matches(withText("AI: ON")))
