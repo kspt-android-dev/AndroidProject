@@ -29,6 +29,8 @@ public class InLocationFragment extends Fragment {
 
     Location currentLocation;
 
+    final static String IN_LOC_FRAG_LOCATION_ID = "location in frag";
+
     public InLocationFragment() {
         // Required empty public constructor
     }
@@ -116,8 +118,11 @@ public class InLocationFragment extends Fragment {
 
         if (location.hasNPC()){
             TextView npcName = getActivity().findViewById(R.id.fragment_in_location_content_NPCTitle);
-            if (location.getNPC().isDead())
-                npcName.setText(location.getNPC().getName() + " (мёртв)");
+            String text;
+            if (location.getNPC().isDead()){
+                text = location.getNPC().getName() + getString(R.string.in_location_fragment_dead);
+                npcName.setText(text);
+            }
             else
                 npcName.setText(location.getNPC().getName());
             TextView npcDesc = getActivity().findViewById(R.id.fragment_in_location_content_NPCDescription);

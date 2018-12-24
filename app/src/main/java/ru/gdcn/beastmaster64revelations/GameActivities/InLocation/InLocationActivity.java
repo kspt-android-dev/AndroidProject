@@ -42,13 +42,13 @@ public class InLocationActivity extends AppCompatActivity {
     //Текущая локация, игрок, очки прокачки доступные игроку
     Location location;
     Player player;
-    Integer upgradePoints = 30;
+    Integer upgradePoints;
 
     //фончик
     ProportionalImageView imageView;
 
     //Мир (внутренняя логика)
-    private World gameWorld = SimpleWorldClass.generateWorld();
+    private World gameWorld;
 
     //Ключи для сохранения в Bundle
     static final String IN_LOC_WORLD_ID = "world";
@@ -67,9 +67,6 @@ public class InLocationActivity extends AppCompatActivity {
         FrameLayout mainFrame = findViewById(R.id.activity_in_location_backgroundFrame);
         mainFrame.addView(imageView, 0);
 
-        //Достаём игрока которого создали в прошлом активити из интента
-        player = (PlayerClass) getIntent().getSerializableExtra("player");
-
         //Создаём наши фрагменты, изначально суём на экран фрагмент локации
         locationFragment = InLocationFragment.newInstance();
         FragmentManager manager = getSupportFragmentManager();
@@ -80,9 +77,7 @@ public class InLocationActivity extends AppCompatActivity {
         mapFragment = MapFragment.newInstance();
         statsFragment = StatsFragment.newInstance();
 
-        //Берём случайную локацию из мира и пихаем туда игрока
-        location = gameWorld.getRandomLocation();
-        transitionToNewLocation(location);
+
 
         //Достаём кнопочки и вешаем события
         Button toMenu = findViewById(R.id.activity_in_location_menu_toMenu);
@@ -93,6 +88,20 @@ public class InLocationActivity extends AppCompatActivity {
         toMap.setOnClickListener(v -> changeFragment(mapFragment));
         Button toStats = findViewById(R.id.activity_in_location_menu_statistics);
         toStats.setOnClickListener(v -> changeFragment(statsFragment));
+
+        if (savedInstanceState == null){
+            //Создаем мир
+            gameWorld = SimpleWorldClass.generateWorld();
+            //Берём случайную локацию из мира
+            location = gameWorld.getRandomLocation();
+            //Достаём игрока которого создали в прошлом активити из интента
+            player = (PlayerClass) getIntent().getSerializableExtra("player");
+            //Очки чкички
+            upgradePoints  = 30;
+        }
+
+        //Пихаем туда игрока
+        transitionToNewLocation(location);
     }
 
     @Override
