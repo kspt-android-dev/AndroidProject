@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorGrey">#808080</color>
+    <color name="Player1BackgroundColor">#f15c5c</color>
+    <color name="Player2BackgroundColor">#3c87ff</color>
+    <color name="Player3BackgroundColor">#b440ed</color>
+    <color name="Player4BackgroundColor">#f8ff26</color>
+    <color name="cellBackground">#a6a7ff</color>
+
+
+</resources>

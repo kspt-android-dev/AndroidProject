@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="up_to_bottom">up-to-bottom</string>
+    <string name="bottom_to_up">bottom-to-up</string>
+</resources>
