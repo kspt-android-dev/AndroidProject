@@ -1,5 +1,7 @@
 package ru.gdcn.beastmaster64revelations.GameActivities.InLocation;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -8,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
@@ -83,14 +86,18 @@ public class InLocationActivity extends AppCompatActivity {
 
         //Достаём кнопочки и вешаем события
         Button toMenu = findViewById(R.id.activity_in_location_menu_toMenu);
-        toMenu.setOnClickListener(v -> goToMenu());
+        toMenu.setOnClickListener(v -> showDialogWindow());
         Button toLoc = findViewById(R.id.activity_in_location_menu_loc);
         toLoc.setOnClickListener(v -> changeFragment(locationFragment));
         Button toMap = findViewById(R.id.activity_in_location_menu_map);
         toMap.setOnClickListener(v -> changeFragment(mapFragment));
         Button toStats = findViewById(R.id.activity_in_location_menu_statistics);
         toStats.setOnClickListener(v -> changeFragment(statsFragment));
+    }
 
+    @Override
+    public void onBackPressed(){
+        showDialogWindow();
     }
 
     @Override
@@ -118,6 +125,25 @@ public class InLocationActivity extends AppCompatActivity {
         super.onPostResume();
         //Обновляем контент
         locationFragment.updateContent();
+    }
+
+    //Диалоговое окно для предотвращения случайного выхода в главное меню
+    private void showDialogWindow(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.in_location_dialog_text))
+                .setPositiveButton(getString(R.string.in_location_text_yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        goToMenu();
+                    }
+                })
+                .setNegativeButton(getString(R.string.in_location_text_no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
     }
 
     private void changeFragment(Fragment fragment) {

@@ -125,7 +125,6 @@ public class CharacterCreationActivity extends AppCompatActivity {
         });
 
 
-
         inputName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -173,13 +172,13 @@ public class CharacterCreationActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState){
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         points = savedInstanceState.getInt(CREATION_PTS_ID);
         stren = savedInstanceState.getInt(CREATION_STR_ID);
         agili = savedInstanceState.getInt(CREATION_AGI_ID);
         intel = savedInstanceState.getInt(CREATION_INTELLECT_ID);
-        gender = (Gender)savedInstanceState.getSerializable(CREATION_GENDER_ID);
+        gender = (Gender) savedInstanceState.getSerializable(CREATION_GENDER_ID);
         GameLogger.log("GDCN", "Character creation instance Restored");
     }
 
@@ -239,6 +238,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
     private void disableButton(Button button) {
         button.setEnabled(false);
     }
+
     //это тоже
     private void enableButton(Button button) {
         button.setEnabled(true);
