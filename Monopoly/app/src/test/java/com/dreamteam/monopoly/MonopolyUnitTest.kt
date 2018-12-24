@@ -3,6 +3,7 @@ package com.dreamteam.monopoly
 import com.dreamteam.monopoly.game.GameData
 import com.dreamteam.monopoly.game.GameManager
 import com.dreamteam.monopoly.game.board.cell.CellState
+import com.dreamteam.monopoly.game.board.cell.GameCellType
 import com.dreamteam.monopoly.game.player.PlayerActions
 import com.dreamteam.monopoly.game.player.PlayerMoveCondition
 import com.dreamteam.monopoly.game.player.PlayerType
@@ -224,7 +225,10 @@ class MonopolyUnitTest {
         val gameManager = GameManager(gameActivity)
         gameManager.addPlayer("BestEverPlayer")
         val player = gameManager.getCurrentPlayer()
-        player.cells.addAll(gameManager.mainBoard.gameWay)
+        for (cell in gameManager.mainBoard.gameWay) {
+            if (cell.info.cellType == GameCellType.COMPANY)
+                player.cells.add(cell)
+        }
         assertEquals(gameManager.mainBoard.gameWay[1], player.findCellWithLowestSellCost())
         assertEquals(gameManager.mainBoard.gameWay[1].info.cost.costSell, player.findCellWithLowestSellCost().info.cost.costSell)
     }
