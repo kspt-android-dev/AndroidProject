@@ -16,6 +16,7 @@ import com.dreamteam.monopoly.game.player.PlayerType
 import com.dreamteam.monopoly.helpers.shakeEffect
 import es.dmoral.toasty.Toasty
 import maes.tech.intentanim.CustomIntent
+import java.lang.StringBuilder
 import kotlin.collections.ArrayList
 
 
@@ -140,14 +141,16 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         }
 
         buttonDelete!!.setOnClickListener {
+            val delNames = StringBuilder()
             for (txtView in deleteList) {
-                Toasty.error(this, txtView.text.toString() + resources.getString(R.string.removed),
-                        Toast.LENGTH_SHORT, true).show()
+                delNames.append(txtView.text.toString() + "\t")
                 playersNames.remove(txtView.text.toString())
                 txtView.text = ""
                 numberOfPlayers--
                 txtView.setBackgroundResource(android.R.color.transparent)
             }
+            Toasty.error(this, delNames.toString() + resources.getString(R.string.removed),
+                    Toast.LENGTH_SHORT, true).show()
             deleteList.clear()
             moveAllNames()
             setUnClickable()
