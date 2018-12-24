@@ -9,6 +9,7 @@ public class BasicHeal implements Action {
 
     protected final String name;
     //    protected final Integer AP;
+    @SuppressWarnings("WeakerAccess")
     protected final Integer pointsHealed;
 
     public BasicHeal(String name, Integer pointsHealed){

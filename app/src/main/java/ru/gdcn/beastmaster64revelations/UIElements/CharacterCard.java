@@ -19,11 +19,10 @@ import ru.gdcn.beastmaster64revelations.R;
 
 public class CharacterCard extends LinearLayout {
 
-    Character character;
-
-    TextView name;
-    ImageView face;
-    TextView HP;
+    private Character character;
+    private TextView name;
+    private ImageView face;
+    private TextView HP;
     //TextView stats;
 
     public CharacterCard(final Context context, @Nullable AttributeSet attrs, Character character) {
@@ -31,14 +30,13 @@ public class CharacterCard extends LinearLayout {
         this.character = character;
 
         face = new ImageView(context);
-        if (character instanceof PlayerClass){
-            if (((PlayerClass)(character)).getGender() == Gender.MALE)
+        if (character instanceof PlayerClass) {
+            if (((PlayerClass) (character)).getGender() == Gender.MALE)
                 face.setImageDrawable(face.getResources().getDrawable(R.drawable.char_face_man));
             else
                 face.setImageDrawable(face.getResources().getDrawable(R.drawable.char_face_woman));
-        }
-        else{
-            switch (((DummyEnemy) (character)).getType()){
+        } else {
+            switch (((DummyEnemy) (character)).getType()) {
                 case DRUNK_PIRATE:
                     face.setImageDrawable(face.getResources().getDrawable(R.drawable.enemy_pirate));
                     break;
@@ -85,7 +83,7 @@ public class CharacterCard extends LinearLayout {
 
     }
 
-    public void updateContent(){
+    public void updateContent() {
         String text = character.getHP() + getResources().getString(R.string.text_slash) + character.getMaxHP();
         HP.setText(text);
     }

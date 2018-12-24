@@ -1,7 +1,5 @@
 package ru.gdcn.beastmaster64revelations.GameClass.Characters.NPC;
 
-import ru.gdcn.beastmaster64revelations.GameClass.Characters.CharacterClass;
-import ru.gdcn.beastmaster64revelations.GameInterface.Action.Action;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Interactions.Trade;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Trader;
 import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;

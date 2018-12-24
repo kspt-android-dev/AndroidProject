@@ -3,7 +3,6 @@ package ru.gdcn.beastmaster64revelations.UIElements;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 public class ProportionalImageView extends android.support.v7.widget.AppCompatImageView {
 

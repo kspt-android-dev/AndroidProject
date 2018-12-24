@@ -12,7 +12,7 @@ import ru.gdcn.beastmaster64revelations.GameInterface.World.World;
 
 public class SimpleWorldClass implements World {
 
-    GameMap map = new SimpleGameMapClass(this);
+    private GameMap map = new SimpleGameMapClass(this);
 
     public static World generateWorld() {
         return new SimpleWorldClass();

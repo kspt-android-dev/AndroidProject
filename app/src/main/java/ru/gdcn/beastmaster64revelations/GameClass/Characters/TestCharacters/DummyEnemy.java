@@ -17,13 +17,12 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;
 public class DummyEnemy extends CharacterClass implements Opponent {
 
     private OpponentType type;
-    private String description = "Противник средней сложности, имеющий примерно равные характеристики с игроком. Постарайтесь не продуть ему!";
 
     public DummyEnemy() {
         super(generateName(), null, 10, 10, 10, 10);
     }
 
-    public DummyEnemy(String name, Integer randomBase) {
+    private DummyEnemy(String name, Integer randomBase) {
         super(name, null,
                 randomBase - randomBase/4 + new Random().nextInt(randomBase/2),
                 randomBase - randomBase/4 + new Random().nextInt(randomBase/2),
@@ -31,12 +30,12 @@ public class DummyEnemy extends CharacterClass implements Opponent {
                 10);
     }
 
-    public DummyEnemy(String name, OpponentType type, Integer randomBase) {
+    private DummyEnemy(String name, OpponentType type, Integer randomBase) {
         this(name, randomBase);
         this.type = type;
     }
 
-    public static String generateName() {
+    private static String generateName() {
         int number = new Random().nextInt(4);
         String name = "Чёрт";
         switch (number) {
@@ -57,8 +56,7 @@ public class DummyEnemy extends CharacterClass implements Opponent {
         String name = generateName();
         OpponentType type = makeTypeByName(name);
         Integer base = 5 + (int) ((player.getAgility() + player.getIntellect() + player.getStrength()) * difficulty / 3);
-        DummyEnemy enemy = new DummyEnemy(name, type, base);
-        return enemy;
+        return new DummyEnemy(name, type, base);
     }
 
     private static OpponentType makeTypeByName(String name) {
@@ -127,6 +125,7 @@ public class DummyEnemy extends CharacterClass implements Opponent {
 
     @Override
     public String getDescription() {
-        return description;
+        //Заглушка
+        return "Противник средней сложности, имеющий примерно равные характеристики с игроком. Постарайтесь не продуть ему!";
     }
 }

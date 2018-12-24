@@ -8,7 +8,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import ru.gdcn.beastmaster64revelations.GameActivities.CharacterCreation.CharacterCreationActivity;
-import ru.gdcn.beastmaster64revelations.GameLogger;
 import ru.gdcn.beastmaster64revelations.R;
 import ru.gdcn.beastmaster64revelations.GameActivities.Settings.SettingsActivity;
 import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;

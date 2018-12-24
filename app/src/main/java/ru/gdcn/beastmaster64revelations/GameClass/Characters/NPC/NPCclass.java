@@ -17,15 +17,16 @@ public class NPCclass extends CharacterClass implements NPC {
     private Boolean isAvoidable;
     private Boolean isAttackable;
 
-    public NPCclass(String name,
-                    Location location,
-                    Integer strength,
-                    Integer agility,
-                    Integer intellect,
-                    Integer luck,
-                    Boolean isTalkable,
-                    Boolean isAvoidable,
-                    Boolean isAttackable) {
+    NPCclass(String name,
+             Location location,
+             Integer strength,
+             Integer agility,
+             Integer intellect,
+             Integer luck,
+             Boolean isValuableForLore,
+             Boolean isTalkable,
+             Boolean isAvoidable,
+             Boolean isAttackable) {
         super(name, location, strength, agility, intellect, luck);
         this.isValuableForLore = isValuableForLore;
         this.isTalkable = isTalkable;

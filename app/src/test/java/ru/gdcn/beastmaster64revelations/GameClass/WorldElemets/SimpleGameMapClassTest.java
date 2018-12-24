@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class SimpleGameMapClassTest {
 
-    World world = new SimpleWorldClass();
+    private World world = new SimpleWorldClass();
 
     @Test
     public void getLocationAt() {

@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
@@ -38,19 +37,19 @@ public class InLocationActivity extends AppCompatActivity {
     boolean loaded = false;
 
     //Фрагменты, между которыми можно переключаться
-    InLocationFragment locationFragment;
-    MapFragment mapFragment;
-    StatsFragment statsFragment;
+    private InLocationFragment locationFragment;
+    private MapFragment mapFragment;
+    private StatsFragment statsFragment;
 
-    Fragment currentFragment;
+    private Fragment currentFragment;
 
     //Текущая локация, игрок, очки прокачки доступные игроку
-    Location location;
-    Player player;
-    Integer upgradePoints;
+    private Location location;
+    private Player player;
+    private Integer upgradePoints;
 
     //фончик
-    ProportionalImageView imageView;
+    private ProportionalImageView imageView;
 
     //Мир (внутренняя логика)
     private World gameWorld;
@@ -114,7 +113,7 @@ public class InLocationActivity extends AppCompatActivity {
             FragmentType fragmentType = (FragmentType) savedInstanceState.getSerializable(IN_LOC_FRAGTYPE_ID);
             GameLogger.log("GDCN", "InLocation instance Restored");
 
-            switch (fragmentType) {
+            switch (fragmentType != null ? fragmentType : FragmentType.INLOC) {
                 case MAP:
                     addFragment(mapFragment);
                     mapFragment.updateMap();
@@ -171,17 +170,9 @@ public class InLocationActivity extends AppCompatActivity {
     private void showDialogWindow(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.in_location_dialog_text))
-                .setPositiveButton(getString(R.string.in_location_text_yes), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        goToMenu();
-                    }
-                })
-                .setNegativeButton(getString(R.string.in_location_text_no), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setPositiveButton(getString(R.string.in_location_text_yes), (dialog, which) -> goToMenu())
+                .setNegativeButton(getString(R.string.in_location_text_no), (dialog, which) -> {
 
-                    }
                 });
         builder.show();
     }

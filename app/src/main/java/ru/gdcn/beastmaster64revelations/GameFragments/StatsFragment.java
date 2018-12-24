@@ -18,19 +18,19 @@ import ru.gdcn.beastmaster64revelations.R;
 
 public class StatsFragment extends Fragment {
 
-    InLocationActivity activity;
+    private InLocationActivity activity;
 
-    Player player;
+    private Player player;
 
-    Button strPlus;
-    Button agiPlus;
-    Button intPlus;
+    private Button strPlus;
+    private Button agiPlus;
+    private Button intPlus;
 
-    TextView strText;
-    TextView agiText;
-    TextView intText;
+    private TextView strText;
+    private TextView agiText;
+    private TextView intText;
 
-    TextView pointsText;
+    private TextView pointsText;
 
     public StatsFragment() {
         // Required empty public constructor
@@ -55,7 +55,11 @@ public class StatsFragment extends Fragment {
 
         activity = (InLocationActivity) getActivity();
 
+        //noinspection ConstantConditions
         player = this.activity.getPlayer();
+
+        if (player == null)
+            return;
 
         strPlus = ((InLocationActivity) activity).findViewById(R.id.fragment_stats_plus_str);
         agiPlus = ((InLocationActivity) activity).findViewById(R.id.fragment_stats_plus_agi);

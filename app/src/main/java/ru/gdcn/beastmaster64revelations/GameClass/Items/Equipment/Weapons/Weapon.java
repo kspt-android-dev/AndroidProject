@@ -13,6 +13,7 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemRarity;
 
 import java.util.Random;
 
+@SuppressWarnings("WeakerAccess")
 public class Weapon extends GameItemClass implements Equipment {
 
     /**

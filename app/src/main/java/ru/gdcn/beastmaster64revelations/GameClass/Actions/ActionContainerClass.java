@@ -7,12 +7,13 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Action.ActionType;
 import java.util.LinkedList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class ActionContainerClass implements ActionContainer {
 
     List<Action> actions;
 
     public ActionContainerClass() {
-        this.actions = new LinkedList<Action>();
+        this.actions = new LinkedList<>();
     }
 
     @Override

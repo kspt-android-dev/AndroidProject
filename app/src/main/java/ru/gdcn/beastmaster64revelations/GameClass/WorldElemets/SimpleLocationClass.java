@@ -17,14 +17,14 @@ import ru.gdcn.beastmaster64revelations.GameInterface.World.World;
 
 public class SimpleLocationClass implements Location, Serializable {
 
-    Boolean hasPlayer;
-    MapPoint coordinates;
-    NPC someSickDude;
-    String description;
-    LocationType type;
-    String name;
-    Player player;
-    Double difficulty = 0.1 + new Random().nextDouble() * 2.0;
+    private Boolean hasPlayer;
+    private MapPoint coordinates;
+    private NPC someSickDude;
+    private String description;
+    private LocationType type;
+    private String name;
+    private Player player;
+    private Double difficulty = 0.1 + new Random().nextDouble() * 2.0;
 
     private World world;
 

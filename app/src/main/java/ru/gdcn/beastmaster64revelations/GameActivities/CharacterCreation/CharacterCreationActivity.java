@@ -18,37 +18,37 @@ import ru.gdcn.beastmaster64revelations.R;
 public class CharacterCreationActivity extends AppCompatActivity {
 
     //Игрок и его пол
-    Player player;
-    Gender gender;
+    private Player player;
+    private Gender gender;
 
     //Аватарки персонажей
-    ImageView manFace;
-    ImageView womanFace;
+    private ImageView manFace;
+    private ImageView womanFace;
 
     //Переменные для отслеживания очков
-    Integer points = 15;
-    Integer stren = 5;
-    Integer agili = 5;
-    Integer intel = 5;
+    private Integer points = 15;
+    private Integer stren = 5;
+    private Integer agili = 5;
+    private Integer intel = 5;
 
     //Кнопочки для распределения очков
-    Button strMin;
-    Button agiMin;
-    Button intMin;
-    Button strPlus;
-    Button agiPlus;
-    Button intPlus;
+    private Button strMin;
+    private Button agiMin;
+    private Button intMin;
+    private Button strPlus;
+    private Button agiPlus;
+    private Button intPlus;
 
     //Кнопка "продолжить"
-    Button readyButton;
+    private Button readyButton;
 
     //Тексты которые нужно обновлять в соответствии кол-ву очков
-    TextView strText;
-    TextView agiText;
-    TextView intText;
-    TextView pointsText;
-    TextView inputName;
-    TextView textName;
+    private TextView strText;
+    private TextView agiText;
+    private TextView intText;
+    private TextView pointsText;
+    private TextView inputName;
+    private TextView textName;
 
     //Ключи для сохранения в Bundle
     static final String CREATION_STR_ID = "strength";

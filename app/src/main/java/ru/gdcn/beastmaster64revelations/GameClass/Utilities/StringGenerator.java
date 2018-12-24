@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class StringGenerator {
 
-    public static final Random randomGenerator = new Random();
+    private static final Random randomGenerator = new Random();
 
     public static String weaponAdjective() {
         return (String) Utilities.getRandomElement(Strings.WEAPON_ADJECTIVES, randomGenerator);

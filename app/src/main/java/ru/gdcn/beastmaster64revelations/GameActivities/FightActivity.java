@@ -39,36 +39,36 @@ import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;
 public class FightActivity extends AppCompatActivity {
 
     //Все кнопочки, которые будут отключаться во время отката действий
-    List<Button> allActionButtons = new ArrayList<>();
+    private List<Button> allActionButtons = new ArrayList<>();
 
     //фончик
-    ImageView backImage;
+    private ImageView backImage;
 
     //Костыль, чтобы атакующий персонаж всегда был поверх противника
     //(Было придумано за 0.1 сек и осталось до сих пор)
-    Integer currentZ = 10;
+    private Integer currentZ = 10;
 
     //таймеры для действий игрока и AI
-    CountDownTimer AItimer;
-    CountDownTimer playerTimer;
+    private CountDownTimer AItimer;
+    private CountDownTimer playerTimer;
 
     //текст и скролл консольки
-    TextView fightConsoleText;
-    NestedScrollView fightConsoleScroll;
+    private TextView fightConsoleText;
+    private NestedScrollView fightConsoleScroll;
 
     //Кастомные вьюшки для отображения карточек игрока и врага
-    CharacterCard playerCard;
-    CharacterCard enemyCard;
+    private CharacterCard playerCard;
+    private CharacterCard enemyCard;
 
     //Холдеры для карточек
-    FrameLayout cardHolderPlayer;
-    FrameLayout cardHolderEnemy;
+    private FrameLayout cardHolderPlayer;
+    private FrameLayout cardHolderEnemy;
 
     //Прогрессбары с кулдауном, игрок и враг
-    Character player;
-    NPC enemy;
-    ImageView progressBar;
-    ImageView enemyProgressBar;
+    private Character player;
+    private NPC enemy;
+    private ImageView progressBar;
+    private ImageView enemyProgressBar;
 
     //Ключи для сохранения в Bundle
     static final String FIGHT_PLAYER_ID = "player";

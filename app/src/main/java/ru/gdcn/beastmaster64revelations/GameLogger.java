@@ -6,10 +6,10 @@ public class GameLogger {
 
     public static void log(String gdcn, String log){
         Log.d("GDCN", log);
-    };
+    }
 
     public static void logError(String log){
         Log.e("GDCN", log);
-    };
+    }
 
 }

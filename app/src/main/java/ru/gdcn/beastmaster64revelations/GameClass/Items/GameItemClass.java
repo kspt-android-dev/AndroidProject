@@ -7,6 +7,7 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Items.GameItem;
 import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;
 import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemRarity;
 
+@SuppressWarnings("WeakerAccess")
 public class GameItemClass implements GameItem, Serializable {
 
     protected String name;

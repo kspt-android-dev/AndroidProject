@@ -11,23 +11,21 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import ru.gdcn.beastmaster64revelations.GameActivities.InLocation.InLocationActivity;
-import ru.gdcn.beastmaster64revelations.GameClass.WorldElemets.SimpleLocationClass;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.MapDirection;
-import ru.gdcn.beastmaster64revelations.GameLogger;
 import ru.gdcn.beastmaster64revelations.R;
 
 public class InLocationFragment extends Fragment {
 
-    Button goUpButton;
-    Button goDownButton;
-    Button goLeftButton;
-    Button goRightButton;
+    private Button goUpButton;
+    private Button goDownButton;
+    private Button goLeftButton;
+    private Button goRightButton;
 
-    Button fightNPC;
-    Button talkNPC;
+    private Button fightNPC;
+    private Button talkNPC;
 
-    Location currentLocation;
+    private Location currentLocation;
 
     final static String IN_LOC_FRAG_LOCATION_ID = "location in frag";
 
@@ -51,18 +49,15 @@ public class InLocationFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_in_location, container, false);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         fightNPC = getActivity().findViewById(R.id.fragment_in_location_content_NPCattack);
-        fightNPC.setOnClickListener(v -> {
-            attackNPC();
-        });
+        fightNPC.setOnClickListener(v -> attackNPC());
         talkNPC = getActivity().findViewById(R.id.fragment_in_location_content_NPCtalk);
-        talkNPC.setOnClickListener(v -> {
-            talkNPC();
-        });
+        talkNPC.setOnClickListener(v -> talkNPC());
 
         goUpButton = getActivity().findViewById(R.id.fragment_in_location_content_GoUp);
         goDownButton = getActivity().findViewById(R.id.fragment_in_location_content_GoDown);
@@ -79,6 +74,7 @@ public class InLocationFragment extends Fragment {
         //this.setContent(new SimpleLocationClass(new MapPoint(0,0)));
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void goAway(MapDirection direction) {
         InLocationActivity activity = (InLocationActivity) getActivity();
         activity.goFurther(direction);
@@ -88,6 +84,7 @@ public class InLocationFragment extends Fragment {
         //TODO
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void attackNPC() {
         InLocationActivity activity = (InLocationActivity) getActivity();
         activity.goToFight();
@@ -104,6 +101,7 @@ public class InLocationFragment extends Fragment {
 
     }
 
+    @SuppressWarnings("ConstantConditions")
     public void setContent(Location location) {
         this.currentLocation = location;
         updateButtons();

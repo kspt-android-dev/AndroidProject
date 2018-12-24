@@ -1,6 +1,5 @@
 package ru.gdcn.beastmaster64revelations.GameClass.Characters.NPC;
 
-import ru.gdcn.beastmaster64revelations.GameClass.Characters.CharacterClass;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Stranger;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 

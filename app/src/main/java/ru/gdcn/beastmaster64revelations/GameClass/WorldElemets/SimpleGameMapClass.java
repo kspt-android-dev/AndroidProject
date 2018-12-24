@@ -12,8 +12,8 @@ import ru.gdcn.beastmaster64revelations.GameInterface.World.World;
 
 public class SimpleGameMapClass implements GameMap {
 
-    Location[][] map;
-    World world;
+    private Location[][] map;
+    private World world;
 
     public SimpleGameMapClass(World world) {
         this(world, 7, 10);
@@ -38,24 +38,24 @@ public class SimpleGameMapClass implements GameMap {
             return null;
     }
 
-    @Override
-    public List<Location> getNeighbours(MapPoint coordinates) {
-        List neighbours = new LinkedList();
-        MapPoint next;
-        next = coordinates.up();
-        if (next.isWithin(map) && !get(next).getType().equals(LocationType.ROCK))
-            neighbours.add(get(next));
-        next = coordinates.left();
-        if (next.isWithin(map) && !get(next).getType().equals(LocationType.ROCK))
-            neighbours.add(get(next));
-        next = coordinates.right();
-        if (next.isWithin(map) && !get(next).getType().equals(LocationType.ROCK))
-            neighbours.add(get(next));
-        next = coordinates.down();
-        if (next.isWithin(map) && !get(next).getType().equals(LocationType.ROCK))
-            neighbours.add(get(next));
-        return neighbours;
-    }
+//    @Override
+//    public List<Location> getNeighbours(MapPoint coordinates) {
+//        List<Location> neighbours = new LinkedList();
+//        MapPoint next;
+//        next = coordinates.up();
+//        if (next.isWithin(map) && !get(next).getType().equals(LocationType.ROCK))
+//            neighbours.add(get(next));
+//        next = coordinates.left();
+//        if (next.isWithin(map) && !get(next).getType().equals(LocationType.ROCK))
+//            neighbours.add(get(next));
+//        next = coordinates.right();
+//        if (next.isWithin(map) && !get(next).getType().equals(LocationType.ROCK))
+//            neighbours.add(get(next));
+//        next = coordinates.down();
+//        if (next.isWithin(map) && !get(next).getType().equals(LocationType.ROCK))
+//            neighbours.add(get(next));
+//        return neighbours;
+//    }
 
     @Override
     public Location getNeightbour(MapPoint coordinates, MapDirection direction) {
