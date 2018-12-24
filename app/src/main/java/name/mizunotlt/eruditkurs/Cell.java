@@ -5,7 +5,6 @@ import android.graphics.Point;
 
 public class Cell {
 
-
     private Point startPoint;
     private Path path;
     private boolean x2Word = false;

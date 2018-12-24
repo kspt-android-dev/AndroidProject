@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class GameMechanic {
 
-
     private ArrayList<CellForLetter> listCellLetter = new ArrayList<>();
     private ArrayList<Cell> workListCells = new ArrayList<>();
     private ArrayList<Integer> listSelectLetter = new ArrayList<>();

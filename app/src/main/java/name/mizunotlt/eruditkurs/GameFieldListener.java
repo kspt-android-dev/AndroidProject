@@ -5,12 +5,13 @@ import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
 
+import static android.os.Parcelable.PARCELABLE_WRITE_RETURN_VALUE;
 import static android.view.MotionEvent.ACTION_CANCEL;
 import static android.view.MotionEvent.ACTION_DOWN;
+import static android.view.MotionEvent.ACTION_MOVE;
 
 //Вся дичь обработки тут а именно выбор буквы и выбор клетки куда поставить
 public class GameFieldListener implements View.OnTouchListener {
-
     private float startX = 0;
     private float startY = 0;
     private final int incXLetter = 95;

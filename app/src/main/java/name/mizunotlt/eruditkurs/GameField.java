@@ -20,7 +20,6 @@ import java.util.List;
 @SuppressLint("ViewConstructor")
 public class GameField extends View {
 
-
     private Paint paint = new Paint();
     private ArrayList<Integer> listSelectLetter = new ArrayList<>();
     //Лист для запоминания букв игрока

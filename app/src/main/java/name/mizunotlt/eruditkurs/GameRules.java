@@ -10,7 +10,6 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 public class GameRules {
-
     private List<Letter> listLetter = new ArrayList<>();
     private int score = 0;
     private boolean flagx2Word = false;
