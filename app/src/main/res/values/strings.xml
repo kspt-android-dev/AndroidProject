@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MyApp</string>
+    <string name="title_activity_second">SecondActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="vs_computer">vs computer</string>
+    <string name="play_n3x3">play 3x3</string>
+    <string name="play_n5x5">play 5x5</string>
+    <string name="restart">RESTART</string>
+    <string name="logo">LOGO</string>
+    <string name="todo">TODO</string>
+    <string name="_0">0</string>
+</resources>
