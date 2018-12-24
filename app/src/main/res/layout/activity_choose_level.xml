@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.pk.game15.ChooseLevel"
+    tools:layout_editor_absoluteY="25dp">
+
+    <Button
+        android:id="@+id/easy"
+        android:layout_width="140dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="161dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/buttonshape"
+        android:fontFamily="@font/armata"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="10"
+        android:text="easy"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/normal"
+        android:layout_width="140dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="13dp"
+        android:background="@drawable/buttonshape"
+        android:fontFamily="@font/armata"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="10"
+        android:text="medium"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/hard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/easy" />
+
+    <Button
+        android:id="@+id/hard"
+        android:layout_width="140dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="203dp"
+        android:background="@drawable/buttonshape"
+        android:fontFamily="@font/armata"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="10"
+        android:text="hard"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/normal" />
+</android.support.constraint.ConstraintLayout>
