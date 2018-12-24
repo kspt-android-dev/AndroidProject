@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -34,10 +35,14 @@ import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;
 
 public class InLocationActivity extends AppCompatActivity {
 
+    boolean loaded = false;
+
     //Фрагменты, между которыми можно переключаться
     InLocationFragment locationFragment;
     MapFragment mapFragment;
     StatsFragment statsFragment;
+
+    Fragment currentFragment;
 
     //Текущая локация, игрок, очки прокачки доступные игроку
     Location location;
@@ -51,15 +56,18 @@ public class InLocationActivity extends AppCompatActivity {
     private World gameWorld;
 
     //Ключи для сохранения в Bundle
-    static final String IN_LOC_WORLD_ID = "world";
-    static final String IN_LOC_PLAYER_ID = "player";
-    static final String IN_LOC_LOCATION_ID = "location";
-    static final String IN_LOC_UPG_ID = "upgrade points";
+    private static final String IN_LOC_FRAGTYPE_ID = "fragtype";
+    private static final String IN_LOC_WORLD_ID = "world";
+    private static final String IN_LOC_PLAYER_ID = "player";
+    private static final String IN_LOC_LOCATION_ID = "location";
+    private static final String IN_LOC_UPG_ID = "upgrade points";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_location);
+
+        Log.d("GDCN", "onCreate!");
 
         //Пихаем фончик за весь наш интерфейс, задаём ему немного прозрачности
         imageView = new ProportionalImageView(this);
@@ -69,11 +77,6 @@ public class InLocationActivity extends AppCompatActivity {
 
         //Создаём наши фрагменты, изначально суём на экран фрагмент локации
         locationFragment = InLocationFragment.newInstance();
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction()
-                .add(R.id.activity_in_location_fragHolder, locationFragment)
-                .commit();
-
         mapFragment = MapFragment.newInstance();
         statsFragment = StatsFragment.newInstance();
 
@@ -98,11 +101,40 @@ public class InLocationActivity extends AppCompatActivity {
             player = (PlayerClass) getIntent().getSerializableExtra("player");
             //Очки чкички
             upgradePoints  = 30;
+
+            addFragment(locationFragment);
+
+            loaded = true;
+
+        } else {
+            gameWorld = (SimpleWorldClass) savedInstanceState.getSerializable(IN_LOC_WORLD_ID);
+            location = (SimpleLocationClass) savedInstanceState.getSerializable(IN_LOC_LOCATION_ID);
+            player = (PlayerClass)savedInstanceState.getSerializable(IN_LOC_PLAYER_ID);
+            upgradePoints = savedInstanceState.getInt(IN_LOC_UPG_ID);
+            FragmentType fragmentType = (FragmentType) savedInstanceState.getSerializable(IN_LOC_FRAGTYPE_ID);
+            GameLogger.log("GDCN", "InLocation instance Restored");
+
+            switch (fragmentType) {
+                case MAP:
+                    addFragment(mapFragment);
+                    mapFragment.updateMap();
+                    break;
+                case INLOC:
+                    addFragment(locationFragment);
+                    locationFragment.setContent(location);
+                    break;
+                case STATS:
+                    addFragment(statsFragment);
+                    break;
+            }
+            loaded = true;
         }
 
         //Пихаем туда игрока
         transitionToNewLocation(location);
+
     }
+
 
     @Override
     public void onBackPressed(){
@@ -112,6 +144,14 @@ public class InLocationActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
+
+        FragmentType type = FragmentType.INLOC;
+        if (currentFragment instanceof MapFragment)
+            type = FragmentType.MAP;
+        if (currentFragment instanceof StatsFragment)
+            type = FragmentType.STATS;
+
+        savedInstanceState.putSerializable(IN_LOC_FRAGTYPE_ID, type);
         savedInstanceState.putSerializable(IN_LOC_WORLD_ID, gameWorld);
         savedInstanceState.putSerializable(IN_LOC_LOCATION_ID, location);
         savedInstanceState.putSerializable(IN_LOC_PLAYER_ID, player);
@@ -119,15 +159,6 @@ public class InLocationActivity extends AppCompatActivity {
         GameLogger.log("GDCN", "InLocation instance Saved");
     }
 
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState){
-        super.onRestoreInstanceState(savedInstanceState);
-        gameWorld = (SimpleWorldClass) savedInstanceState.getSerializable(IN_LOC_WORLD_ID);
-        location = (SimpleLocationClass) savedInstanceState.getSerializable(IN_LOC_LOCATION_ID);
-        player = (PlayerClass)savedInstanceState.getSerializable(IN_LOC_PLAYER_ID);
-        upgradePoints = savedInstanceState.getInt(IN_LOC_UPG_ID);
-        GameLogger.log("GDCN", "InLocation instance Restored");
-    }
 
     @Override
     protected void onPostResume() {
@@ -155,7 +186,20 @@ public class InLocationActivity extends AppCompatActivity {
         builder.show();
     }
 
+    private void addFragment(Fragment fragment){
+
+        currentFragment = fragment;
+
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction()
+                .add(R.id.activity_in_location_fragHolder, fragment)
+                .commit();
+    }
+
     private void changeFragment(Fragment fragment) {
+
+        currentFragment = fragment;
+
         //Заменяем фрагмент в нашем холдере на тот который нужно
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.activity_in_location_fragHolder, fragment);
