@@ -26,7 +26,7 @@ public class TraderClass extends NPCclass implements Trader {
                        Boolean isTalkable,
                        Boolean isAvoidable,
                        Boolean isAttackable) {
-        super(name, location, strength, agility, intellect, luck, isTalkable, isAvoidable, isAttackable);
+        super(name, location, strength, agility, intellect, luck, null, isTalkable, isAvoidable, isAttackable);
     }
 
 

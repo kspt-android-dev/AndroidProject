@@ -1,7 +1,6 @@
 package ru.gdcn.beastmaster64revelations.GameActivities.InLocation;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -15,21 +14,21 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import ru.gdcn.beastmaster64revelations.GameActivities.FightActivity;
+import ru.gdcn.beastmaster64revelations.GameActivities.MainMenu.MainMenuActivity;
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.PlayerClass;
 import ru.gdcn.beastmaster64revelations.GameClass.WorldElemets.SimpleLocationClass;
 import ru.gdcn.beastmaster64revelations.GameClass.WorldElemets.SimpleWorldClass;
 import ru.gdcn.beastmaster64revelations.GameFragments.InLocationFragment;
+import ru.gdcn.beastmaster64revelations.GameFragments.MapFragment.MapFragment;
+import ru.gdcn.beastmaster64revelations.GameFragments.StatsFragment;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Interactions.Fight.FightResult;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.LocationType;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.MapDirection;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.World;
-import ru.gdcn.beastmaster64revelations.GameActivities.MainMenu.MainMenuActivity;
-import ru.gdcn.beastmaster64revelations.GameFragments.MapFragment.MapFragment;
 import ru.gdcn.beastmaster64revelations.GameLogger;
 import ru.gdcn.beastmaster64revelations.R;
-import ru.gdcn.beastmaster64revelations.GameFragments.StatsFragment;
 import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;
 
 public class InLocationActivity extends AppCompatActivity {
@@ -232,7 +231,9 @@ public class InLocationActivity extends AppCompatActivity {
         transitionToNewLocation(location.getNeightbour(direction));
     }
 
+    @SuppressWarnings("unused")
     private SimpleLocationClass generateLocation() {
+        //TODO!
         //Ровно то что написано в названии метода, использовался до создания нормального World
         return new SimpleLocationClass();
     }
