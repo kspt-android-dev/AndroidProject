@@ -90,7 +90,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             }
 
             if (playersNames.contains(content)) {
-                Toasty.error(this, resources.getString(R.string.containtsString),
+                Toasty.error(this, resources.getString(R.string.containsString),
                         Toast.LENGTH_SHORT, true).show()
                 return@setOnClickListener
             }
@@ -261,7 +261,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
     }
 
     private fun restorePlayersList(savedInstanceState: Bundle) {
-        playersNames = savedInstanceState.getStringArrayList(getString(R.string.playersMap))
+        playersNames = savedInstanceState.getStringArrayList(getString(R.string.playersNames))
         val pDells: ArrayList<String> = savedInstanceState.getStringArrayList(getString(R.string.deletePlayersNames))
         val pTypes: BooleanArray = savedInstanceState.getBooleanArray(getString(R.string.playersTypes))
         numberOfPlayers = playersNames.size
