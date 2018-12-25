@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class ChooseLevelActivity extends Activity {
+public class A_ChooseLevelActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +41,8 @@ public class ChooseLevelActivity extends Activity {
 
     }
 
-    void goToGameActivity(int minesNumber) {
-        GameActivity.setMinesNumber(minesNumber);
-        startActivity(new Intent(this, GameActivity.class));
+    private void goToGameActivity(int minesNumber) {
+        A_GameActivity.setMinesNumber(minesNumber);
+        startActivity(new Intent(this, A_GameActivity.class));
     }
 }

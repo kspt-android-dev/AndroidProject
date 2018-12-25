@@ -11,7 +11,7 @@ import android.widget.Chronometer;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
-public class GameActivity extends Activity {
+public class A_GameActivity extends Activity {
     static int minesNumber;
 
 
@@ -70,11 +70,11 @@ public class GameActivity extends Activity {
 
     }
 
-    void goToSettingsActivity() {
-        startActivity(new Intent(this, ChooseLevelActivity.class));
+    private void goToSettingsActivity() {
+        startActivity(new Intent(this, A_ChooseLevelActivity.class));
     }
 
     public static void setMinesNumber(int minesNumber) {
-        GameActivity.minesNumber = minesNumber;
+        A_GameActivity.minesNumber = minesNumber;
     }
 }

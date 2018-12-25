@@ -13,13 +13,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="com.example.danila.minerandroid.ChooseLevelActivity"
-            android:configChanges="orientation"
-            >
-        </activity>
-
-        <activity
-            android:name="com.example.danila.minerandroid.GameActivity"
+            android:name="com.example.danila.minerandroid.A_MenuActivity"
             android:configChanges="orientation"
             android:label="@string/app_name">
             <intent-filter>
@@ -29,18 +23,17 @@
         </activity>
 
         <activity
-            android:name="com.example.danila.minerandroid.MenuActivity"
-            android:configChanges="orientation"
-            >
-        </activity>
+            android:name="com.example.danila.minerandroid.A_RecordsTableActivity"
+            android:configChanges="orientation"></activity>
+
 
         <activity
-            android:name="com.example.danila.minerandroid.RecordsTableActivity"
-            android:configChanges="orientation"
-            >
-        </activity>
+            android:name="com.example.danila.minerandroid.A_ChooseLevelActivity"
+            android:configChanges="orientation"></activity>
 
-
+        <activity
+            android:name="com.example.danila.minerandroid.A_GameActivity"
+            android:configChanges="orientation"></activity>
 
 
     </application>
