@@ -20,9 +20,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onClickExit(View view){
-        System.exit(1);
-    }
 
     public void onClickAbout(View view){
         Intent intent = new Intent(this, AboutActivity.class);
