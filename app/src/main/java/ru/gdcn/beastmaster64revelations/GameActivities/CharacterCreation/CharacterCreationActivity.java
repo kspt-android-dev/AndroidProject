@@ -92,6 +92,8 @@ public class CharacterCreationActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        readyButton.setEnabled(false);
+
         strMin.setOnClickListener(v -> {
             points++;
             stren--;
@@ -155,6 +157,15 @@ public class CharacterCreationActivity extends AppCompatActivity {
             updateContent();
         });
 
+        if (savedInstanceState != null){
+            points = savedInstanceState.getInt(CREATION_PTS_ID);
+            stren = savedInstanceState.getInt(CREATION_STR_ID);
+            agili = savedInstanceState.getInt(CREATION_AGI_ID);
+            intel = savedInstanceState.getInt(CREATION_INTELLECT_ID);
+            gender = (Gender) savedInstanceState.getSerializable(CREATION_GENDER_ID);
+            GameLogger.log("GDCN", "Character creation instance Restored");
+        }
+
         //Обновляем контент активити в соответствии с внутренней логикой
         updateContent();
 
@@ -169,17 +180,6 @@ public class CharacterCreationActivity extends AppCompatActivity {
         savedInstanceState.putInt(CREATION_AGI_ID, agili);
         savedInstanceState.putInt(CREATION_INTELLECT_ID, intel);
         GameLogger.log("GDCN", "Character creation instance Saved");
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        points = savedInstanceState.getInt(CREATION_PTS_ID);
-        stren = savedInstanceState.getInt(CREATION_STR_ID);
-        agili = savedInstanceState.getInt(CREATION_AGI_ID);
-        intel = savedInstanceState.getInt(CREATION_INTELLECT_ID);
-        gender = (Gender) savedInstanceState.getSerializable(CREATION_GENDER_ID);
-        GameLogger.log("GDCN", "Character creation instance Restored");
     }
 
     private void updateContent() {

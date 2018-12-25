@@ -131,7 +131,7 @@
     <string name="character_creation_text_attributeNames">atributeNames</string>
     <string name="character_creation_text_totalPoints">totalPoints</string>
     <string name="fight_log_kick">Kick</string>
-    <string name="fight_log_kicked">\u00A0kicked</string>
+    <string name="fight_log_kicked">\u00A0kicked\u00A0</string>
     <string name="fight_log_kicks">\u00A0damage!</string>
     <string name="fight_log_just_healed">\u00A0just healed!</string>
     <string name="fight_log_used_magic">\u00A0used magic!</string>

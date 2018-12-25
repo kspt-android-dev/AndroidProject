@@ -18,14 +18,14 @@
         android:alpha="0.85">
 
         <TextView
-        android:id="@+id/main_menu_text_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+            android:id="@+id/main_menu_text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:fontFamily="@font/thin"
-        android:text="@string/main_name_of_the_greatest_game_ever"
-        android:textColor="@android:color/holo_red_light"
-        android:textSize="60sp" />
+            android:text="@string/main_name_of_the_greatest_game_ever"
+            android:textColor="@color/title_menu_color"
+            android:textSize="70sp" />
 
         <Button
             android:id="@+id/main_menu_button_play"
@@ -33,6 +33,7 @@
             android:layout_width="180dp"
             android:layout_height="70dp"
             android:layout_margin="10dp"
+            android:backgroundTint="@color/colorAccent"
             android:text="@string/main_menu_text_play" />
 
         <Button
@@ -50,7 +51,6 @@
             android:layout_height="70dp"
             android:layout_margin="10dp"
             android:layout_marginBottom="0dp"
-            android:backgroundTint="@color/colorAccent"
             android:text="@string/main_menu_text_exit" /></LinearLayout>
 
 

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -17,9 +18,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ru.gdcn.beastmaster64revelations.GameClass.Actions.BasicAttack;
 import ru.gdcn.beastmaster64revelations.GameClass.Actions.BasicHeal;
+import ru.gdcn.beastmaster64revelations.GameClass.Actions.SpecialAttack;
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.PlayerClass;
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.TestCharacters.DummyEnemy;
 import ru.gdcn.beastmaster64revelations.GameInterface.Action.Action;
@@ -135,23 +139,24 @@ public class FightActivity extends AppCompatActivity {
         Button magicButton = findViewById(R.id.activity_fight_action_magic);
         Button strongButton = findViewById(R.id.activity_fight_action_kick2);
 
+        //уже доступна
         //Она пока недоступна в игре (не придумали зачем она)
-        strongButton.setEnabled(false);
+//        strongButton.setEnabled(false);
 
         //Добавляем в отслеживание чтобы отключать их на время кулдауна
         allActionButtons.add(kickButton);
         allActionButtons.add(healButton);
         allActionButtons.add(magicButton);
-//        allActionButtons.add(strongButton);
+        allActionButtons.add(strongButton);
 
-        runEnemyAI(1500);
+        runEnemyAI(1400);
 
         //Криво-костыльно задаём на кнопки удары и кулдаун на них
         kickButton.setOnClickListener(v -> {
             //проигрываем анимацию удара
             playKickAnimationPlayer();
             //Создаём атаку
-            BasicAttack basicAttack = new BasicAttack(getString(R.string.fight_log_kick), 1.1);
+            BasicAttack basicAttack = new BasicAttack(getString(R.string.fight_log_kick), 1.2);
             //Запоминаем HP
             int hpBefore = enemy.getHP();
             //Бабах!
@@ -160,7 +165,7 @@ public class FightActivity extends AppCompatActivity {
             playerCard.updateContent();
             enemyCard.updateContent();
             //Задаём откат кнопочкам
-            actionDelay(1200);
+            actionDelay(1200 - player.getAgility()*5/2);
             //Логируем в нашу консоль чё случилось
             logFightAction(player.getName() + getString(R.string.fight_log_kicked) + enemy.getName() + "!");
             logFightAction(hpBefore - enemy.getHP() + getString(R.string.fight_log_kicks));
@@ -185,7 +190,7 @@ public class FightActivity extends AppCompatActivity {
             player.dealHeal(player.getIntellect() * 4);
             playerCard.updateContent();
             enemyCard.updateContent();
-            actionDelay(500 - player.getIntellect());
+            actionDelay(600 - player.getIntellect());
             logFightAction(player.getName() + getString(R.string.fight_log_just_healed));
 
             if (player.isDead()) {
@@ -202,7 +207,7 @@ public class FightActivity extends AppCompatActivity {
         magicButton.setOnClickListener(v -> {
             playBounceAnimation(cardHolderPlayer);
 
-            enemy.dealPhysicalDamage(player.getIntellect()*5);
+            enemy.dealPhysicalDamage(player.getIntellect()*3);
 
             playerCard.updateContent();
             enemyCard.updateContent();
@@ -213,6 +218,35 @@ public class FightActivity extends AppCompatActivity {
 
             logFightAction(player.getName() + getString(R.string.fight_log_used_magic));
 
+            if (player.isDead()) {
+                onPlayerDead();
+                return;
+            }
+            if (enemy.isDead()){
+                onEnemyDead();
+                return;
+            }
+        });
+
+        strongButton.setOnClickListener(v -> {
+            //проигрываем анимацию удара
+            playKickAnimationPlayer();
+            //Создаём атаку
+            BasicAttack basicAttack = new BasicAttack(getString(R.string.fight_log_kick), 2.4);
+            //Запоминаем HP
+            int hpBefore = enemy.getHP();
+            //Бабах!
+            basicAttack.use(player, enemy);
+            //Обновляем инфу на карточках
+            playerCard.updateContent();
+            enemyCard.updateContent();
+            //Задаём откат кнопочкам
+            actionDelay(2600 - player.getAgility()*5);
+            //Логируем в нашу консоль чё случилось
+            logFightAction(player.getName() + getString(R.string.fight_log_kicked) + enemy.getName() + "!");
+            logFightAction(hpBefore - enemy.getHP() + getString(R.string.fight_log_kicks));
+
+            //Проверяем не умер ли кто-нибудь наконец-то
             if (player.isDead()) {
                 onPlayerDead();
                 return;
@@ -255,26 +289,25 @@ public class FightActivity extends AppCompatActivity {
             public void onFinish() {
                 runOnUiThread(() -> enemyProgressBar.setScaleX(0f));
                 runOnUiThread(() -> {
+                    if (player.isDead()) {
+                        onPlayerDead();
+                        return;
+                    }
+                    if (enemy.isDead()){
+                        onEnemyDead();
+                        return;
+                    }
                     //Спрашиваем какое действие он совершит сейчас
                     Action enemyAction = enemy.makeNextFightTurn(player);
                     //Костыльно проверяем какую анимацию произвести, хил или атака
-                    if (enemyAction instanceof BasicAttack)
-                        playKickAnimationEnemy();
-                    if (enemyAction instanceof BasicHeal)
-                        playBounceAnimation(cardHolderEnemy);
-                    //логируем
-                    logFightAction(enemy.getName() + getString(R.string.fight_log_use) + enemyAction.getName() + "!!!");
-                    //запоминаем хп
-                    int hpBefore = player.getHP();
-                    //совершаем действие
-                    enemyAction.use(enemy, player);
-                    //логируем дамаг если противник юзал удар
-                    if (enemyAction instanceof BasicAttack)
-                        logFightAction(hpBefore - player.getHP() + getString(R.string.fight_log_kicks));
-                    playerCard.updateContent();
-                    enemyCard.updateContent();
+                    if (enemyAction instanceof SpecialAttack) {
+                        int actionCount = 5;
+                        runSpecialAttack(5, enemyAction);
+                    } else {
+                        enemyUseAction(enemyAction);
+                        runEnemyAI(1500);
+                    }
                 });
-                runEnemyAI(1500);
                 if (player.isDead()) {
                     onPlayerDead();
                     return;
@@ -287,6 +320,52 @@ public class FightActivity extends AppCompatActivity {
         };
         //Собсна стартуем таймер
         AItimer.start();
+    }
+
+    private void runSpecialAttack(int actionsLeft, Action action) {
+
+        if (actionsLeft == 0){
+            runOnUiThread(() -> runEnemyAI(1400));
+            return;
+        }
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (player.isDead()) {
+                    onPlayerDead();
+                    return;
+                }
+                if (enemy.isDead()){
+                    onEnemyDead();
+                    return;
+                }
+                runOnUiThread(() -> enemyUseAction(action));
+                runSpecialAttack(actionsLeft - 1, action);
+            }
+        }, 100);
+    }
+
+    private void enemyUseAction(Action enemyAction) {
+
+        if (enemyAction instanceof SpecialAttack){
+
+        } if (enemyAction instanceof BasicAttack){
+            playKickAnimationEnemy();
+        } else if (enemyAction instanceof BasicHeal)
+            playBounceAnimation(cardHolderEnemy);
+
+        //логируем
+        logFightAction(enemy.getName() + getString(R.string.fight_log_use) + enemyAction.getName() + "!!!");
+        //запоминаем хп
+        //int hpBefore = player.getHP();
+        //совершаем действие
+        enemyAction.use(enemy, player);
+        //логируем дамаг если противник юзал удар
+//        if (enemyAction instanceof BasicAttack)
+//            logFightAction(hpBefore - player.getHP() + getString(R.string.fight_log_kicks));
+        playerCard.updateContent();
+        enemyCard.updateContent();
     }
 
     private void logFightAction(String text){

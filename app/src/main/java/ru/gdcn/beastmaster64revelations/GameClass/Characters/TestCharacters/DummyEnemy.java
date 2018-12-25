@@ -5,6 +5,7 @@ import java.util.Random;
 
 import ru.gdcn.beastmaster64revelations.GameClass.Actions.BasicAttack;
 import ru.gdcn.beastmaster64revelations.GameClass.Actions.BasicHeal;
+import ru.gdcn.beastmaster64revelations.GameClass.Actions.SpecialAttack;
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.CharacterClass;
 import ru.gdcn.beastmaster64revelations.GameInterface.Action.Action;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Character;
@@ -15,6 +16,9 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
 import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;
 
 public class DummyEnemy extends CharacterClass implements Opponent {
+
+    final int specialEvery = 2 + new Random().nextInt(2);
+    int special = 0;
 
     private OpponentType type;
 
@@ -100,11 +104,17 @@ public class DummyEnemy extends CharacterClass implements Opponent {
     @Override
     public Action makeNextFightTurn(Character enemy) {
         Action action;
+        if (special == specialEvery){
+            special = 0;
+            action = new SpecialAttack("Сюрикен", 0.25);
+            return action;
+        }
         if (HP * 1.0 / maxHP < 0.15) {
             action = new BasicHeal("Пуф!", 4*enemy.getIntellect());
         } else {
             action = new BasicAttack("Бац", 1.0);
         }
+        special++;
         return action;
     }
 
