@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecordAdapter extends BaseAdapter {
-    
+
     Context ctx;
     LayoutInflater lInflater;
     List<Record> objects;
@@ -52,8 +52,6 @@ public class RecordAdapter extends BaseAdapter {
 
         Record record = getRecord(position);
 
-        // заполняем View в пункте списка данными из товаров: наименование, цена
-        // и картинка
         ((TextView) view.findViewById(R.id.recordName)).setText(record.getName());
         ((TextView) view.findViewById(R.id.recordTime)).setText(record.getTime());
         ((TextView) view.findViewById(R.id.recordTips)).setText(String.valueOf(record.getTips()));

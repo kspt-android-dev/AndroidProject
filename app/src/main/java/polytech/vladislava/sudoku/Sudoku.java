@@ -1,6 +1,8 @@
 package polytech.vladislava.sudoku;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,18 +14,24 @@ import java.util.List;
  * @author Eric Beijer
  */
 
-public class Sudoku {
+public class Sudoku implements Serializable {
     private int[][] solution;       // Generated solution.
     private int[][] game;           // Generated game with user input.
+    private boolean[][] helped;     // If cell is true, this one was a hint
+    private boolean[][] initial;    // If true, the cell was opened at begining
     private boolean[][] check;      // Holder for checking validity of game.
     private boolean help;           // Help turned on or off.
+
 
     /**
      * Constructor
      */
     public Sudoku() {
-        newGame();
         check = new boolean[9][9];
+        helped = new boolean[9][9];
+        initial = new boolean[9][9];
+        newGame();
+        helped[3][3] = false;
         help = true;
     }
 
@@ -34,6 +42,10 @@ public class Sudoku {
     public void newGame() {
         solution = generateSolution(new int[9][9], 0);
         game = generateGame(copy(solution));
+        for (int i = 0; i < 81; i++){
+            if (game[i % 9][i / 9] != 0)
+                initial[i % 9][i / 9] = true;
+        }
     }
 
     /**
@@ -45,25 +57,6 @@ public class Sudoku {
             for (int x = 0; x < 9; x++)
                 check[y][x] = game[y][x] == solution[y][x];
         }
-    }
-
-    /**
-     * Sets help turned on or off.<br />
-     * All observers will be notified, update action: help.
-     *
-     * @param help True for help on, false for help off.
-     */
-    public void setHelp(boolean help) {
-        this.help = help;
-    }
-
-    /**
-     * Returns whether help is turned on or off.
-     *
-     * @return True if help is turned on, false if help is turned off.
-     */
-    public boolean isHelp() {
-        return help;
     }
 
     /**
@@ -311,11 +304,10 @@ public class Sudoku {
         return copy;
     }
 
-    public int getSolution(int x, int y) {
-        print(game);
+    public int getSolutionForHelp(int x, int y) {
         setNumber(x, y, solution[y][x]);
+        helped[y][x] = true;
         return solution[y][x];
-
     }
 
     /*
@@ -330,5 +322,13 @@ public class Sudoku {
                 System.out.print(" " + game[y][x]);
             System.out.println();
         }
+    }
+
+    public boolean isHelped(int x, int y) {
+        return helped[y][x];
+    }
+
+    public boolean isInitial(int x, int y) {
+        return initial[y][x];
     }
 }

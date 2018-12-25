@@ -1,8 +1,11 @@
 package polytech.vladislava.sudoku;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.GridLayout;
+
+import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 
 
 public class SudokuButton extends android.support.v7.widget.AppCompatButton {
@@ -13,19 +16,19 @@ public class SudokuButton extends android.support.v7.widget.AppCompatButton {
     final int position;
 
     public SudokuButton(Context context, int position, int initValue) {
-
         super(context);
-
         this.position = position;
 
         GridLayout.LayoutParams doubleLayoutParams = new GridLayout.LayoutParams();
         doubleLayoutParams.width = 0;
-        doubleLayoutParams.height = 0;
+        if (context.getResources().getConfiguration().orientation == ORIENTATION_LANDSCAPE)
+            doubleLayoutParams.height = 0;
         doubleLayoutParams.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 5f);
         doubleLayoutParams.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 5f);
         doubleLayoutParams.setGravity(Gravity.FILL);
         setLayoutParams(doubleLayoutParams);
 
+        this.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
         setBackground(getResources().getDrawable(R.drawable.button_background, getContext().getTheme()));
         setValue(initValue);
         setOnClickListener(v -> clicked());
@@ -64,4 +67,5 @@ public class SudokuButton extends android.support.v7.widget.AppCompatButton {
     public void setContent(int actualy) {
         setValue(actualy);
     }
+
 }

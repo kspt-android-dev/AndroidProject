@@ -1,17 +1,10 @@
 package polytech.vladislava.sudoku;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -32,6 +25,7 @@ import java.util.List;
  */
 public class GameActivity extends AppCompatActivity {
 
+    boolean loaded = false;
     Chronometer chronometer;
     List<SudokuButton> gameButtons;
     Sudoku game;
@@ -50,7 +44,6 @@ public class GameActivity extends AppCompatActivity {
         chronometer.stop();
 
         LinearLayout loading = findViewById(R.id.a_game_loadingScreen);
-        loading.setAlpha(1f);
 
         check = findViewById(R.id.a_game_check);
         check.setOnClickListener(v -> checkGame());
@@ -58,7 +51,35 @@ public class GameActivity extends AppCompatActivity {
         help = findViewById(R.id.a_game_help);
         help.setOnClickListener(v -> help());
 
-        generateNewStuff();
+        if (savedInstanceState == null || !savedInstanceState.containsKey("sudokuGame")) {
+            loading.setAlpha(1f);
+            generateNewStuff();
+        } else {
+            loaded = true;
+            loading.setAlpha(0f);
+            loadSavedGame(savedInstanceState);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle saveState) {
+        super.onSaveInstanceState(saveState);
+
+        if (!loaded)
+            return;
+
+        saveState.putSerializable("sudokuGame", game);
+        saveState.putLong("chronoBase", chronometer.getBase());
+        saveState.putInt("tipsCounter", tips);
+
+    }
+
+    private void loadSavedGame(Bundle savedInstanceState) {
+        game = (Sudoku) savedInstanceState.getSerializable("sudokuGame");
+        tips = savedInstanceState.getInt("tipsCounter");
+        chronometer.setBase(savedInstanceState.getLong("chronoBase"));
+        fillGrid();
+        chronometer.start();
     }
 
     private void help() {
@@ -72,7 +93,7 @@ public class GameActivity extends AppCompatActivity {
             return;
         Collections.shuffle(notFinished);
         int helpingIndex = notFinished.get(0);
-        int solution = game.getSolution(helpingIndex % 9, helpingIndex / 9);
+        int solution = game.getSolutionForHelp(helpingIndex % 9, helpingIndex / 9);
         gameButtons.get(helpingIndex).setHepled(solution);
         tips++;
     }
@@ -108,6 +129,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void win() {
+        chronometer.stop();
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Поздравляем!");
         alertDialog.setMessage("Введите имя игрока:");
@@ -157,8 +179,13 @@ public class GameActivity extends AppCompatActivity {
             SudokuButton button = new SudokuButton(this, i, 0);
             int actualy = game.getNumber(i % 9, i / 9);
             if (actualy != 0) {
-                button.setContent(actualy);
-                button.makeStatic();
+                if (game.isHelped(i % 9, i / 9))
+                    button.setHepled(actualy);
+                else if (game.isInitial(i % 9, i / 9)) {
+                    button.setContent(actualy);
+                    button.makeStatic();
+                } else
+                    button.setContent(actualy);
             }
             gameButtons.add(button);
             gameGrid.addView(button);
@@ -169,7 +196,7 @@ public class GameActivity extends AppCompatActivity {
                     Space space = new Space(this);
                     GridLayout.LayoutParams doubleLayoutParams = new GridLayout.LayoutParams();
                     doubleLayoutParams.width = 0;
-                    doubleLayoutParams.height = 20;
+                    doubleLayoutParams.height = 8;
                     doubleLayoutParams.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
                     doubleLayoutParams.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
                     space.setLayoutParams(doubleLayoutParams);
@@ -191,13 +218,11 @@ public class GameActivity extends AppCompatActivity {
             if (counter == 9)
                 counter = 0;
         }
-
     }
 
     public void notifyGameCreated() {
-
+        loaded = true;
         fillGrid();
-
         LinearLayout loading = findViewById(R.id.a_game_loadingScreen);
         Animation fadeOut = new AlphaAnimation(1, 0);
         fadeOut.setDuration(1000);
@@ -219,9 +244,7 @@ public class GameActivity extends AppCompatActivity {
         });
         loading.setAnimation(fadeOut);
         fadeOut.start();
-
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
     }
-
 }

@@ -13,6 +13,11 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -20,7 +25,8 @@
             android:layout_margin="7dp"
             android:fontFamily="casual"
             android:text="@string/sudoku"
-            android:textSize="60sp" />
+            android:textSize="60sp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/a_menu_PLAY"
@@ -29,7 +35,8 @@
             android:layout_margin="7dp"
             android:backgroundTint="@android:color/background_light"
             android:text="@string/play"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/a_menu_RECORDS"
@@ -38,7 +45,8 @@
             android:layout_margin="7dp"
             android:backgroundTint="@android:color/background_light"
             android:text="@string/records"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/a_menu_ABOUT"
@@ -47,7 +55,8 @@
             android:layout_margin="7dp"
             android:backgroundTint="@android:color/background_light"
             android:text="@string/aboutAuthor"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/a_menu_EXIT"
@@ -56,6 +65,12 @@
             android:layout_margin="7dp"
             android:backgroundTint="@android:color/holo_red_light"
             android:text="@string/exit"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_weight="1"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
     </LinearLayout>
 </FrameLayout>
