@@ -9,12 +9,8 @@ import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 
 public class MapButton extends android.support.v7.widget.AppCompatButton {
 
-    Location location;
-
     public MapButton(Context context, Location location) {
         super(context);
-
-        this.location = location;
 
         GridLayout.LayoutParams doubleLayoutParams = new GridLayout.LayoutParams();
         doubleLayoutParams.width = 0;

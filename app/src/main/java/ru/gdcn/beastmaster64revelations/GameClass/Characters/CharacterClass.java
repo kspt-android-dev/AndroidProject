@@ -12,6 +12,7 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Items.EquipmentType;
 import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 
+@SuppressWarnings("WeakerAccess")
 public class CharacterClass implements Character, Serializable {
 
     protected Integer HP;
@@ -46,7 +47,7 @@ public class CharacterClass implements Character, Serializable {
 
     public Integer getMaxHP(){
         return maxHP;
-    };
+    }
 
     @Override
     public String getName() {

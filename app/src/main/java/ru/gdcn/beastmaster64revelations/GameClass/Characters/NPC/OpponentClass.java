@@ -20,7 +20,7 @@ public class OpponentClass extends NPCclass implements Opponent {
                          Boolean isAttackable,
                          Boolean isAgressive,
                          OpponentType type) {
-        super(name, location, strength, agility, intellect, luck, isTalkable, isAvoidable, isAttackable);
+        super(name, location, strength, agility, intellect, luck, null, isTalkable, isAvoidable, isAttackable);
         this.type = type;
         this.isAgressive = isAgressive;
     }

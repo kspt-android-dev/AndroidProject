@@ -60,8 +60,14 @@ public class MapFragment extends Fragment {
         updateMap();
     }
 
+    @SuppressWarnings("ConstantConditions")
     public void updateMap() {
+        //noinspection ConstantConditions
         World world = ((InLocationActivity)(getActivity())).getWorld();
+
+        if (world == null)
+            return;
+
         GameMap map = world.getGameMap();
 
         Log.d("MAP", "UPDATING");

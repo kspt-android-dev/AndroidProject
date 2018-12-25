@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class CharacterClassTest {
 
-    Character character = new CharacterClass("TestCharacter", null, 10, 10, 10, 10);
+    private Character character = new CharacterClass("TestCharacter", null, 10, 10, 10, 10);
 
     @Test
     public void getMaxHP() {

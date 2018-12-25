@@ -139,4 +139,8 @@
     <string name="fight_log_you_lose">You didn\'t laugh, but you lose :с</string>
     <string name="fight_log_you_win">You win!</string>
     <string name="text_slash">/</string>
+    <string name="in_location_dialog_text">Exit to the main menu?</string>
+    <string name="in_location_text_yes">Yes</string>
+    <string name="in_location_text_no">No</string>
+    <string name="in_location_fragment_dead">(мёртв)</string>
 </resources>

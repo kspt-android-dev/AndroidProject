@@ -11,6 +11,7 @@ public class BasicAttack implements Action {
 
     protected final String name;
 //    protected final Integer AP;
+    @SuppressWarnings("WeakerAccess")
     protected final Double damageModifier;
 
     public BasicAttack(String name, Double damageModifier){

@@ -139,4 +139,8 @@
     <string name="fight_log_you_lose">Ты проиграл, парень :с</string>
     <string name="fight_log_you_win">Ты победил!</string>
     <string name="text_slash">/</string>
+    <string name="in_location_dialog_text">Выйти в главное меню?</string>
+    <string name="in_location_text_yes">Да</string>
+    <string name="in_location_text_no">Нет</string>
+    <string name="in_location_fragment_dead">(мёртв)</string>
 </resources>

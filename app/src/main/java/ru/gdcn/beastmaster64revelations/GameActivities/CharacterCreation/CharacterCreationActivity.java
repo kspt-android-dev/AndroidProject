@@ -12,42 +12,50 @@ import android.widget.TextView;
 import ru.gdcn.beastmaster64revelations.GameActivities.InLocation.InLocationActivity;
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.PlayerClass;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
+import ru.gdcn.beastmaster64revelations.GameLogger;
 import ru.gdcn.beastmaster64revelations.R;
 
 public class CharacterCreationActivity extends AppCompatActivity {
 
     //Игрок и его пол
-    Player player;
-    Gender gender;
+    private Player player;
+    private Gender gender;
 
     //Аватарки персонажей
-    ImageView manFace;
-    ImageView womanFace;
+    private ImageView manFace;
+    private ImageView womanFace;
 
     //Переменные для отслеживания очков
-    Integer points = 15;
-    Integer stren = 5;
-    Integer agili = 5;
-    Integer intel = 5;
+    private Integer points = 15;
+    private Integer stren = 5;
+    private Integer agili = 5;
+    private Integer intel = 5;
 
     //Кнопочки для распределения очков
-    Button strMin;
-    Button agiMin;
-    Button intMin;
-    Button strPlus;
-    Button agiPlus;
-    Button intPlus;
+    private Button strMin;
+    private Button agiMin;
+    private Button intMin;
+    private Button strPlus;
+    private Button agiPlus;
+    private Button intPlus;
 
     //Кнопка "продолжить"
-    Button readyButton;
+    private Button readyButton;
 
     //Тексты которые нужно обновлять в соответствии кол-ву очков
-    TextView strText;
-    TextView agiText;
-    TextView intText;
-    TextView pointsText;
-    TextView inputName;
-    TextView textName;
+    private TextView strText;
+    private TextView agiText;
+    private TextView intText;
+    private TextView pointsText;
+    private TextView inputName;
+    private TextView textName;
+
+    //Ключи для сохранения в Bundle
+    static final String CREATION_STR_ID = "strength";
+    static final String CREATION_AGI_ID = "agility";
+    static final String CREATION_INTELLECT_ID = "intellect";
+    static final String CREATION_PTS_ID = "points";
+    static final String CREATION_GENDER_ID = "gender";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +124,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
             updateContent();
         });
 
+
         inputName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -149,6 +158,28 @@ public class CharacterCreationActivity extends AppCompatActivity {
         //Обновляем контент активити в соответствии с внутренней логикой
         updateContent();
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt(CREATION_PTS_ID, points);
+        savedInstanceState.putSerializable(CREATION_GENDER_ID, gender);
+        savedInstanceState.putInt(CREATION_STR_ID, stren);
+        savedInstanceState.putInt(CREATION_AGI_ID, agili);
+        savedInstanceState.putInt(CREATION_INTELLECT_ID, intel);
+        GameLogger.log("GDCN", "Character creation instance Saved");
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        points = savedInstanceState.getInt(CREATION_PTS_ID);
+        stren = savedInstanceState.getInt(CREATION_STR_ID);
+        agili = savedInstanceState.getInt(CREATION_AGI_ID);
+        intel = savedInstanceState.getInt(CREATION_INTELLECT_ID);
+        gender = (Gender) savedInstanceState.getSerializable(CREATION_GENDER_ID);
+        GameLogger.log("GDCN", "Character creation instance Restored");
     }
 
     private void updateContent() {
@@ -207,6 +238,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
     private void disableButton(Button button) {
         button.setEnabled(false);
     }
+
     //это тоже
     private void enableButton(Button button) {
         button.setEnabled(true);

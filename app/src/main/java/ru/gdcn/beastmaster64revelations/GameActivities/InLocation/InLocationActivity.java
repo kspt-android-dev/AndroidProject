@@ -1,5 +1,6 @@
 package ru.gdcn.beastmaster64revelations.GameActivities.InLocation;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -8,48 +9,63 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
 import ru.gdcn.beastmaster64revelations.GameActivities.FightActivity;
+import ru.gdcn.beastmaster64revelations.GameActivities.MainMenu.MainMenuActivity;
 import ru.gdcn.beastmaster64revelations.GameClass.Characters.PlayerClass;
 import ru.gdcn.beastmaster64revelations.GameClass.WorldElemets.SimpleLocationClass;
 import ru.gdcn.beastmaster64revelations.GameClass.WorldElemets.SimpleWorldClass;
 import ru.gdcn.beastmaster64revelations.GameFragments.InLocationFragment;
+import ru.gdcn.beastmaster64revelations.GameFragments.MapFragment.MapFragment;
+import ru.gdcn.beastmaster64revelations.GameFragments.StatsFragment;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.Interactions.Fight.FightResult;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Player;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.LocationType;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.MapDirection;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.World;
-import ru.gdcn.beastmaster64revelations.GameActivities.MainMenu.MainMenuActivity;
-import ru.gdcn.beastmaster64revelations.GameFragments.MapFragment.MapFragment;
+import ru.gdcn.beastmaster64revelations.GameLogger;
 import ru.gdcn.beastmaster64revelations.R;
-import ru.gdcn.beastmaster64revelations.GameFragments.StatsFragment;
 import ru.gdcn.beastmaster64revelations.UIElements.ProportionalImageView;
 
 public class InLocationActivity extends AppCompatActivity {
 
+    boolean loaded = false;
+
     //Фрагменты, между которыми можно переключаться
-    InLocationFragment locationFragment;
-    MapFragment mapFragment;
-    StatsFragment statsFragment;
+    private InLocationFragment locationFragment;
+    private MapFragment mapFragment;
+    private StatsFragment statsFragment;
+
+    private Fragment currentFragment;
 
     //Текущая локация, игрок, очки прокачки доступные игроку
-    Location location;
-    Player player;
-    Integer upgradePoints = 30;
+    private Location location;
+    private Player player;
+    private Integer upgradePoints;
 
     //фончик
-    ProportionalImageView imageView;
+    private ProportionalImageView imageView;
 
     //Мир (внутренняя логика)
-    private World gameWorld = SimpleWorldClass.generateWorld();
+    private World gameWorld;
+
+    //Ключи для сохранения в Bundle
+    private static final String IN_LOC_FRAGTYPE_ID = "fragtype";
+    private static final String IN_LOC_WORLD_ID = "world";
+    private static final String IN_LOC_PLAYER_ID = "player";
+    private static final String IN_LOC_LOCATION_ID = "location";
+    private static final String IN_LOC_UPG_ID = "upgrade points";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_location);
+
+        Log.d("GDCN", "onCreate!");
 
         //Пихаем фончик за весь наш интерфейс, задаём ему немного прозрачности
         imageView = new ProportionalImageView(this);
@@ -57,26 +73,16 @@ public class InLocationActivity extends AppCompatActivity {
         FrameLayout mainFrame = findViewById(R.id.activity_in_location_backgroundFrame);
         mainFrame.addView(imageView, 0);
 
-        //Достаём игрока которого создали в прошлом активити из интента
-        player = (PlayerClass) getIntent().getSerializableExtra("player");
-
         //Создаём наши фрагменты, изначально суём на экран фрагмент локации
         locationFragment = InLocationFragment.newInstance();
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction()
-                .add(R.id.activity_in_location_fragHolder, locationFragment)
-                .commit();
-
         mapFragment = MapFragment.newInstance();
         statsFragment = StatsFragment.newInstance();
 
-        //Берём случайную локацию из мира и пихаем туда игрока
-        location = gameWorld.getRandomLocation();
-        transitionToNewLocation(location);
+
 
         //Достаём кнопочки и вешаем события
         Button toMenu = findViewById(R.id.activity_in_location_menu_toMenu);
-        toMenu.setOnClickListener(v -> goToMenu());
+        toMenu.setOnClickListener(v -> showDialogWindow());
         Button toLoc = findViewById(R.id.activity_in_location_menu_loc);
         toLoc.setOnClickListener(v -> changeFragment(locationFragment));
         Button toMap = findViewById(R.id.activity_in_location_menu_map);
@@ -84,7 +90,73 @@ public class InLocationActivity extends AppCompatActivity {
         Button toStats = findViewById(R.id.activity_in_location_menu_statistics);
         toStats.setOnClickListener(v -> changeFragment(statsFragment));
 
+        if (savedInstanceState == null){
+            //Создаем мир
+            gameWorld = SimpleWorldClass.generateWorld();
+            //Берём случайную локацию из мира
+            location = gameWorld.getRandomLocation();
+            //Достаём игрока которого создали в прошлом активити из интента
+            player = (PlayerClass) getIntent().getSerializableExtra("player");
+            //Очки чкички
+            upgradePoints  = 30;
+
+            addFragment(locationFragment);
+
+            loaded = true;
+
+        } else {
+            gameWorld = (SimpleWorldClass) savedInstanceState.getSerializable(IN_LOC_WORLD_ID);
+            location = (SimpleLocationClass) savedInstanceState.getSerializable(IN_LOC_LOCATION_ID);
+            player = (PlayerClass)savedInstanceState.getSerializable(IN_LOC_PLAYER_ID);
+            upgradePoints = savedInstanceState.getInt(IN_LOC_UPG_ID);
+            FragmentType fragmentType = (FragmentType) savedInstanceState.getSerializable(IN_LOC_FRAGTYPE_ID);
+            GameLogger.log("GDCN", "InLocation instance Restored");
+
+            switch (fragmentType != null ? fragmentType : FragmentType.INLOC) {
+                case MAP:
+                    addFragment(mapFragment);
+                    mapFragment.updateMap();
+                    break;
+                case INLOC:
+                    addFragment(locationFragment);
+                    locationFragment.setContent(location);
+                    break;
+                case STATS:
+                    addFragment(statsFragment);
+                    break;
+            }
+            loaded = true;
+        }
+
+        //Пихаем туда игрока
+        transitionToNewLocation(location);
+
     }
+
+
+    @Override
+    public void onBackPressed(){
+        showDialogWindow();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        FragmentType type = FragmentType.INLOC;
+        if (currentFragment instanceof MapFragment)
+            type = FragmentType.MAP;
+        if (currentFragment instanceof StatsFragment)
+            type = FragmentType.STATS;
+
+        savedInstanceState.putSerializable(IN_LOC_FRAGTYPE_ID, type);
+        savedInstanceState.putSerializable(IN_LOC_WORLD_ID, gameWorld);
+        savedInstanceState.putSerializable(IN_LOC_LOCATION_ID, location);
+        savedInstanceState.putSerializable(IN_LOC_PLAYER_ID, player);
+        savedInstanceState.putInt(IN_LOC_UPG_ID, upgradePoints);
+        GameLogger.log("GDCN", "InLocation instance Saved");
+    }
+
 
     @Override
     protected void onPostResume() {
@@ -93,7 +165,31 @@ public class InLocationActivity extends AppCompatActivity {
         locationFragment.updateContent();
     }
 
+    //Диалоговое окно для предотвращения случайного выхода в главное меню
+    private void showDialogWindow(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.in_location_dialog_text))
+                .setPositiveButton(getString(R.string.in_location_text_yes), (dialog, which) -> goToMenu())
+                .setNegativeButton(getString(R.string.in_location_text_no), (dialog, which) -> {
+
+                });
+        builder.show();
+    }
+
+    private void addFragment(Fragment fragment){
+
+        currentFragment = fragment;
+
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction()
+                .add(R.id.activity_in_location_fragHolder, fragment)
+                .commit();
+    }
+
     private void changeFragment(Fragment fragment) {
+
+        currentFragment = fragment;
+
         //Заменяем фрагмент в нашем холдере на тот который нужно
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.activity_in_location_fragHolder, fragment);
@@ -135,7 +231,9 @@ public class InLocationActivity extends AppCompatActivity {
         transitionToNewLocation(location.getNeightbour(direction));
     }
 
+    @SuppressWarnings("unused")
     private SimpleLocationClass generateLocation() {
+        //TODO!
         //Ровно то что написано в названии метода, использовался до создания нормального World
         return new SimpleLocationClass();
     }

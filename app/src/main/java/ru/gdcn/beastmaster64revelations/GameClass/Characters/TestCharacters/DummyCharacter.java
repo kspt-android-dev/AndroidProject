@@ -14,6 +14,7 @@ import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemContainer;
 import ru.gdcn.beastmaster64revelations.GameInterface.Items.ItemRarity;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 
+@SuppressWarnings("WeakerAccess")
 public class DummyCharacter implements Character, Serializable {
 
     protected Integer HP = 100;

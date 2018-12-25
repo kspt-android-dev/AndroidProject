@@ -1,6 +1,5 @@
 package ru.gdcn.beastmaster64revelations.GameClass.Characters.NPC;
 
-import ru.gdcn.beastmaster64revelations.GameClass.Characters.CharacterClass;
 import ru.gdcn.beastmaster64revelations.GameInterface.Character.NPC.Stranger;
 import ru.gdcn.beastmaster64revelations.GameInterface.World.Location.Location;
 
@@ -25,7 +24,7 @@ public class StrangerClass extends NPCclass implements Stranger {
                          Boolean isTalkable,
                          Boolean isAvoidable,
                          Boolean isAttackable) {
-        super(name, location, strength, agility, intellect, luck, isTalkable, isAvoidable, isAttackable);
+        super(name, location, strength, agility, intellect, luck, null, isTalkable, isAvoidable, isAttackable);
     }
 
 

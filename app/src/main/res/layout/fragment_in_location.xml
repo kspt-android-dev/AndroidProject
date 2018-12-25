@@ -88,7 +88,9 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/fragment_in_location_content_difficultyTitle"
                     style="@style/BMRTextTitle"

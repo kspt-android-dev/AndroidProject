@@ -17,15 +17,17 @@ import ru.gdcn.beastmaster64revelations.R;
 
 public class InLocationFragment extends Fragment {
 
-    Button goUpButton;
-    Button goDownButton;
-    Button goLeftButton;
-    Button goRightButton;
+    private Button goUpButton;
+    private Button goDownButton;
+    private Button goLeftButton;
+    private Button goRightButton;
 
-    Button fightNPC;
-    Button talkNPC;
+    private Button fightNPC;
+    private Button talkNPC;
 
-    Location currentLocation;
+    private Location currentLocation;
+
+    final static String IN_LOC_FRAG_LOCATION_ID = "location in frag";
 
     public InLocationFragment() {
         // Required empty public constructor
@@ -42,31 +44,20 @@ public class InLocationFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-
         return inflater.inflate(R.layout.fragment_in_location, container, false);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         fightNPC = getActivity().findViewById(R.id.fragment_in_location_content_NPCattack);
-        fightNPC.setOnClickListener(v -> {
-            attackNPC();
-        });
+        fightNPC.setOnClickListener(v -> attackNPC());
         talkNPC = getActivity().findViewById(R.id.fragment_in_location_content_NPCtalk);
-        talkNPC.setOnClickListener(v -> {
-            talkNPC();
-        });
+        talkNPC.setOnClickListener(v -> talkNPC());
 
         goUpButton = getActivity().findViewById(R.id.fragment_in_location_content_GoUp);
         goDownButton = getActivity().findViewById(R.id.fragment_in_location_content_GoDown);
@@ -83,6 +74,7 @@ public class InLocationFragment extends Fragment {
         //this.setContent(new SimpleLocationClass(new MapPoint(0,0)));
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void goAway(MapDirection direction) {
         InLocationActivity activity = (InLocationActivity) getActivity();
         activity.goFurther(direction);
@@ -92,6 +84,7 @@ public class InLocationFragment extends Fragment {
         //TODO
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void attackNPC() {
         InLocationActivity activity = (InLocationActivity) getActivity();
         activity.goToFight();
@@ -108,15 +101,21 @@ public class InLocationFragment extends Fragment {
 
     }
 
-    public void setContent(Location location){
+    @SuppressWarnings("ConstantConditions")
+    public void setContent(Location location) {
         this.currentLocation = location;
         updateButtons();
 
-        if (location.hasNPC()){
+        if (location == null)
+            return;
+
+        if (location.hasNPC()) {
             TextView npcName = getActivity().findViewById(R.id.fragment_in_location_content_NPCTitle);
-            if (location.getNPC().isDead())
-                npcName.setText(location.getNPC().getName() + " (мёртв)");
-            else
+            String text;
+            if (location.getNPC().isDead()) {
+                text = location.getNPC().getName() + getString(R.string.in_location_fragment_dead);
+                npcName.setText(text);
+            } else
                 npcName.setText(location.getNPC().getName());
             TextView npcDesc = getActivity().findViewById(R.id.fragment_in_location_content_NPCDescription);
             npcDesc.setText(location.getNPC().getDescription());
@@ -125,7 +124,7 @@ public class InLocationFragment extends Fragment {
         }
 
         TextView diffText = getActivity().findViewById(R.id.fragment_in_location_content_difficulty);
-        diffText.setText(String.valueOf( ((int) (location.getDifficulty() * 10))/10.0 ));
+        diffText.setText(String.valueOf(((int) (location.getDifficulty() * 10)) / 10.0));
         TextView nameView = getActivity().findViewById(R.id.fragment_in_location_content_LocationName);
         nameView.setText(location.getName());
         TextView descView = getActivity().findViewById(R.id.fragment_in_location_content_LocationDescriptionContent);

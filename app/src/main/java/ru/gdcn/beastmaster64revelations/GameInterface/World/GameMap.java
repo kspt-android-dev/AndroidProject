@@ -17,7 +17,7 @@ public interface GameMap extends Serializable {
     /**
      * Возвращает соседей клетки с заданными координатами
      **/
-    public List<Location> getNeighbours(MapPoint coordinates);
+//    public List<Location> getNeighbours(MapPoint coordinates);
 
     public Location getNeightbour(MapPoint coordinates, MapDirection direction);
 
