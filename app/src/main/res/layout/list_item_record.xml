@@ -7,7 +7,8 @@
     android:padding="10dp"
     android:orientation="vertical"
     android:scaleX="0.9"
-    android:scaleY="0.9">
+    android:scaleY="0.9"
+    android:id="@+id/list_item_record">
     <TextView
         android:id="@+id/recordName"
         android:layout_width="wrap_content"

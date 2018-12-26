@@ -23,28 +23,28 @@ public class RecordAdapter extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    // кол-во элементов
+
     @Override
     public int getCount() {
         return objects.size();
     }
 
-    // элемент по позиции
+
     @Override
     public Object getItem(int position) {
         return objects.get(position);
     }
 
-    // id по позиции
+
     @Override
     public long getItemId(int position) {
         return position;
     }
 
-    // пункт списка
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // используем созданные, но не используемые view
+
         View view = convertView;
         if (view == null) {
             view = lInflater.inflate(R.layout.list_item_record, parent, false);
@@ -59,7 +59,7 @@ public class RecordAdapter extends BaseAdapter {
         return view;
     }
 
-    // товар по позиции
+
     Record getRecord(int position) {
         return ((Record) getItem(position));
     }

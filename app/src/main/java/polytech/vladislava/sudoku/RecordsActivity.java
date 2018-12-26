@@ -17,7 +17,6 @@ public class RecordsActivity extends AppCompatActivity {
         if (records != null){
             RecordAdapter adapter = new RecordAdapter(this, records);
 
-            // настраиваем список
             ListView lvMain = findViewById(R.id.a_recs_listView);
             lvMain.setAdapter(adapter);
         }
