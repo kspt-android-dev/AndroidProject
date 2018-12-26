@@ -27,7 +27,7 @@ public class LogicCellTest {
 
     @Test
     public void checkBot() throws Exception {
-        logic.getLogicCells()[0].check();
+        logic.getLogicCells()[0].checkCell();
         assertTrue(logic.getLogicCells()[0].isChecked());
     }
 

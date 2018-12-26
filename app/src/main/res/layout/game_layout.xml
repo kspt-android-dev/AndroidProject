@@ -61,12 +61,12 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/settings_button"
+            android:id="@+id/menu_button"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="SETTINGS" />
+            android:text="@string/menu" />
 
         <Button
             android:id="@+id/reload_button"
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="RELOAD" />
+            android:text="@string/reload" />
 
         <Button
             android:id="@+id/reloadlast_button"
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="RELOAD LAST" />
+            android:text="@string/reload_last" />
     </LinearLayout>
 
 </LinearLayout>

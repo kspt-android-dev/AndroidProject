@@ -17,8 +17,6 @@
             android:layout_marginTop="100dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:layout_weight="0"
-            android:gravity="center"
             android:orientation="vertical">
 
             <Button
@@ -27,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="PLAY" />
+                android:text="@string/play" />
 
             <Button
                 android:id="@+id/records_button"
@@ -35,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="RECORDS" />
+                android:text="@string/records" />
 
             <Button
                 android:id="@+id/exit_button"
@@ -43,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="EXIT" />
+                android:text="@string/exit" />
         </LinearLayout>
     </LinearLayout>
 

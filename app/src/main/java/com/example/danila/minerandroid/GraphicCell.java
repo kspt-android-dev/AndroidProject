@@ -5,9 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.GridLayout;
-import android.widget.TextView;
 
 
 @SuppressLint("ViewConstructor")
@@ -20,7 +18,7 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
 
 
     @SuppressLint("SetTextI18n")
-    GraphicCell(Activity gameActivity, TextView minesNumberView, Logic logic, Graphic graphic, LogicCell logicCell) {
+    GraphicCell(Activity gameActivity, LogicCell logicCell) {
         super(gameActivity, null, R.style.grid_button);
 
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
@@ -35,47 +33,6 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
         this.logicCell = logicCell;
 
         setBackgroundColor(CLOSED_COLOR);
-        //setBackground(getResources().getDrawable(R.drawable.rectangle_border));
-
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                switch (logic.checkGameCondition()) {
-                    case 0:
-                        logic.checkCell(logicCell.getNumberInArray());
-                        graphic.update();
-                        minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
-                        break;
-                    case -1:
-                        logic.checkAll();
-                        graphic.checkAll();
-                        break;
-                    case 1:
-                        logic.checkAll();
-                        graphic.checkAll();
-                        break;
-
-                }
-
-            }
-
-
-        });
-
-        setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (logic.checkGameCondition() == 0) {
-                    logic.changeFlag(logicCell.getNumberInArray());
-                    changeFlag();
-                    minesNumberView.setText("" + (logic.getMinesDigit() - logic.getFindedMinesDigit()));
-                } else {
-                }//TODO
-
-                return true;
-            }
-        });
 
 
     }
@@ -91,27 +48,17 @@ class GraphicCell extends android.support.v7.widget.AppCompatButton {
                 setBackgroundColor(EMPTY_COLOR);
                 setText("" + logicCell.getConditon());
             }
-        } else if (logicCell.isFlag())
+        } else if (logicCell.isFlag()) {
             setBackgroundColor(FLAG_COLOR);
-        else if (!logicCell.isChecked())
+            setText("");
+        } else if (!logicCell.isChecked()) {
             setBackgroundColor(CLOSED_COLOR);
+            setText("");
+        }
     }
 
 
-    //Установка/снятие флага(для игрока)
-    private void changeFlag() {
-        if (!logicCell.isChecked())
-            if (logicCell.isFlag())
-                setBackgroundColor(FLAG_COLOR);
-            else
-                setBackgroundColor(CLOSED_COLOR);
-        //setBackground(getResources().getDrawable(R.drawable.rectangle_border));
-
-
-    }
-
-
-    //Сеттеры, геттеры
+    /*getters*/
 
     LogicCell getLogicCell() {
         return logicCell;

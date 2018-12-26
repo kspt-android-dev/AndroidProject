@@ -1,6 +1,8 @@
 package com.example.danila.minerandroid;
 
-class LogicCell {
+import java.io.Serializable;
+
+class LogicCell implements Serializable {
 
     private int conditon;//Колличество мин вокруг клетки, 9 обозначается мина
     private boolean isChecked = false;//Проверена ли клетка
@@ -55,12 +57,10 @@ class LogicCell {
 
     }
 
-    //Проверка клетки для бота, сделать для логической клетки
-    void check() {
+    void checkCell() {
         isChecked = true;
     }
 
-    //Установка флага(для бота)
     void changeFlag() {
 
         if (!isChecked)
@@ -69,12 +69,12 @@ class LogicCell {
 
     }
 
+
+    //setters
     void setFlag(boolean flag) {
         this.flag = flag;
     }
 
-
-    //setters
     void setConditon(int conditon) {
         this.conditon = conditon;
     }
@@ -105,7 +105,6 @@ class LogicCell {
         return flag;
     }
 
-    //Открыли ли клетку(для автоматического открывания клеток вокруг нуля, боту не понадобится)
     boolean isChecked() {
         return isChecked;
     }

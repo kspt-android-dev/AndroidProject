@@ -1,10 +1,10 @@
 package com.example.danila.minerandroid;
 
+import java.io.Serializable;
 import java.util.Random;
-//Периодически выставляется меньше мин чем надо
 
 
-class Logic {
+class Logic implements Serializable {
 
     private LogicCell[] logicCells;
     private LogicCell[] bombs;
@@ -12,6 +12,12 @@ class Logic {
     private int levelWidth;
     private int levelHight;
     private int findedBombs = 0;
+    private int gameCondition;
+
+
+    final static int GAME_WIN = 1;
+    final static int GAME_CONTINUES = 0;
+    final static int GAME_LOSSED = -1;
 
 
     Logic(int width, int hight, int[] numbersOfMines) {
@@ -67,17 +73,13 @@ class Logic {
                 if (number != -10)
                     logicCells[number].addCondition();
 
-
     }
 
 
-    //Метод для обеспечения отсутсвия повторов номеров мин
-    //Необходимо избавиться/переделать
     private static boolean contains(int dig, int[] mass) {
         for (int number : mass)
             if (dig == number)
                 return true;
-
         return false;
 
     }
@@ -157,7 +159,7 @@ class Logic {
     void checkCell(int numberOfCell) {
         if (!logicCells[numberOfCell].isFlag() && !logicCells[numberOfCell].isChecked()) {
 
-            logicCells[numberOfCell].check();
+            logicCells[numberOfCell].checkCell();
 
             if (logicCells[numberOfCell].getConditon() == 0)
                 for (int index : logicCells[numberOfCell].getNearlyCells())
@@ -183,9 +185,39 @@ class Logic {
             logicCell.setChecked(true);
     }
 
+    int checkGameCondition() {
 
-    //Getters-----------------------------
+        for (LogicCell bomb : bombs)
+            if (bomb.isChecked()) {
+                gameCondition = GAME_LOSSED;
+                return gameCondition;
+            }
 
+
+        int checkedCell = 0;
+        findedBombs = 0;
+
+        for (LogicCell cell : logicCells) {
+            if (cell.isFlag())
+                findedBombs++;
+            if (cell.isChecked())
+                checkedCell++;
+        }
+
+        gameCondition = findedBombs + checkedCell == logicCells.length ? GAME_WIN : GAME_CONTINUES;
+
+        return gameCondition;
+
+
+    }
+
+    //setter
+
+    void setLogicCells(LogicCell[] logicCells) {
+        this.logicCells = logicCells;
+    }
+
+    //getters-----------------------------
     int getMinesDigit() {
         return minesDigit;
     }
@@ -204,30 +236,6 @@ class Logic {
 
     LogicCell[] getBombs() {
         return bombs;
-    }
-
-    int checkGameCondition() {
-
-        for (LogicCell bomb : bombs)
-            if (bomb.isChecked())
-                return -1;
-
-
-        int checkedCell = 0;
-        findedBombs = 0;
-
-        for (LogicCell cell : logicCells) {
-            if (cell.isFlag())
-                findedBombs++;
-            if (cell.isChecked())
-                checkedCell++;
-        }
-
-
-        return findedBombs + checkedCell == logicCells.length ? 1 : 0;
-
-
-
     }
 
     boolean isWin() {
@@ -251,7 +259,6 @@ class Logic {
     int getFindedMinesDigit() {
         return findedBombs;
     }
-
 
 }
 

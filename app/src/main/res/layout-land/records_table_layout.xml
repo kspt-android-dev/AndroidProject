@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="SETTINGS" />
+            android:text="EASY" />
 
         <Button
             android:id="@+id/middle_table_button"
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="RELOAD" />
+            android:text="MEDIUM" />
 
         <Button
             android:id="@+id/easy_table_button"
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="RELOAD LAST" />
+            android:text="HARD" />
     </LinearLayout>
 
 

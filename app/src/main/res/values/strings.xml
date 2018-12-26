@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MinerAndroid</string>
+    <string name="easy">EASY</string>
+    <string name="medium">MEDIUM</string>
+    <string name="hard">HARD</string>
+    <string name="menu">MENU</string>
+    <string name="reload">RELOAD</string>
+    <string name="reload_last">RELOAD LAST</string>
+    <string name="play">PLAY</string>
+    <string name="records">RECORDS</string>
+    <string name="exit">EXIT</string>
 </resources>
