@@ -1,6 +1,6 @@
 package polytech.vladislava.sudoku;
 
-class Record {
+class Record implements Comparable<Record>{
 
     private final String name;
     private final String time;
@@ -22,5 +22,16 @@ class Record {
 
     public int getTips() {
         return tips;
+    }
+
+    public int getTimeValue(){
+        String[] times = time.trim().split(":");
+        return Integer.valueOf(times[0]) * 60 + Integer.valueOf(times[1]);
+    }
+
+
+    @Override
+    public int compareTo(Record o) {
+        return Integer.compare(getTimeValue(), o.getTimeValue());
     }
 }
