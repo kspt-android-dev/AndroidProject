@@ -7,14 +7,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class RecordAdapter extends BaseAdapter {
+class RecordAdapter extends BaseAdapter {
 
-    Context ctx;
-    LayoutInflater lInflater;
-    List<Record> objects;
+    private final Context ctx;
+    private final LayoutInflater lInflater;
+    private final List<Record> objects;
 
     RecordAdapter(Context context, List<Record> Records) {
         ctx = context;
@@ -60,7 +59,7 @@ public class RecordAdapter extends BaseAdapter {
     }
 
 
-    Record getRecord(int position) {
+    private Record getRecord(int position) {
         return ((Record) getItem(position));
     }
 

@@ -48,10 +48,7 @@ public class AppTest {
         try {
             onView(withId(R.id.a_game_sudokuGrid))
                     .perform(click());
-        } catch (Exception e) {
-
-        };
-
+        } catch (Exception e) {}
 
         onView(withId(R.id.a_game_check))
                 .check(matches(isDisplayed()))

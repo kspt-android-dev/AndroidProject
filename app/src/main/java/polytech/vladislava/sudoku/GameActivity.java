@@ -25,14 +25,14 @@ import java.util.List;
  */
 public class GameActivity extends AppCompatActivity {
 
-    boolean loaded = false;
-    Chronometer chronometer;
-    List<SudokuButton> gameButtons;
-    Sudoku game;
-    Button check;
-    Button help;
-    int tips = 0;
-    GridLayout gameGrid;
+    private boolean loaded = false;
+    private Chronometer chronometer;
+    private List<SudokuButton> gameButtons;
+    private Sudoku game;
+    private Button check;
+    private Button help;
+    private int tips = 0;
+    private GridLayout gameGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,7 +220,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    public void notifyGameCreated() {
+    private void notifyGameCreated() {
         loaded = true;
         fillGrid();
         LinearLayout loading = findViewById(R.id.a_game_loadingScreen);

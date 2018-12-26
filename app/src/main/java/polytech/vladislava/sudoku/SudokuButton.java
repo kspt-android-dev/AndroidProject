@@ -11,9 +11,9 @@ import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 public class SudokuButton extends android.support.v7.widget.AppCompatButton {
 
     public static Sudoku game;
-    boolean isConstant = false;
-    int value;
-    final int position;
+    private boolean isConstant = false;
+    private int value;
+    private final int position;
 
     public SudokuButton(Context context, int position, int initValue) {
         super(context);

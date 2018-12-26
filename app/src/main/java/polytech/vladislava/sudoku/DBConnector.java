@@ -10,7 +10,7 @@ import java.util.List;
 
 import static polytech.vladislava.sudoku.DBHelper.*;
 
-public class DBConnector {
+class DBConnector {
 
     public static void addRecord(Context context, Record record) {
         DBHelper helper = new DBHelper(context);
@@ -48,6 +48,7 @@ public class DBConnector {
         }
         database.close();
         helper.close();
+        cursor.close();
         return null;
     }
 

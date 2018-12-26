@@ -2,17 +2,16 @@ package polytech.vladislava.sudoku;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Sudoku implements Serializable {
     private int[][] solution;       // Generated solution.
     private int[][] game;           // Generated game with user input.
-    private boolean[][] helped;     // If cell is true, this one was a hint
-    private boolean[][] initial;    // If true, the cell was opened at begining
+    private final boolean[][] helped;     // If cell is true, this one was a hint
+    private final boolean[][] initial;    // If true, the cell was opened at begining
     private boolean[][] check;      // Holder for checking validity of game.
-    private boolean help;           // Help turned on or off.
+    private final boolean help;           // Help turned on or off.
 
 
     public Sudoku() {
@@ -33,7 +32,7 @@ public class Sudoku implements Serializable {
         help = true;
     }
 
-    public void newGame() {
+    private void newGame() {
         solution = generateSolution(new int[9][9], 0);
         game = generateGame(copy(solution));
         for (int i = 0; i < 81; i++){
@@ -43,7 +42,7 @@ public class Sudoku implements Serializable {
     }
 
 
-    public void checkGame() {
+    private void checkGame() {
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++)
                 check[y][x] = game[y][x] == solution[y][x];
@@ -122,7 +121,7 @@ public class Sudoku implements Serializable {
         int x = index % 9;
         int y = index / 9;
 
-        List<Integer> numbers = new ArrayList<Integer>();
+        List<Integer> numbers = new ArrayList<>();
         for (int i = 1; i <= 9; i++) numbers.add(i);
         Collections.shuffle(numbers);
 
@@ -143,7 +142,7 @@ public class Sudoku implements Serializable {
 
 
     private int[][] generateGame(int[][] game) {
-        List<Integer> positions = new ArrayList<Integer>();
+        List<Integer> positions = new ArrayList<>();
         for (int i = 0; i < 81; i++)
             positions.add(i);
         Collections.shuffle(positions);
@@ -180,7 +179,7 @@ public class Sudoku implements Serializable {
         int y = index / 9;
 
         if (game[y][x] == 0) {
-            List<Integer> numbers = new ArrayList<Integer>();
+            List<Integer> numbers = new ArrayList<>();
             for (int i = 1; i <= 9; i++)
                 numbers.add(i);
 
@@ -196,8 +195,7 @@ public class Sudoku implements Serializable {
                 }
                 game[y][x] = 0;
             }
-        } else if (!isValid(game, index + 1, numberOfSolutions))
-            return false;
+        } else return isValid(game, index + 1, numberOfSolutions);
 
         return true;
     }
@@ -206,8 +204,7 @@ public class Sudoku implements Serializable {
     private int[][] copy(int[][] game) {
         int[][] copy = new int[9][9];
         for (int y = 0; y < 9; y++) {
-            for (int x = 0; x < 9; x++)
-                copy[y][x] = game[y][x];
+            System.arraycopy(game[y], 0, copy[y], 0, 9);
         }
         return copy;
     }

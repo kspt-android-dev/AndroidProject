@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 <item android:state_enabled="false">
-    <color android:color="@color/button_helped"></color>
+    <color android:color="@color/button_helped" />
 </item>
 </selector>
