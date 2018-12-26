@@ -43,7 +43,7 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
     private fun changeImagePlace(player: Player) {
         val currentPlayerID = player.id
         val constraintSet = ConstraintSet()
-        val constraintLayout: ConstraintLayout = activity.findViewById(R.id.ConstraintLayout)
+        val constraintLayout: ConstraintLayout = activity.findViewById(R.id.ConstraintLayoutScroll)
         constraintSet.clone(constraintLayout)
 
         val myPlayer = activity.resources.getIdentifier(activity.getString(R.string.Player) +

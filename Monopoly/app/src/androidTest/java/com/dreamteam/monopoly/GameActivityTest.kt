@@ -21,6 +21,7 @@ import org.hamcrest.Matchers.not
 import android.widget.TextView
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAssertion
 import org.hamcrest.Matcher
 import java.lang.IllegalStateException
 
@@ -81,10 +82,14 @@ class GameActivityTest {
             onView(withId(R.id.DialogView)).check(ViewAssertions.matches(not(isDisplayed())))
         }
         Thread.sleep(shortDelay)
+        onView(withId(R.id.scrollview2)).perform(swipeUp())
+        onView(withId(R.id.scrollview1)).perform(swipeLeft())
         onView(withId(R.id.cell25)).perform(click())
         Thread.sleep(shortDelay)
-        if (getText(withId(R.id.cellName)) != ("Name: " + ga.getGameManager().mainBoard.gameWay[testsellnumber - 1].info.name))
-            throw IllegalStateException()  // -1 because array size start from
+
+        onView(withId(R.id.cellName)).check(ViewAssertions.matches(withText("Name: " + ga.getGameManager().mainBoard.gameWay[testsellnumber-1].info.name)))
+        //if (getText(withId(R.id.cellName)) != ("Name: " + ga.getGameManager().mainBoard.gameWay[testsellnumber - 1].info.name))
+          //  throw IllegalStateException()  // -1 because array size start from
         Thread.sleep(shortDelay)
         device.setOrientationLeft()
         Thread.sleep(longDelay)   //long delay here to check rotation save

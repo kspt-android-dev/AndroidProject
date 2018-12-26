@@ -1,5 +1,6 @@
 package com.dreamteam.monopoly
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.drawable.BitmapDrawable
@@ -31,6 +32,13 @@ import com.dreamteam.monopoly.game.player.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
+import android.content.res.TypedArray
+
+
+
+
+
+
 
 
 class GameActivity : AppCompatActivity() {
@@ -41,10 +49,12 @@ class GameActivity : AppCompatActivity() {
     private var noButton: Button? = null
     private var sellButton: Button? = null
     private var question: Button? = null
+    private var scroll: HorizontalScrollView? = null
 
     private var gameManager: GameManager = GameManager(this)
     private var cellButtons: ArrayList<ImageButton> = ArrayList(gameManager.mainBoard.gameWayLength)
     private var suicidePlayers: ArrayList<Int> = ArrayList()
+
 
     private var actionState: ActionState = ActionState.IDLE
     private var currentInfo: Int = 0
@@ -65,6 +75,7 @@ class GameActivity : AppCompatActivity() {
         question = findViewById(R.id.DialogView)
         sellButton = findViewById(R.id.sellButton)
         buttonSuicide = findViewById(R.id.buttonSuicide)
+        scroll = findViewById(R.id.scrollview1)
 
         init()
         if (savedInstanceState != null) {
@@ -100,7 +111,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        val constraintLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayout)
+        val constraintLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayoutScroll)
+        val mainLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayout)
         val underTopLineGuideline = findViewById<Guideline>(R.id.UnderTopPartGuideline)
         val horizontalGuideline = findViewById<Guideline>(R.id.HorizontalGuideline)
         val verticalGuideline = findViewById<Guideline>(R.id.VerticalGuideline)
@@ -115,9 +127,9 @@ class GameActivity : AppCompatActivity() {
 
         val boardSize: Int =
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-                    metrics.widthPixels
+                    metrics.widthPixels * 2
                 else
-                    metrics.heightPixels
+                    metrics.heightPixels * 2
         val cellWidth: Int = (boardSize / ((gameManager.mainBoard.gameWayLength / numberOfSides - 1) +
                 numberOfCornersPerSide * GameData.cellSidesModifier)).toInt()
         val cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
@@ -125,14 +137,16 @@ class GameActivity : AppCompatActivity() {
         val fullSideLength = numberOfCornersPerSide * cellHeight.toFloat() +
                 numberOfCommonCellsPerSide * cellWidth.toFloat()
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            horizontalGuideline.setGuidelinePercent(fullSideLength / metrics.heightPixels)
+            horizontalGuideline.setGuidelinePercent(resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density / (metrics.heightPixels / resources.displayMetrics.density))
             underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
         } else {
-            underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / boardSize)
-            horizontalGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
-            verticalGuideline.setGuidelinePercent(fullSideLength / metrics.widthPixels)
+            underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
+            //horizontalGuideline.setGuidelinePercent((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / metrics.heightPixels)
+            verticalGuideline.setGuidelinePercent((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / (metrics.widthPixels / resources.displayMetrics.density))
             val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
-            verticalGuideline2.setGuidelinePercent((fullSideLength / 2) / metrics.widthPixels)
+            verticalGuideline2.setGuidelinePercent(((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / (metrics.widthPixels / resources.displayMetrics.density)) / 2 )
+            Log.d("HEIGHT2", ( metrics.widthPixels / resources.displayMetrics.density).toString())
+            Log.d("HEIGHT1", (resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density).toString())
         }
         createBoard(constraintLayout, cellHeight, cellWidth)
         startAssignment(playersNames)
@@ -399,8 +413,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun createCell(width: Int, height: Int, layout: ConstraintLayout, From1: Int, To1: Int, From2: Int, To2: Int, From3: Int, To3: Int, start: Boolean = false) {
-        val thisButtonID = resources.getIdentifier(getString(R.string.cell) + (indexForBoard + 1).toString(), getString(R.string.id), packageName)
-        val previousButtonID = resources.getIdentifier(getString(R.string.cell) + indexForBoard.toString(), getString(R.string.id), packageName)
+        val ar = resources.obtainTypedArray(R.array.cells);
+        Log.d("CHECKCHECk", ar.getResourceId(indexForBoard,0).toString())
+        val thisButtonID = ar.getResourceId(indexForBoard,0)
         val button = ImageButton(this)
         button.layoutParams = LayoutParams(width, height)
         button.id = (thisButtonID)
@@ -422,6 +437,7 @@ class GameActivity : AppCompatActivity() {
             constraintSet.connect(button.id, From3, layout.id, To3, 0)
 
         } else {
+            val previousButtonID = ar.getResourceId(indexForBoard-1,0)
             constraintSet.connect(button.id, From1, previousButtonID, To1, 0)
             constraintSet.connect(button.id, From2, previousButtonID, To2, 0)
             constraintSet.connect(button.id, From3, previousButtonID, To3, 0)
