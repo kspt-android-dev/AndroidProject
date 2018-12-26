@@ -9,27 +9,31 @@ import ru.polytech.course.pashnik.lines.Core.ColorType;
 
 public class Ball {
 
-    private static final double RADIUS_COEFFICIENT = 0.3;
+    private static float RADIUS_COEFFICIENT = 0.3f;
 
-    private int radius;
+    private final float radius;
     private final float x;
     private final float y;
     private final ColorType color;
 
-    public Ball(int x, int y, ColorType color) {
+    public Ball(int x, int y, ColorType color, float radius) {
         int cellSize = GameView.getCellSize();
         this.x = cellSize / 2 + x * cellSize;
         this.y = cellSize / 2 + y * cellSize;
         this.color = color;
-        radius = (int) (cellSize * RADIUS_COEFFICIENT);
+        this.radius = cellSize * radius;
     }
 
     public Ball(Cell cell, ColorType color) {
-        this(cell.getX(), cell.getY(), color);
+        this(cell.getX(), cell.getY(), color, RADIUS_COEFFICIENT);
+    }
+
+    public Ball(Cell cell, ColorType colorType, float radius) {
+        this(cell.getX(), cell.getY(), colorType, radius);
     }
 
     public Ball(Cell cell) {
-        this(cell.getX(), cell.getY(), ColorType.BLUE);
+        this(cell.getX(), cell.getY(), ColorType.BLUE, RADIUS_COEFFICIENT);
     }
 
     public void drawBall(Canvas canvas) {

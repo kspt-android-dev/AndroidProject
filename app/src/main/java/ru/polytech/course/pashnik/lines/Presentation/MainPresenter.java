@@ -1,5 +1,7 @@
 package ru.polytech.course.pashnik.lines.Presentation;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 
 import java.util.ArrayDeque;
@@ -13,6 +15,7 @@ import ru.polytech.course.pashnik.lines.Core.ColorType;
 import ru.polytech.course.pashnik.lines.Core.Intellect;
 import ru.polytech.course.pashnik.lines.Core.Line;
 import ru.polytech.course.pashnik.lines.Core.WinLines;
+import ru.polytech.course.pashnik.lines.Graphics.Ball;
 import ru.polytech.course.pashnik.lines.Graphics.GameView;
 
 public class MainPresenter implements MainContract.Presenter {
@@ -42,7 +45,10 @@ public class MainPresenter implements MainContract.Presenter {
         Cell definedCell = defineCell(x, y);
         if (isPressed) {
             if (model.haveCell(definedCell)) {
+                view.stopAnimation();
+                view.drawBallOnBoard(pressedCell, model.getColor(pressedCell));
                 pressedCell = definedCell;
+                view.makeAnimation(pressedCell, model.getColor(pressedCell));
             } else {
                 view.drawBallOnBoard(definedCell, model.getColor(pressedCell));
                 model.addCell(definedCell, model.getColor(pressedCell));
@@ -57,6 +63,7 @@ public class MainPresenter implements MainContract.Presenter {
                     clearWinLines(winLines);
                     view.setScore(String.valueOf(score));
                 }
+                view.stopAnimation();
                 drawThreeBalls();
                 fillQueue();
                 drawNextBallsOnScoreView();
@@ -66,6 +73,7 @@ public class MainPresenter implements MainContract.Presenter {
             if (model.haveCell(definedCell)) {
                 isPressed = true;
                 pressedCell = definedCell;
+                view.makeAnimation(pressedCell, model.getColor(pressedCell));
             }
         }
     }

@@ -19,6 +19,10 @@ public interface MainContract {
         void setScore(String score);
 
         void createDialog();
+
+        void makeAnimation(Cell cell, ColorType color);
+
+        void stopAnimation();
     }
 
     interface Presenter {

@@ -1,5 +1,7 @@
 package ru.polytech.course.pashnik.lines.Activities;
 
+import android.animation.FloatEvaluator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -8,6 +10,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +35,7 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
     private MainContract.Presenter presenter;
     private DataBaseHandler dataBaseHandler = new DataBaseHandler(this);
     private TextView textView;
+    private GameView gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
 
         presenter = new MainPresenter(this);
 
-        GameView gameView = new GameView(this);
+        gameView = new GameView(this);
         gameView.setBundle(savedInstanceState);
 
         linearLayout.addView(scoreView);
@@ -88,6 +92,16 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
                             }
                         });
         builder.show();
+    }
+
+    @Override
+    public void makeAnimation(final Cell pressedCell, final ColorType color) {
+        gameView.makeAnimation(pressedCell, color);
+    }
+
+    @Override
+    public void stopAnimation() {
+        gameView.stopAnimation();
     }
 
     @Override

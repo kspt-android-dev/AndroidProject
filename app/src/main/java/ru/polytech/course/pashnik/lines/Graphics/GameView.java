@@ -1,5 +1,8 @@
 package ru.polytech.course.pashnik.lines.Graphics;
 
+import android.animation.FloatEvaluator;
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -8,9 +11,12 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 
 import ru.polytech.course.pashnik.lines.Activities.GameActivity;
+import ru.polytech.course.pashnik.lines.Core.Cell;
+import ru.polytech.course.pashnik.lines.Core.ColorType;
 import ru.polytech.course.pashnik.lines.Presentation.MainContract;
 
 public class GameView extends View implements View.OnTouchListener {
@@ -24,6 +30,13 @@ public class GameView extends View implements View.OnTouchListener {
     private Canvas canvas;
     private MainContract.Presenter presenter;
     private Bundle savedState;
+    private ValueAnimator animation;
+
+    private boolean clearBall;
+    private Cell clearCell;
+    private ColorType clearColor;
+    private float currentRadius;
+
 
     private boolean initFlag = true;
 
@@ -50,6 +63,7 @@ public class GameView extends View implements View.OnTouchListener {
         }
     }
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
         if (this.canvas == null) { // first draw of a bitmap
@@ -70,6 +84,7 @@ public class GameView extends View implements View.OnTouchListener {
             else presenter.restoreModel(savedState);
         }
         canvas.drawBitmap(bitmap, 0, 0, bitmapPaint);
+        if (clearBall) new Ball(clearCell, clearColor, currentRadius).drawBall(canvas);
         invalidate();
     }
 
@@ -87,11 +102,38 @@ public class GameView extends View implements View.OnTouchListener {
     }
 
     private void setViewHeight(int viewSize) {
-        // View view = findViewById(R.id.game_view);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
         params.height = viewSize;
         params.width = viewSize;
         this.setLayoutParams(params);
+    }
+
+    public void makeAnimation(final Cell cell, final ColorType colorType) {
+        clearBall = true;
+        clearCell = cell;
+        clearColor = colorType;
+        new Ball(cell, clearColor).clearBall(canvas);
+        animation = ValueAnimator.ofFloat(0.15f, 0.3f);
+        animation.setDuration(1000);
+        animation.setRepeatCount(ValueAnimator.INFINITE);
+        animation.setRepeatMode(ValueAnimator.REVERSE);
+        animation.setEvaluator(new FloatEvaluator());
+        animation.setInterpolator(new LinearInterpolator());
+        animation.start();
+
+        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (float) animation.getAnimatedValue();
+                currentRadius = value;
+                new Ball(cell, colorType, value).clearBall(canvas);
+            }
+        });
+    }
+
+    public void stopAnimation() {
+        animation.cancel();
+        clearBall = false;
     }
 
     @Override
