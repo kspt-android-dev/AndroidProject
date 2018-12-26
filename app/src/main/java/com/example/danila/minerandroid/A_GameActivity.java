@@ -17,6 +17,9 @@ import android.widget.TextView;
 import java.util.Arrays;
 
 public class A_GameActivity extends Activity {
+    private final int FIELD_WIDTH = 6;
+    private final int FIELD_HEIGHT = 8;
+
     private static int minesNumber;
 
     private Logic logic;
@@ -45,7 +48,7 @@ public class A_GameActivity extends Activity {
 
 
         if ((savedInstanceState == null) || !(savedInstanceState.containsKey("logic"))) {
-            logic = new Logic(6, 8, minesNumber);
+            logic = new Logic(FIELD_WIDTH, FIELD_HEIGHT, minesNumber);
             initGameField(gameField, minesNumberView, logic);
             chronometer.setBase(SystemClock.elapsedRealtime());
         } else {
@@ -219,7 +222,8 @@ public class A_GameActivity extends Activity {
             String name = input.getText().length() == 0 ? "[Игрок]" : String.valueOf(input.getText());
             String time = String.valueOf(chronometer.getText());
             Record record = new Record(name, time);
-            DBConnector.addRecord(getApplicationContext(), record);
+            /*TODO*/
+            //DBConnector.addRecord(getApplicationContext(), record);
             finish();
         });
         alertDialog.show();

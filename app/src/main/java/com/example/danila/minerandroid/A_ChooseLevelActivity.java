@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 
 public class A_ChooseLevelActivity extends Activity {
+    final int EASY_MINES_NUMBER = 6;
+    final int MEDIUM_MINES_NUMBER = 9;
+    final int HARD_MINES_NUMBER = 12;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,21 +24,21 @@ public class A_ChooseLevelActivity extends Activity {
         easy_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToGameActivity(6);
+                goToGameActivity(EASY_MINES_NUMBER);
             }
         });
 
         medium_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToGameActivity(9);
+                goToGameActivity(MEDIUM_MINES_NUMBER);
             }
         });
 
         hard_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToGameActivity(12);
+                goToGameActivity(HARD_MINES_NUMBER);
             }
         });
 

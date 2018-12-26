@@ -48,7 +48,7 @@ public class A_MenuActivity extends Activity {
     }
 
     private void goToExit() {
-        System.exit(0);
+        /*TODO*/
     }
 
 }
