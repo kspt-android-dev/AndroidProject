@@ -6,4 +6,47 @@
         <item>JUST</item>
         <item>DO IT</item>
     </string-array>
+
+    <array name="cells">
+        <item>@id/cell1</item>
+        <item>@id/cell2</item>
+        <item>@id/cell3</item>
+        <item>@id/cell4</item>
+        <item>@id/cell5</item>
+        <item>@id/cell6</item>
+        <item>@id/cell7</item>
+        <item>@id/cell8</item>
+        <item>@id/cell9</item>
+        <item>@id/cell10</item>
+        <item>@id/cell11</item>
+        <item>@id/cell12</item>
+        <item>@id/cell13</item>
+        <item>@id/cell14</item>
+        <item>@id/cell15</item>
+        <item>@id/cell16</item>
+        <item>@id/cell17</item>
+        <item>@id/cell18</item>
+        <item>@id/cell19</item>
+        <item>@id/cell20</item>
+        <item>@id/cell21</item>
+        <item>@id/cell22</item>
+        <item>@id/cell23</item>
+        <item>@id/cell24</item>
+        <item>@id/cell25</item>
+        <item>@id/cell26</item>
+        <item>@id/cell27</item>
+        <item>@id/cell28</item>
+        <item>@id/cell29</item>
+        <item>@id/cell30</item>
+        <item>@id/cell31</item>
+        <item>@id/cell32</item>
+        <item>@id/cell33</item>
+        <item>@id/cell34</item>
+        <item>@id/cell35</item>
+        <item>@id/cell36</item>
+        <item>@id/cell37</item>
+        <item>@id/cell38</item>
+        <item>@id/cell39</item>
+        <item>@id/cell40</item>
+    </array>
 </resources>

@@ -133,28 +133,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.31" />
+        app:layout_constraintGuide_percent="0.0" />
 
     <android.support.constraint.Guideline
         android:id="@+id/VerticalGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.67" />
 
     <android.support.constraint.Guideline
         android:id="@+id/VerticalGuideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.46" />
 
     <TextView
         android:id="@+id/cellName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="120dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HorizontalGuideline" />
@@ -163,7 +163,7 @@
         android:id="@+id/cellCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="120dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginTop="8dp"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
@@ -173,7 +173,7 @@
         android:id="@+id/cellSell"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="120dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginTop="8dp"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
@@ -183,7 +183,7 @@
         android:id="@+id/cellCharge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="120dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginTop="8dp"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
@@ -263,5 +263,23 @@
         app:layout_constraintStart_toStartOf="@+id/VerticalGuideline"
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="visible" />
+
+    <HorizontalScrollView
+        android:id="@+id/scrollview1"
+        android:layout_width="@dimen/scrollViewNatural"
+        android:layout_height="wrap_content">
+        <ScrollView
+            android:id="@+id/scrollview2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/ConstraintLayoutScroll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </android.support.constraint.ConstraintLayout>
+
+        </ScrollView>
+    </HorizontalScrollView>
 
 </android.support.constraint.ConstraintLayout>
