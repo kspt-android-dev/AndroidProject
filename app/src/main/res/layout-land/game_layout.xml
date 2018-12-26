@@ -6,22 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginStart="2dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginEnd="2dp"
+    android:layout_marginBottom="2dp"
     tools:context=".A_GameActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="2dp"
         android:layout_weight="1">
 
         <TextView
             android:id="@+id/mines_number"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="000"
             android:textSize="40sp" />
@@ -29,7 +33,7 @@
         <Chronometer
             android:id="@+id/timer_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="right"
             android:textSize="40sp"
@@ -40,6 +44,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="2dp"
         android:orientation="horizontal"
         android:layout_weight="5">
 
@@ -82,6 +90,10 @@
             android:id="@+id/game_field"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
             android:layout_gravity="start"
             android:layout_weight="3">
         </GridLayout>
