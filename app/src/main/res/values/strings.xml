@@ -11,10 +11,19 @@
     <string name="strings_main_bottom_menu_calendar">Каленадрь</string>
     <string name="strings_main_bottom_menu_notes">Записи</string>
     <string name="main_notes_recycler_header_all">Все записи</string>
-    <string name="activity_about_textview_text">О приложение</string>
+    <string name="activity_about_textview_text">
+        WhatToDO\n
+        Created by Alex\n
+        21/12/2018\n
+    </string>
     <string name="dialog_choose_date">Выбериете дату</string>
     <string name="dialog_choose_time">Выбериете время</string>
     <string name="dialog_repeat">Повторять</string>
+    <string name="dialog_save_button">Сохранить</string>
+    <string name="dialog_delete_button">Удалить</string>
+    <string name="dialog_cancel_button">Отмена</string>
+    <string name="dialog_title">Установите дату и вермя</string>
+
     <string name="items_addbutton">Новый пункт</string>
     <string name="other_notes">Другие записи</string>
     <string name="no_name">(Без названия)</string>

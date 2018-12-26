@@ -15,19 +15,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 18;
     private static final String DATABASE_NAME = "WhatToDO_DB";
-    public static final String TABLE_NOTES = "Notes";
-    public static final String TABLE_ITEMS = "Items";
+    static final String TABLE_NOTES = "Notes";
+    static final String TABLE_ITEMS = "Items";
 
-    public static final String KEY_ID = "_id";
-    public static final String KEY_POSITION = "position";
-    public static final String KEY_HEADER = "header";
-    public static final String KEY_CONTENT = "content";
-    public static final String KEY_TYPE = "type";
-    public static final String KEY_DATE = "date";
-    public static final String KEY_FIXED = "fixed";
-    public static final String KEY_DELETED = "deleted";
-    public static final String KEY_PARENT_ID = "parent_id";
-    public static final String KEY_CHECKED = "checked";
+    static final String KEY_ID = "_id";
+    static final String KEY_POSITION = "position";
+    static final String KEY_HEADER = "header";
+    static final String KEY_CONTENT = "content";
+    static final String KEY_TYPE = "type";
+    static final String KEY_DATE = "date";
+    static final String KEY_FIXED = "fixed";
+    static final String KEY_DELETED = "deleted";
+    static final String KEY_PARENT_ID = "parent_id";
+    static final String KEY_CHECKED = "checked";
 
     /*
 
@@ -39,7 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
      */
 
-    public DBHelper(@Nullable Context context) {
+    DBHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

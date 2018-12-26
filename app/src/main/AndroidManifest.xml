@@ -9,24 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.MainActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".SettingsActivity"/>
         <activity android:name=".creation.CreationActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".AboutActivity"
-            android:screenOrientation="portrait" />
-        <receiver android:name=".creation.AlarmBroadcastReceiver"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+        <activity android:name=".AboutActivity"/>
+        <receiver android:name=".creation.AlarmBroadcastReceiver"/>
     </application>
 
 </manifest>

@@ -38,9 +38,14 @@ public class CreationManager {
         if (note == null) {
             note = new Note(countNotes + 1);
             note.setId(DBConnector.insertNote(activity, note));
-            notify = new Notify();
+//            notify = new Notify();
+            notify = null;
         } else {
-            notify = new Notify(note.getDate());
+            Log.d(TAG, TextFormer.getStartText(className) + note.getDate());
+            if (note.getDate() != null && note.getDate() != 0)
+                notify = new Notify(note.getDate());
+            else
+                notify = null;
         }
         if (note.getType().equals("list"))
             items = (List<Item>) DBConnector.loadItems(activity, note.getId());
@@ -85,5 +90,13 @@ public class CreationManager {
 
     public Notify getNotify() {
         return notify;
+    }
+
+    public void setNotify(Notify notify) {
+        this.notify = notify;
+    }
+
+    public void setNote(Note note) {
+        this.note = note;
     }
 }

@@ -22,6 +22,8 @@ import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.creation.alarm.ChooseDateDialog;
 import ru.gdcn.alex.whattodo.creation.alarm.ChooseTimeDialog;
 import ru.gdcn.alex.whattodo.creation.alarm.CreateAlarmDialog;
+import ru.gdcn.alex.whattodo.objects.Note;
+import ru.gdcn.alex.whattodo.objects.Notify;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
 public class CreationActivity extends AppCompatActivity implements View.OnClickListener,
@@ -56,18 +58,7 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
 
         setupActionBar();
         header.setText(noteManager.getNote().getHeader());
-        if (noteManager.getNote().getType().equals("note")) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.creation_main_space, noteFragment)
-                    .commit();
-            findViewById(R.id.creation_bottom_menu_note).setSelected(true);
-        }
-        if (noteManager.getNote().getType().equals("list")) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.creation_main_space, listFragment)
-                    .commit();
-            findViewById(R.id.creation_bottom_menu_list).setSelected(true);
-        }
+        Log.d(TAG, TextFormer.getStartText(className) + "onCreate!");
     }
 
     private void setupActionBar() {
@@ -95,7 +86,7 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
             menu.getItem(0).setChecked(true);
             menu.getItem(0).getIcon().setTint(Color.parseColor("#FF2ABFF1"));
         }
-        if (noteManager.getNote().getDate() != null) {
+        if (noteManager.getNote().getDate() != null && noteManager.getNote().getDate() != 0) {
             alarmItem.setChecked(true);
             alarmItem.getIcon().setTint(Color.parseColor("#FF2ABFF1"));
         }
@@ -137,16 +128,71 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, TextFormer.getStartText(className) + "onStart!");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (noteManager.getNote().getType().equals("note")) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.creation_main_space, noteFragment)
+                    .commit();
+            findViewById(R.id.creation_bottom_menu_note).setSelected(true);
+        }
+        if (noteManager.getNote().getType().equals("list")) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.creation_main_space, listFragment)
+                    .commit();
+            findViewById(R.id.creation_bottom_menu_list).setSelected(true);
+        }
+        Log.d(TAG, TextFormer.getStartText(className) + "onResume!");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("note", noteManager.getNote());
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, TextFormer.getStartText(className) + "onSave!");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        Note note = (Note) savedInstanceState.getSerializable("note");
+        noteManager.setNote(note);
+        header.setText(noteManager.getNote().getHeader());
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(TAG, TextFormer.getStartText(className) + "onRestore!");
+    }
+
+    @Override
     protected void onPause() {
-        Log.d(TAG, TextFormer.getStartText(className) + "onPause!");
         super.onPause();
         saveData();
+        Log.d(TAG, TextFormer.getStartText(className) + "onPause!");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, TextFormer.getStartText(className) + "onStop!");
     }
 
     private void saveData() {
         Log.d(TAG, TextFormer.getStartText(className) + "Сохраняю данные...");
         noteManager.getNote().setHeader(String.valueOf(header.getText()));
         noteManager.save();
+
+        if (noteManager.getNote().getDate() != null && noteManager.getNote().getDate() != 0) {
+            AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(this, AlarmBroadcastReceiver.class);
+            intent.putExtra("note", noteManager.getNote());
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                    0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            am.set(AlarmManager.RTC_WAKEUP, noteManager.getNote().getDate(), pendingIntent);
+        }
     }
 
     @Override
@@ -201,14 +247,20 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onSetDate(int year, int month, int day) {
-        noteManager.getNotify().setYMD(year, month, day);
-        ((CreateAlarmDialog)getSupportFragmentManager().findFragmentByTag("alarm")).update(year, month, day);
+        if (noteManager.getNotify() == null)
+            noteManager.setNotify(new Notify());
+        Notify notify = noteManager.getNotify();
+        notify.setYMD(year, month, day);
+        ((CreateAlarmDialog) getSupportFragmentManager().findFragmentByTag("alarm")).update(year, month, day);
     }
 
     @Override
     public void onSetTime(int hour, int minute) {
-        noteManager.getNotify().setHM(hour, minute);
-        ((CreateAlarmDialog)getSupportFragmentManager().findFragmentByTag("alarm")).update(hour, minute);
+        if (noteManager.getNotify() == null)
+            noteManager.setNotify(new Notify());
+        Notify notify = noteManager.getNotify();
+        notify.setHM(hour, minute);
+        ((CreateAlarmDialog) getSupportFragmentManager().findFragmentByTag("alarm")).update(hour, minute);
     }
 
     @Override
@@ -223,7 +275,7 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         intent.putExtra("note", noteManager.getNote());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
                 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        am.set(AlarmManager.RTC_WAKEUP, noteManager.getNote().getDate(), pendingIntent); //TODO поменять дату обратно
+        am.set(AlarmManager.RTC_WAKEUP, noteManager.getNote().getDate(), pendingIntent);
     }
 
     @Override
@@ -238,6 +290,13 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         am.cancel(pendingIntent);
 
         noteManager.getNote().setDate(null);
+        noteManager.setNotify(null);
+    }
+
+    @Override
+    public void onCancel() {
+        if (noteManager.getNote().getDate() == null)
+            noteManager.setNotify(null);
     }
 
     public CreationManager getNoteManager() {

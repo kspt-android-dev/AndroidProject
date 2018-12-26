@@ -1,8 +1,9 @@
 package ru.gdcn.alex.whattodo.objects;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class Notify {
+public class Notify implements Serializable {
 
     private final Calendar calendar;
     private int year;
