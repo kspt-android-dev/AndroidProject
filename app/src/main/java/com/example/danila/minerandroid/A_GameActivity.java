@@ -14,7 +14,6 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Arrays;
 
 public class A_GameActivity extends Activity {
     private final int FIELD_WIDTH = 6;
@@ -222,16 +221,22 @@ public class A_GameActivity extends Activity {
             String name = input.getText().length() == 0 ? "[Игрок]" : String.valueOf(input.getText());
             String time = String.valueOf(chronometer.getText());
             Record record = new Record(name, time);
-            /*TODO*/
-            //DBConnector.addRecord(getApplicationContext(), record);
+            DBConnector.addRecord(getApplicationContext(), record);
+            goToRecordsActivity();
             finish();
         });
         alertDialog.show();
+
+
     }
 
 
     private void goToMenuActivity() {
         startActivity(new Intent(this, A_MenuActivity.class));
+    }
+
+    private void goToRecordsActivity() {
+        startActivity(new Intent(this, A_RecordsTableActivity.class));
     }
 
 
