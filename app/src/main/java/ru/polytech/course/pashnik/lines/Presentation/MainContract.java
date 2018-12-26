@@ -1,5 +1,9 @@
 package ru.polytech.course.pashnik.lines.Presentation;
 
+import android.os.Bundle;
+
+import java.util.HashMap;
+
 import ru.polytech.course.pashnik.lines.Core.Cell;
 import ru.polytech.course.pashnik.lines.Core.ColorType;
 import ru.polytech.course.pashnik.lines.Core.WinLines;
@@ -23,6 +27,10 @@ public interface MainContract {
         int getScore();
 
         void initGameView();
+
+        void restoreModel(Bundle savedState);
+
+        void saveModel(Bundle saveState);
     }
 
     interface Model {
@@ -39,6 +47,11 @@ public interface MainContract {
         void removeCell(Cell cell);
 
         boolean isFull();
+
+        HashMap getModel();
+
+        void setModel(HashMap<Cell, ColorType> model);
+
     }
 
 }

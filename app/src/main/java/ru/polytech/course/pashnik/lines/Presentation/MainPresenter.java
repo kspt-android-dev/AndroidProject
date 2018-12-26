@@ -1,6 +1,10 @@
 package ru.polytech.course.pashnik.lines.Presentation;
 
+import android.os.Bundle;
+
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Queue;
 
 import ru.polytech.course.pashnik.lines.Core.Board;
@@ -16,6 +20,8 @@ public class MainPresenter implements MainContract.Presenter {
     private int score = 0;
     private static final int MIN_BALLS = 5;
     private static final int NEXT_BALLS_NUMBER = 3;
+    private static final int MAX_BALLS = 81;
+    private static final int NEXT_LINE = GameView.CELL_NUMBER - 1;
 
     private MainContract.Model model;
     private MainContract.ViewInterface view;
@@ -34,7 +40,6 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void onCellWasClicked(float x, float y) {
         Cell definedCell = defineCell(x, y);
-        if (model.isFull()) view.createDialog();
         if (isPressed) {
             if (model.haveCell(definedCell)) {
                 pressedCell = definedCell;
@@ -78,10 +83,40 @@ public class MainPresenter implements MainContract.Presenter {
         drawNextBallsOnScoreView();
     }
 
+    @Override
+    public void restoreModel(Bundle savedState) {
+        // restoring gameView
+        restoreModel(Objects.requireNonNull(savedState.getIntegerArrayList("colors")));
+        for (Object cell : model.getModel().keySet()) {
+            view.drawBallOnBoard((Cell) cell, model.getColor((Cell) cell));
+        }
+        // restoring number of points
+        this.score = savedState.getInt("score");
+        if (score != 0)
+            view.setScore(String.valueOf(score));
+        // restoring scoreView
+        ArrayList<Integer> scoreColors = savedState.getIntegerArrayList("score_colors");
+        for (int i = 0; i < Objects.requireNonNull(scoreColors).size(); i++) {
+            queue.add(ColorType.getColorType(scoreColors.get(i)));
+        }
+        drawNextBallsOnScoreView();
+    }
+
+    @Override
+    public void saveModel(Bundle saveState) {
+        saveState.putIntegerArrayList("colors", getColors());
+        saveState.putInt("score", score);
+        saveState.putIntegerArrayList("score_colors", getScoreColors());
+    }
+
     private void drawThreeBalls() {
         while (!queue.isEmpty()) {
             ColorType colorType = queue.poll();
             Cell nextCell = intellect.generateNextCell();
+            if (nextCell == Intellect.DEFAULT_CELL) {
+                view.createDialog();
+                break;
+            }
             view.drawBallOnBoard(nextCell, colorType);
             model.addCell(nextCell, colorType);
         }
@@ -127,5 +162,46 @@ public class MainPresenter implements MainContract.Presenter {
         }
     }
 
+    private ArrayList<Integer> getColors() {
+        ArrayList<Integer> colors = new ArrayList<>();
+        int counter = 0;
+        Cell right = new Cell(1, 0);
+        Cell down = new Cell(0, 1);
+        Cell start = new Cell(-1, 0);
+        Cell current = new Cell(-1, 0);
+        for (int i = 0; i < MAX_BALLS; i++) {
+            current = current.plus(right);
+            colors.add(ColorType.getIndex(model.getColor(current)));
+            if (counter == NEXT_LINE) {
+                start = start.plus(down);
+                current = start;
+                counter = 0;
+            }
+            counter++;
+        }
+        return colors;
+    }
 
+    private void restoreModel(ArrayList<Integer> arrayList) {
+        int x = 0;
+        int y = 0;
+        int counter = 0;
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (arrayList.get(i) != -1) {
+                model.addCell(new Cell(x, y), ColorType.getColorType(arrayList.get(i)));
+            }
+            x++;
+            counter++;
+            if (i % NEXT_LINE == 0 && i != 0) x = 0;
+            if (counter % NEXT_LINE == 0 && counter != 0) y++;
+        }
+    }
+
+    private ArrayList<Integer> getScoreColors() {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            arrayList.add(ColorType.getIndex(queue.poll()));
+        }
+        return arrayList;
+    }
 }

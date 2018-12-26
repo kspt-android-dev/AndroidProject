@@ -3,7 +3,6 @@ package ru.polytech.course.pashnik.lines.Activities;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -41,11 +40,13 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
         LinearLayout linearLayout = findViewById(R.id.main_layout);
 
         ScoreView scoreView = new ScoreView(this);
-        linearLayout.addView(scoreView);
 
         presenter = new MainPresenter(this);
 
         GameView gameView = new GameView(this);
+        gameView.setBundle(savedInstanceState);
+
+        linearLayout.addView(scoreView);
         linearLayout.addView(gameView);
         gameView.setPresenter(presenter);
 
@@ -58,6 +59,15 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
         textView.setTextSize(TEXT_SIZE);
         textView.setLayoutParams(lpView);
         linearLayout.addView(textView);
+
+        if (savedInstanceState != null)
+            gameView.makeInit(false);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle saveState) {
+        super.onSaveInstanceState(saveState);
+        presenter.saveModel(saveState);
     }
 
     @SuppressLint("InflateParams")

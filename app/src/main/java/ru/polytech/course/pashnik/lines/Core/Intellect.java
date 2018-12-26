@@ -8,6 +8,7 @@ import ru.polytech.course.pashnik.lines.Presentation.MainContract;
 public class Intellect {
 
     private static final int MAX_BOUNDS = 7;
+    public static final Cell DEFAULT_CELL = new Cell(-1, -1);
 
     private Random random = new Random();
     private MainContract.Model model;
@@ -23,12 +24,14 @@ public class Intellect {
      */
 
     public Cell generateNextCell() {
-        while (true) {
-            int x = random.nextInt(cellNumber);
-            int y = random.nextInt(cellNumber);
-            Cell cell = new Cell(x, y);
-            if (!model.haveCell(cell)) return cell;
-        }
+        if (!model.isFull()) {
+            while (true) {
+                int x = random.nextInt(cellNumber);
+                int y = random.nextInt(cellNumber);
+                Cell cell = new Cell(x, y);
+                if (!model.haveCell(cell)) return cell;
+            }
+        } else return DEFAULT_CELL;
     }
 
     public ColorType generateNextColor() {

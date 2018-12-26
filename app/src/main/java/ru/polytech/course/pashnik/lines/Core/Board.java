@@ -9,7 +9,7 @@ public class Board implements MainContract.Model {
     private static final int MIN_FULL_SIZE = 79;
     private static final int WIN_LENGTH = 5;
 
-    private final HashMap<Cell, ColorType> map = new HashMap<>();
+    private HashMap<Cell, ColorType> map = new HashMap<>();
     private final WinLines winLines = new WinLines();
 
     private final Cell[] DIRECTIONS = {
@@ -75,6 +75,16 @@ public class Board implements MainContract.Model {
     @Override
     public boolean isFull() {
         return map.size() >= MIN_FULL_SIZE;
+    }
+
+    @Override
+    public HashMap getModel() {
+        return map;
+    }
+
+    @Override
+    public void setModel(HashMap<Cell, ColorType> map) {
+        this.map = map;
     }
 
     private boolean isWinLength(int currentLength) {

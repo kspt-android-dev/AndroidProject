@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -22,7 +23,9 @@ public class GameView extends View implements View.OnTouchListener {
     private Bitmap bitmap;
     private Canvas canvas;
     private MainContract.Presenter presenter;
+    private Bundle savedState;
 
+    private boolean initFlag = true;
 
     public GameView(Context context) {
         super(context);
@@ -50,7 +53,9 @@ public class GameView extends View implements View.OnTouchListener {
     @Override
     protected void onDraw(Canvas canvas) {
         if (this.canvas == null) { // first draw of a bitmap
-            int viewSize = getWidth();
+            int height = getHeight();
+            int width = getWidth();
+            int viewSize = width > height ? height : width;
             setViewHeight(viewSize);
 
             // creating a Bitmap and setting Bitmap on Canvas
@@ -61,7 +66,8 @@ public class GameView extends View implements View.OnTouchListener {
             //drawing a board
             drawGameView();
             GameActivity.setGameViewCanvas(this.canvas);
-            presenter.initGameView();
+            if (initFlag) presenter.initGameView();
+            else presenter.restoreModel(savedState);
         }
         canvas.drawBitmap(bitmap, 0, 0, bitmapPaint);
         invalidate();
@@ -84,6 +90,7 @@ public class GameView extends View implements View.OnTouchListener {
         // View view = findViewById(R.id.game_view);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
         params.height = viewSize;
+        params.width = viewSize;
         this.setLayoutParams(params);
     }
 
@@ -95,5 +102,13 @@ public class GameView extends View implements View.OnTouchListener {
 
     public void setPresenter(MainContract.Presenter presenter) {
         this.presenter = presenter;
+    }
+
+    public void makeInit(boolean flag) {
+        this.initFlag = flag;
+    }
+
+    public void setBundle(Bundle bundle) {
+        this.savedState = bundle;
     }
 }

@@ -27,8 +27,11 @@ public class ScoreView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         if (this.canvas == null) {
-            int viewHeight = getWidth() / GameView.CELL_NUMBER;
-            int bitmapWidth = getWidth() / 3;
+            int height = getHeight();
+            int width = getWidth();
+            int size = width > height ? height : width;
+            int viewHeight = size / GameView.CELL_NUMBER;
+            int bitmapWidth = size / 3;
             bitmap = Bitmap.createBitmap(bitmapWidth, viewHeight, Bitmap.Config.ARGB_8888);
             this.canvas = new Canvas(bitmap);
 

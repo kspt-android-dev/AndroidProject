@@ -31,4 +31,9 @@ public enum ColorType {
         return ColorType.values()[index];
     }
 
+    public static int getIndex(ColorType colorType) {
+        if (colorType == null) return EXIT_CODE;
+        return colorType.ordinal();
+    }
+
 }
