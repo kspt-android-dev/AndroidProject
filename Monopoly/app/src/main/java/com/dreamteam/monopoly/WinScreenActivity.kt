@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
 import android.view.View
+import com.dreamteam.monopoly.game.Data.ValuesData
 import com.dreamteam.monopoly.helpers.makeTinyAlert
 import maes.tech.intentanim.CustomIntent
 
@@ -25,7 +26,7 @@ class WinScreenActivity : AppCompatActivity() {
         val intent = intent
         winnerNamespace = findViewById(R.id.winerName)
         if (savedInstanceState == null) {
-            winnerNamespace?.text = intent.getStringExtra(getString(R.string.winnerName))
+            winnerNamespace?.text = intent.getStringExtra(ValuesData.winnerName)
             makeTinyAlert(this, resources.getString(R.string.congratulation) + winnerNamespace?.text)
         } else
             dataRestore(savedInstanceState)
@@ -62,11 +63,11 @@ class WinScreenActivity : AppCompatActivity() {
     }
 
     private fun dataRestore(savedInstanceState: Bundle) {
-        winnerNamespace?.text = savedInstanceState.getString(getString(R.string.winnerName))
+        winnerNamespace?.text = savedInstanceState.getString(ValuesData.winnerName)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putString(getString(R.string.winnerName), winnerNamespace!!.text.toString())
+        outState?.putString(ValuesData.winnerName, winnerNamespace!!.text.toString())
         super.onSaveInstanceState(outState)
     }
 }

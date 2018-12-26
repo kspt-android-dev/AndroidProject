@@ -2,8 +2,8 @@ package com.dreamteam.monopoly.game.player
 
 import android.widget.TextView
 import com.dreamteam.monopoly.R
-import com.dreamteam.monopoly.game.GameData.maxChanceMoney
-import com.dreamteam.monopoly.game.GameData.minChanceMoney
+import com.dreamteam.monopoly.game.Data.GameData.maxChanceMoney
+import com.dreamteam.monopoly.game.Data.GameData.minChanceMoney
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.board.cell.CellState
 import com.dreamteam.monopoly.game.board.cell.GameCell

@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import gr.net.maroulis.library.EasySplashScreen
 import android.view.View
-import com.dreamteam.monopoly.game.GameData.splashScreenDuration
+import com.dreamteam.monopoly.game.Data.GameData.splashScreenDuration
 
 
 class SplashScreenActivity : AppCompatActivity() {

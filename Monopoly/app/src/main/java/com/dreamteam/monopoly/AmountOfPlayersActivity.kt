@@ -9,9 +9,10 @@ import android.widget.EditText
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.dreamteam.monopoly.game.GameData.maxNameLength
-import com.dreamteam.monopoly.game.GameData.maxPlayers
-import com.dreamteam.monopoly.game.GameData.minPlayers
+import com.dreamteam.monopoly.game.Data.GameData.maxNameLength
+import com.dreamteam.monopoly.game.Data.GameData.maxPlayers
+import com.dreamteam.monopoly.game.Data.GameData.minPlayers
+import com.dreamteam.monopoly.game.Data.ValuesData
 import com.dreamteam.monopoly.game.player.PlayerType
 import com.dreamteam.monopoly.helpers.shakeEffect
 import es.dmoral.toasty.Toasty
@@ -76,7 +77,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         if (numberOfPlayers < minPlayers) buttonStart!!.isEnabled = false
 
         for (i in 1..maxPlayers) {
-            val textViewId = resources.getIdentifier(getString(R.string.playerName) + i, getString(R.string.id), packageName)
+            val textViewId = resources.getIdentifier(getString(R.string.playerName) + i,  ValuesData.id, packageName)
             val textView = findViewById<TextView>(textViewId)
             arrayOfTextViews.add(textView)
         }
@@ -98,7 +99,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
 
             Toasty.success(this, resources.getString(R.string.newPlayer) + content,
                     Toast.LENGTH_SHORT, true).show()
-            val textViewId = resources.getIdentifier(getString(R.string.playerName) + numberOfPlayers, getString(R.string.id), packageName)
+            val textViewId = resources.getIdentifier(getString(R.string.playerName) + numberOfPlayers,  ValuesData.id, packageName)
             val textView = findViewById<TextView>(textViewId)
             namespace!!.setText("")
             textView.text = content
@@ -117,7 +118,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
             val bots: ArrayList<String> = ArrayList()
             val names = HashMap<PlayerType, ArrayList<String>>()
             for (i in 1..numberOfPlayers) {
-                val buttonID = this.resources.getIdentifier(getString(R.string.aiButton) + i, getString(R.string.id), packageName)
+                val buttonID = this.resources.getIdentifier(getString(R.string.aiButton) + i,  ValuesData.id, packageName)
                 val aiButton = findViewById<Button>(buttonID)
                 if (aiButton.text.toString() == resources.getString(R.string.offAI))
                     players.add(playersNames[i - 1])
@@ -129,7 +130,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
 
             shakeEffect(buttonStart!!)
             intent = Intent(this, GameActivity::class.java)
-            intent.putExtra(getString(R.string.playersMap), names)
+            intent.putExtra(ValuesData.playersMap, names)
             startActivity(intent)
             CustomIntent.customType(this, getString(R.string.bottom_to_up))
         }
@@ -254,20 +255,20 @@ class AmountOfPlayersActivity : AppCompatActivity() {
     }
 
     private fun changeAiButtonAppearance(i: Int, value: Boolean) {
-        val buttonID = this.resources.getIdentifier(getString(R.string.aiButton) + i, getString(R.string.id), packageName)
+        val buttonID = this.resources.getIdentifier(getString(R.string.aiButton) + i, ValuesData.id, packageName)
         val aiButton = findViewById<Button>(buttonID)
         aiButton.visibility = if (value) View.VISIBLE else View.INVISIBLE
         aiButton.isClickable = value
     }
 
     private fun restorePlayersList(savedInstanceState: Bundle) {
-        playersNames = savedInstanceState.getStringArrayList(getString(R.string.playersNames))
-        val pDells: ArrayList<String> = savedInstanceState.getStringArrayList(getString(R.string.deletePlayersNames))
-        val pTypes: BooleanArray = savedInstanceState.getBooleanArray(getString(R.string.playersTypes))
+        playersNames = savedInstanceState.getStringArrayList(ValuesData.playersNames)
+        val pDells: ArrayList<String> = savedInstanceState.getStringArrayList(ValuesData.deletePlayersNames)
+        val pTypes: BooleanArray = savedInstanceState.getBooleanArray(ValuesData.playersTypes)
         numberOfPlayers = playersNames.size
         deleteList.clear()
         for (i in 1..numberOfPlayers) {
-            val textViewID = this.resources.getIdentifier(getString(R.string.playerName) + i, getString(R.string.id), packageName)
+            val textViewID = this.resources.getIdentifier(getString(R.string.playerName) + i,  ValuesData.id, packageName)
             val pName = findViewById<TextView>(textViewID)
             pName.text = playersNames[i - 1]
 
@@ -278,7 +279,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
                 deleteList.add(pName)
             }
 
-            val aiButtonID = this.resources.getIdentifier(getString(R.string.aiButton) + i, getString(R.string.id), packageName)
+            val aiButtonID = this.resources.getIdentifier(getString(R.string.aiButton) + i,  ValuesData.id, packageName)
             val aiButton = findViewById<Button>(aiButtonID)
             if (pTypes[i - 1]) aiButton.text = resources.getString(R.string.onAI)
             else aiButton.text = resources.getString(R.string.offAI)
@@ -288,7 +289,7 @@ class AmountOfPlayersActivity : AppCompatActivity() {
     }
 
     private fun dataRestore(savedInstanceState: Bundle) {
-        namespace!!.setText(savedInstanceState.getString(getString(R.string.keyboardText)))
+        namespace!!.setText(savedInstanceState.getString(ValuesData.keyboardText))
         restorePlayersList(savedInstanceState)
     }
 
@@ -297,17 +298,17 @@ class AmountOfPlayersActivity : AppCompatActivity() {
         for (p in deleteList)
             deletePlayersNames.add(p.text.toString())
 
-        outState?.putStringArrayList(getString(R.string.playersNames), playersNames)
-        outState?.putStringArrayList(getString(R.string.deletePlayersNames), deletePlayersNames)
-        outState?.putBooleanArray(getString(R.string.playersTypes), loadPlayersTypes())
-        outState?.putString(getString(R.string.keyboardText), namespace!!.text.toString())
+        outState?.putStringArrayList(ValuesData.playersNames, playersNames)
+        outState?.putStringArrayList(ValuesData.deletePlayersNames, deletePlayersNames)
+        outState?.putBooleanArray(ValuesData.playersTypes, loadPlayersTypes())
+        outState?.putString(ValuesData.keyboardText, namespace!!.text.toString())
         super.onSaveInstanceState(outState)
     }
 
     private fun loadPlayersTypes(): BooleanArray {
         val playersTypes: ArrayList<Boolean> = ArrayList()
         for (i in 1..playersNames.size) {
-            val aiButton = findViewById<Button>(resources.getIdentifier(getString(R.string.aiButton) + i, getString(R.string.id), packageName))
+            val aiButton = findViewById<Button>(resources.getIdentifier(getString(R.string.aiButton) + i,  ValuesData.id, packageName))
             if (aiButton.text.toString() == resources.getString(R.string.offAI))
                 playersTypes.add(false)
             else

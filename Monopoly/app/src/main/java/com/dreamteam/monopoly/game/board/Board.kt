@@ -1,6 +1,6 @@
 package com.dreamteam.monopoly.game.board
 
-import com.dreamteam.monopoly.game.GameData
+import com.dreamteam.monopoly.game.Data.GameData
 import com.dreamteam.monopoly.game.board.cell.Cell
 import com.dreamteam.monopoly.game.board.cell.GameCell
 import com.dreamteam.monopoly.game.player.Player
@@ -9,6 +9,7 @@ import android.support.constraint.ConstraintSet
 import com.dreamteam.monopoly.R
 import android.support.constraint.ConstraintLayout
 import com.dreamteam.monopoly.GameActivity
+import com.dreamteam.monopoly.game.Data.ValuesData
 import com.dreamteam.monopoly.game.player.Order
 
 
@@ -47,9 +48,9 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
         constraintSet.clone(constraintLayout)
 
         val myPlayer = activity.resources.getIdentifier(activity.getString(R.string.Player) +
-                currentPlayerID.toString(), activity.getString(R.string.id), activity.packageName)
+                currentPlayerID.toString(),  ValuesData.id, activity.packageName)
         val myId = activity.resources.getIdentifier(activity.getString(R.string.cell) +
-                (player.currentPosition + 1).toString(), activity.getString(R.string.id), activity.packageName)
+                (player.currentPosition + 1).toString(),  ValuesData.id, activity.packageName)
         if (currentPlayerID == Order.FIRST.value || currentPlayerID == Order.THIRD.value) {
             constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
             constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)

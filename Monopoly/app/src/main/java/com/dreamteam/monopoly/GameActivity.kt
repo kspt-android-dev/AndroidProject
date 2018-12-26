@@ -1,6 +1,5 @@
 package com.dreamteam.monopoly
 
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.drawable.BitmapDrawable
@@ -18,27 +17,21 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.widget.*
-import com.dreamteam.monopoly.game.GameData
-import com.dreamteam.monopoly.game.GameData.bottomSideIndexesModifier
-import com.dreamteam.monopoly.game.GameData.leftSideIndexesModifier
-import com.dreamteam.monopoly.game.GameData.numberOfCommonCellsPerSide
-import com.dreamteam.monopoly.game.GameData.numberOfCornersPerSide
-import com.dreamteam.monopoly.game.GameData.numberOfSides
-import com.dreamteam.monopoly.game.GameData.rightSideIndexesModifier
-import com.dreamteam.monopoly.game.GameData.upSideIndexesModifier
+import com.dreamteam.monopoly.game.Data.GameData
+import com.dreamteam.monopoly.game.Data.GameData.bottomSideIndexesModifier
+import com.dreamteam.monopoly.game.Data.GameData.leftSideIndexesModifier
+import com.dreamteam.monopoly.game.Data.GameData.numberOfCommonCellsPerSide
+import com.dreamteam.monopoly.game.Data.GameData.numberOfCornersPerSide
+import com.dreamteam.monopoly.game.Data.GameData.numberOfSides
+import com.dreamteam.monopoly.game.Data.GameData.rightSideIndexesModifier
+import com.dreamteam.monopoly.game.Data.GameData.upSideIndexesModifier
+import com.dreamteam.monopoly.game.Data.ValuesData
 import com.dreamteam.monopoly.game.GameManager
 import com.dreamteam.monopoly.game.board.cell.GameCellType
 import com.dreamteam.monopoly.game.player.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
 import maes.tech.intentanim.CustomIntent
-import android.content.res.TypedArray
-
-
-
-
-
-
 
 
 class GameActivity : AppCompatActivity() {
@@ -120,7 +113,7 @@ class GameActivity : AppCompatActivity() {
         val intent = this.intent
         val bundle: Bundle = intent.extras
         @Suppress("UNCHECKED_CAST")
-        val playersNames: HashMap<PlayerType, ArrayList<String>> = bundle.getSerializable(getString(R.string.playersMap)) as HashMap<PlayerType, ArrayList<String>>
+        val playersNames: HashMap<PlayerType, ArrayList<String>> = bundle.getSerializable(ValuesData.playersMap) as HashMap<PlayerType, ArrayList<String>>
 
         val metrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(metrics)
@@ -158,7 +151,7 @@ class GameActivity : AppCompatActivity() {
             else -> playersNames[PlayerType.AI]!!.size + playersNames[PlayerType.PERSON]!!.size
         }
         for (i in 1..namesize) {
-            val myPlayerID = resources.getIdentifier(getString(R.string.Player) + i.toString(), getString(R.string.id), packageName)
+            val myPlayerID = resources.getIdentifier(getString(R.string.Player) + i.toString(),  ValuesData.id, packageName)
             val playerImage = resources.getDrawable(resources
                     .getIdentifier(getString(R.string.player) + i.toString(), getString(R.string.drawable), packageName), null)
             val player = ImageView(this)
@@ -168,7 +161,7 @@ class GameActivity : AppCompatActivity() {
             constraintLayout.addView(player)
             val constraintSet = ConstraintSet()
             constraintSet.clone(constraintLayout)
-            val myId = resources.getIdentifier(getString(R.string.cell) + Order.FIRST.value.toString(), getString(R.string.id), packageName)
+            val myId = resources.getIdentifier(getString(R.string.cell) + Order.FIRST.value.toString(),  ValuesData.id, packageName)
             if (i == Order.FIRST.value || i == Order.THIRD.value) {
                 constraintSet.connect(player.id, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
                 constraintSet.connect(player.id, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
@@ -269,11 +262,11 @@ class GameActivity : AppCompatActivity() {
         val cube2: ImageView = findViewById(R.id.cube2)
         //getting first cube image
         val drawCube1 = resources.getDrawable(resources
-                .getIdentifier(getString(R.string.dice) + (dices.first).toString(),
+                .getIdentifier(ValuesData.dice + (dices.first).toString(),
                         getString(R.string.drawable), packageName), null)
         //getting second cube image
         val drawCube2 = resources.getDrawable(resources
-                .getIdentifier(getString(R.string.dice) + (dices.second).toString(),
+                .getIdentifier(ValuesData.dice + (dices.second).toString(),
                         getString(R.string.drawable), packageName), null)
         cube1.setImageDrawable(drawCube1)  //draw this pics
         cube2.setImageDrawable(drawCube2)
@@ -332,7 +325,7 @@ class GameActivity : AppCompatActivity() {
             for (string in playersNames[PlayerType.AI]!!) {
                 gameManager.addPlayer(string, PlayerType.AI)
                 val playerStatsId = resources.getIdentifier(getString(R.string.playerStats) +
-                        gameManager.players.size.toString(), getString(R.string.id), packageName)
+                        gameManager.players.size.toString(),  ValuesData.id, packageName)
                 val playerStats: TextView = findViewById(playerStatsId)
                 playerStats.text = string
                 gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
@@ -343,7 +336,7 @@ class GameActivity : AppCompatActivity() {
             for (string in playersNames[PlayerType.PERSON]!!) {
                 gameManager.addPlayer(string, PlayerType.PERSON)
                 val playerStatsId = resources.getIdentifier(getString(R.string.playerStats) +
-                        gameManager.players.size.toString(), getString(R.string.id), packageName)
+                        gameManager.players.size.toString(),  ValuesData.id, packageName)
                 val playerStats: TextView = findViewById(playerStatsId)
                 playerStats.text = string
                 gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
@@ -358,7 +351,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun suicideAction(playerToSuicide: Player, withPlayerSwap: Boolean = true) {
         val myPlayerID = resources.getIdentifier(getString(R.string.Player) + playerToSuicide.id.toString(),
-                getString(R.string.id), packageName)
+                ValuesData.id, packageName)
         val player = findViewById<ImageView>(myPlayerID)
         player.visibility = View.INVISIBLE
         suicidePlayers.add(playerToSuicide.id)
@@ -478,7 +471,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun dataRestore(savedInstanceState: Bundle) {
         restoreSuicidePlayers(savedInstanceState)
-        gameManager.currentPlayerIndex = savedInstanceState.getInt(getString(R.string.currentPlayerIndex))
+        gameManager.currentPlayerIndex = savedInstanceState.getInt(ValuesData.currentPlayerIndex)
         restoreMoney(savedInstanceState)
         restoreCells(savedInstanceState)
         restoreActionState(savedInstanceState)
@@ -487,13 +480,13 @@ class GameActivity : AppCompatActivity() {
 
     private fun restoreSuicidePlayers(savedInstanceState: Bundle) {
         suicidePlayers.clear()
-        val playersToSuicide: ArrayList<Int> = savedInstanceState.getIntegerArrayList(getString(R.string.playersSuicideIds))
+        val playersToSuicide: ArrayList<Int> = savedInstanceState.getIntegerArrayList(ValuesData.playersSuicideIds)
         for (i in 0 until playersToSuicide.size)
             suicideAction(gameManager.getPlayerById(playersToSuicide[i]), false)
     }
 
     private fun restoreMoney(savedInstanceState: Bundle) {
-        val pMoney = savedInstanceState.getIntegerArrayList(getString(R.string.playerMoney))
+        val pMoney = savedInstanceState.getIntegerArrayList(ValuesData.playerMoney)
         for (i in 0 until pMoney.size) {
             gameManager.players[i].money = pMoney[i]
             updPlayerMoney(gameManager.players[i])
@@ -503,12 +496,12 @@ class GameActivity : AppCompatActivity() {
     private fun restoreCells(savedInstanceState: Bundle) {
         for (i in 0 until gameManager.players.size) {
             gameManager.players[i].restoreGameCells(
-                    savedInstanceState.getIntegerArrayList(getString(R.string.playerCells) + i.toString()))
+                    savedInstanceState.getIntegerArrayList(ValuesData.playerCells + i.toString()))
         }
     }
 
     private fun restoreActionState(savedInstanceState: Bundle) {
-        when (savedInstanceState.getInt(getString(R.string.actionState))) {
+        when (savedInstanceState.getInt(ValuesData.actionState)) {
             ActionState.BUY.state -> {
                 activateThrowButton(false)
                 reactivateBuyChoice()
@@ -523,7 +516,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun restoreCurrentInfo(savedInstanceState: Bundle) {
-        showInfo(savedInstanceState.getInt(getString(R.string.currentInfo)))
+        showInfo(savedInstanceState.getInt(ValuesData.currentInfo))
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -544,28 +537,28 @@ class GameActivity : AppCompatActivity() {
             for (j in 0 until player.cells.size)
                 playersOwnedCells[i].add(player.cells[j].id.toInt())
         }
-        outState?.putIntegerArrayList(getString(R.string.playersSuicideIds), suicidePlayers)
-        outState?.putIntegerArrayList(getString(R.string.playersPositions), playersPos)
-        outState?.putIntegerArrayList(getString(R.string.playerMoney), playersMoney)
-        outState?.putInt(getString(R.string.currentPlayerIndex), gameManager.currentPlayerIndex)
-        outState?.putInt(getString(R.string.actionState), actionState.state)
-        outState?.putInt(getString(R.string.currentInfo), currentInfo)
+        outState?.putIntegerArrayList(ValuesData.playersSuicideIds, suicidePlayers)
+        outState?.putIntegerArrayList(ValuesData.playersPositions, playersPos)
+        outState?.putIntegerArrayList(ValuesData.playerMoney, playersMoney)
+        outState?.putInt(ValuesData.currentPlayerIndex, gameManager.currentPlayerIndex)
+        outState?.putInt(ValuesData.actionState, actionState.state)
+        outState?.putInt(ValuesData.currentInfo, currentInfo)
         for (i in 0 until playersNum) {
-            outState?.putIntegerArrayList(getString(R.string.playerCells) + i.toString(), playersOwnedCells[i])
+            outState?.putIntegerArrayList(ValuesData.playerCells + i.toString(), playersOwnedCells[i])
         }
         super.onSaveInstanceState(outState)
     }
 
     private fun updPlayerMoney(player: Player) {
-        val playerMoneyId = resources.getIdentifier(getString(R.string.playerMoney) +
-                gameManager.getPlayerByName(player.name)!!.id, getString(R.string.id), packageName)
+        val playerMoneyId = resources.getIdentifier(ValuesData.playerMoney +
+                gameManager.getPlayerByName(player.name)!!.id,  ValuesData.id, packageName)
         val playerMoney: TextView = findViewById(playerMoneyId)
         playerMoney.text = gameManager.getPlayerByName(player.name)!!.money.toString()
     }
 
     fun endGameAction(winner: Player) {
         intent = Intent(this, WinScreenActivity::class.java)
-        intent.putExtra(getString(R.string.winnerName), winner.name)
+        intent.putExtra(ValuesData.winnerName, winner.name)
         startActivity(intent)
         CustomIntent.customType(this, getString(R.string.bottom_to_up))
     }
