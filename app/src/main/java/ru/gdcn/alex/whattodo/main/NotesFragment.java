@@ -1,5 +1,6 @@
 package ru.gdcn.alex.whattodo.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -49,8 +50,15 @@ public class NotesFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, TextFormer.getStartText(className) + "onStart!");
+        Log.d(TAG, TextFormer.getStartText(className) + "onResume!");
         notesRecyclerAdapter.loadNotes();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        Log.d(TAG, TextFormer.getStartText(className) + "onAttach!");
+        super.onAttach(context);
+
     }
 
     private void initRecyclerView() {

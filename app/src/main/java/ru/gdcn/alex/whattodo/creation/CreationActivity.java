@@ -18,10 +18,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.creation.alarm.ChooseDateDialog;
 import ru.gdcn.alex.whattodo.creation.alarm.ChooseTimeDialog;
 import ru.gdcn.alex.whattodo.creation.alarm.CreateAlarmDialog;
+import ru.gdcn.alex.whattodo.data.DBConnector;
+import ru.gdcn.alex.whattodo.objects.Item;
 import ru.gdcn.alex.whattodo.objects.Note;
 import ru.gdcn.alex.whattodo.objects.Notify;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
@@ -158,10 +162,12 @@ public class CreationActivity extends AppCompatActivity implements View.OnClickL
         Log.d(TAG, TextFormer.getStartText(className) + "onSave!");
     }
 
-    @Override
+    @Override //Ужас, отвратительно
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         Note note = (Note) savedInstanceState.getSerializable("note");
+        DBConnector.deleteNote(this, noteManager.getNote());
         noteManager.setNote(note);
+        noteManager.setItems((List<Item>) DBConnector.loadItems(this, note.getId()));
         header.setText(noteManager.getNote().getHeader());
         super.onRestoreInstanceState(savedInstanceState);
         Log.d(TAG, TextFormer.getStartText(className) + "onRestore!");

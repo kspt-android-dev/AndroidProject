@@ -99,4 +99,8 @@ public class CreationManager {
     public void setNote(Note note) {
         this.note = note;
     }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 }
