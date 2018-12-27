@@ -24,13 +24,16 @@ public class GameView extends View implements View.OnTouchListener {
     public static final int CELL_NUMBER = 9;
     private static final float LINE_THICKNESS = 5f;
     private static int cellSize;
+    private static final float START_ANIMATION = 0.15f;
+    private static final float END_ANIMATION = 0.3f;
+    private static final int DURATION = 1000;
 
     private Paint bitmapPaint = new Paint();
     private Bitmap bitmap;
     private Canvas canvas;
     private MainContract.Presenter presenter;
     private Bundle savedState;
-    private ValueAnimator animation;
+    private ValueAnimator blinkingAnimator;
 
     private boolean clearBall;
     private Cell clearCell;
@@ -108,20 +111,21 @@ public class GameView extends View implements View.OnTouchListener {
         this.setLayoutParams(params);
     }
 
-    public void makeAnimation(final Cell cell, final ColorType colorType) {
+    public void setBlinkingAnimation(final Cell cell, final ColorType colorType) {
         clearBall = true;
         clearCell = cell;
         clearColor = colorType;
         new Ball(cell, clearColor).clearBall(canvas);
-        animation = ValueAnimator.ofFloat(0.15f, 0.3f);
-        animation.setDuration(1000);
-        animation.setRepeatCount(ValueAnimator.INFINITE);
-        animation.setRepeatMode(ValueAnimator.REVERSE);
-        animation.setEvaluator(new FloatEvaluator());
-        animation.setInterpolator(new LinearInterpolator());
-        animation.start();
 
-        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        blinkingAnimator = ValueAnimator.ofFloat(START_ANIMATION, END_ANIMATION);
+        blinkingAnimator.setDuration(DURATION);
+        blinkingAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        blinkingAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        blinkingAnimator.setEvaluator(new FloatEvaluator());
+        blinkingAnimator.setInterpolator(new LinearInterpolator());
+        blinkingAnimator.start();
+
+        blinkingAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
@@ -131,8 +135,8 @@ public class GameView extends View implements View.OnTouchListener {
         });
     }
 
-    public void stopAnimation() {
-        animation.cancel();
+    public void stopBlinkingAnimation() {
+        blinkingAnimator.cancel();
         clearBall = false;
     }
 

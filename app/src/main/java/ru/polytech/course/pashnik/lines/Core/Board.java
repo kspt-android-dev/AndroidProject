@@ -82,11 +82,6 @@ public class Board implements MainContract.Model {
         return map;
     }
 
-    @Override
-    public void setModel(HashMap<Cell, ColorType> map) {
-        this.map = map;
-    }
-
     private boolean isWinLength(int currentLength) {
         return currentLength >= WIN_LENGTH;
     }

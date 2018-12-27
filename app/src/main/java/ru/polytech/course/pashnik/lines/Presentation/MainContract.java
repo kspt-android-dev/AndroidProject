@@ -20,9 +20,9 @@ public interface MainContract {
 
         void createDialog();
 
-        void makeAnimation(Cell cell, ColorType color);
+        void makeBlinkingAnimation(Cell cell, ColorType color);
 
-        void stopAnimation();
+        void stopBlinkingAnimation();
     }
 
     interface Presenter {
@@ -53,9 +53,6 @@ public interface MainContract {
         boolean isFull();
 
         HashMap getModel();
-
-        void setModel(HashMap<Cell, ColorType> model);
-
     }
 
 }

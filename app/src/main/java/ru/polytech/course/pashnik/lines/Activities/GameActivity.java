@@ -1,7 +1,5 @@
 package ru.polytech.course.pashnik.lines.Activities;
 
-import android.animation.FloatEvaluator;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,7 +8,6 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -95,13 +92,13 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void makeAnimation(final Cell pressedCell, final ColorType color) {
-        gameView.makeAnimation(pressedCell, color);
+    public void makeBlinkingAnimation(final Cell pressedCell, final ColorType color) {
+        gameView.setBlinkingAnimation(pressedCell, color);
     }
 
     @Override
-    public void stopAnimation() {
-        gameView.stopAnimation();
+    public void stopBlinkingAnimation() {
+        gameView.stopBlinkingAnimation();
     }
 
     @Override
