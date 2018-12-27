@@ -2,6 +2,7 @@ package ru.alexandra.forum;
 
 
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -76,6 +77,21 @@ public class LoginActivity extends AppCompatActivity{
         );
         DBConnector.insertUser(this, user);
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putString("login", login.getText().toString());
+        outState.putString("password", pass.getText().toString());
+        super.onSaveInstanceState(outState, outPersistentState);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        login.setText(savedInstanceState.getString("login"));
+        pass.setText(savedInstanceState.getString("password"));
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }
 

@@ -2,6 +2,7 @@ package ru.alexandra.forum;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,12 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import ru.alexandra.forum.objects.Answer;
 import ru.alexandra.forum.objects.Theme;
 import ru.alexandra.forum.objects.User;
 
-public class ThemeActivity extends AppCompatActivity {
+public class ThemeActivity extends AppCompatActivity implements AnswerDialog.OnAddAnswerListener {
 
     private AnswerRecyclerAdapter answerRecyclerAdapter;
     private Theme theme;
@@ -63,9 +65,9 @@ public class ThemeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.theme_menu_answer:
-                answering();
+                new AnswerDialog().show(getSupportFragmentManager(), "answer");
                 return true;
             case android.R.id.home:
                 onBackPressed();
@@ -75,27 +77,23 @@ public class ThemeActivity extends AppCompatActivity {
     }
 
     private void answering() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final View view = getLayoutInflater().inflate(R.layout.answer_dialog, null);
-        builder.setView(view);
-        builder.setPositiveButton("Ответить", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Answer answer = new Answer(
-                                theme.getId(),
-                                user.getId(),
-                                ((EditText)view.findViewById(R.id.answer_dialog_text)).getText().toString(),
-                                user
-                        );
-                        answerRecyclerAdapter.addAnswer(answer);
-                    }
-                })
-                .setNeutralButton("Отмена", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-        builder.show();
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    public void onAddAnswer(String text) {
+        Answer answer = new Answer(
+                theme.getId(),
+                user.getId(),
+                text,
+                user
+        );
+        answerRecyclerAdapter.addAnswer(answer);
     }
 }
