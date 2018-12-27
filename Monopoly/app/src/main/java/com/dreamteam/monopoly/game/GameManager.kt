@@ -1,9 +1,12 @@
 package com.dreamteam.monopoly.game
 
+import android.widget.TextView
 import com.dreamteam.monopoly.GameActivity
+import com.dreamteam.monopoly.R
 import com.dreamteam.monopoly.game.data.GameData
 import com.dreamteam.monopoly.game.data.GameData.startMoney
 import com.dreamteam.monopoly.game.board.Board
+import com.dreamteam.monopoly.game.data.ValuesData
 import com.dreamteam.monopoly.game.player.Player
 import com.dreamteam.monopoly.game.player.PlayerType
 
@@ -14,6 +17,34 @@ class GameManager(private val activity: GameActivity) {
     var currentPlayerIndex: Int = 0
     var actionState: ActionState = ActionState.IDLE
     var currentInfo: Int = 0
+
+    fun startAssignment(playersNames: HashMap<PlayerType, ArrayList<String>>) //adding text/players on map
+    {
+        if (playersNames[PlayerType.AI] != null) {
+            for (string in playersNames[PlayerType.AI]!!) {
+                addPlayer(string, PlayerType.AI)
+                val playerStatsId = activity.resources.getIdentifier(activity.getString(R.string.playerStats) +
+                        players.size.toString(), ValuesData.id, activity.packageName)
+                val playerStats: TextView = activity.findViewById(playerStatsId)
+                playerStats.text = string
+                getPlayerByName(string)!!.setPlayerID(
+                        players.indexOf(getPlayerByName(string)!!) + 1)
+                activity.updPlayerMoney(getPlayerByName(string)!!)
+            }
+        }
+        if (playersNames[PlayerType.PERSON] != null) {
+            for (string in playersNames[PlayerType.PERSON]!!) {
+                addPlayer(string, PlayerType.PERSON)
+                val playerStatsId = activity.resources.getIdentifier(activity.getString(R.string.playerStats) +
+                        players.size.toString(), ValuesData.id, activity.packageName)
+                val playerStats: TextView = activity.findViewById(playerStatsId)
+                playerStats.text = string
+                getPlayerByName(string)!!.setPlayerID(
+                        players.indexOf(getPlayerByName(string)!!) + 1)
+                activity.updPlayerMoney(getPlayerByName(string)!!)
+            }
+        }
+    }
 
     fun resetPlayersPositions(savedPositions: ArrayList<Int>) {
         if (savedPositions.size == players.size)
