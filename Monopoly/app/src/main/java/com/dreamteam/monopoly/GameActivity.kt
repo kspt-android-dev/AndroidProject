@@ -156,7 +156,7 @@ class GameActivity : AppCompatActivity() {
             gameManager.mainBoard.createBoard(constraintLayout, cellHeight, cellWidth)
         }
 
-        startAssignment(playersNames)
+        gameManager.startAssignment(playersNames)
 
         val namesize: Int = when {
             playersNames[PlayerType.PERSON]?.size == null -> playersNames[PlayerType.AI]!!.size
@@ -175,6 +175,10 @@ class GameActivity : AppCompatActivity() {
             constraintLayout.addView(player)
         }
         gameManager.updateAllPositions()
+
+        buttonSuicide!!.setOnClickListener {
+            suicideAction(gameManager.getCurrentPlayer())
+        }
     }
 
     private fun playerStartMoveAction() {
@@ -323,38 +327,6 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun getGameManager(): GameManager = gameManager
-
-    private fun startAssignment(playersNames: HashMap<PlayerType, ArrayList<String>>) //adding text/players on map
-    {
-        if (playersNames[PlayerType.AI] != null) {
-            for (string in playersNames[PlayerType.AI]!!) {
-                gameManager.addPlayer(string, PlayerType.AI)
-                val playerStatsId = resources.getIdentifier(getString(R.string.playerStats) +
-                        gameManager.players.size.toString(), ValuesData.id, packageName)
-                val playerStats: TextView = findViewById(playerStatsId)
-                playerStats.text = string
-                gameManager.getPlayerByName(string)!!.setPlayerID(
-                        gameManager.players.indexOf(gameManager.getPlayerByName(string)!!) + 1)
-                updPlayerMoney(gameManager.getPlayerByName(string)!!)
-            }
-        }
-        if (playersNames[PlayerType.PERSON] != null) {
-            for (string in playersNames[PlayerType.PERSON]!!) {
-                gameManager.addPlayer(string, PlayerType.PERSON)
-                val playerStatsId = resources.getIdentifier(getString(R.string.playerStats) +
-                        gameManager.players.size.toString(), ValuesData.id, packageName)
-                val playerStats: TextView = findViewById(playerStatsId)
-                playerStats.text = string
-                gameManager.getPlayerByName(string)!!.setPlayerID(
-                        gameManager.players.indexOf(gameManager.getPlayerByName(string)!!) + 1)
-                updPlayerMoney(gameManager.getPlayerByName(string)!!)
-            }
-        }
-
-        buttonSuicide!!.setOnClickListener {
-            suicideAction(gameManager.getCurrentPlayer())
-        }
-    }
 
     private fun suicideAction(playerToSuicide: Player, withPlayerSwap: Boolean = true) {
         val myPlayerID = resources.getIdentifier(getString(R.string.Player) + playerToSuicide.id.toString(),
