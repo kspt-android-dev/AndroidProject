@@ -7,7 +7,6 @@ import com.dreamteam.monopoly.game.data.GameData.startMoney
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.player.Player
 import com.dreamteam.monopoly.game.player.PlayerType
-import java.lang.StringBuilder
 
 class GameManager(private val activity: GameActivity) {
     var mainBoard: Board = Board(GameData.boardGameCells, activity)
@@ -27,7 +26,7 @@ class GameManager(private val activity: GameActivity) {
 
     fun resetPlayersData() {
         /*for (p in suicidePlayers)
-            activity.suicideAction(getPlayerById(p), false)*/
+            activity.deletePlayerFromView(getPlayerById(p))*/
         for (p in players) {
             Log.d("RESTORE", "=========================================")
             mainBoard.changeImagePlace(p)

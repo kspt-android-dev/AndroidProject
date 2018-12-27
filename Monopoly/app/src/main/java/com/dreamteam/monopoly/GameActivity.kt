@@ -224,7 +224,12 @@ class GameActivity : AppCompatActivity() {
             sellButton!!.setOnClickListener {
                 gameManager.mainBoard.gameWay[index].sell()
                 activateSellChoice(false)
-                updPlayerMoney(gameManager.getCurrentPlayer())
+                updPlayerMoney(gameManager.getCurrentPlayer()
+                )
+                if (gameManager.actionState == ActionState.SELL)
+                    gameManager.actionState = ActionState.IDLE
+                else
+                    gameManager.actionState = ActionState.BUY
             }
         }
     }
@@ -299,6 +304,7 @@ class GameActivity : AppCompatActivity() {
             Order.THIRD.value -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player3BackgroundColor))
             Order.FOURTH.value -> gradientDrawable.setColor(ContextCompat.getColor(this, R.color.Player4BackgroundColor))
         }
+        Log.d("RESTORE", "player's id(${player.id} cell($index) color setup")
         cellButtons[index].background = shape
     }
 
@@ -321,7 +327,8 @@ class GameActivity : AppCompatActivity() {
                         gameManager.players.size.toString(), ValuesData.id, packageName)
                 val playerStats: TextView = findViewById(playerStatsId)
                 playerStats.text = string
-                gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
+                gameManager.getPlayerByName(string)!!.setPlayerID(
+                        gameManager.players.indexOf(gameManager.getPlayerByName(string)!!) + 1)
                 updPlayerMoney(gameManager.getPlayerByName(string)!!)
             }
         }
@@ -332,7 +339,8 @@ class GameActivity : AppCompatActivity() {
                         gameManager.players.size.toString(), ValuesData.id, packageName)
                 val playerStats: TextView = findViewById(playerStatsId)
                 playerStats.text = string
-                gameManager.getPlayerByName(string)!!.setPlayerID(gameManager.players.size)
+                gameManager.getPlayerByName(string)!!.setPlayerID(
+                        gameManager.players.indexOf(gameManager.getPlayerByName(string)!!) + 1)
                 updPlayerMoney(gameManager.getPlayerByName(string)!!)
             }
         }
@@ -342,11 +350,8 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    fun suicideAction(playerToSuicide: Player, withPlayerSwap: Boolean = true) {
-        val myPlayerID = resources.getIdentifier(getString(R.string.Player) + playerToSuicide.id.toString(),
-                ValuesData.id, packageName)
-        val player = findViewById<ImageView>(myPlayerID)
-        player.visibility = View.INVISIBLE
+    private fun suicideAction(playerToSuicide: Player, withPlayerSwap: Boolean = true) {
+        deletePlayerFromView(playerToSuicide)
         gameManager.suicidePlayers.add(playerToSuicide.id)
         playerToSuicide.decision(PlayerActions.RETREAT)
         if (withPlayerSwap) {
@@ -354,6 +359,13 @@ class GameActivity : AppCompatActivity() {
             playersSwap(false)
         }
         showCurrentPlayerName()
+    }
+
+    fun deletePlayerFromView(playerToSuicide: Player) {
+        val myPlayerID = resources.getIdentifier(getString(R.string.Player) + playerToSuicide.id.toString(),
+                ValuesData.id, packageName)
+        val player = findViewById<ImageView>(myPlayerID)
+        player.visibility = View.INVISIBLE
     }
 
     val showInfoClick = View.OnClickListener { view ->
@@ -392,8 +404,9 @@ class GameActivity : AppCompatActivity() {
                 if (savedInstanceState != null) restoreFromBundle(savedInstanceState)
             }
             SaveMode.FROM_VIEW_MODEL -> {
-                init()
                 savedData = ViewModelProviders.of(this).get(GameActivityData::class.java)
+                if (savedData.isInited) gameManager = savedData.gameManager
+                init()
                 if (savedData.isInited) restoreFromViewModel()
             }
         }
@@ -410,7 +423,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun restoreFromViewModel() {
         Log.d("RESTORE", "RESTORE ")
-        gameManager = savedData.gameManager
+        //gameManager = savedData.gameManager
         updateViewData()
     }
 
@@ -502,9 +515,9 @@ class GameActivity : AppCompatActivity() {
 
     fun updPlayerMoney(player: Player) {
         val playerMoneyId = resources.getIdentifier(ValuesData.playerMoney +
-                gameManager.getPlayerByName(player.name)!!.id, ValuesData.id, packageName)
+                player.id, ValuesData.id, packageName)
         val playerMoney: TextView = findViewById(playerMoneyId)
-        playerMoney.text = gameManager.getPlayerByName(player.name)!!.money.toString()
+        playerMoney.text = player.money.toString()
     }
 
     fun endGameAction(winner: Player) {
