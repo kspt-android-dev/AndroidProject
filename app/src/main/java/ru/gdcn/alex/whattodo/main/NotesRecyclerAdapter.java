@@ -110,7 +110,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
-    public class CardViewHolder extends RecyclerView.ViewHolder {
+    class CardViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView headerView;
 
@@ -134,7 +134,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             header = itemView.findViewById(R.id.main_notes_recycler_header);
         }
 
-        public void bindAllHeader() {
+        void bindAllHeader() {
             header.setText(R.string.main_notes_recycler_header_all);
         }
     }

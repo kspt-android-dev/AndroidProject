@@ -24,7 +24,7 @@ import ru.gdcn.alex.whattodo.R;
 import ru.gdcn.alex.whattodo.objects.Item;
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class ItemsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = "ToDO_Logger";
     private static final String className = "ItemRecyclerAdapter";

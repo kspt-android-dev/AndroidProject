@@ -20,6 +20,10 @@
     <string name="dialog_choose_date">Date</string>
     <string name="dialog_choose_time">Time</string>
     <string name="dialog_repeat">Repeat</string>
+    <string name="dialog_save_button">Save</string>
+    <string name="dialog_delete_button">Delete</string>
+    <string name="dialog_cancel_button">Cancel</string>
+    <string name="dialog_title">Setup date and time</string>
     <string name="items_addbutton">New note</string>
     <string name="other_notes">Other notes</string>
     <string name="no_name">(No name)</string>

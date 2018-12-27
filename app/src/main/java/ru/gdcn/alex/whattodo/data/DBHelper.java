@@ -8,7 +8,7 @@ import android.util.Log;
 
 import ru.gdcn.alex.whattodo.utilities.TextFormer;
 
-public class DBHelper extends SQLiteOpenHelper {
+class DBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "ToDO_Logger";
     private static final String className = "DBHelper";

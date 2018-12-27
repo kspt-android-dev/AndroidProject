@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;
 
-    NotesFragment notes;
-    TrashFragment tasks;
+    private NotesFragment notes;
+    private TrashFragment tasks;
     CalendarFragment calendarFragment;
 
     @Override
