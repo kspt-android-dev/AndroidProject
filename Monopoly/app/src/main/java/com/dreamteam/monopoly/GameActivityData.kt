@@ -1,10 +1,7 @@
 package com.dreamteam.monopoly
 
 import android.arch.lifecycle.ViewModel
-import com.dreamteam.monopoly.R.array.cells
-import com.dreamteam.monopoly.R.string.player
 import com.dreamteam.monopoly.game.GameManager
-import com.dreamteam.monopoly.game.player.Player
 
 class GameActivityData : ViewModel() {
     var isInited = false

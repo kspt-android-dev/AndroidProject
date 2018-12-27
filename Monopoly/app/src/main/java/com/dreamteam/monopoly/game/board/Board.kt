@@ -1,5 +1,6 @@
 package com.dreamteam.monopoly.game.board
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.LayerDrawable
 import com.dreamteam.monopoly.game.data.GameData
@@ -45,19 +46,15 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
 
         val myPlayer = activity.resources.getIdentifier(activity.getString(R.string.Player) +
                 currentPlayerID.toString(), ValuesData.id, activity.packageName)
-        Log.d("RESTARE", currentPlayerID.toString())
         val myId = activity.resources.getIdentifier(activity.getString(R.string.cell) +
                 (player.currentPosition + 1).toString(), ValuesData.id, activity.packageName)
-        Log.d("RESTARE", (player.currentPosition + 1).toString())
         if (currentPlayerID == Order.FIRST.value || currentPlayerID == Order.THIRD.value) {
-            Log.d("RESTARE", "IM IN FIRST IF")
             constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
             constraintSet.connect(myPlayer, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
             if (currentPlayerID == Order.FIRST.value) constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
             else constraintSet.connect(myPlayer, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
         }
         if (currentPlayerID == Order.SECOND.value || currentPlayerID == Order.FOURTH.value) {
-            Log.d("RESTARE", "IM IN SECOND IF")
             constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
             constraintSet.connect(myPlayer, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
             if (currentPlayerID == Order.SECOND.value) constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
@@ -97,7 +94,6 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
                     Direction.END.value, Direction.START.value, Direction.TOP.value,
                     Direction.TOP.value, Direction.BOTTOM.value, Direction.BOTTOM.value)
         }
-        Log.d("board", indexOfCell.toString())
         createCell(cellHeight, cellHeight, constraintLayout,
                 Direction.END.value, Direction.START.value, Direction.TOP.value,
                 Direction.TOP.value, Direction.BOTTOM.value, Direction.BOTTOM.value)
@@ -110,9 +106,9 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
         }
     }
 
+    @SuppressLint("Recycle")
     private fun createCell(width: Int, height: Int, layout: ConstraintLayout, From1: Int, To1: Int, From2: Int, To2: Int, From3: Int, To3: Int, start: Boolean = false) {
         val ar = activity.resources.obtainTypedArray(R.array.cells)
-        Log.d("CHECKCHECk", indexOfCell.toString())
         val thisButtonID = ar.getResourceId(indexOfCell, 0)
 
         val button = ImageButton(activity)

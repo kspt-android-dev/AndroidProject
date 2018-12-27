@@ -18,7 +18,6 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import com.dreamteam.monopoly.game.data.GameData
-import com.dreamteam.monopoly.game.data.GameData.numberOfCommonCellsPerSide
 import com.dreamteam.monopoly.game.data.GameData.numberOfCornersPerSide
 import com.dreamteam.monopoly.game.data.GameData.numberOfSides
 import com.dreamteam.monopoly.game.data.ValuesData
@@ -117,14 +116,11 @@ class GameActivity : AppCompatActivity() {
                 numberOfCornersPerSide * GameData.cellSidesModifier)).toInt()
         val cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
 
-        val fullSideLength = numberOfCornersPerSide * cellHeight.toFloat() +
-                numberOfCommonCellsPerSide * cellWidth.toFloat()
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             horizontalGuideline.setGuidelinePercent(resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density / (metrics.heightPixels / resources.displayMetrics.density))
             underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
         } else {
             underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
-            //horizontalGuideline.setGuidelinePercent((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / metrics.heightPixels)
             verticalGuideline.setGuidelinePercent((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / (metrics.widthPixels / resources.displayMetrics.density))
             val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
             verticalGuideline2.setGuidelinePercent(((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / (metrics.widthPixels / resources.displayMetrics.density)) / 2)
@@ -376,7 +372,6 @@ class GameActivity : AppCompatActivity() {
     private fun showInfo(i: Int) {
         gameManager.currentInfo = i
         val name: String = gameManager.mainBoard.gameWay[i].info.name
-        Log.d("SIZE", name.toString())
         val costBuy = gameManager.mainBoard.gameWay[i].info.cost.costBuy
         val costSell = gameManager.mainBoard.gameWay[i].info.cost.costSell
         val charge = gameManager.mainBoard.gameWay[i].info.cost.costCharge
@@ -392,7 +387,6 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun dataRestore(savedInstanceState: Bundle? = null) {
-        Log.d("GHGdatarestore", cellButtons.size.toString())
         when (saveMode) {
             SaveMode.FROM_BUNDLE -> {
                 init()
@@ -400,12 +394,10 @@ class GameActivity : AppCompatActivity() {
             }
             SaveMode.FROM_VIEW_MODEL -> {
                 savedData = ViewModelProviders.of(this).get(GameActivityData::class.java)
-                //if (savedData.isInited) gameManager = savedData.gameManager
                 init()
                 if (savedData.isInited) restoreFromViewModel()
             }
         }
-        Log.d("GHGafterwhen", cellButtons.size.toString())
     }
 
     private fun restoreFromBundle(savedInstanceState: Bundle) {
@@ -507,7 +499,7 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    fun updPlayerMoney(player: Player) {
+    private fun updPlayerMoney(player: Player) {
         val playerMoneyId = resources.getIdentifier(ValuesData.playerMoney +
                 player.id, ValuesData.id, packageName)
         val playerMoney: TextView = findViewById(playerMoneyId)

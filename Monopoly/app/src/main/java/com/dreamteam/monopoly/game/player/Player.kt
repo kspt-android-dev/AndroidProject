@@ -1,6 +1,5 @@
 package com.dreamteam.monopoly.game.player
 
-import android.util.Log
 import android.widget.TextView
 import com.dreamteam.monopoly.R
 import com.dreamteam.monopoly.game.data.GameData.maxChanceMoney

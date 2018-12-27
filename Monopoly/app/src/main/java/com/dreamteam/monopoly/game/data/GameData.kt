@@ -20,7 +20,6 @@ object GameData {
     const val bottomSideIndexesModifier: Float = numberOfSides / 3f
     const val leftSideIndexesModifier: Int = numberOfSides / 4
     const val numberOfCornersPerSide = 2
-    const val numberOfCommonCellsPerSide = 9
     const val swapDicesDelay: Long = 2000
     const val cellSidesModifier: Float = 1.75f
 
