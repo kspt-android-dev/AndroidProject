@@ -53,7 +53,7 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        Log.d("GHGoncreatestart",cellButtons.size.toString())
+        Log.d("GHGoncreatestart", cellButtons.size.toString())
 
         hideTopBar()
 
@@ -403,7 +403,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun dataRestore(savedInstanceState: Bundle? = null) {
-        Log.d("GHGdatarestore",cellButtons.size.toString())
+        Log.d("GHGdatarestore", cellButtons.size.toString())
         when (saveMode) {
             SaveMode.FROM_BUNDLE -> {
                 init()
@@ -411,15 +411,16 @@ class GameActivity : AppCompatActivity() {
             }
             SaveMode.FROM_VIEW_MODEL -> {
                 savedData = ViewModelProviders.of(this).get(GameActivityData::class.java)
-                if (savedData.isInited) gameManager = savedData.gameManager
+                //if (savedData.isInited) gameManager = savedData.gameManager
                 init()
                 if (savedData.isInited) restoreFromViewModel()
             }
         }
-        Log.d("GHGafterwhen",cellButtons.size.toString())
+        Log.d("GHGafterwhen", cellButtons.size.toString())
     }
 
     private fun restoreFromBundle(savedInstanceState: Bundle) {
+        gameManager.resetPlayersPositions(savedInstanceState.getIntegerArrayList(ValuesData.playersPositions))
         restoreSuicidePlayers(savedInstanceState.getIntegerArrayList(ValuesData.playersSuicideIds))
         gameManager.currentPlayerIndex = savedInstanceState.getInt(ValuesData.currentPlayerIndex)
         restoreMoney(savedInstanceState.getIntegerArrayList(ValuesData.playerMoney))
@@ -431,7 +432,16 @@ class GameActivity : AppCompatActivity() {
     private fun restoreFromViewModel() {
         Log.d("RESTORE", "RESTORE ")
         //gameManager = savedData.gameManager
-        updateViewData()
+        //updateViewData()
+
+        // gameManager.resetPlayersPositions(savedInstanceState.getIntegerArrayList(ValuesData.playersPositions))
+        restoreSuicidePlayers(savedData.gameManager.suicidePlayers)
+        gameManager.resetPlayersData()
+        gameManager.currentPlayerIndex = savedData.gameManager.currentPlayerIndex
+        //restoreMoney(savedInstanceState.getIntegerArrayList(ValuesData.playerMoney))
+        //restoreCells(savedInstanceState)
+        restoreActionState(savedData.gameManager.actionState.state)
+        restoreCurrentInfo(savedData.gameManager.currentInfo)
     }
 
     private fun updateViewData() {
@@ -477,12 +487,6 @@ class GameActivity : AppCompatActivity() {
 
     private fun restoreCurrentInfo(index: Int) {
         showInfo(index)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        if (saveMode == SaveMode.FROM_BUNDLE)
-            gameManager.resetPlayersPositions(savedInstanceState.getIntegerArrayList(ValuesData.playersPositions))
-        super.onRestoreInstanceState(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
