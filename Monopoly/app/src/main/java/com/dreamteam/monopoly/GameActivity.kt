@@ -53,6 +53,7 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        Log.d("GHGoncreatestart",cellButtons.size.toString())
 
         hideTopBar()
 
@@ -96,7 +97,6 @@ class GameActivity : AppCompatActivity() {
 
     private fun init() {
         val constraintLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayoutScroll)
-        val mainLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayout)
         val underTopLineGuideline = findViewById<Guideline>(R.id.UnderTopPartGuideline)
         val horizontalGuideline = findViewById<Guideline>(R.id.HorizontalGuideline)
         val verticalGuideline = findViewById<Guideline>(R.id.VerticalGuideline)
@@ -129,8 +129,6 @@ class GameActivity : AppCompatActivity() {
             verticalGuideline.setGuidelinePercent((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / (metrics.widthPixels / resources.displayMetrics.density))
             val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
             verticalGuideline2.setGuidelinePercent(((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / (metrics.widthPixels / resources.displayMetrics.density)) / 2)
-            Log.d("HEIGHT2", (metrics.widthPixels / resources.displayMetrics.density).toString())
-            Log.d("HEIGHT1", (resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density).toString())
         }
         gameManager.mainBoard.createBoard(constraintLayout, cellHeight, cellWidth)
 
@@ -142,6 +140,7 @@ class GameActivity : AppCompatActivity() {
             playersNames[PlayerType.AI]?.size == null -> playersNames[PlayerType.PERSON]!!.size
             else -> playersNames[PlayerType.AI]!!.size + playersNames[PlayerType.PERSON]!!.size
         }
+
         for (i in 1..namesize) {
             val myPlayerID = resources.getIdentifier(getString(R.string.Player) + i.toString(), ValuesData.id, packageName)
             val playerImage = resources.getDrawable(resources
@@ -167,7 +166,9 @@ class GameActivity : AppCompatActivity() {
                 else constraintSet.connect(player.id, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
             }
             constraintSet.applyTo(constraintLayout)
+
         }
+
         // }
     }
 
@@ -370,6 +371,9 @@ class GameActivity : AppCompatActivity() {
 
     val showInfoClick = View.OnClickListener { view ->
         val i = cellButtons.indexOf(view)
+        Log.d("SIZE", i.toString())
+        Log.d("SIZE", cellButtons.size.toString())
+        Log.d("SIZE", cellButtons[i].toString())
         showInfo(i)
 
         if (gameManager.mainBoard.gameWay[i].owner == gameManager.getCurrentPlayer()) {
@@ -383,6 +387,7 @@ class GameActivity : AppCompatActivity() {
     private fun showInfo(i: Int) {
         gameManager.currentInfo = i
         val name: String = gameManager.mainBoard.gameWay[i].info.name
+        Log.d("SIZE", name.toString())
         val costBuy = gameManager.mainBoard.gameWay[i].info.cost.costBuy
         val costSell = gameManager.mainBoard.gameWay[i].info.cost.costSell
         val charge = gameManager.mainBoard.gameWay[i].info.cost.costCharge
@@ -398,6 +403,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun dataRestore(savedInstanceState: Bundle? = null) {
+        Log.d("GHGdatarestore",cellButtons.size.toString())
         when (saveMode) {
             SaveMode.FROM_BUNDLE -> {
                 init()
@@ -410,6 +416,7 @@ class GameActivity : AppCompatActivity() {
                 if (savedData.isInited) restoreFromViewModel()
             }
         }
+        Log.d("GHGafterwhen",cellButtons.size.toString())
     }
 
     private fun restoreFromBundle(savedInstanceState: Bundle) {
