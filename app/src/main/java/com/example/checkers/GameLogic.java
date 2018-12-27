@@ -1,6 +1,5 @@
 package com.example.checkers;
 
-import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +14,10 @@ public class GameLogic {
     private int numbOfBlackDead;
     private int numbOfWiteDead;
 
+    //индикатор для убитой шашки
+    private boolean whiteKill;
+    private boolean blackKill;
+
     // цвет ходящего игрока
     enum TurnColor {WHITE, BLACK}
     private TurnColor turnColor;
@@ -26,8 +29,11 @@ public class GameLogic {
     private boolean someoneKilledJustNow;
 
     // цвет ячеек поля
-    private int LIGHT = Color.rgb(255, 250, 250);
-    private int DARCK = Color.rgb(139,69,19);
+    private int LIGHT;
+    private int DARK;
+
+    private int black;
+    private int white;
 
     // цвета игроков
     static int bottomPlayerColor;
@@ -35,11 +41,16 @@ public class GameLogic {
 
     private int fieldSize;
     private Point padding; // отступ до поля от края экрана
-    private int hellHeight; // для dead checkers     входит в размер поля
+    private int hellHeight; // для dead checkers входит в размер поля
 
-    public GameLogic() {
-        upperPlayerColor = Color.BLACK;
-        bottomPlayerColor = Color.WHITE;
+    public GameLogic(int colorLight, int colorDark,
+                     int black, int white) {
+        upperPlayerColor = black;
+        bottomPlayerColor = white;
+        this.LIGHT = colorLight;
+        this.DARK = colorDark;
+        this.black = black;
+        this.white = white;
     }
 
     public void setParams(int fieldSize, Point padding) {
@@ -57,7 +68,7 @@ public class GameLogic {
         numbOfWiteDead = 0;
 
         turnColor = TurnColor.WHITE;
-        turnSide = (upperPlayerColor == Color.WHITE) ? TurnSide.TOP : TurnSide.BOTTOM;
+        turnSide = (upperPlayerColor == white) ? TurnSide.TOP : TurnSide.BOTTOM;
 
         someoneKilledJustNow = false;
 
@@ -164,7 +175,7 @@ public class GameLogic {
         ArrayList<Cell> cells = new ArrayList<>();
         Point cellStartPoint = new Point(padding.x + hellHeight, padding.y + hellHeight);
         for (int i = 0; i < 100; i++) {
-            Cell cell = new Cell(new Point(cellStartPoint.x, cellStartPoint.y), fieldSize/12, color);
+            Cell cell = new Cell(new Point(cellStartPoint.x, cellStartPoint.y), fieldSize/12, color, white);
 
             // определяем соседей для возможного хода
             if (i > 9) { //верхних ближних
@@ -196,7 +207,7 @@ public class GameLogic {
             }
             else{
                 cellStartPoint.x += fieldSize/12;
-                color = (color == LIGHT) ? DARCK : LIGHT;
+                color = (color == LIGHT) ? DARK : LIGHT;
             }
         }
         return cells;
@@ -207,7 +218,7 @@ public class GameLogic {
 
         for (int i = 0; i < 40; i++) {
             //расставляем сверху
-            if (cells.get(i).getBackgroundColor() == DARCK) {
+            if (cells.get(i).getBackgroundColor() == DARK) {
                 cells.get(i).setCondition(Cell.CellCondition.CONTAINS_CHECKER);
                 cells.get(i).setCheckerColor(upperPlayerColor);
 
@@ -215,7 +226,7 @@ public class GameLogic {
             }
 
             //расставляем снизу
-            if (cells.get(cells.size() - 1 - i).getBackgroundColor() == DARCK) {
+            if (cells.get(cells.size() - 1 - i).getBackgroundColor() == DARK) {
                 cells.get(cells.size() - 1 - i).setCondition(Cell.CellCondition.CONTAINS_CHECKER);
                 cells.get(cells.size() - 1 - i).setCheckerColor(bottomPlayerColor);
             }
@@ -253,7 +264,6 @@ public class GameLogic {
         else {
             setCheckerToCell(riseCheckerPoint, riseCheckerPoint);
         }
-        //TODO show smth
         if ( gameFinished() ) Log.i("Game", "IsFinashed");
         someoneKilledJustNow = false;
     }
@@ -264,8 +274,8 @@ public class GameLogic {
             if (cell.contains(point) &&
                     ( cell.getCondition().equals(Cell.CellCondition.CONTAINS_CHECKER) ||
                             cell.getCondition().equals(Cell.CellCondition.CONTAINS_CROWN )) &&
-                    ((turnColor.equals(TurnColor.WHITE) && cell.getCheckerColor() == Color.WHITE) ||
-                            (turnColor.equals(TurnColor.BLACK) && cell.getCheckerColor() == Color.BLACK)))
+                    ((turnColor.equals(TurnColor.WHITE) && cell.getCheckerColor() == white) ||
+                            (turnColor.equals(TurnColor.BLACK) && cell.getCheckerColor() == black)))
                 return true;
 
         }
@@ -367,7 +377,7 @@ public class GameLogic {
         int numberOfCheckersInWay = 0;
         boolean containsRiseCheckerPoint = false;
         // шашка, которую срубят
-        Cell victim = new Cell(new Point(0,0),0,0);
+        Cell victim = new Cell(new Point(0,0),0,0, white);
         Cell tmpCell = cell;
 
         while (!tmpCell.contains(riseCheckerPoint)) {
@@ -398,7 +408,7 @@ public class GameLogic {
         int numberOfCheckersInWay = 0;
         boolean containsRiseCheckerPoint = false;
         // шашка, которую срубят
-        Cell victim = new Cell(new Point(0,0),0,0);
+        Cell victim = new Cell(new Point(0,0),0,0, white);
         Cell tmpCell = cell;
 
         while (!tmpCell.contains(riseCheckerPoint)) {
@@ -429,7 +439,7 @@ public class GameLogic {
         int numberOfCheckersInWay = 0;
         boolean containsRiseCheckerPoint = false;
         // шашка, которую срубят
-        Cell victim = new Cell(new Point(0,0),0,0);
+        Cell victim = new Cell(new Point(0,0),0,0, white);
         Cell tmpCell = cell;
 
         while (!tmpCell.contains(riseCheckerPoint)) {
@@ -460,7 +470,7 @@ public class GameLogic {
         int numberOfCheckersInWay = 0;
         boolean containsRiseCheckerPoint = false;
         // шашка, которую срубят
-        Cell victim = new Cell(new Point(0,0),0,0);
+        Cell victim = new Cell(new Point(0,0),0,0, white);
         Cell tmpCell = cell;
 
         while (!tmpCell.contains(riseCheckerPoint)) {
@@ -529,12 +539,16 @@ public class GameLogic {
     }
 
     private void killChecker (Cell cell) {
-        if (cell.getCheckerColor() == Color.WHITE){
+        if (cell.getCheckerColor() == white){
+            whiteKill = true;
+            blackKill = false;
             numbOfWiteDead ++;
             Log.i("Killed", "Wite");
         }
         else {
             Log.i("Killed", "Black");
+            blackKill = true;
+            whiteKill = false;
             numbOfBlackDead++;
         }
         someoneKilledJustNow = true;
@@ -574,7 +588,7 @@ public class GameLogic {
     // устанавливает цвет шашки в ячейке
     private void setCellCheckerColor(Point point) {
         for (Cell cell : cells) {
-            if (cell.contains(point)) cell.setCheckerColor(turnColor.equals(TurnColor.WHITE) ? Color.WHITE : Color.BLACK);
+            if (cell.contains(point)) cell.setCheckerColor(turnColor.equals(TurnColor.WHITE) ? white : black);
         }
     }
 
@@ -628,8 +642,8 @@ public class GameLogic {
         while (tmpCell.getCloseTopLeft() != null) {
             tmpCell = tmpCell.getCloseTopLeft();
             if (!tmpCell.getCondition().equals(Cell.CellCondition.EMPTY) &&
-                    ((turnColor == TurnColor.BLACK && tmpCell.getCheckerColor() == Color.WHITE) ||
-                            (turnColor == TurnColor.WHITE && tmpCell.getCheckerColor() == Color.BLACK))) break;
+                    ((turnColor == TurnColor.BLACK && tmpCell.getCheckerColor() == white) ||
+                            (turnColor == TurnColor.WHITE && tmpCell.getCheckerColor() == black))) break;
         }
         if (tmpCell.getCloseTopLeft() != null && tmpCell.getCloseTopLeft().getCondition().equals(Cell.CellCondition.EMPTY)) {
             Log.i("Crown Possible To Kilee", "Rule 1");
@@ -641,8 +655,8 @@ public class GameLogic {
         while (tmpCell.getCloseTopRight() != null) {
             tmpCell = tmpCell.getCloseTopRight();
             if (!tmpCell.getCondition().equals(Cell.CellCondition.EMPTY) &&
-                    ((turnColor == TurnColor.BLACK && tmpCell.getCheckerColor() == Color.WHITE) ||
-                            (turnColor == TurnColor.WHITE && tmpCell.getCheckerColor() == Color.BLACK))) break;
+                    ((turnColor == TurnColor.BLACK && tmpCell.getCheckerColor() == white) ||
+                            (turnColor == TurnColor.WHITE && tmpCell.getCheckerColor() == black))) break;
         }
         if (tmpCell.getCloseTopRight() != null && tmpCell.getCloseTopRight().getCondition().equals(Cell.CellCondition.EMPTY)) {
             Log.i("Crown Possible To Kilee", "Rule 2");
@@ -654,8 +668,8 @@ public class GameLogic {
         while (tmpCell.getCloseBottomRight() != null){
             tmpCell = tmpCell.getCloseBottomRight();
             if (!tmpCell.getCondition().equals(Cell.CellCondition.EMPTY) &&
-                    ((turnColor == TurnColor.BLACK && tmpCell.getCheckerColor() == Color.WHITE) ||
-                            (turnColor == TurnColor.WHITE && tmpCell.getCheckerColor() == Color.BLACK))) break;
+                    ((turnColor == TurnColor.BLACK && tmpCell.getCheckerColor() == white) ||
+                            (turnColor == TurnColor.WHITE && tmpCell.getCheckerColor() == black))) break;
         }
         if (tmpCell.getCloseBottomRight() != null && tmpCell.getCloseBottomRight().getCondition().equals(Cell.CellCondition.EMPTY)) {
             Log.i("Crown Possible To Kilee", "Rule 3");
@@ -667,8 +681,8 @@ public class GameLogic {
         while (tmpCell.getCloseBottomLeft() != null) {
             tmpCell = tmpCell.getCloseBottomLeft();
             if (!tmpCell.getCondition().equals(Cell.CellCondition.EMPTY) &&
-                    ((turnColor == TurnColor.BLACK && tmpCell.getCheckerColor() == Color.WHITE) ||
-                            (turnColor == TurnColor.WHITE && tmpCell.getCheckerColor() == Color.BLACK))) break;
+                    ((turnColor == TurnColor.BLACK && tmpCell.getCheckerColor() == white) ||
+                            (turnColor == TurnColor.WHITE && tmpCell.getCheckerColor() == black))) break;
         }
         if (tmpCell.getCloseBottomLeft() != null && tmpCell.getCloseBottomLeft().getCondition().equals(Cell.CellCondition.EMPTY)) {
             Log.i("Crown Possible To Kilee", "Rule 4");
@@ -711,28 +725,28 @@ public class GameLogic {
         ArrayList<Integer> whiteCheckers = (ArrayList<Integer>) savedInstanceState.get("whiteCheckers");
         for (int i = 0; i < whiteCheckers.size(); i++) {
             cells.get(whiteCheckers.get(i)).setCondition(Cell.CellCondition.CONTAINS_CHECKER);
-            cells.get(whiteCheckers.get(i)).setCheckerColor(Color.WHITE);
+            cells.get(whiteCheckers.get(i)).setCheckerColor(white);
         }
 
         // расставляем чёрные шашки
         ArrayList<Integer> blackCheckers = (ArrayList<Integer>) savedInstanceState.get("blackCheckers");
         for (int i = 0; i < blackCheckers.size(); i++) {
             cells.get(blackCheckers.get(i)).setCondition(Cell.CellCondition.CONTAINS_CHECKER);
-            cells.get(blackCheckers.get(i)).setCheckerColor(Color.BLACK);
+            cells.get(blackCheckers.get(i)).setCheckerColor(black);
         }
 
         // расставляем белые дамки
         ArrayList<Integer> whiteCrowns = (ArrayList<Integer>) savedInstanceState.get("whiteCrowns");
         for (int i=0; i<whiteCrowns.size(); i++){
             cells.get(whiteCrowns.get(i)).setCondition(Cell.CellCondition.CONTAINS_CROWN);
-            cells.get(whiteCrowns.get(i)).setCheckerColor(Color.WHITE);
+            cells.get(whiteCrowns.get(i)).setCheckerColor(white);
         }
 
         // расставляем чёрные дамки
         ArrayList<Integer> blackCrowns = (ArrayList<Integer>) savedInstanceState.get("blackCrowns");
         for (int i=0; i<blackCrowns.size(); i++){
             cells.get(blackCrowns.get(i)).setCondition(Cell.CellCondition.CONTAINS_CROWN);
-            cells.get(blackCrowns.get(i)).setCheckerColor(Color.BLACK);
+            cells.get(blackCrowns.get(i)).setCheckerColor(black);
         }
 
         numbOfWiteDead = (int) savedInstanceState.get("numbOfWiteDead");
@@ -772,12 +786,18 @@ public class GameLogic {
         return numbOfWiteDead;
     }
 
+    public boolean isWhiteKill() { return whiteKill;}
+
+    public boolean isBlackKill() {
+        return blackKill;
+    }
+
     // для сохранения при перевороте
     public ArrayList<Integer> getWiteCheckersPlaces(){
         ArrayList<Integer> result = new ArrayList<>();
 
         for (int i=0; i < cells.size(); i++) {
-            if (cells.get(i).getCondition().equals(Cell.CellCondition.CONTAINS_CHECKER) && cells.get(i).getCheckerColor() == Color.WHITE) result.add(i);
+            if (cells.get(i).getCondition().equals(Cell.CellCondition.CONTAINS_CHECKER) && cells.get(i).getCheckerColor() == white) result.add(i);
         }
 
         return result;
@@ -787,7 +807,7 @@ public class GameLogic {
         ArrayList<Integer> result = new ArrayList<>();
 
         for (int i = 0; i < cells.size(); i++) {
-            if (cells.get(i).getCondition().equals(Cell.CellCondition.CONTAINS_CROWN) && cells.get(i).getCheckerColor() == Color.WHITE) result.add(i);
+            if (cells.get(i).getCondition().equals(Cell.CellCondition.CONTAINS_CROWN) && cells.get(i).getCheckerColor() == white) result.add(i);
         }
         return result;
     }
@@ -796,7 +816,7 @@ public class GameLogic {
         ArrayList<Integer> result = new ArrayList<>();
 
         for (int i = 0; i < cells.size(); i++) {
-            if (cells.get(i).getCondition().equals(Cell.CellCondition.CONTAINS_CROWN) && cells.get(i).getCheckerColor() == Color.BLACK) result.add(i);
+            if (cells.get(i).getCondition().equals(Cell.CellCondition.CONTAINS_CROWN) && cells.get(i).getCheckerColor() == black) result.add(i);
         }
         return result;
     }
@@ -806,7 +826,7 @@ public class GameLogic {
         ArrayList<Integer> result = new ArrayList<>();
 
         for (int i=0; i < cells.size(); i++) {
-            if (cells.get(i).getCondition().equals(Cell.CellCondition.CONTAINS_CHECKER) && cells.get(i).getCheckerColor() == Color.BLACK) result.add(i);
+            if (cells.get(i).getCondition().equals(Cell.CellCondition.CONTAINS_CHECKER) && cells.get(i).getCheckerColor() == black) result.add(i);
         }
 
         return result;

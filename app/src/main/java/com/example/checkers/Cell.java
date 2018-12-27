@@ -30,11 +30,11 @@ public class Cell {
     enum CellCondition { CONTAINS_CHECKER, EMPTY, CONTAINS_GRABBED_CHECKER, CONTAINS_CROWN, CONTAINS_GRABBED_CROWN}
     private CellCondition condition;
 
-    public Cell(Point startPoint, int size, int color) {
+    public Cell(Point startPoint, int size, int color, int white) {
         this.startPoint = startPoint;
         this.backgroundColor = color;
         this.size = size;
-        this.checkerColor = Color.BLUE;
+        this.checkerColor = white;
         this.condition = CellCondition.EMPTY;
 
         this.closeBottomLeft = null;

@@ -18,7 +18,7 @@ public class UnitTests {
     //---------------- gameLogic -------------------
     @Test
     public void startNewGameTest() {
-        GameLogic gameLogic = new GameLogic();
+        GameLogic gameLogic = new GameLogic(Color.WHITE, Color.BLACK, Color.WHITE, Color.BLACK);
 
         gameLogic.setParams(1080, new Point(100, 100));
         gameLogic.startNewGame();
@@ -82,7 +82,7 @@ public class UnitTests {
 
     @Test
     public void recoverParamsTest() {
-        GameLogic gameLogic = new GameLogic();
+        GameLogic gameLogic = new GameLogic(Color.WHITE, Color.BLACK, Color.WHITE, Color.BLACK);
         gameLogic.setParams(1080, new Point(100, 100));
         gameLogic.startNewGame();
 
@@ -184,7 +184,7 @@ public class UnitTests {
     public void hideCheckerTest() {
         final int fieldSize = 1200;
         final int padding = 100;
-        GameLogic gameLogic = new GameLogic();
+        GameLogic gameLogic = new GameLogic(Color.WHITE, Color.BLACK, Color.WHITE, Color.BLACK);
 
         gameLogic.setParams(fieldSize, new Point(padding, padding));
         Bundle savedInstanceState = setFieldConfiguration();
@@ -209,7 +209,7 @@ public class UnitTests {
     public void suitableForGrabTest() {
         final int fieldSize = 1200;
         final int padding = 100;
-        GameLogic gameLogic = new GameLogic();
+        GameLogic gameLogic = new GameLogic(Color.WHITE, Color.BLACK, Color.WHITE, Color.BLACK);
 
         gameLogic.setParams(fieldSize, new Point(padding, padding));
         Bundle savedInstanceState = setFieldConfiguration();

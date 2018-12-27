@@ -2,7 +2,6 @@ package com.example.checkers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -39,11 +38,11 @@ public class SettingsActivity extends Activity {
                 if (firstMove.getCheckedRadioButtonId() != oldFirstMove) {
                     // установка цветов игроков
                     if (firstMove.getCheckedRadioButtonId() == R.id.upper_player_first_move) {
-                        GameLogic.upperPlayerColor = Color.WHITE;
-                        GameLogic.bottomPlayerColor = Color.BLACK;
+                        GameLogic.upperPlayerColor = getResources().getColor(R.color.white);
+                        GameLogic.bottomPlayerColor =getResources().getColor( R.color.black);
                     } else {
-                        GameLogic.upperPlayerColor = Color.BLACK;
-                        GameLogic.bottomPlayerColor = Color.WHITE;
+                        GameLogic.upperPlayerColor = getResources().getColor(R.color.black);
+                        GameLogic.bottomPlayerColor = getResources().getColor(R.color.white);
                     }
                     setResult(RESULT_OK);
                 }
@@ -56,7 +55,7 @@ public class SettingsActivity extends Activity {
 
     // устанавливаем параметры в соответствии с текущими настройками поля
     public void setParams() {
-        firstMove.check( (GameLogic.upperPlayerColor == Color.WHITE) ? R.id.upper_player_first_move : R.id.bottom_player_first_move);
+        firstMove.check( (GameLogic.upperPlayerColor == getResources().getColor(R.color.white)) ? R.id.upper_player_first_move : R.id.bottom_player_first_move);
         oldFirstMove = firstMove.getCheckedRadioButtonId();
     }
 

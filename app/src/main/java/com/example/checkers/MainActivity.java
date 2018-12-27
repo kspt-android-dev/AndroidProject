@@ -1,9 +1,7 @@
 package com.example.checkers;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Service;
-import android.content.Context;
+import android.app.Activity;;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -19,7 +17,7 @@ public class MainActivity extends Activity {
     public static final int SETTINGS_ACTIVITY_RESULT = 1;
     private PlayingField field;
     private FrameLayout frameLayout;
-    //private Context context;
+
 
     private boolean checkerGrabbed = false;
     Point downFingerPoint = new Point(0,0);
@@ -34,9 +32,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      //  context = this;
 
-        gameLogic = new GameLogic();
+
+        gameLogic = new GameLogic(getResources().getColor(R.color.snow), getResources().getColor(R.color.saddleBrown),
+                    getResources().getColor(R.color.black), getResources().getColor(R.color.white));
 
         // останавливаем сервис уведомлений
         startServiceIntent = new Intent(this,NotificationService.class);
