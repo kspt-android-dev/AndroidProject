@@ -36,6 +36,7 @@ public class GameField extends View {
     private List<Bitmap> bitmapListLetter = new ArrayList<>();
     private List<Bitmap> bitmapListLetterBoard = new ArrayList<>();
     private GameMechanic games;
+    //Дефолтные значения отступов экрана
     private final int indent = 100;
     private final int indentY = 5;
     Bitmap x2Letterpict;
@@ -180,7 +181,6 @@ public class GameField extends View {
         bitmapListLetterBoard.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.letb33),
                 sizeCell,sizeCell,  false));
     }
-
     public void setStartPoint(){
         if (!orientation){
             int startX = (sizeScreen.x - sizeCell*NUMBER_CELL_IN_ROW) / 2;
@@ -212,34 +212,27 @@ public class GameField extends View {
     public Point getSizeScreen() {
         return sizeScreen;
     }
-
     public void setOrientation(boolean orient) {
-
         orientation = orient;
     }
-
     public void setSizeScreen(Point screen){
         this.sizeScreen = screen;
     }
-
     public void newWord(){
         games.newWord(tempListLetter, tempListNumCells);
         tempListLetter.clear();
         tempListNumCells.clear();
         invalidate();
     }
-
     public void changeTurn(){
         games.changeTurn();
         invalidate();
     }
-
     public void changeTurnResetLetter(){
         if (tempListNumCells.isEmpty())
             games.changeTurnResetLetter();
         invalidate();
     }
-
     public GameField(Context context, Player player1, Player player2, int sizeCell) {
         super(context);
         this.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
@@ -247,6 +240,7 @@ public class GameField extends View {
         this.setClickable(true);
         this.setOnTouchListener(new GameFieldListener(this));
         this.sizeCell = sizeCell;
+        //Сделано для того чтобы буквы которые в руке у игрока выглядели больше
         this.SIZE_CELL_LETTER = sizeCell + 5;
         matrix = new Matrix();
         games = new GameMechanic(player1,player2);
@@ -277,7 +271,6 @@ public class GameField extends View {
         games.getGameRule().setCountFreeLetter( (ArrayList<Integer>) savedInstanceState.get("freeLetter"));
         invalidate();
     }
-
     public int getSizeCell(){
         return sizeCell;
     }
@@ -287,7 +280,6 @@ public class GameField extends View {
     public boolean getOrientation(){
         return orientation;
     }
-
     public boolean isTempListNumCells(){
         return tempListNumCells.isEmpty();
     }
@@ -305,7 +297,6 @@ public class GameField extends View {
         startpict = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.start),
                 sizeCell,sizeCell,false);
     }
-
     @Override
     public boolean performClick() {
         return super.performClick();

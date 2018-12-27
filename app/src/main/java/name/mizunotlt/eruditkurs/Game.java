@@ -35,23 +35,19 @@ public class Game extends Activity {
         Intent initIntent = getIntent();
         player1 = new Player(initIntent.getStringExtra("firstPlayer"));
         player2 = new Player(initIntent.getStringExtra("secondPlayer"));
+        size = new Point();
+        Display display = getWindowManager().getDefaultDisplay();
+        display.getSize(size);
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            size = new Point();
-            Display display = getWindowManager().getDefaultDisplay();
-            display.getSize(size);
             //Округление в сторону нуля
             sizeCell = ((size.y / CELLS_IN_ROW) / 10) * 10;
             orientation = true;
         }
         else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            size = new Point();
-            Display display = getWindowManager().getDefaultDisplay();
-            display.getSize(size);
             //Округление в сторону 0
             sizeCell = ((size.x / CELLS_IN_ROW) / 10) * 10;
             orientation = false;
         }
-
         gameField = new GameField(this, player1, player2, sizeCell);
         frameLayout = (FrameLayout) findViewById(R.id.frameGame);
         gameField.setOrientation(orientation);

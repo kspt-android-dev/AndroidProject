@@ -30,10 +30,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class EruditKursInstrumentedTest {
-    /*
-    @Rule
-    public ActivityTestRule<GameStart> myStartGame = new ActivityTestRule<>(GameStart.class);
-    */
+
     private Game testGameActivity;
     @Rule
     public  ActivityTestRule<Game> myGameTest = new ActivityTestRule<>(Game.class);
@@ -49,7 +46,11 @@ public class EruditKursInstrumentedTest {
     @Test
     @SmallTest
     public void testStartGameAndAddWord(){
-
+        //тест проверяет составление корректного и неккоректного слова
+        //Если слово составлено корректно до в текстэдит отобразиться само слово иначе вернется
+        //Пустая строка и буквы скинутся до исходного состояния
+        //Числа это координаты нажатия (Тестировалось на устройстве с экраном 1080x2160 точек
+        //Поэтому такие числа
         onView(ViewMatchers.withId(R.id.startGame)).perform(ViewActions.click());
         onView(ViewMatchers.withId(R.id.nextTurn)).perform(ViewActions.click());
         setupLetter();
@@ -75,6 +76,7 @@ public class EruditKursInstrumentedTest {
     @Test
     @SmallTest
     public void  nextTurnTest(){
+        //Тест проверка перехода хода
         onView(ViewMatchers.withId(R.id.startGame)).perform(ViewActions.click());
         onView(ViewMatchers.withId(R.id.namePlayer)).check(matches(withText("ГОША\n0")));
         onView(ViewMatchers.withId(R.id.nextTurn)).perform(ViewActions.click());
@@ -84,13 +86,16 @@ public class EruditKursInstrumentedTest {
     @Test
     @SmallTest
     public void  recycleTest(){
+        //Тест проверка удаления буквы выбираем первую букву и сбрасываем
         onView(ViewMatchers.withId(R.id.startGame)).perform(ViewActions.click());
         onView(ViewMatchers.withId(R.id.namePlayer)).check(matches(withText("ГОША\n0")));
         onView(ViewMatchers.withId(R.id.nextTurn)).perform(ViewActions.click());
         setupLetter();
+        //char oldLetter = testGameActivity.gameField.getGames().getListCellLetter()
         onView(ViewMatchers.withId(R.id.nextTurn)).perform(ViewActions.click());
         onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(100, 1900));
         onView(ViewMatchers.withId(R.id.recylce)).perform(ViewActions.click());
+
     }
 
     //Тест составления и проверки слова

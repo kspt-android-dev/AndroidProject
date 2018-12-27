@@ -2,14 +2,16 @@ package name.mizunotlt.eruditkurs;
 
 import android.graphics.Path;
 import android.graphics.Point;
-
+enum State{
+    DEF_CELL, X2WORD, X2LETTER, X3WORD, X3LETTER,START_POSITION
+}
 public class Cell {
 
     private Point startPoint;
     private Path path;
     private char letter = ' ';
     private boolean useEarly = false;
-    private StateCellEnum.State state;
+    private State state;
     private int numCell;
     private int size;
 
@@ -20,11 +22,11 @@ public class Cell {
         this.setPath();
     }
 
-    public void setState(StateCellEnum.State state){
+    public void setState(State state){
         this.state = state;
     }
 
-    public StateCellEnum.State getState(){
+    public State getState(){
         return state;
     }
 

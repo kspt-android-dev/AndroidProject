@@ -141,8 +141,10 @@ public class GameRules {
                     startMakeWord += cellsInRow;
                 }
                 if (flagX3Word)
+                    //Бонус умножения на 3
                     score *= 3;
                 if (flagX2Word)
+                    //Бонус умножения на 2
                     score *= 2;
             }
             if  (first + cellsInRow > countCells){

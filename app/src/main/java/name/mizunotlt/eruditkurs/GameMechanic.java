@@ -4,6 +4,13 @@ import android.graphics.Point;
 
 import java.util.ArrayList;
 
+import static name.mizunotlt.eruditkurs.State.DEF_CELL;
+import static name.mizunotlt.eruditkurs.State.START_POSITION;
+import static name.mizunotlt.eruditkurs.State.X2LETTER;
+import static name.mizunotlt.eruditkurs.State.X2WORD;
+import static name.mizunotlt.eruditkurs.State.X3LETTER;
+import static name.mizunotlt.eruditkurs.State.X3WORD;
+
 public class GameMechanic {
 
     private ArrayList<CellForLetter> listCellLetter = new ArrayList<>();
@@ -223,27 +230,27 @@ public class GameMechanic {
                     case 0 :{
                         switch (j){
                             case 0:{
-                                tempCell.setState(StateCellEnum.State.X3WORD);
+                                tempCell.setState(X3WORD);
                                 break;
                             }
                             case 3: {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 7: {
-                                tempCell.setState(StateCellEnum.State.X3WORD);
+                                tempCell.setState(X3WORD);
                                 break;
                             }
                             case 11: {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 14:{
-                                tempCell.setState(StateCellEnum.State.X3WORD);
+                                tempCell.setState(X3WORD);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -252,23 +259,23 @@ public class GameMechanic {
                     case 1 :{
                         switch (j){
                             case 1 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             case 5 : {
-                                tempCell.setState(StateCellEnum.State.X3LETTER);
+                                tempCell.setState(X3LETTER);
                                 break;
                             }
                             case 9 : {
-                                tempCell.setState(StateCellEnum.State.X3LETTER);
+                                tempCell.setState(X3LETTER);
                                 break;
                             }
                             case 13 :{
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -277,23 +284,23 @@ public class GameMechanic {
                     case 2 :{
                         switch (j){
                             case 2 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             case 6 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 8 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 12: {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -302,27 +309,27 @@ public class GameMechanic {
                     case 3:{
                         switch (j){
                             case 0 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 3 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             case 7 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 11 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             case 14 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -331,15 +338,15 @@ public class GameMechanic {
                     case 4 :{
                         switch (j){
                             case 4 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             case 10 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -364,15 +371,15 @@ public class GameMechanic {
                     case 5 :{
                         switch (j){
                             case 1 : {
-                                tempCell.setState(StateCellEnum.State.X3LETTER);
+                                tempCell.setState(X3LETTER);
                                 break;
                             }
                             case 13 :{
-                                tempCell.setState(StateCellEnum.State.X3LETTER);
+                                tempCell.setState(X3LETTER);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -381,23 +388,23 @@ public class GameMechanic {
                     case 6 :{
                         switch (j){
                             case 2 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 6 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 8 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 12 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -406,27 +413,27 @@ public class GameMechanic {
                     case 7 :{
                         switch (j){
                             case 0 : {
-                                tempCell.setState(StateCellEnum.State.X3WORD);
+                                tempCell.setState(X3WORD);
                                 break;
                             }
                             case 3 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 7 : {
-                                tempCell.setState(StateCellEnum.State.START_POSITION);
+                                tempCell.setState(START_POSITION);
                                 break;
                             }
                             case 11: {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 14 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -435,23 +442,23 @@ public class GameMechanic {
                     case 8 :{
                         switch (j){
                             case 2 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 6 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 8 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 12 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -460,15 +467,15 @@ public class GameMechanic {
                     case 9 :{
                         switch (j){
                             case 1 : {
-                                tempCell.setState(StateCellEnum.State.X3LETTER);
+                                tempCell.setState(X3LETTER);
                                 break;
                             }
                             case 13 : {
-                                tempCell.setState(StateCellEnum.State.X3LETTER);
+                                tempCell.setState(X3LETTER);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -493,15 +500,15 @@ public class GameMechanic {
                     case 10 :{
                         switch (j){
                             case 4 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             case 10 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -510,27 +517,27 @@ public class GameMechanic {
                     case 11 :{
                         switch (j){
                             case 0 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 3 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             case 7 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 11 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             case 14 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -539,23 +546,23 @@ public class GameMechanic {
                     case 12 :{
                         switch (j){
                             case 2 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             case 6 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 8 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 12 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -564,23 +571,23 @@ public class GameMechanic {
                     case 13 :{
                         switch (j){
                             case 1 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             case 5 : {
-                                tempCell.setState(StateCellEnum.State.X3LETTER);
+                                tempCell.setState(X3LETTER);
                                 break;
                             }
                             case 9 : {
-                                tempCell.setState(StateCellEnum.State.X3LETTER);
+                                tempCell.setState(X3LETTER);
                                 break;
                             }
                             case 13 : {
-                                tempCell.setState(StateCellEnum.State.X2WORD);
+                                tempCell.setState(X2WORD);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
@@ -589,27 +596,27 @@ public class GameMechanic {
                     case 14 :{
                         switch (j){
                             case 0 : {
-                                tempCell.setState(StateCellEnum.State.X3WORD);
+                                tempCell.setState(X3WORD);
                                 break;
                             }
                             case 3 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 7 : {
-                                tempCell.setState(StateCellEnum.State.X3WORD);
+                                tempCell.setState(X3WORD);
                                 break;
                             }
                             case 11 : {
-                                tempCell.setState(StateCellEnum.State.X2LETTER);
+                                tempCell.setState(X2LETTER);
                                 break;
                             }
                             case 14 : {
-                                tempCell.setState(StateCellEnum.State.X3WORD);
+                                tempCell.setState(X3WORD);
                                 break;
                             }
                             default: {
-                                tempCell.setState(StateCellEnum.State.DEF_CELL);
+                                tempCell.setState(DEF_CELL);
                                 break;
                             }
                         }
