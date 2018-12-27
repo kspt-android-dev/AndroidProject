@@ -22,6 +22,7 @@ object GameData {
     const val numberOfCornersPerSide = 2
     const val swapDicesDelay: Long = 2000
     const val cellSidesModifier: Float = 1.75f
+    const val numberOfCommonCellsPerSide = 9
 
     /// Special cells settings
     const val minChanceMoney: Int = 1

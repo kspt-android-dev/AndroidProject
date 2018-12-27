@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintLayout.LayoutParams
-import android.support.constraint.ConstraintSet
 import android.support.constraint.Guideline
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
@@ -94,6 +93,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        val cellWidth: Int
+        val cellHeight: Int
         val constraintLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayoutScroll)
         val underTopLineGuideline = findViewById<Guideline>(R.id.UnderTopPartGuideline)
         val horizontalGuideline = findViewById<Guideline>(R.id.HorizontalGuideline)
@@ -107,25 +108,53 @@ class GameActivity : AppCompatActivity() {
         val metrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(metrics)
 
-        val boardSize: Int =
-                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-                    metrics.widthPixels * 2
-                else
-                    metrics.heightPixels * 2
-        val cellWidth: Int = (boardSize / ((gameManager.mainBoard.gameWayLength / numberOfSides - 1) +
-                numberOfCornersPerSide * GameData.cellSidesModifier)).toInt()
-        val cellHeight: Int = (cellWidth * GameData.cellSidesModifier).toInt()
+        var screenLayout = getResources().getConfiguration().screenLayout
+        screenLayout = screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            horizontalGuideline.setGuidelinePercent(resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density / (metrics.heightPixels / resources.displayMetrics.density))
-            underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
+        if (screenLayout == Configuration.SCREENLAYOUT_SIZE_SMALL) {
+            val boardSize: Int =
+                    if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+                        metrics.widthPixels * 2
+                    else
+                        metrics.heightPixels * 2
+            cellWidth = (boardSize / ((gameManager.mainBoard.gameWayLength / numberOfSides - 1) +
+                    numberOfCornersPerSide * GameData.cellSidesModifier)).toInt()
+            cellHeight = (cellWidth * GameData.cellSidesModifier).toInt()
+
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                horizontalGuideline.setGuidelinePercent(resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density / (metrics.heightPixels / resources.displayMetrics.density))
+                underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
+            } else {
+                underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
+                verticalGuideline.setGuidelinePercent((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / (metrics.widthPixels / resources.displayMetrics.density))
+                val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
+                verticalGuideline2.setGuidelinePercent(((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / (metrics.widthPixels / resources.displayMetrics.density)) / 2)
+            }
+            gameManager.mainBoard.createBoard(constraintLayout, cellHeight, cellWidth)
         } else {
-            underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
-            verticalGuideline.setGuidelinePercent((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / (metrics.widthPixels / resources.displayMetrics.density))
-            val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
-            verticalGuideline2.setGuidelinePercent(((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / (metrics.widthPixels / resources.displayMetrics.density)) / 2)
+            val boardSize: Int =
+                    if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+                        metrics.widthPixels
+                    else
+                        metrics.heightPixels
+            cellWidth = (boardSize / ((gameManager.mainBoard.gameWayLength / numberOfSides - 1) +
+                    numberOfCornersPerSide * GameData.cellSidesModifier)).toInt()
+            cellHeight = (cellWidth * GameData.cellSidesModifier).toInt()
+
+            val fullSideLength = numberOfCornersPerSide * cellHeight.toFloat() +
+                    GameData.numberOfCommonCellsPerSide * cellWidth.toFloat()
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                horizontalGuideline.setGuidelinePercent(fullSideLength / metrics.heightPixels)
+                underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
+            } else {
+                underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / boardSize)
+                horizontalGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
+                verticalGuideline.setGuidelinePercent(fullSideLength / metrics.widthPixels)
+                val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
+                verticalGuideline2.setGuidelinePercent((fullSideLength / 2) / metrics.widthPixels)
+            }
+            gameManager.mainBoard.createBoard(constraintLayout, cellHeight, cellWidth)
         }
-        gameManager.mainBoard.createBoard(constraintLayout, cellHeight, cellWidth)
 
         startAssignment(playersNames)
 
@@ -144,24 +173,8 @@ class GameActivity : AppCompatActivity() {
             player.id = (myPlayerID)
             player.setImageDrawable(playerImage)
             constraintLayout.addView(player)
-            val constraintSet = ConstraintSet()
-            constraintSet.clone(constraintLayout)
-            val myId = resources.getIdentifier(getString(R.string.cell) + Order.FIRST.value.toString(), ValuesData.id, packageName)
-            if (i == Order.FIRST.value || i == Order.THIRD.value) {
-                constraintSet.connect(player.id, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
-                constraintSet.connect(player.id, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
-                if (i == Order.FIRST.value) constraintSet.connect(player.id, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
-                else constraintSet.connect(player.id, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
-            }
-            if (i == Order.SECOND.value || i == Order.FOURTH.value) {
-                constraintSet.connect(player.id, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
-                constraintSet.connect(player.id, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
-                if (i == Order.SECOND.value) constraintSet.connect(player.id, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
-                else constraintSet.connect(player.id, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
-            }
-            constraintSet.applyTo(constraintLayout)
         }
-        //gameManager.updateAllPositions()
+        gameManager.updateAllPositions()
     }
 
     private fun playerStartMoveAction() {
