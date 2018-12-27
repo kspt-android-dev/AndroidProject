@@ -21,6 +21,16 @@ public class Note implements Serializable {
         this.position = position;
     }
 
+    public Note(int position, String header, String content, String type, Long date, int fixed, int deleted) {
+        this.position = position;
+        this.header = header;
+        this.content = content;
+        this.type = type;
+        this.date = date;
+        this.fixed = fixed;
+        this.deleted = deleted;
+    }
+
     public Note(int id, int position, String header, String content, String type, Long date, int fixed, int deleted) {
         this.id = id;
         this.position = position;
