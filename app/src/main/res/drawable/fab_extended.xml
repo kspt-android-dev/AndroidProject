@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android" tools:keep="@drawable/fab_extended">
+<item>
+    <shape android:shape="rectangle">
+        <solid android:color="@color/colorPrimary"/>
+        <corners android:radius="32dp"/>
+    </shape>
+</item>
+</selector>
