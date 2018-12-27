@@ -17,7 +17,8 @@ import android.app.Activity
 import android.widget.TextView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import com.dreamteam.monopoly.game.GameManager
+import com.dreamteam.monopoly.helpers.DelayType
+import com.dreamteam.monopoly.helpers.delay
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
 import java.lang.IllegalStateException
@@ -26,18 +27,18 @@ import java.lang.IllegalStateException
 class WholeGameTest {
 
     @get:Rule
-    val mActivityRule: ActivityTestRule<MainActivity>  = ActivityTestRule(MainActivity::class.java)
+    val mActivityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
 
     @Test
     @Throws(Exception::class)
     fun testGame() {
         val device = UiDevice.getInstance(getInstrumentation())
+        val isHumanCheck = true
         val testsellnumber = 25
-        val shortDelay = 2000L  // delays need for visualising
-        val longDelay = 10000L
-        Thread.sleep(shortDelay)
+
+        delay(isHumanCheck, DelayType.SHORT)
         onView(withId(R.id.buttonPlay)).perform(click())
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
         onView(withId(R.id.Namespace)).perform(typeText("TheBestPlayer")).perform(closeSoftKeyboard())
         onView(withId(R.id.buttonEnter)).perform(click())
         onView(withId(R.id.Namespace)).perform(typeText("WillBeDeleted")).perform(closeSoftKeyboard())
@@ -60,79 +61,79 @@ class WholeGameTest {
 
         onView(withId(R.id.buttonThrowCubes)).perform(click())
         onView(withId(R.id.buttonThrowCubes)).check(ViewAssertions.matches(Matchers.not(isDisplayed())))
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
         if (ga.findViewById<Button>(R.id.DialogView).visibility == View.VISIBLE) {
             onView(withId(R.id.YesButton)).perform(click())
             onView(withId(R.id.DialogView)).check(ViewAssertions.matches(Matchers.not(isDisplayed())))
         }
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
         onView(withId(R.id.buttonThrowCubes)).perform(click())
         onView(withId(R.id.buttonThrowCubes)).check(ViewAssertions.matches(Matchers.not(isDisplayed())))
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
         if (ga.findViewById<Button>(R.id.DialogView).visibility == View.VISIBLE) {
             onView(withId(R.id.YesButton)).perform(click())
             onView(withId(R.id.DialogView)).check(ViewAssertions.matches(Matchers.not(isDisplayed())))
         }
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
         onView(withId(R.id.buttonThrowCubes)).perform(click())
         onView(withId(R.id.buttonThrowCubes)).check(ViewAssertions.matches(Matchers.not(isDisplayed())))
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
         if (ga.findViewById<Button>(R.id.DialogView).visibility == View.VISIBLE) {
             onView(withId(R.id.NoButton)).perform(click())
             onView(withId(R.id.DialogView)).check(ViewAssertions.matches(Matchers.not(isDisplayed())))
         }
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
         onView(withId(R.id.buttonThrowCubes)).perform(click())
         onView(withId(R.id.buttonThrowCubes)).check(ViewAssertions.matches(Matchers.not(isDisplayed())))
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
         if (ga.findViewById<Button>(R.id.DialogView).visibility == View.VISIBLE) {
             onView(withId(R.id.NoButton)).perform(click())
             onView(withId(R.id.DialogView)).check(ViewAssertions.matches(Matchers.not(isDisplayed())))
         }
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
         onView(withId(R.id.cell25)).perform(click())
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
         if (getText(withId(R.id.cellName)) != ("Name: " + ga.getGameManager().mainBoard.gameWay[testsellnumber - 1].info.name))
             throw IllegalStateException()  // -1 because array size start from
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
         device.setOrientationLeft()
-        Thread.sleep(longDelay)   //long delay here to check rotation save
+        delay(isHumanCheck, DelayType.LONG)
         device.setOrientationNatural()
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
         onView(withId(R.id.buttonSuicide)).perform(click())
         onView(withId(R.id.buttonSuicide)).perform(click())
-        Thread.sleep(shortDelay)
+        delay(isHumanCheck, DelayType.SHORT)
     }
 
+}
+
+private fun getActivityInstance(): Activity {
+    val currentActivity = ArrayList<Activity>()
+
+    getInstrumentation().runOnMainSync {
+        val resumedActivity = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED)
+        val it = resumedActivity.iterator()
+        currentActivity.add(it.next())
     }
 
-    private fun getActivityInstance(): Activity {
-        val currentActivity = ArrayList<Activity>()
+    return currentActivity[0]
+}
 
-        getInstrumentation().runOnMainSync {
-            val resumedActivity = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED)
-            val it = resumedActivity.iterator()
-            currentActivity.add(it.next())
+fun getText(matcher: Matcher<View>): String {
+    val stringHolder = ArrayList<String>()
+    onView(matcher).perform(object : ViewAction {
+        override fun getConstraints(): Matcher<View> {
+            return isAssignableFrom(TextView::class.java)
         }
 
-        return currentActivity[0]
-    }
+        override fun getDescription(): String {
+            return "getting text from a TextView"
+        }
 
-    fun getText(matcher: Matcher<View>): String {
-        val stringHolder = ArrayList<String>()
-        onView(matcher).perform(object : ViewAction {
-            override fun getConstraints(): Matcher<View> {
-                return isAssignableFrom(TextView::class.java)
-            }
-
-            override fun getDescription(): String {
-                return "getting text from a TextView"
-            }
-
-            override fun perform(uiController: UiController, view: View) {
-                val tv = view as TextView
-                stringHolder.add(tv.text.toString())
-            }
-        })
-        return stringHolder[0]
-    }
+        override fun perform(uiController: UiController, view: View) {
+            val tv = view as TextView
+            stringHolder.add(tv.text.toString())
+        }
+    })
+    return stringHolder[0]
+}

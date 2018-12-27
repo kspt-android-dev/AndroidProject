@@ -27,3 +27,12 @@ fun shakeEffect(btn: Button) {
             .repeat(shakeRepeatCount)
             .playOn(btn)
 }
+
+fun delay(value: Boolean, delayType: DelayType) {
+    if (value)
+        Thread.sleep(delayType.value)
+}
+
+enum class DelayType(val value: Long) {
+    SHORT(2000L), LONG(10000L)
+}

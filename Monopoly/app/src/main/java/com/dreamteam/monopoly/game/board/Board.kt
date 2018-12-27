@@ -11,7 +11,6 @@ import java.util.ArrayList
 import android.support.constraint.ConstraintSet
 import com.dreamteam.monopoly.R
 import android.support.constraint.ConstraintLayout
-import android.util.Log
 import android.widget.ImageButton
 import com.dreamteam.monopoly.GameActivity
 import com.dreamteam.monopoly.game.data.ValuesData
