@@ -48,7 +48,7 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
         Log.d("RESTARE", currentPlayerID.toString())
         val myId = activity.resources.getIdentifier(activity.getString(R.string.cell) +
                 (player.currentPosition + 1).toString(), ValuesData.id, activity.packageName)
-        Log.d("RESTARE",  (player.currentPosition + 1).toString())
+        Log.d("RESTARE", (player.currentPosition + 1).toString())
         if (currentPlayerID == Order.FIRST.value || currentPlayerID == Order.THIRD.value) {
             Log.d("RESTARE", "IM IN FIRST IF")
             constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)
@@ -57,7 +57,7 @@ class Board(var gameWay: ArrayList<GameCell>, val activity: GameActivity) {
             else constraintSet.connect(myPlayer, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
         }
         if (currentPlayerID == Order.SECOND.value || currentPlayerID == Order.FOURTH.value) {
-            Log.d("RESTARE",  "IM IN SECOND IF")
+            Log.d("RESTARE", "IM IN SECOND IF")
             constraintSet.connect(myPlayer, ConstraintSet.TOP, myId, ConstraintSet.TOP, 0)
             constraintSet.connect(myPlayer, ConstraintSet.BOTTOM, myId, ConstraintSet.BOTTOM, 0)
             if (currentPlayerID == Order.SECOND.value) constraintSet.connect(myPlayer, ConstraintSet.RIGHT, myId, ConstraintSet.RIGHT, 0)

@@ -24,19 +24,9 @@ class GameManager(private val activity: GameActivity) {
             }
     }
 
-    fun resetPlayersData() {
-        /*for (p in suicidePlayers)
-            activity.deletePlayerFromView(getPlayerById(p))*/
-        for (p in players) {
-            Log.d("RESTORE", "=========================================")
+    fun updateAllPositions() {
+        for (p in players)
             mainBoard.changeImagePlace(p)
-            activity.updPlayerMoney(p)
-            p.updateOwnedCells()
-            Log.d("RESTORE", "player ${p.name} (${p.id}) restored")
-            Log.d("RESTORE", "player ${p.name} ${p.currentPosition} position")
-            Log.d("RESTORE", "player ${p.name} ${p.money} money")
-            Log.d("RESTORE", "player ${p.name} ${p.cells.size} cells")
-        }
     }
 
     fun nextPlayerMove() {

@@ -140,13 +140,6 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         }
     }
 
-    fun updateOwnedCells() {
-        for (cell in cells) {
-            markOwnedCell(cell)
-            Log.d("RESTORE", "player $name ($id) ${cell.info.name} marked")
-        }
-    }
-
     fun addGameCell(newCell: GameCell) {
         cells.add(newCell)
         markOwnedCell(newCell)

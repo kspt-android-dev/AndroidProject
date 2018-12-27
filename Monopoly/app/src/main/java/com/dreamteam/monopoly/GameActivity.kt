@@ -53,7 +53,6 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        Log.d("GHGoncreatestart", cellButtons.size.toString())
 
         hideTopBar()
 
@@ -132,7 +131,6 @@ class GameActivity : AppCompatActivity() {
         }
         gameManager.mainBoard.createBoard(constraintLayout, cellHeight, cellWidth)
 
-        //if (gameManager.players.isEmpty()) {
         startAssignment(playersNames)
 
         val namesize: Int = when {
@@ -166,10 +164,8 @@ class GameActivity : AppCompatActivity() {
                 else constraintSet.connect(player.id, ConstraintSet.LEFT, myId, ConstraintSet.LEFT, 0)
             }
             constraintSet.applyTo(constraintLayout)
-
         }
-
-        // }
+        //gameManager.updateAllPositions()
     }
 
     private fun playerStartMoveAction() {
@@ -352,7 +348,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun suicideAction(playerToSuicide: Player, withPlayerSwap: Boolean = true) {
-        deletePlayerFromView(playerToSuicide)
+        val myPlayerID = resources.getIdentifier(getString(R.string.Player) + playerToSuicide.id.toString(),
+                ValuesData.id, packageName)
+        val player = findViewById<ImageView>(myPlayerID)
+        player.visibility = View.INVISIBLE
         gameManager.suicidePlayers.add(playerToSuicide.id)
         playerToSuicide.decision(PlayerActions.RETREAT)
         if (withPlayerSwap) {
@@ -362,18 +361,8 @@ class GameActivity : AppCompatActivity() {
         showCurrentPlayerName()
     }
 
-    fun deletePlayerFromView(playerToSuicide: Player) {
-        val myPlayerID = resources.getIdentifier(getString(R.string.Player) + playerToSuicide.id.toString(),
-                ValuesData.id, packageName)
-        val player = findViewById<ImageView>(myPlayerID)
-        player.visibility = View.INVISIBLE
-    }
-
     val showInfoClick = View.OnClickListener { view ->
         val i = cellButtons.indexOf(view)
-        Log.d("SIZE", i.toString())
-        Log.d("SIZE", cellButtons.size.toString())
-        Log.d("SIZE", cellButtons[i].toString())
         showInfo(i)
 
         if (gameManager.mainBoard.gameWay[i].owner == gameManager.getCurrentPlayer()) {
@@ -430,24 +419,13 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun restoreFromViewModel() {
-        Log.d("RESTORE", "RESTORE ")
-        //gameManager = savedData.gameManager
-        //updateViewData()
-
-        // gameManager.resetPlayersPositions(savedInstanceState.getIntegerArrayList(ValuesData.playersPositions))
+        gameManager.resetPlayersPositions(savedData.getPlayersPositionsData())
         restoreSuicidePlayers(savedData.gameManager.suicidePlayers)
-        gameManager.resetPlayersData()
         gameManager.currentPlayerIndex = savedData.gameManager.currentPlayerIndex
-        //restoreMoney(savedInstanceState.getIntegerArrayList(ValuesData.playerMoney))
-        //restoreCells(savedInstanceState)
+        restoreMoney(savedData.getPlayersMoneyData())
+        restoreCells()
         restoreActionState(savedData.gameManager.actionState.state)
         restoreCurrentInfo(savedData.gameManager.currentInfo)
-    }
-
-    private fun updateViewData() {
-        gameManager.resetPlayersData()
-        restoreActionState(gameManager.actionState.state)
-        restoreCurrentInfo(gameManager.currentInfo)
     }
 
     private fun restoreSuicidePlayers(playersToSuicide: ArrayList<Int>) {
@@ -467,6 +445,12 @@ class GameActivity : AppCompatActivity() {
         for (i in 0 until gameManager.players.size) {
             gameManager.players[i].restoreOwnedCells(
                     savedInstanceState.getIntegerArrayList(ValuesData.playerCells + i.toString()))
+        }
+    }
+
+    private fun restoreCells() {
+        for (i in 0 until gameManager.players.size) {
+            gameManager.players[i].restoreOwnedCells(savedData.getPlayersCellsData(i))
         }
     }
 
@@ -520,7 +504,6 @@ class GameActivity : AppCompatActivity() {
         super.onDestroy()
         if (saveMode == SaveMode.FROM_VIEW_MODEL) {
             savedData.save(gameManager)
-            Log.d("RESTORE", "SAVED")
         }
     }
 
