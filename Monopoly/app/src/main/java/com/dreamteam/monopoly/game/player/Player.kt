@@ -1,9 +1,10 @@
 package com.dreamteam.monopoly.game.player
 
+import android.util.Log
 import android.widget.TextView
 import com.dreamteam.monopoly.R
-import com.dreamteam.monopoly.game.Data.GameData.maxChanceMoney
-import com.dreamteam.monopoly.game.Data.GameData.minChanceMoney
+import com.dreamteam.monopoly.game.data.GameData.maxChanceMoney
+import com.dreamteam.monopoly.game.data.GameData.minChanceMoney
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.board.cell.CellState
 import com.dreamteam.monopoly.game.board.cell.GameCell
@@ -133,9 +134,16 @@ class Player(val name: String, startMoney: Int, val type: PlayerType, private va
         } else false
     }
 
-    fun restoreGameCells(newCellIndexList: ArrayList<Int>) {
+    fun restoreOwnedCells(newCellIndexList: ArrayList<Int>) {
         for (index in newCellIndexList) {
             board.gameWay[index].setupOwner(this)
+        }
+    }
+
+    fun updateOwnedCells() {
+        for (cell in cells) {
+            markOwnedCell(cell)
+            Log.d("RESTORE", "player $name ($id) ${cell.info.name} marked")
         }
     }
 

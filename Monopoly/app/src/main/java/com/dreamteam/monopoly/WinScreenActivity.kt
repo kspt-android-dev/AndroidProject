@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
 import android.view.View
-import com.dreamteam.monopoly.game.Data.ValuesData
+import com.dreamteam.monopoly.game.data.ValuesData
 import com.dreamteam.monopoly.helpers.makeTinyAlert
 import maes.tech.intentanim.CustomIntent
 

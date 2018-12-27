@@ -5,9 +5,9 @@ import android.widget.Button
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.dreamteam.monopoly.R
-import com.dreamteam.monopoly.game.Data.GameData.alertDuration
-import com.dreamteam.monopoly.game.Data.GameData.shakeEffectDuration
-import com.dreamteam.monopoly.game.Data.GameData.shakeRepeatCount
+import com.dreamteam.monopoly.game.data.GameData.alertDuration
+import com.dreamteam.monopoly.game.data.GameData.shakeEffectDuration
+import com.dreamteam.monopoly.game.data.GameData.shakeRepeatCount
 import com.tapadoo.alerter.Alerter
 
 fun makeTinyAlert(activity: Activity, text: String) {

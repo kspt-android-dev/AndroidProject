@@ -1,6 +1,6 @@
 package com.dreamteam.monopoly
 
-import com.dreamteam.monopoly.game.Data.GameData
+import com.dreamteam.monopoly.game.data.GameData
 import com.dreamteam.monopoly.game.GameManager
 import com.dreamteam.monopoly.game.board.cell.CellState
 import com.dreamteam.monopoly.game.board.cell.GameCellType

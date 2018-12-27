@@ -1,4 +1,4 @@
-package com.dreamteam.monopoly.game.Data
+package com.dreamteam.monopoly.game.data
 
 import com.dreamteam.monopoly.game.board.cell.GameCell
 import com.dreamteam.monopoly.game.board.cell.GameCellInfo

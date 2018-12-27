@@ -1,4 +1,4 @@
-package com.dreamteam.monopoly.game.Data
+package com.dreamteam.monopoly.game.data
 
 object ValuesData {
     const val winnerName ="winnerName"

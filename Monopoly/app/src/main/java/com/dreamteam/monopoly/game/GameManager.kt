@@ -1,23 +1,43 @@
 package com.dreamteam.monopoly.game
 
-import android.os.Bundle
+import android.util.Log
 import com.dreamteam.monopoly.GameActivity
-import com.dreamteam.monopoly.R
-import com.dreamteam.monopoly.game.Data.GameData
-import com.dreamteam.monopoly.game.Data.GameData.startMoney
-import com.dreamteam.monopoly.game.Data.ValuesData
+import com.dreamteam.monopoly.game.data.GameData
+import com.dreamteam.monopoly.game.data.GameData.startMoney
 import com.dreamteam.monopoly.game.board.Board
 import com.dreamteam.monopoly.game.player.Player
 import com.dreamteam.monopoly.game.player.PlayerType
+import java.lang.StringBuilder
 
 class GameManager(private val activity: GameActivity) {
     var mainBoard: Board = Board(GameData.boardGameCells, activity)
     var players: ArrayList<Player> = ArrayList()
+    var suicidePlayers: ArrayList<Int> = ArrayList()
     var currentPlayerIndex: Int = 0
-    private var isEndGame: Boolean = false
+    var actionState: ActionState = ActionState.IDLE
+    var currentInfo: Int = 0
 
-    fun resetSaveData(savedInstanceState: Bundle) {
-        mainBoard.resetField(savedInstanceState.getIntegerArrayList(ValuesData.playersPositions))
+    fun resetPlayersPositions(savedPositions: ArrayList<Int>) {
+        if (savedPositions.size == players.size)
+            for (i in 0 until players.size) {
+                players[i].currentPosition = savedPositions[i]
+                mainBoard.changeImagePlace(players[i])
+            }
+    }
+
+    fun resetPlayersData() {
+        /*for (p in suicidePlayers)
+            activity.suicideAction(getPlayerById(p), false)*/
+        for (p in players) {
+            Log.d("RESTORE", "=========================================")
+            mainBoard.changeImagePlace(p)
+            activity.updPlayerMoney(p)
+            p.updateOwnedCells()
+            Log.d("RESTORE", "player ${p.name} (${p.id}) restored")
+            Log.d("RESTORE", "player ${p.name} ${p.currentPosition} position")
+            Log.d("RESTORE", "player ${p.name} ${p.money} money")
+            Log.d("RESTORE", "player ${p.name} ${p.cells.size} cells")
+        }
     }
 
     fun nextPlayerMove() {
@@ -35,20 +55,30 @@ class GameManager(private val activity: GameActivity) {
     }
 
     fun addPlayer(name: String) {
-        players.add(Player(name, startMoney, PlayerType.PERSON, mainBoard))
+        if (checkExistingPlayer(name))
+            players.add(Player(name, startMoney, PlayerType.PERSON, mainBoard))
     }
 
     fun addPlayers(playersData: List<String>) {
         for (name: String in playersData)
-            players.add(Player(name, startMoney, PlayerType.PERSON, mainBoard))
+            if (checkExistingPlayer(name))
+                players.add(Player(name, startMoney, PlayerType.PERSON, mainBoard))
     }
 
     fun addPlayer(name: String, type: PlayerType) {
-        players.add(Player(name, startMoney, type, mainBoard))
+        if (checkExistingPlayer(name))
+            players.add(Player(name, startMoney, type, mainBoard))
     }
 
     fun addPlayer(name: String, startMoney: Int, type: PlayerType) {
-        players.add(Player(name, startMoney, type, mainBoard))
+        if (checkExistingPlayer(name))
+            players.add(Player(name, startMoney, type, mainBoard))
+    }
+
+    private fun checkExistingPlayer(name: String): Boolean {
+        for (p in players)
+            if (p.name == name) return false
+        return true
     }
 
     fun removePlayer(player: Player) {
@@ -68,12 +98,16 @@ class GameManager(private val activity: GameActivity) {
 
     private fun checkEndGame() {
         if (players.size == 1) {
-            isEndGame = true
             activity.endGameAction(players[0])
         }
     }
 
     fun getPlayerByName(name: String): Player? {
         return players.find { p -> p.name == name }
+    }
+
+    enum class ActionState(val state: Int) {
+        IDLE(0), BUY(1),
+        SELL(2), BUY_SELL(3)
     }
 }

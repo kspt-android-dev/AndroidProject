@@ -9,10 +9,10 @@ import android.widget.EditText
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.dreamteam.monopoly.game.Data.GameData.maxNameLength
-import com.dreamteam.monopoly.game.Data.GameData.maxPlayers
-import com.dreamteam.monopoly.game.Data.GameData.minPlayers
-import com.dreamteam.monopoly.game.Data.ValuesData
+import com.dreamteam.monopoly.game.data.GameData.maxNameLength
+import com.dreamteam.monopoly.game.data.GameData.maxPlayers
+import com.dreamteam.monopoly.game.data.GameData.minPlayers
+import com.dreamteam.monopoly.game.data.ValuesData
 import com.dreamteam.monopoly.game.player.PlayerType
 import com.dreamteam.monopoly.helpers.shakeEffect
 import es.dmoral.toasty.Toasty
