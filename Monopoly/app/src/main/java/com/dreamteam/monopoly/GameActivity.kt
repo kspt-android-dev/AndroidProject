@@ -110,7 +110,7 @@ class GameActivity : AppCompatActivity() {
 
         var screenLayout = getResources().getConfiguration().screenLayout
         screenLayout = screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK
-
+        Log.d("LAYOUT", this.packageName)
         if (screenLayout == Configuration.SCREENLAYOUT_SIZE_SMALL) {
             val boardSize: Int =
                     if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
