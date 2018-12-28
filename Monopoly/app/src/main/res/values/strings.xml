@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Best Monopoly Ever!</string>
+    <string name="winnerTitle">Monopoly King:</string>
+    <string name="menu">Menu</string>
+    <string name="sell">Sell</string>
+    <string name="suicide">Suicide</string>
+    <string name="yesAnswer">Yes</string>
+    <string name="buyQuestion">Buy this cell?</string>
+    <string name="noAnswer">No</string>
+    <string name="onAI">AI: ON</string>
+    <string name="offAI">AI: OFF</string>
+    <string name="namespace">Name: %1$s</string>
+    <string name="buyspace">Buy: %1$d</string>
+    <string name="sellspace">Sell: %1$d</string>
+    <string name="chargespace">Charge: %1$d</string>
+    <string name="buttonPlay">Play</string>
+    <string name="buttonExit">Exit</string>
+    <string name="buttonEnter">Enter</string>
+    <string name="buttonStart">Start</string>
+    <string name="buttonDelete">Delete</string>
+    <string name="playerNameHint">BestEverPlayer:</string>
+    <string name="playersTitle">Players:</string>
+    <string name="newPlayer">New player: </string>
+    <string name="removed"> removed</string>
+    <string name="startGameToast">Time to play the Game!</string>
+    <string name="nameSize">Name should be from 1 to 15 symbols!</string>
+    <string name="containsString">This name is already exists</string>
+    <string name="gameCellDescription">Game cell</string>
+    <string name="dices">Dices</string>
+    <string name="throw_dices">Throw dices</string>
+    <string name="title_activity_win_screen">WinScreenActivity</string>
+    <string name="deathMoneyInfo">[DEAD :)]</string>
+    <string name="congratulation">Congratulation to player  </string>
+    <string name="move">move</string>
+</resources>

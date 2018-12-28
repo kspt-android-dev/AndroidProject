@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameActivity">
+
+
+    <Button
+        android:id="@+id/buttonThrowCubes"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="@string/throw_dices"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/VerticalGuideline2"
+        app:layout_constraintStart_toStartOf="@+id/VerticalGuideline2"
+        app:layout_constraintTop_toBottomOf="@id/UnderTopPartGuideline" />
+
+    <ImageView
+        android:id="@+id/cube1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/dices"
+        app:layout_constraintEnd_toEndOf="@+id/buttonThrowCubes"
+        app:layout_constraintStart_toStartOf="@+id/VerticalGuideline2"
+        app:layout_constraintTop_toBottomOf="@+id/buttonThrowCubes" />
+
+    <ImageView
+        android:id="@+id/cube2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/dices"
+        app:layout_constraintEnd_toStartOf="@+id/VerticalGuideline2"
+        app:layout_constraintStart_toStartOf="@+id/DialogView"
+        app:layout_constraintTop_toBottomOf="@+id/buttonThrowCubes" />
+
+
+    <TextView
+        android:id="@+id/playerStats1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/HorizontalGuideline" />
+
+    <TextView
+        android:id="@+id/playerStats2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/playerMoney1" />
+
+    <TextView
+        android:id="@+id/playerStats3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/playerMoney2" />
+
+    <TextView
+        android:id="@+id/playerStats4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/playerMoney3" />
+
+    <TextView
+        android:id="@+id/playerMoney1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/playerStats1" />
+
+    <TextView
+        android:id="@+id/playerMoney2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/playerStats2" />
+
+    <TextView
+        android:id="@+id/playerMoney3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/playerStats3" />
+
+    <TextView
+        android:id="@+id/playerMoney4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/VerticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/playerStats4" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/HorizontalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/VerticalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.67" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/VerticalGuideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.46" />
+
+    <TextView
+        android:id="@+id/cellName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HorizontalGuideline" />
+
+    <TextView
+        android:id="@+id/cellCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cellName" />
+
+    <TextView
+        android:id="@+id/cellSell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cellCost" />
+
+    <TextView
+        android:id="@+id/cellCharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="8dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cellSell" />
+
+    <Button
+        android:id="@+id/sellButton"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sell"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/cellCharge"
+        app:layout_constraintTop_toBottomOf="@+id/cellCharge"
+        android:visibility="invisible"
+        android:clickable="false"/>
+
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/UnderTopPartGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+
+    <Button
+        android:id="@+id/YesButton"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:text="@string/yesAnswer"
+        android:clickable="false"
+        android:visibility="invisible"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/DialogView"
+        app:layout_constraintStart_toStartOf="@+id/DialogView" />
+
+    <Button
+        android:id="@+id/NoButton"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:text="@string/noAnswer"
+        android:clickable="false"
+        android:visibility="invisible"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/DialogView"
+        app:layout_constraintEnd_toEndOf="@+id/DialogView" />
+
+    <Button
+        android:id="@+id/DialogView"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:gravity="center"
+        android:text="@string/buyQuestion"
+        android:textSize="15sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/buttonThrowCubes"
+        app:layout_constraintStart_toStartOf="@+id/buttonThrowCubes"
+        app:layout_constraintTop_toBottomOf="@id/UnderTopPartGuideline" />
+
+    <Button
+        android:id="@+id/buttonSuicide"
+        android:background="#7d20f5"
+        android:textColor="#ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/suicide"
+        app:layout_constraintStart_toStartOf="@+id/VerticalGuideline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="visible" />
+
+    <HorizontalScrollView
+        android:id="@+id/scrollview1"
+        android:layout_width="@dimen/scrollViewNatural"
+        android:layout_height="wrap_content">
+        <ScrollView
+            android:id="@+id/scrollview2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/ConstraintLayoutScroll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </android.support.constraint.ConstraintLayout>
+
+        </ScrollView>
+    </HorizontalScrollView>
+
+</android.support.constraint.ConstraintLayout>
