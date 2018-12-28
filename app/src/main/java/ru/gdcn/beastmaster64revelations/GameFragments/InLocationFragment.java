@@ -28,6 +28,8 @@ public class InLocationFragment extends Fragment {
     private Location currentLocation;
 
     final static String IN_LOC_FRAG_LOCATION_ID = "location in frag";
+    final static int LOC_DIFFICULTY_MODIFIER = 10;
+    final static double LOC_DIFFICULTY_DIVIDER = 10.0;
 
     public InLocationFragment() {
         // Required empty public constructor
@@ -124,7 +126,7 @@ public class InLocationFragment extends Fragment {
         }
 
         TextView diffText = getActivity().findViewById(R.id.fragment_in_location_content_difficulty);
-        diffText.setText(String.valueOf(((int) (location.getDifficulty() * 10)) / 10.0));
+        diffText.setText(String.valueOf(((int) (location.getDifficulty() * LOC_DIFFICULTY_MODIFIER)) / LOC_DIFFICULTY_DIVIDER));
         TextView nameView = getActivity().findViewById(R.id.fragment_in_location_content_LocationName);
         nameView.setText(location.getName());
         TextView descView = getActivity().findViewById(R.id.fragment_in_location_content_LocationDescriptionContent);

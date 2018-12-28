@@ -22,6 +22,8 @@ import ru.gdcn.beastmaster64revelations.R;
 
 public class MapFragment extends Fragment {
 
+    final static int MAP_Z = 20;
+
     public MapFragment() {}
 
     public static MapFragment newInstance() {
@@ -74,7 +76,7 @@ public class MapFragment extends Fragment {
 
         GridLayout gridLayout = getActivity().findViewById(R.id.fragment_map_holder);
         gridLayout.removeAllViews();
-        gridLayout.setZ(20);
+        gridLayout.setZ(MAP_Z);
 
 
         gridLayout.setColumnCount(map.getWidth());
