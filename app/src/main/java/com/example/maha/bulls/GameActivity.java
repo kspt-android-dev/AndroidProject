@@ -139,13 +139,14 @@ public class GameActivity extends Activity implements View.OnClickListener{
         if (win == 1) alert.show();
         Log.d(LOG_TAG, "onRestoreInstanceState");
     }
+    // закрытие GameActivity
     private void closeActivity(){
         this.finish();
     }
     @Override
     public void onClick(View v) {
         txt2.setMovementMethod(new ScrollingMovementMethod());
-       // txt3.setText(myNumb);
+       //git push --force txt3.setText(myNumb);
         switch (v.getId()) {
             case R.id.button1:
                 plusButtonValue(4, "1");
