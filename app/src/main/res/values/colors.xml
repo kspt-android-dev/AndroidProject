@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorForNumber1">#9E9E9E</color>
+    <color name="colorResultNumber">#006400</color>
+    <color name="colorForNumber2">#858585</color>
+    <color name="colorRealNumber">#FFD700</color>
+    <color name="colorScoreTitle">#BA4200</color>
+
+    <color name="colorHelpTitle">#EEA60A</color>
+    <color name="colorHelpDescription">#8cb400</color>
+    <color name="colorHelpSentence">#007f33</color>
+</resources>

@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">LogicCombine</string>
+    <string name="title_name">Logic Combine</string>
+    <string name="button_play">Play</string>
+    <string name="button_help">Help</string>
+    <string name="button_stats">Stats</string>
+    <string name="button_sound">Sound</string>
+    <string name="button_quit">Quit</string>
+    <string name="nothing">Nothing</string>
+    <string name="plus_button">Plus Button</string>
+    <string name="minus_button">Minus Button</string>
+    <string name="multiply_button">Multiply Button</string>
+    <string name="share_button">Share Button</string>
+    <string name="power_button">Power Button</string>
+    <string name="combine_button">Combine Button</string>
+    <string name="scoreTitle">Your Score:</string>
+    <string name="substrate">Substrate</string>
+    <string name="back_button">Back</string>
+    <string name="number_one">Number one</string>
+    <string name="number_two">Number two</string>
+    <string name="number_three">Number three</string>
+    <string name="number_four">Number four</string>
+    <string name="number_five">Number five</string>
+    <string name="number_six">Number six</string>
+    <string name="number_seven">Number seven</string>
+    <string name="number_eight">Number eight</string>
+    <string name="number_nine">Number nine</string>
+    <string name="cell_sign">Cell for sign</string>
+
+    <string name="helpTitle">If you have not figured out how to play, then here you will find information that will help you understand the mechanics of the game.</string>
+    <string name="helpDescription1">The essence of the game is that the player needs to collect to highlight the number. And you need to achieve this by placing arithmetic signs between the numbers from 1 to 9.</string>
+    <string name="helpDescription2">Click on the sign button at the bottom of the game screen and then choose between which numbers you want to put it.</string>
+    <string name="helpDescription3">To remove a mark, simply reset the arithmetic symbol (click on it again) and then click on the cell in which you would like to remove the mark.</string>
+    <string name="helpSentence1">List of arithmetic signs:</string>
+    <string name="helpSentence2">Plus - adds two adjacent numbers to each other.</string>
+    <string name="helpSentence3">Minus - subtracts left from the right number.</string>
+    <string name="helpSentence4">Multiply - multiplies the adjacent numbers among themselves.</string>
+    <string name="helpSentence5">To divide - divides two adjacent numbers among themselves, while the left number is the quotient, and the right number is the divisor.</string>
+    <string name="helpSentence6">Degree - raises the left number to a power equal to the right number.</string>
+    <string name="helpSentence7">Connect - creates one from two adjacent numbers. (For example, if the right number is 4, and the left is 5, then putting this sign will turn them into one number equal to 45).</string>
+
+</resources>
