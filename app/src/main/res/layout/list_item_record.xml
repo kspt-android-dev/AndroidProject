@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/list_element"
+    android:padding="@dimen/LinearPadding"
+    android:orientation="vertical"
+    android:scaleX="0.9"
+    android:scaleY="0.9"
+    android:id="@+id/list_item_record">
+    <TextView
+        android:id="@+id/recordName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="@dimen/TitleTextSize"
+        android:layout_margin="@dimen/TextMargin"
+        android:layout_gravity="center">
+    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/NormalTextSize"
+            android:text="@string/time"
+            android:layout_margin="@dimen/ListItemTextMargin">
+        </TextView>
+        <TextView
+            android:id="@+id/recordTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/NormalTextSize"
+            android:text="">
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/NormalTextSize"
+            android:text="@string/tipsCount"
+            android:layout_margin="@dimen/ListItemTextMargin">
+        </TextView>
+        <TextView
+            android:id="@+id/recordTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/NormalTextSize"
+            android:text="">
+        </TextView>
+    </LinearLayout>
+
+</LinearLayout>

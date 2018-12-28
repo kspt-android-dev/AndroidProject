@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_game_landscape"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
+    tools:context=".GameActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <GridLayout
+            android:id="@+id/a_game_sudokuGrid"
+            android:layout_width="@dimen/LandGridWidth"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/GridLayoutMargin"
+            android:layout_weight="0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/a_game_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/LandButtonMargin"
+                android:layout_weight="2"
+                android:backgroundTint="@android:color/holo_orange_light"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/checkButton"
+                android:textSize="@dimen/ButtonTextSize" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4" />
+
+            <Chronometer
+                android:id="@+id/a_game_chrono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ChronoMargin"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/ChronoTextSize" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="4" />
+
+            <Button
+                android:id="@+id/a_game_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/LandButtonMargin"
+                android:layout_weight="2"
+                android:backgroundTint="@android:color/holo_green_light"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/tip"
+                android:textSize="@dimen/ButtonTextSize" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/a_game_loadingScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="@color/loading_background"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/TextMargin"
+            android:fontFamily="monospace"
+            android:text="@string/load"
+            android:textColor="@color/loading_text"
+            android:textSize="@dimen/LoadingTextSize" />
+
+        <ProgressBar
+            android:layout_width="@dimen/ProgressBarWidth"
+            android:layout_height="@dimen/ProgressBarHeight" />
+    </LinearLayout>
+
+</FrameLayout>
