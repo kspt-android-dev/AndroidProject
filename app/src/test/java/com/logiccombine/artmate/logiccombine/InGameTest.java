@@ -16,16 +16,17 @@ public class InGameTest {
 
     @Test
     public void countResultTests() {
+        Calculations calculations = new Calculations();
         inGame = new InGame();
-        int[] operations1 = {1,1,1,1,1,6,1,1};
-        assertEquals(99, inGame.countResult(operations1), 0);
-        int[] operations2 = {5,3,1,1,1,3,3,1};
-        assertEquals(357, inGame.countResult(operations2), 0);
-        int[] operations3 = {6,6,3,1,6,6,1,1};
-        assertEquals(1076, inGame.countResult(operations3), 0);
-        int[] operations4 = {3,1,1,1,3,6,6,1};
-        assertEquals(3408, inGame.countResult(operations4), 0);
-        int[] operations5 = {1,5,3,5,1,1,1,6};
-        assertEquals(8295, inGame.countResult(operations5), 0);
+        arithmeticOperations[] operations1 = {arithmeticOperations.PLUS,arithmeticOperations.PLUS,arithmeticOperations.PLUS,arithmeticOperations.PLUS,arithmeticOperations.PLUS,arithmeticOperations.CONNECT,arithmeticOperations.PLUS,arithmeticOperations.PLUS};
+        assertEquals(99, calculations.countResult(operations1), 0);
+        arithmeticOperations[] operations2 = {arithmeticOperations.POWER,arithmeticOperations.MULTIPLY,arithmeticOperations.PLUS,arithmeticOperations.PLUS,arithmeticOperations.PLUS,arithmeticOperations.MULTIPLY,arithmeticOperations.MULTIPLY,arithmeticOperations.PLUS};
+        assertEquals(357, calculations.countResult(operations2), 0);
+        arithmeticOperations[] operations3 = {arithmeticOperations.CONNECT,arithmeticOperations.CONNECT,arithmeticOperations.MULTIPLY,arithmeticOperations.PLUS,arithmeticOperations.CONNECT,arithmeticOperations.CONNECT,arithmeticOperations.PLUS,arithmeticOperations.PLUS};
+        assertEquals(1076, calculations.countResult(operations3), 0);
+        arithmeticOperations[] operations4 = {arithmeticOperations.MULTIPLY,arithmeticOperations.PLUS,arithmeticOperations.PLUS,arithmeticOperations.PLUS,arithmeticOperations.MULTIPLY,arithmeticOperations.CONNECT,arithmeticOperations.CONNECT,arithmeticOperations.PLUS};
+        assertEquals(3408, calculations.countResult(operations4), 0);
+        arithmeticOperations[] operations5 = {arithmeticOperations.PLUS,arithmeticOperations.POWER,arithmeticOperations.MULTIPLY,arithmeticOperations.POWER,arithmeticOperations.PLUS,arithmeticOperations.PLUS,arithmeticOperations.PLUS,arithmeticOperations.CONNECT};
+        assertEquals(8295, calculations.countResult(operations5), 0);
     }
 }

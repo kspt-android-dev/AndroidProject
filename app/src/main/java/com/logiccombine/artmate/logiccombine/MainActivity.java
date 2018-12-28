@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String APP_PREFERENCES = "mysettings";
+    public static final String APP_PREFERENCES = "mastering";
     public static final String APP_PREFERENCES_SOUND = "sound";
     private SharedPreferences mySettings;
 
@@ -19,17 +19,6 @@ public class MainActivity extends AppCompatActivity {
     }
     private void  stopSound(){
         stopService(new Intent(this, ServiceForMusic.class));
-    }
-
-    @Override
-    public void onBackPressed(){
-        try {
-            stopSound();
-            finish();
-            System.exit(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

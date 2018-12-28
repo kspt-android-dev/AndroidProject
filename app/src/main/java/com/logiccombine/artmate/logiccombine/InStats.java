@@ -38,7 +38,7 @@ public class InStats extends AppCompatActivity {
             }
         });
 
-        final String APP_PREFERENCES = "mysettings";
+        final String APP_PREFERENCES = "mastering";
         final String APP_PREFERENCES_SCORE = "score";
         final SharedPreferences mySettings;
         mySettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
