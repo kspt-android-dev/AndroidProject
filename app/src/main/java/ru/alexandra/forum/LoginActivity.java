@@ -16,26 +16,28 @@ import ru.alexandra.forum.objects.User;
 
 public class LoginActivity extends AppCompatActivity{
 
-    public static final String TAG = "LOGGER";
-
     EditText login, pass;
     Button signIn;
+
+    private DBConnector dbConnector;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        login = findViewById(R.id.login_email);
-        pass = findViewById(R.id.login_password);
+        dbConnector = new DBConnector(this);
+
+        login = findViewById(R.id.login);
+        pass = findViewById(R.id.password);
         signIn = findViewById(R.id.login_sign_in);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (attemptLogin(login.getText().toString(), pass.getText().toString())){
-                    User user = DBConnector.loadUser(LoginActivity.this, login.getText().toString());
+                    User user = dbConnector.loadUser(login.getText().toString());
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("user", user);
+                    intent.putExtra(Constants.KEY_USER, user);
                     startActivity(intent);
                 }
             }
@@ -43,7 +45,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private boolean attemptLogin(String login, String pass) {
-        User user = DBConnector.loadUser(this, login);
+        User user = dbConnector.loadUser(login);
         if (user == null){
             return registration(login, pass);
         } else {
@@ -53,11 +55,11 @@ public class LoginActivity extends AppCompatActivity{
 
     private boolean checkUserData(String login, String pass, User user) {
         if (!login.equals(user.getName())) {
-            Toast.makeText(this, "Неверный логин!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.wrong_login), Toast.LENGTH_SHORT).show();
             return false;
         }
         if (!pass.equals(user.getPass())) {
-            Toast.makeText(this, "Неверный пароль!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.wrong_password), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -65,33 +67,38 @@ public class LoginActivity extends AppCompatActivity{
 
     private boolean registration(String login, String pass) {
         if (login.equals("")) {
-            Toast.makeText(this, "Поле логина не должно быть пустым!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.login_empty), Toast.LENGTH_SHORT).show();
             return false;
         }
         User user = new User(
                 login,
                 pass,
-                "user",
                 0,
                 0
         );
-        DBConnector.insertUser(this, user);
+        dbConnector.insertUser(user);
         return true;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        outState.putString("login", login.getText().toString());
-        outState.putString("password", pass.getText().toString());
+        outState.putString(Constants.KEY_LOGIN, login.getText().toString());
+        outState.putString(Constants.KEY_PASS, pass.getText().toString());
         super.onSaveInstanceState(outState, outPersistentState);
 
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        login.setText(savedInstanceState.getString("login"));
-        pass.setText(savedInstanceState.getString("password"));
+        login.setText(savedInstanceState.getString(Constants.KEY_LOGIN));
+        pass.setText(savedInstanceState.getString(Constants.KEY_PASS));
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        dbConnector.close();
+        super.onDestroy();
     }
 }
 

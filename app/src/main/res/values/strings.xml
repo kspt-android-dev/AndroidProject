@@ -1,17 +1,30 @@
 <resources>
-    <string name="app_name">Forum</string>
+    <string name="app_name" translatable="false">Forum</string>
+
     <!-- Strings related to login -->
-    <string name="prompt_email">Логин</string>
-    <string name="prompt_password">Пароль (не обязательно)</string>
-    <string name="action_sign_in">Войти или зарегистрироваться</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="navigation_drawer_open">0</string>
-    <string name="navigation_drawer_close">1</string>
+    <string name="login_title" translatable="false">FORUM</string>
+    <string name="hint_login">Логин</string>
+    <string name="hint_password">Пароль (не обязательно)</string>
+    <string name="button_sign_in">Войти или зарегистрироваться</string>
+    <string name="wrong_password">Неверный пароль!</string>
+    <string name="wrong_login">Неверный логин!</string>
+    <string name="login_empty">Поле логина не должно быть пустым!</string>
+
+    <string name="dialog_answer">Ответить</string>
+    <string name="dialog_creation_yes">Да</string>
+    <string name="dialog_creation_delete">Удалить</string>
+    <string name="dialog_creation_title">Опубликовать новую тему?</string>
+
+    <string name="hint_header">Название</string>
+    <string name="hint_text">Текст</string>
+    <string name="hint_user_name">Логин</string>
+
+    <string name="navigation_drawer_open" translatable="false">0</string>
+    <string name="navigation_drawer_close" translatable="false">1</string>
+    <string name="menu_button_add">Добавить</string>
+    <string name="menu_button_profile">Профиль</string>
+    <string name="menu_button_statistics">Статистика</string>
+    <string name="menu_button_settings">Настройки</string>
+    <string name="menu_button_exit">Выход</string>
+    <string name="menu_button_reply">Ответить</string>
 </resources>

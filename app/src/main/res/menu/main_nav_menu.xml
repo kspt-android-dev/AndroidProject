@@ -4,24 +4,20 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/main_nav_menu_profile"
-            android:title="Профиль"
-            android:visible="false"/>
+            android:title="@string/menu_button_profile"
+            android:visible="false" />
     </group>
 
-    <item android:title="Приложение">
-        <menu>
-            <item
-                android:id="@+id/main_nav_menu_stats"
-                android:title="Статистика"
-                android:visible="false"/>
-            <item
-                android:id="@+id/main_nav_menu_settings"
-                android:title="Настройки"
-                android:visible="false"/>
-            <item
-                android:id="@+id/main_nav_menu_logout"
-                android:title="Выход" />
-        </menu>
-    </item>
+    <item
+        android:id="@+id/main_nav_menu_stats"
+        android:title="@string/menu_button_statistics"
+        android:visible="false" />
+    <item
+        android:id="@+id/main_nav_menu_settings"
+        android:title="@string/menu_button_settings"
+        android:visible="false" />
+    <item
+        android:id="@+id/main_nav_menu_logout"
+        android:title="@string/menu_button_exit" />
 
 </menu>

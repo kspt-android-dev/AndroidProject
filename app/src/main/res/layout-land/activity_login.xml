@@ -10,8 +10,8 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="FORUM"
+        android:layout_height="wrap_content"
+        android:text="@string/login_title"
         android:gravity="center"
         android:layout_marginTop="40dp"
         android:textSize="60sp"
@@ -19,36 +19,32 @@
 
     <LinearLayout
         android:id="@+id/login_layout_for_edit_texts"
-        android:layout_width="276dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center">
         <EditText
-            android:id="@+id/login_email"
+            android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/prompt_email"
+            android:hint="@string/hint_login"
             android:inputType="text"
             android:maxLines="1"
             android:singleLine="true" />
         <EditText
-            android:id="@+id/login_password"
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/prompt_password"
-            android:imeActionId="6"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionUnspecified"
+            android:hint="@string/hint_password"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:singleLine="true" />
+            android:singleLine="true"/>
         <Button
             android:id="@+id/login_sign_in"
-            style="?android:textAppearanceSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/action_sign_in"
-            android:textStyle="bold" />
+            android:layout_gravity="center_horizontal"
+            android:text="@string/button_sign_in"/>
     </LinearLayout>
 </LinearLayout>

@@ -28,13 +28,13 @@ public class AnswerDialog extends DialogFragment {
         final View view = getActivity().getLayoutInflater().inflate(R.layout.answer_dialog, null);
         editText = view.findViewById(R.id.answer_dialog_text);
         builder.setView(view);
-        builder.setPositiveButton("Ответить", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(R.string.dialog_answer), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 onAddAnswerListener.onAddAnswer(editText.getText().toString());
             }
         })
-                .setNeutralButton("Отмена", new DialogInterface.OnClickListener() {
+                .setNeutralButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -51,13 +51,13 @@ public class AnswerDialog extends DialogFragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString("answer", editText.getText().toString());
+        outState.putString(Constants.KEY_ANSWER, editText.getText().toString());
         super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        editText.setText(savedInstanceState.getString("answer"));
+        editText.setText(savedInstanceState.getString(Constants.KEY_ANSWER));
         super.onViewStateRestored(savedInstanceState);
     }
 }

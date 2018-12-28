@@ -24,12 +24,15 @@ public class ThemeRecyclerAdapter extends RecyclerView.Adapter {
     private List<Theme> themeList;
     private Context context;
 
-    public ThemeRecyclerAdapter(Context context) {
+    private DBConnector dbConnector;
+
+    public ThemeRecyclerAdapter(Context context, DBConnector dbConnector) {
         this.context = context;
+        this.dbConnector = dbConnector;
     }
 
     public void loadData() {
-        themeList = DBConnector.loadThemes(context);
+        themeList = dbConnector.loadThemes();
         notifyDataSetChanged();
     }
 
@@ -63,8 +66,8 @@ public class ThemeRecyclerAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ThemeActivity.class);
-                    intent.putExtra("theme", themeList.get(getAdapterPosition()));
-                    intent.putExtra("user", ((MainActivity)context).getUser());
+                    intent.putExtra(Constants.KEY_THEME, themeList.get(getAdapterPosition()));
+                    intent.putExtra(Constants.KEY_USER, ((MainActivity)context).getUser());
                     context.startActivity(intent);
                 }
             });

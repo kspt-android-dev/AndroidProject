@@ -18,7 +18,7 @@ import ru.alexandra.forum.objects.Theme;
 
 public class AnswerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context context;
+    private DBConnector dbConnector;
 
     private Theme theme;
     private List<Answer> answerList;
@@ -26,19 +26,19 @@ public class AnswerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public static final int TYPE_THEME = 1;
     public static final int TYPE_ANSWER = 2;
 
-    public AnswerRecyclerAdapter(Context context, Theme theme) {
-        this.context = context;
+    public AnswerRecyclerAdapter(DBConnector dbConnector, Theme theme) {
+        this.dbConnector = dbConnector;
         this.theme = theme;
     }
 
     public void loadData() {
-        answerList = DBConnector.loadAnswers(context, theme.getId());
+        answerList = dbConnector.loadAnswers(theme.getId());
         notifyDataSetChanged();
     }
 
     public void addAnswer(Answer answer){
         answerList.add(answer);
-        DBConnector.insertAnswer(context, answer);
+        dbConnector.insertAnswer(answer);
         notifyItemInserted(getItemCount());
     }
 

@@ -1,9 +1,6 @@
 package ru.alexandra.forum;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.PersistableBundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,27 +8,31 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
+import ru.alexandra.forum.data.DBConnector;
 import ru.alexandra.forum.objects.Answer;
 import ru.alexandra.forum.objects.Theme;
 import ru.alexandra.forum.objects.User;
 
 public class ThemeActivity extends AppCompatActivity implements AnswerDialog.OnAddAnswerListener {
 
+
+
     private AnswerRecyclerAdapter answerRecyclerAdapter;
     private Theme theme;
     private User user;
+
+    private DBConnector dbConnector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme);
 
-        theme = (Theme) getIntent().getSerializableExtra("theme");
-        user = (User) getIntent().getSerializableExtra("user");
+        dbConnector = new DBConnector(this);
+
+        theme = (Theme) getIntent().getSerializableExtra(Constants.KEY_THEME);
+        user = (User) getIntent().getSerializableExtra(Constants.KEY_USER);
 
         Toolbar toolbar = findViewById(R.id.theme_toolbar);
         setSupportActionBar(toolbar);
@@ -46,7 +47,7 @@ public class ThemeActivity extends AppCompatActivity implements AnswerDialog.OnA
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.theme_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        answerRecyclerAdapter = new AnswerRecyclerAdapter(this, theme);
+        answerRecyclerAdapter = new AnswerRecyclerAdapter(dbConnector, theme);
         recyclerView.setAdapter(answerRecyclerAdapter);
     }
 
@@ -76,10 +77,6 @@ public class ThemeActivity extends AppCompatActivity implements AnswerDialog.OnA
         return super.onOptionsItemSelected(item);
     }
 
-    private void answering() {
-
-    }
-
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
 
@@ -95,5 +92,11 @@ public class ThemeActivity extends AppCompatActivity implements AnswerDialog.OnA
                 user
         );
         answerRecyclerAdapter.addAnswer(answer);
+    }
+
+    @Override
+    protected void onDestroy() {
+        dbConnector.close();
+        super.onDestroy();
     }
 }

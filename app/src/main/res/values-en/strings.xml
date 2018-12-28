@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hint_login">Login</string>
+    <string name="hint_password">Password</string>
+    <string name="button_sign_in">Sign in/Sign up</string>
+    <string name="wrong_password">Wrong password!</string>
+    <string name="wrong_login">Wrong login!</string>
+    <string name="login_empty">Login could not empty!</string>
+
+    <string name="dialog_answer">Reply</string>
+    <string name="dialog_creation_yes">Yes</string>
+    <string name="dialog_creation_delete">Delete</string>
+    <string name="dialog_creation_title">Publish new topic?</string>
+
+    <string name="hint_header">Header</string>
+    <string name="hint_text">Text</string>
+    <string name="hint_user_name">Login</string>
+
+    <string name="menu_button_add">Add</string>
+    <string name="menu_button_profile">Profile</string>
+    <string name="menu_button_statistics">Statistics</string>
+    <string name="menu_button_settings">Settings</string>
+    <string name="menu_button_exit">Sign out</string>
+    <string name="menu_button_reply">Reply</string>
+</resources>

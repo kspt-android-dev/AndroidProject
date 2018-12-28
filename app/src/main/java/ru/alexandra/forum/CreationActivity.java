@@ -19,10 +19,14 @@ public class CreationActivity extends AppCompatActivity {
     private EditText headerView, textView;
     private User creator;
 
+    private DBConnector dbConnector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation);
+
+        dbConnector = new DBConnector(this);
 
         headerView = findViewById(R.id.creation_header);
         textView = findViewById(R.id.creation_text);
@@ -34,7 +38,7 @@ public class CreationActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle("Новая тема");
 
-        creator = (User) getIntent().getSerializableExtra("user");
+        creator = (User) getIntent().getSerializableExtra(Constants.KEY_USER);
     }
 
     @Override
@@ -51,21 +55,21 @@ public class CreationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Опубликовать новую тему?")
-                .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+        builder.setMessage(getResources().getString(R.string.dialog_creation_title))
+                .setPositiveButton(getResources().getString(R.string.dialog_creation_yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         saveTheme();
                         CreationActivity.super.onBackPressed();
                     }
                 })
-                .setNegativeButton("Удалить", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getResources().getString(R.string.dialog_creation_delete), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         CreationActivity.super.onBackPressed();
                     }
                 })
-                .setNeutralButton("Отмена", new DialogInterface.OnClickListener() {
+                .setNeutralButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -80,9 +84,14 @@ public class CreationActivity extends AppCompatActivity {
                 headerView.getText().toString(),
                 textView.getText().toString(),
                 0,
-                "open",
                 creator
         );
-        DBConnector.insertTheme(CreationActivity.this, theme);
+        dbConnector.insertTheme(theme);
+    }
+
+    @Override
+    protected void onDestroy() {
+        dbConnector.close();
+        super.onDestroy();
     }
 }
