@@ -3,4 +3,8 @@
     <string name="start_game">Start game</string>
     <string name="settings">Settings</string>
     <string name="logo">Logo</string>
+    <string name="health_bar">Health Bar</string>
+    <string name="pizza">Pizza</string>
+    <string name="save_result">Save Result</string>
+    <string name="enter_your_name">Enter your name</string>
 </resources>
