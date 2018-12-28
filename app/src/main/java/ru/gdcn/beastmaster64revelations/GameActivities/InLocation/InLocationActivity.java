@@ -60,6 +60,10 @@ public class InLocationActivity extends AppCompatActivity {
     private static final String IN_LOC_LOCATION_ID = "location";
     private static final String IN_LOC_UPG_ID = "upgrade points";
 
+    //начальные и прибавляемые очки
+    private static final int FIRST_POINTS = 30;
+    private static final int POINTS_FOR_KILL = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +102,7 @@ public class InLocationActivity extends AppCompatActivity {
             //Достаём игрока которого создали в прошлом активити из интента
             player = (PlayerClass) getIntent().getSerializableExtra("player");
             //Очки чкички
-            upgradePoints  = 30;
+            upgradePoints  = FIRST_POINTS;
 
             addFragment(locationFragment);
 
@@ -305,7 +309,7 @@ public class InLocationActivity extends AppCompatActivity {
             case FightResult.PLAYER_WON:
                 //Игрок выиграл, дать ему очков и больше нельзя драться с этим врагом
                 //Он ведь умер!
-                upgradePoints += 3;
+                upgradePoints += POINTS_FOR_KILL;
                 setEnemyDead();
                 break;
         }

@@ -78,6 +78,30 @@ public class FightActivity extends AppCompatActivity {
     static final String FIGHT_PLAYER_ID = "player";
     static final String FIGHT_ENEMY_ID = "enemy";
 
+    //for heal
+    static final int HEAL_MODIFIER = 4;
+    static final int HEAL_COOLDOWN = 600;
+    //for magic
+    static final int MAGIC_COOLDOWN = 2000;
+    static final int MAGIC_DAMAGE_MODIFIER = 3;
+    static final int MAGIC_COOLDOWN_MODIFIER = 2;
+    //for enemy
+    static final int RUN_ENEMY_UI = 1000;
+    static final int ENEMY_UI_COUNTDOWN_INTERVAL = 5;
+    static final int ENEMY_NUMBER_OF_SPECIAL_ATTACKS = 5;
+    static final int DELAY_AFTER_SPECIAL_ATTACK = 100;
+    static final int ENEMY__UI_DELAY_2 = 1500;
+    static final int ENEMY_UI_DELAY_1 = 1400;
+    //for kick
+    static final double KICK_DAMAGE_MODIFIER = 1.2;
+    static final int KICK_COOLDOWN = 1200;
+    static final int KICK_AGILITY_COOLDOWN_MODIFIER = 5/2;
+    //for strong kick
+    static final double STRONG_KICK_DAMAGE_MODIFIER = 2.4;
+    static final int STRONG_KICK_AGILITY_COOLDOWN_MODIFIER = 5;
+    static final int STRONG_KICK_COOLDOWN = 2600;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,14 +173,14 @@ public class FightActivity extends AppCompatActivity {
         allActionButtons.add(magicButton);
         allActionButtons.add(strongButton);
 
-        runEnemyAI(1400);
+        runEnemyAI(ENEMY_UI_DELAY_1);
 
         //Криво-костыльно задаём на кнопки удары и кулдаун на них
         kickButton.setOnClickListener(v -> {
             //проигрываем анимацию удара
             playKickAnimationPlayer();
             //Создаём атаку
-            BasicAttack basicAttack = new BasicAttack(getString(R.string.fight_log_kick), 1.2);
+            BasicAttack basicAttack = new BasicAttack(getString(R.string.fight_log_kick), KICK_DAMAGE_MODIFIER);
             //Запоминаем HP
             int hpBefore = enemy.getHP();
             //Бабах!
@@ -165,7 +189,7 @@ public class FightActivity extends AppCompatActivity {
             playerCard.updateContent();
             enemyCard.updateContent();
             //Задаём откат кнопочкам
-            actionDelay(1200 - player.getAgility()*5/2);
+            actionDelay(KICK_COOLDOWN - player.getAgility()*KICK_AGILITY_COOLDOWN_MODIFIER);
             //Логируем в нашу консоль чё случилось
             logFightAction(player.getName() + getString(R.string.fight_log_kicked) + enemy.getName() + "!");
             logFightAction(hpBefore - enemy.getHP() + getString(R.string.fight_log_kicks));
@@ -187,10 +211,10 @@ public class FightActivity extends AppCompatActivity {
 
             playBounceAnimation(cardHolderPlayer);
 
-            player.dealHeal(player.getIntellect() * 4);
+            player.dealHeal(player.getIntellect() * HEAL_MODIFIER);
             playerCard.updateContent();
             enemyCard.updateContent();
-            actionDelay(600 - player.getIntellect());
+            actionDelay(HEAL_COOLDOWN - player.getIntellect());
             logFightAction(player.getName() + getString(R.string.fight_log_just_healed));
 
             if (player.isDead()) {
@@ -207,14 +231,14 @@ public class FightActivity extends AppCompatActivity {
         magicButton.setOnClickListener(v -> {
             playBounceAnimation(cardHolderPlayer);
 
-            enemy.dealPhysicalDamage(player.getIntellect()*3);
+            enemy.dealPhysicalDamage(player.getIntellect()*MAGIC_DAMAGE_MODIFIER);
 
             playerCard.updateContent();
             enemyCard.updateContent();
-            actionDelay(2000 - player.getIntellect()*2);
+            actionDelay(MAGIC_COOLDOWN - player.getIntellect()*MAGIC_COOLDOWN_MODIFIER);
 
             AItimer.cancel();
-            runEnemyAI(1000);
+            runEnemyAI(RUN_ENEMY_UI);
 
             logFightAction(player.getName() + getString(R.string.fight_log_used_magic));
 
@@ -232,7 +256,7 @@ public class FightActivity extends AppCompatActivity {
             //проигрываем анимацию удара
             playKickAnimationPlayer();
             //Создаём атаку
-            BasicAttack basicAttack = new BasicAttack(getString(R.string.fight_log_kick), 2.4);
+            BasicAttack basicAttack = new BasicAttack(getString(R.string.fight_log_kick), STRONG_KICK_DAMAGE_MODIFIER);
             //Запоминаем HP
             int hpBefore = enemy.getHP();
             //Бабах!
@@ -241,7 +265,7 @@ public class FightActivity extends AppCompatActivity {
             playerCard.updateContent();
             enemyCard.updateContent();
             //Задаём откат кнопочкам
-            actionDelay(2600 - player.getAgility()*5);
+            actionDelay(STRONG_KICK_COOLDOWN - player.getAgility()*STRONG_KICK_AGILITY_COOLDOWN_MODIFIER);
             //Логируем в нашу консоль чё случилось
             logFightAction(player.getName() + getString(R.string.fight_log_kicked) + enemy.getName() + "!");
             logFightAction(hpBefore - enemy.getHP() + getString(R.string.fight_log_kicks));
@@ -279,7 +303,7 @@ public class FightActivity extends AppCompatActivity {
 
         //Ждём заданное время и спрашиваем у противника что он будет делать
 
-        AItimer = new CountDownTimer(millisDelay, 5) {
+        AItimer = new CountDownTimer(millisDelay, ENEMY_UI_COUNTDOWN_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
                 runOnUiThread(() -> enemyProgressBar.setScaleX(millisUntilFinished * 1.0f / millisDelay));
@@ -301,11 +325,11 @@ public class FightActivity extends AppCompatActivity {
                     Action enemyAction = enemy.makeNextFightTurn(player);
                     //Костыльно проверяем какую анимацию произвести, хил или атака
                     if (enemyAction instanceof SpecialAttack) {
-                        int actionCount = 5;
-                        runSpecialAttack(5, enemyAction);
+                        int actionCount = ENEMY_NUMBER_OF_SPECIAL_ATTACKS;
+                        runSpecialAttack(ENEMY_NUMBER_OF_SPECIAL_ATTACKS, enemyAction);
                     } else {
                         enemyUseAction(enemyAction);
-                        runEnemyAI(1500);
+                        runEnemyAI(ENEMY__UI_DELAY_2);
                     }
                 });
                 if (player.isDead()) {
@@ -325,7 +349,7 @@ public class FightActivity extends AppCompatActivity {
     private void runSpecialAttack(int actionsLeft, Action action) {
 
         if (actionsLeft == 0){
-            runOnUiThread(() -> runEnemyAI(1400));
+            runOnUiThread(() -> runEnemyAI(ENEMY_UI_DELAY_1));
             return;
         }
         Timer timer = new Timer();
@@ -343,7 +367,7 @@ public class FightActivity extends AppCompatActivity {
                 runOnUiThread(() -> enemyUseAction(action));
                 runSpecialAttack(actionsLeft - 1, action);
             }
-        }, 100);
+        }, DELAY_AFTER_SPECIAL_ATTACK);
     }
 
     private void enemyUseAction(Action enemyAction) {
