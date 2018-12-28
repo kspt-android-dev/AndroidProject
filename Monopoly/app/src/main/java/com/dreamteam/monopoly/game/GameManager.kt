@@ -10,7 +10,7 @@ import com.dreamteam.monopoly.game.data.ValuesData
 import com.dreamteam.monopoly.game.player.Player
 import com.dreamteam.monopoly.game.player.PlayerType
 
-class GameManager(private val activity: GameActivity) {
+class GameManager(val activity: GameActivity) {
     var mainBoard: Board = Board(GameData.boardGameCells, activity)
     var players: ArrayList<Player> = ArrayList()
     var suicidePlayers: ArrayList<Int> = ArrayList()
@@ -84,7 +84,7 @@ class GameManager(private val activity: GameActivity) {
                 players.add(Player(name, startMoney, PlayerType.PERSON, mainBoard))
     }
 
-    fun addPlayer(name: String, type: PlayerType) {
+    private fun addPlayer(name: String, type: PlayerType) {
         if (checkExistingPlayer(name))
             players.add(Player(name, startMoney, type, mainBoard))
     }
@@ -121,7 +121,7 @@ class GameManager(private val activity: GameActivity) {
         }
     }
 
-    fun getPlayerByName(name: String): Player? {
+    private fun getPlayerByName(name: String): Player? {
         return players.find { p -> p.name == name }
     }
 

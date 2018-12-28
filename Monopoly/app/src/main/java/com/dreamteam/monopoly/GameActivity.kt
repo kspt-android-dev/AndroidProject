@@ -16,6 +16,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.widget.*
+import com.dreamteam.monopoly.game.SaveDataManager
 import com.dreamteam.monopoly.game.data.GameData
 import com.dreamteam.monopoly.game.data.GameData.numberOfCornersPerSide
 import com.dreamteam.monopoly.game.data.GameData.numberOfSides
@@ -44,7 +45,7 @@ class GameActivity : AppCompatActivity() {
 
     private val saveMode: SaveMode = SaveMode.FROM_VIEW_MODEL
 
-    private lateinit var savedData: GameActivityData
+    private lateinit var savedData: SaveDataManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,7 +109,7 @@ class GameActivity : AppCompatActivity() {
         val metrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(metrics)
 
-        var screenLayout = getResources().getConfiguration().screenLayout
+        var screenLayout = resources.configuration.screenLayout
         screenLayout = screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK
         Log.d("LAYOUT", this.packageName)
         if (screenLayout == Configuration.SCREENLAYOUT_SIZE_SMALL) {
@@ -244,12 +245,12 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun reactivateBuyChoice() {
+    fun reactivateBuyChoice() {
         activateBuyChoice(false)
         activateBuyChoice(true)
     }
 
-    private fun reactivateSellChoice() {
+    fun reactivateSellChoice() {
         activateSellChoice(false)
         activateSellChoice(true, gameManager.currentInfo)
     }
@@ -282,7 +283,7 @@ class GameActivity : AppCompatActivity() {
         activateThrowButton(false)
     }
 
-    private fun activateThrowButton(value: Boolean) {
+    fun activateThrowButton(value: Boolean) {
         buttonThrowDices!!.visibility = if (value) View.VISIBLE else View.INVISIBLE
         buttonThrowDices!!.isEnabled = value
     }
@@ -328,7 +329,7 @@ class GameActivity : AppCompatActivity() {
 
     fun getGameManager(): GameManager = gameManager
 
-    private fun suicideAction(playerToSuicide: Player, withPlayerSwap: Boolean = true) {
+    fun suicideAction(playerToSuicide: Player, withPlayerSwap: Boolean = true) {
         val myPlayerID = resources.getIdentifier(getString(R.string.Player) + playerToSuicide.id.toString(),
                 ValuesData.id, packageName)
         val player = findViewById<ImageView>(myPlayerID)
@@ -354,7 +355,7 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun showInfo(i: Int) {
+    fun showInfo(i: Int) {
         gameManager.currentInfo = i
         val name: String = gameManager.mainBoard.gameWay[i].info.name
         val costBuy = gameManager.mainBoard.gameWay[i].info.cost.costBuy
@@ -375,79 +376,14 @@ class GameActivity : AppCompatActivity() {
         when (saveMode) {
             SaveMode.FROM_BUNDLE -> {
                 init()
-                if (savedInstanceState != null) restoreFromBundle(savedInstanceState)
+                if (savedInstanceState != null) savedData.restoreFromBundle(savedInstanceState, this)
             }
             SaveMode.FROM_VIEW_MODEL -> {
-                savedData = ViewModelProviders.of(this).get(GameActivityData::class.java)
+                savedData = ViewModelProviders.of(this).get(SaveDataManager::class.java)
                 init()
-                if (savedData.isInited) restoreFromViewModel()
+                if (savedData.isInited) savedData.restoreFromViewModel(this)
             }
         }
-    }
-
-    private fun restoreFromBundle(savedInstanceState: Bundle) {
-        gameManager.resetPlayersPositions(savedInstanceState.getIntegerArrayList(ValuesData.playersPositions))
-        restoreSuicidePlayers(savedInstanceState.getIntegerArrayList(ValuesData.playersSuicideIds))
-        gameManager.currentPlayerIndex = savedInstanceState.getInt(ValuesData.currentPlayerIndex)
-        restoreMoney(savedInstanceState.getIntegerArrayList(ValuesData.playerMoney))
-        restoreCells(savedInstanceState)
-        restoreActionState(savedInstanceState.getInt(ValuesData.actionState))
-        restoreCurrentInfo(savedInstanceState.getInt(ValuesData.currentInfo))
-    }
-
-    private fun restoreFromViewModel() {
-        gameManager.resetPlayersPositions(savedData.getPlayersPositionsData())
-        restoreSuicidePlayers(savedData.gameManager.suicidePlayers)
-        gameManager.currentPlayerIndex = savedData.gameManager.currentPlayerIndex
-        restoreMoney(savedData.getPlayersMoneyData())
-        restoreCells()
-        restoreActionState(savedData.gameManager.actionState.state)
-        restoreCurrentInfo(savedData.gameManager.currentInfo)
-    }
-
-    private fun restoreSuicidePlayers(playersToSuicide: ArrayList<Int>) {
-        gameManager.suicidePlayers.clear()
-        for (i in 0 until playersToSuicide.size)
-            suicideAction(gameManager.getPlayerById(playersToSuicide[i]), false)
-    }
-
-    private fun restoreMoney(pMoney: ArrayList<Int>) {
-        for (i in 0 until pMoney.size) {
-            gameManager.players[i].money = pMoney[i]
-            updPlayerMoney(gameManager.players[i])
-        }
-    }
-
-    private fun restoreCells(savedInstanceState: Bundle) {
-        for (i in 0 until gameManager.players.size) {
-            gameManager.players[i].restoreOwnedCells(
-                    savedInstanceState.getIntegerArrayList(ValuesData.playerCells + i.toString()))
-        }
-    }
-
-    private fun restoreCells() {
-        for (i in 0 until gameManager.players.size) {
-            gameManager.players[i].restoreOwnedCells(savedData.getPlayersCellsData(i))
-        }
-    }
-
-    private fun restoreActionState(state: Int) {
-        when (state) {
-            ActionState.BUY.state -> {
-                activateThrowButton(false)
-                reactivateBuyChoice()
-            }
-            ActionState.SELL.state -> reactivateSellChoice()
-            ActionState.BUY_SELL.state -> {
-                activateThrowButton(false)
-                reactivateBuyChoice()
-                reactivateSellChoice()
-            }
-        }
-    }
-
-    private fun restoreCurrentInfo(index: Int) {
-        showInfo(index)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
