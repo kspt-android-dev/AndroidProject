@@ -51,6 +51,15 @@
                 android:text="Open instruction" />
 
             <TextView
+                android:id="@+id/off_music"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="sans-serif"
+                android:text="Off music" />
+
+            <TextView
                 android:id="@+id/whos_first_move"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

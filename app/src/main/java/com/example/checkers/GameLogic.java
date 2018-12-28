@@ -264,7 +264,10 @@ public class GameLogic {
         else {
             setCheckerToCell(riseCheckerPoint, riseCheckerPoint);
         }
-        if ( gameFinished() ) Log.i("Game", "IsFinashed");
+        if ( gameFinished() ) {
+            Log.i("Game", "IsFinashed");
+
+        }
         someoneKilledJustNow = false;
     }
 

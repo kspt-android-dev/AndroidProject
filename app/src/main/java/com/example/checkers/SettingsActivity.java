@@ -13,6 +13,8 @@ public class SettingsActivity extends Activity {
     RadioGroup firstMove;
     int oldFirstMove;
     TextView instructionTW;
+    TextView offMusic;
+    boolean off;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,13 +31,23 @@ public class SettingsActivity extends Activity {
             }
         });
 
+        offMusic = findViewById(R.id.off_music);
+        offMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                off = true;
+//                setResult(RESULT_OK);
+//                finish();
+            }
+        });
+
         findViewById(R.id.save_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setResult(RESULT_CANCELED);
 
                 // если при закрытии окна настройки изменившиеся
-                if (firstMove.getCheckedRadioButtonId() != oldFirstMove) {
+                if (firstMove.getCheckedRadioButtonId() != oldFirstMove ) {
                     // установка цветов игроков
                     if (firstMove.getCheckedRadioButtonId() == R.id.upper_player_first_move) {
                         GameLogic.upperPlayerColor = getResources().getColor(R.color.white);
@@ -44,7 +56,11 @@ public class SettingsActivity extends Activity {
                         GameLogic.upperPlayerColor = getResources().getColor(R.color.black);
                         GameLogic.bottomPlayerColor = getResources().getColor(R.color.white);
                     }
+                    setParams();
                     setResult(RESULT_OK);
+                }
+                else if(off){
+                    setResult(RECEIVER_VISIBLE_TO_INSTANT_APPS);
                 }
                     finish();
             }

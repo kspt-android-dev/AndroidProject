@@ -4,6 +4,7 @@
     <string name="notification_title">Chechers</string>
     <string name="notification_text">Мы ждем тебя</string>
     <string name="insturcion">Инструкции</string>
+    <string name = "new_game">Новая Игра</string>
     <string name="html">
         <![CDATA[
         <p> «<b>Шашки</b>» – Очень интересная, динамичная, интеллектуальная игра.

@@ -1,9 +1,11 @@
 package com.example.checkers;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;;
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -15,6 +17,7 @@ import android.widget.FrameLayout;
 public class MainActivity extends Activity {
 
     public static final int SETTINGS_ACTIVITY_RESULT = 1;
+    public static final int GAME_ACTIVITY_RESULT = 2;
     private PlayingField field;
     private FrameLayout frameLayout;
 
@@ -27,7 +30,9 @@ public class MainActivity extends Activity {
     GameLogic gameLogic;
 
     Intent startServiceIntent ;
+    Intent startMusic;
 
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,10 @@ public class MainActivity extends Activity {
         // останавливаем сервис уведомлений
         startServiceIntent = new Intent(this,NotificationService.class);
         stopService(startServiceIntent);
+
+        //запускаем сервис с музыкой
+        startMusic = new Intent(this, MusicService.class);
+        startService(startMusic);
 
         frameLayout = findViewById(R.id.frameLayout);
         field = new PlayingField(this);
@@ -73,6 +82,12 @@ public class MainActivity extends Activity {
         super.onDestroy();
         // запускаем сервис уведомлений
         startService(startServiceIntent);
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        stopService(new Intent(this, MusicService.class));
     }
 
     @Override
@@ -84,7 +99,16 @@ public class MainActivity extends Activity {
                     gameLogic.startNewGame();
                     field.invalidate();
                 }
-                break;
+
+            case GAME_ACTIVITY_RESULT:
+                if (resultCode == RESULT_OK){
+                    gameLogic.startNewGame();
+                    field.invalidate();
+                }
+                if (resultCode == RECEIVER_VISIBLE_TO_INSTANT_APPS) {
+                    Log.i("Music", "Music Off");
+                    onBackPressed();
+                }
         }
     }
 
@@ -141,7 +165,10 @@ public class MainActivity extends Activity {
 
                     if (checkerGrabbed) {
                         gameLogic.placeChecker(downFingerPoint, upFingerPoint);
-
+                        if (gameLogic.gameFinished()) {
+                            Intent gameFinish = new Intent(MainActivity.this, FinishGame.class);
+                            startActivityForResult(gameFinish, GAME_ACTIVITY_RESULT);
+                        }
                         field.setGrabbedChecker(new Point(0,0));
                         checkerGrabbed = false;
 
