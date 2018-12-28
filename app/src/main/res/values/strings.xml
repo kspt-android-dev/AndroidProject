@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Bulls and cows</string>
+    <string name="title">Быки и коровы</string>
+    <string name="start">Начать игру</string>
+    <string name="rules">Правила</string>
+    <string name="settings">Настройки</string>
+    <string name="quit">Выход</string>
+    <string name="bull">Бык</string>
+    <string name="rulesTitle">Правила игры:</string>
+    <string name="rulesText">\n Задумывается число заданного Вами размера (до 10), состоящее из не повторяющихся цифр.\n
+        Ваша цель - угадать это число.\n
+        На каждом ходу Вы вводите число, в ответ показывается количество быков и коров.\n
+        Быки - цифры, совпадающие с цифрами загаданного числа и стоящие на правильном месте.\n
+        Коровы - цифры, совпадающие с цифрами загаданного числа и стоящие не на своем месте.\n
+        Например:\n
+        Задумано число 0834. Вы сделали ход 8134. Итого: 2 "быка" (цифры 3 и 4) и 1 "корова" (цифра 8).</string>
+    <string name="back">Назад</string>
+    <string name="soundClick">Громкость звука</string>
+    <string name="soundMusic">Громкость музыки</string>
+    <string name="chooseComplex">Выберите размер числа</string>
+    <string name="zero">0</string>
+    <string name="begin">Играть</string>
+    <string name="type">Введите число</string>
+    <string name="here">Здесь</string>
+    <string name="showHint">Подсказка</string>
+    <string name="tryAgain">Новое число</string>
+    <string name="enter">Ввод числа</string>
+
+</resources>
