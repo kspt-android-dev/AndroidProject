@@ -57,6 +57,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
     static final String CREATION_PTS_ID = "points";
     static final String CREATION_GENDER_ID = "gender";
 
+    static final int LUCK_POINTS = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +87,7 @@ public class CharacterCreationActivity extends AppCompatActivity {
 
         readyButton = findViewById(R.id.activity_character_creation_proceedButton);
         readyButton.setOnClickListener(v -> {
-            player = new PlayerClass(inputName.getText().toString(), null, stren, agili, intel, 10, gender);
+            player = new PlayerClass(inputName.getText().toString(), null, stren, agili, intel, LUCK_POINTS, gender);
             Intent intent = new Intent(getApplicationContext(), InLocationActivity.class);
             intent.putExtra("player", player);
             startActivity(intent);
