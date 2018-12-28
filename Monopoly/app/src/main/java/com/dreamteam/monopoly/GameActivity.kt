@@ -2,28 +2,21 @@ package com.dreamteam.monopoly
 
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.support.constraint.ConstraintLayout
-import android.support.constraint.ConstraintLayout.LayoutParams
-import android.support.constraint.Guideline
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.widget.*
-import com.dreamteam.monopoly.game.SaveDataManager
-import com.dreamteam.monopoly.game.data.GameData
-import com.dreamteam.monopoly.game.data.GameData.numberOfCornersPerSide
-import com.dreamteam.monopoly.game.data.GameData.numberOfSides
-import com.dreamteam.monopoly.game.data.ValuesData
 import com.dreamteam.monopoly.game.GameManager
 import com.dreamteam.monopoly.game.GameManager.ActionState
+import com.dreamteam.monopoly.game.SaveDataManager
 import com.dreamteam.monopoly.game.board.cell.GameCellType
+import com.dreamteam.monopoly.game.data.GameData
+import com.dreamteam.monopoly.game.data.ValuesData
 import com.dreamteam.monopoly.game.player.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_game.*
@@ -72,6 +65,20 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    private fun init() {
+        val intent = this.intent
+        val bundle: Bundle = intent.extras
+        @Suppress("UNCHECKED_CAST")
+        val playersNames: HashMap<PlayerType, ArrayList<String>> = bundle.getSerializable(ValuesData.playersMap) as HashMap<PlayerType, ArrayList<String>>
+
+        gameManager.startAssignment(playersNames)
+        gameManager.updateAllPositions()
+
+        buttonSuicide!!.setOnClickListener {
+            suicideAction(gameManager.getCurrentPlayer())
+        }
+    }
+
     @Override
     override fun finish() {
         super.finish()
@@ -93,92 +100,51 @@ class GameActivity : AppCompatActivity() {
         actionBar?.hide()
     }
 
-    private fun init() {
-        val cellWidth: Int
-        val cellHeight: Int
-        val constraintLayout = findViewById<ConstraintLayout>(R.id.ConstraintLayoutScroll)
-        val underTopLineGuideline = findViewById<Guideline>(R.id.UnderTopPartGuideline)
-        val horizontalGuideline = findViewById<Guideline>(R.id.HorizontalGuideline)
-        val verticalGuideline = findViewById<Guideline>(R.id.VerticalGuideline)
-
-        val intent = this.intent
-        val bundle: Bundle = intent.extras
-        @Suppress("UNCHECKED_CAST")
-        val playersNames: HashMap<PlayerType, ArrayList<String>> = bundle.getSerializable(ValuesData.playersMap) as HashMap<PlayerType, ArrayList<String>>
-
-        val metrics = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(metrics)
-
-        var screenLayout = resources.configuration.screenLayout
-        screenLayout = screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK
-        Log.d("LAYOUT", this.packageName)
-        if (screenLayout == Configuration.SCREENLAYOUT_SIZE_SMALL) {
-            val boardSize: Int =
-                    if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-                        metrics.widthPixels * 2
-                    else
-                        metrics.heightPixels * 2
-            cellWidth = (boardSize / ((gameManager.mainBoard.gameWayLength / numberOfSides - 1) +
-                    numberOfCornersPerSide * GameData.cellSidesModifier)).toInt()
-            cellHeight = (cellWidth * GameData.cellSidesModifier).toInt()
-
-            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                horizontalGuideline.setGuidelinePercent(resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density / (metrics.heightPixels / resources.displayMetrics.density))
-                underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
-            } else {
-                underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
-                verticalGuideline.setGuidelinePercent((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / (metrics.widthPixels / resources.displayMetrics.density))
-                val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
-                verticalGuideline2.setGuidelinePercent(((resources.getDimension(R.dimen.scrollViewNatural) / resources.displayMetrics.density) / (metrics.widthPixels / resources.displayMetrics.density)) / 2)
+    private fun dataRestore(savedInstanceState: Bundle? = null) {
+        when (saveMode) {
+            SaveMode.FROM_BUNDLE -> {
+                init()
+                if (savedInstanceState != null) savedData.restoreFromBundle(savedInstanceState, this)
             }
-            gameManager.mainBoard.createBoard(constraintLayout, cellHeight, cellWidth)
-        } else {
-            val boardSize: Int =
-                    if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-                        metrics.widthPixels
-                    else
-                        metrics.heightPixels
-            cellWidth = (boardSize / ((gameManager.mainBoard.gameWayLength / numberOfSides - 1) +
-                    numberOfCornersPerSide * GameData.cellSidesModifier)).toInt()
-            cellHeight = (cellWidth * GameData.cellSidesModifier).toInt()
-
-            val fullSideLength = numberOfCornersPerSide * cellHeight.toFloat() +
-                    GameData.numberOfCommonCellsPerSide * cellWidth.toFloat()
-            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                horizontalGuideline.setGuidelinePercent(fullSideLength / metrics.heightPixels)
-                underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
-            } else {
-                underTopLineGuideline.setGuidelinePercent(cellHeight.toFloat() / boardSize)
-                horizontalGuideline.setGuidelinePercent(cellHeight.toFloat() / metrics.heightPixels)
-                verticalGuideline.setGuidelinePercent(fullSideLength / metrics.widthPixels)
-                val verticalGuideline2 = findViewById<Guideline>(R.id.VerticalGuideline2)
-                verticalGuideline2.setGuidelinePercent((fullSideLength / 2) / metrics.widthPixels)
+            SaveMode.FROM_VIEW_MODEL -> {
+                savedData = ViewModelProviders.of(this).get(SaveDataManager::class.java)
+                init()
+                if (savedData.isInited) savedData.restoreFromViewModel(this)
             }
-            gameManager.mainBoard.createBoard(constraintLayout, cellHeight, cellWidth)
         }
+    }
 
-        gameManager.startAssignment(playersNames)
-
-        val namesize: Int = when {
-            playersNames[PlayerType.PERSON]?.size == null -> playersNames[PlayerType.AI]!!.size
-            playersNames[PlayerType.AI]?.size == null -> playersNames[PlayerType.PERSON]!!.size
-            else -> playersNames[PlayerType.AI]!!.size + playersNames[PlayerType.PERSON]!!.size
+    override fun onSaveInstanceState(outState: Bundle?) {
+        if (saveMode == SaveMode.FROM_BUNDLE) {
+            val playersNum: Int = gameManager.players.size
+            val playersPos = ArrayList<Int>(playersNum)
+            val playersMoney = ArrayList<Int>(playersNum)
+            val playersOwnedCells: ArrayList<ArrayList<Int>> = arrayListOf(
+                    ArrayList(), ArrayList(), ArrayList(), ArrayList())
+            for (i in 0 until playersNum) {
+                val player = gameManager.players[i]
+                playersPos.add(player.currentPosition)
+                playersMoney.add(player.money)
+                for (j in 0 until player.cells.size)
+                    playersOwnedCells[i].add(player.cells[j].id.toInt())
+            }
+            outState?.putIntegerArrayList(ValuesData.playersSuicideIds, gameManager.suicidePlayers)
+            outState?.putIntegerArrayList(ValuesData.playersPositions, playersPos)
+            outState?.putIntegerArrayList(ValuesData.playerMoney, playersMoney)
+            outState?.putInt(ValuesData.currentPlayerIndex, gameManager.currentPlayerIndex)
+            outState?.putInt(ValuesData.actionState, gameManager.actionState.state)
+            outState?.putInt(ValuesData.currentInfo, gameManager.currentInfo)
+            for (i in 0 until playersNum) {
+                outState?.putIntegerArrayList(ValuesData.playerCells + i.toString(), playersOwnedCells[i])
+            }
+            super.onSaveInstanceState(outState)
         }
+    }
 
-        for (i in 1..namesize) {
-            val myPlayerID = resources.getIdentifier(getString(R.string.Player) + i.toString(), ValuesData.id, packageName)
-            val playerImage = resources.getDrawable(resources
-                    .getIdentifier(getString(R.string.player) + i.toString(), getString(R.string.drawable), packageName), null)
-            val player = ImageView(this)
-            player.layoutParams = LayoutParams(cellWidth / 2, cellWidth / 2)
-            player.id = (myPlayerID)
-            player.setImageDrawable(playerImage)
-            constraintLayout.addView(player)
-        }
-        gameManager.updateAllPositions()
-
-        buttonSuicide!!.setOnClickListener {
-            suicideAction(gameManager.getCurrentPlayer())
+    override fun onDestroy() {
+        super.onDestroy()
+        if (saveMode == SaveMode.FROM_VIEW_MODEL) {
+            savedData.save(gameManager)
         }
     }
 
@@ -370,54 +336,6 @@ class GameActivity : AppCompatActivity() {
         buySpace.text = String.format(resources.getString(R.string.buyspace), costBuy)
         sellSpace.text = String.format(resources.getString(R.string.sellspace), costSell)
         chargeSpace.text = String.format(resources.getString(R.string.chargespace), charge)
-    }
-
-    private fun dataRestore(savedInstanceState: Bundle? = null) {
-        when (saveMode) {
-            SaveMode.FROM_BUNDLE -> {
-                init()
-                if (savedInstanceState != null) savedData.restoreFromBundle(savedInstanceState, this)
-            }
-            SaveMode.FROM_VIEW_MODEL -> {
-                savedData = ViewModelProviders.of(this).get(SaveDataManager::class.java)
-                init()
-                if (savedData.isInited) savedData.restoreFromViewModel(this)
-            }
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        if (saveMode == SaveMode.FROM_BUNDLE) {
-            val playersNum: Int = gameManager.players.size
-            val playersPos = ArrayList<Int>(playersNum)
-            val playersMoney = ArrayList<Int>(playersNum)
-            val playersOwnedCells: ArrayList<ArrayList<Int>> = arrayListOf(
-                    ArrayList(), ArrayList(), ArrayList(), ArrayList())
-            for (i in 0 until playersNum) {
-                val player = gameManager.players[i]
-                playersPos.add(player.currentPosition)
-                playersMoney.add(player.money)
-                for (j in 0 until player.cells.size)
-                    playersOwnedCells[i].add(player.cells[j].id.toInt())
-            }
-            outState?.putIntegerArrayList(ValuesData.playersSuicideIds, gameManager.suicidePlayers)
-            outState?.putIntegerArrayList(ValuesData.playersPositions, playersPos)
-            outState?.putIntegerArrayList(ValuesData.playerMoney, playersMoney)
-            outState?.putInt(ValuesData.currentPlayerIndex, gameManager.currentPlayerIndex)
-            outState?.putInt(ValuesData.actionState, gameManager.actionState.state)
-            outState?.putInt(ValuesData.currentInfo, gameManager.currentInfo)
-            for (i in 0 until playersNum) {
-                outState?.putIntegerArrayList(ValuesData.playerCells + i.toString(), playersOwnedCells[i])
-            }
-            super.onSaveInstanceState(outState)
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (saveMode == SaveMode.FROM_VIEW_MODEL) {
-            savedData.save(gameManager)
-        }
     }
 
     fun updPlayerMoney(player: Player) {
