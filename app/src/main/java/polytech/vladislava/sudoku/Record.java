@@ -5,6 +5,7 @@ class Record implements Comparable<Record>{
     private final String name;
     private final String time;
     private final int tips;
+    private static final int SEC_IN_MIN = 60;
 
     public Record(String name, String time, int tips) {
         this.name = name;
@@ -26,7 +27,7 @@ class Record implements Comparable<Record>{
 
     public int getTimeValue(){
         String[] times = time.trim().split(":");
-        return Integer.valueOf(times[0]) * 60 + Integer.valueOf(times[1]);
+        return Integer.valueOf(times[0]) * SEC_IN_MIN + Integer.valueOf(times[1]);
     }
 
 

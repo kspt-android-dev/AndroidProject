@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.swipeDown;
+import static android.support.test.espresso.action.ViewActions.swipeUp;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -46,22 +48,45 @@ public class AppTest {
                 .check(matches(isDisplayed()));
 
         try {
-            onView(withId(R.id.a_game_sudokuGrid))
-                    .perform(click());
+            for (int i = 0; i < 10; i++) {
+                onView(withId(R.id.a_game_sudokuGrid))
+                        .perform(click());
+            }
         } catch (Exception e) {}
 
         onView(withId(R.id.a_game_check))
                 .check(matches(isDisplayed()))
                 .perform(click());
 
-        onView(withText("Не все поля заполнены!")).inRoot(withDecorView(not(is(activityActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        try {
+            onView(withText("Не все поля заполнены!")).inRoot(withDecorView(not(is(activityActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        } catch (Exception e) {
+            onView(withText("There are some empty cells!")).inRoot(withDecorView(not(is(activityActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
 
+        }
         onView(withId(R.id.a_game_chrono))
                 .check(matches(isDisplayed()));
 
         onView(withId(R.id.a_game_help))
-                .check(matches(isDisplayed()))
-                .perform(click())
+                .check(matches(isDisplayed()));
+
+
+        for (int i = 0; i < 58; i++) {
+            onView(withId(R.id.a_game_help))
+                    .check(matches(isDisplayed()))
+                    .perform(click());
+        }
+
+        onView(withId(R.id.a_game_check))
                 .perform(click());
+
+
+        try {
+            onView(withText("Ready"))
+                    .perform(click());
+        } catch (Exception e) {
+            onView(withText("Ввести"))
+                    .perform(click());
+        }
     }
 }

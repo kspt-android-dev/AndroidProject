@@ -19,7 +19,7 @@ public class RecordsActivity extends AppCompatActivity {
         connector = new DBConnector(getApplicationContext());
 
         List<Record> records = connector.getAllRecords();
-        if (records!= null) Collections.sort(records);
+        if (records != null) Collections.sort(records);
         if (records != null){
             RecordAdapter adapter = new RecordAdapter(this, records);
 

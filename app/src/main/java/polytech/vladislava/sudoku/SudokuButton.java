@@ -49,7 +49,7 @@ public class SudokuButton extends android.support.v7.widget.AppCompatButton {
     private void clicked() {
         if (isConstant)
             return;
-        setValue((value + 1) % FIELD_SIZE + 1);
+        setValue((value + 1) % (FIELD_SIZE + 1));
         game.setNumber(position % FIELD_SIZE, position / FIELD_SIZE, value);
     }
 

@@ -37,6 +37,8 @@ public class GameActivity extends AppCompatActivity {
     private static final int FIELD_SIZE = 9;
     private static final int MARGINS = 20;
     private static final int DURATION = 1000;
+    private final static int BLOCK_SIZE1 = 3;
+    private final static int BLOCK_SIZE2 = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,9 +128,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void checkGame() {
-        for (int i = 0; i < FIELD_SIZE * FIELD_SIZE; i++) {
-            if (!checkPoint(i % FIELD_SIZE, i / FIELD_SIZE))
-                return;
+        for (int i = 0; i < FIELD_SIZE; i++) {
+            for (int j = 0; j < FIELD_SIZE; j++) {
+                if (!checkPoint(i, j))
+                    return;
+            }
         }
         win();
     }
@@ -196,7 +200,7 @@ public class GameActivity extends AppCompatActivity {
             gameGrid.addView(button);
             counter++;
             second_counter++;
-            if (second_counter == 27 && !(i > 60)) {
+            if (second_counter == FIELD_SIZE * BLOCK_SIZE1 && !(i > 60)) {
                 for (int j = 0; j < FIELD_SIZE + 2; j++) {
                     Space space = new Space(this);
                     GridLayout.LayoutParams doubleLayoutParams = new GridLayout.LayoutParams();
@@ -211,7 +215,7 @@ public class GameActivity extends AppCompatActivity {
                 second_counter = 0;
                 continue;
             }
-            if (counter == 3 || counter == 6) {
+            if (counter == BLOCK_SIZE1 || counter == BLOCK_SIZE2) {
                 Space space = new Space(this);
                 GridLayout.LayoutParams doubleLayoutParams = new GridLayout.LayoutParams();
                 doubleLayoutParams.width = 0;
