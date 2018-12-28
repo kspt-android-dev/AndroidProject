@@ -9,7 +9,7 @@ import static android.view.MotionEvent.ACTION_CANCEL;
 import static android.view.MotionEvent.ACTION_DOWN;
 
 //Вся дичь обработки тут а именно выбор буквы и выбор клетки куда поставить
-public class GameFieldListener implements View.OnTouchListener {
+class GameFieldListener implements View.OnTouchListener {
     private int size;
     private GameField gameField;
 

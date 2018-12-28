@@ -58,7 +58,7 @@ public class GameRules {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public static class MyAsyncTask extends AsyncTask<String, Void, Boolean> {
+    private static class MyAsyncTask extends AsyncTask<String, Void, Boolean> {
         boolean result;
         @Override
         protected Boolean doInBackground(String... word) {

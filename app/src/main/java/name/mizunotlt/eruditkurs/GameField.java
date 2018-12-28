@@ -28,10 +28,10 @@ public class GameField extends View {
     private ArrayList<Integer> tempListNumCells= new ArrayList<>();
     //false если портретная, true если альбомная
     private Point sizeScreen = new Point();
-    public boolean orientation = false;
+    private boolean orientation = false;
     private final int COUNT_LETTER = 7;
     private final int NUMBER_CELL_IN_ROW = 15;
-    private  int SIZE_CELL_LETTER;
+    private  int sizeCellLetter;
     private int sizeCell;
     private List<Bitmap> bitmapListLetter = new ArrayList<>();
     private List<Bitmap> bitmapListLetterBoard = new ArrayList<>();
@@ -39,81 +39,81 @@ public class GameField extends View {
     //Дефолтные значения отступов экрана
     private final int indent = 100;
     private final int indentY = 5;
-    Bitmap x2Letterpict;
-    Bitmap x2Wordpict;
-    Bitmap x3Letterpict;
-    Bitmap x3Wordpict;
-    Bitmap defpict;
-    Bitmap startpict;
-    Matrix matrix;
+    private Bitmap x2Letterpict;
+    private Bitmap x2Wordpict;
+    private Bitmap x3Letterpict;
+    private Bitmap x3Wordpict;
+    private Bitmap defpict;
+    private Bitmap startpict;
+    private Matrix matrix;
 
     private void initBitmapListLetter(){
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let1),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let2),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let3),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let4),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let5),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let6),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let7),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let8),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let9),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let10),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let11),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let12),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER,false));
+                sizeCellLetter, sizeCellLetter,false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let13),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER,false));
+                sizeCellLetter, sizeCellLetter,false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let14),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let15),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let16),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let17),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let18),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let19),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let20),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let21),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let22),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let23),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let24),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let25),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let26),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let27),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let28),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let29),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let30),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let31),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let32),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetter.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.let33),
-                SIZE_CELL_LETTER,SIZE_CELL_LETTER, false));
+                sizeCellLetter, sizeCellLetter, false));
         bitmapListLetterBoard.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.letb1),
                 sizeCell,sizeCell, false));
         bitmapListLetterBoard.add(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.letb2),
@@ -241,7 +241,7 @@ public class GameField extends View {
         this.setOnTouchListener(new GameFieldListener(this));
         this.sizeCell = sizeCell;
         //Сделано для того чтобы буквы которые в руке у игрока выглядели больше
-        this.SIZE_CELL_LETTER = sizeCell + 5;
+        this.sizeCellLetter = sizeCell + 5;
         matrix = new Matrix();
         games = new GameMechanic(player1,player2);
     }
@@ -297,10 +297,7 @@ public class GameField extends View {
         startpict = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.start),
                 sizeCell,sizeCell,false);
     }
-    @Override
-    public boolean performClick() {
-        return super.performClick();
-    }
+
     public void updateField(int num){
 
         for(CellForLetter cell: games.getListCellLetter()){

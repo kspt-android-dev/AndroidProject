@@ -8,15 +8,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static name.mizunotlt.eruditkurs.State.X3WORD;
+import static name.mizunotlt.eruditkurs.State.X2LETTER;
+import static name.mizunotlt.eruditkurs.State.X2WORD;
+import static name.mizunotlt.eruditkurs.State.X3LETTER;
+import static name.mizunotlt.eruditkurs.State.START_POSITION;
+import static name.mizunotlt.eruditkurs.State.DEF_CELL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
 public class EruditKursUnitTest {
-    Player testPlayer1 = new Player("ЖОРА");
-    Player testPlayer2 = new Player("ГОША");
-    GameMechanic mechanicTest = new GameMechanic(testPlayer1,testPlayer2);
-    GameRules rules = new GameRules();
+    private Player testPlayer1 = new Player("ЖОРА");
+    private Player testPlayer2 = new Player("ГОША");
+    private GameMechanic mechanicTest = new GameMechanic(testPlayer1,testPlayer2);
+    private GameRules rules = new GameRules();
 
     @Test
     public void addition_isCorrect() {
@@ -145,12 +151,12 @@ public class EruditKursUnitTest {
         mechanicTest.setStartPoint(new Point(15,100), new Point (1900,100));
         mechanicTest.startGame();
 
-        assertEquals(StateCellEnum.State.X3WORD, mechanicTest.getWorkListCells().get(0).getState());
-        assertEquals(StateCellEnum.State.DEF_CELL, mechanicTest.getWorkListCells().get(1).getState());
-        assertEquals(StateCellEnum.State.X2LETTER, mechanicTest.getWorkListCells().get(3).getState());
-        assertEquals(StateCellEnum.State.X2WORD, mechanicTest.getWorkListCells().get(16).getState());
-        assertEquals(StateCellEnum.State.X3LETTER, mechanicTest.getWorkListCells().get(20).getState());
-        assertEquals(StateCellEnum.State.START_POSITION, mechanicTest.getWorkListCells().get(112).getState());
+        assertEquals(X3WORD, mechanicTest.getWorkListCells().get(0).getState());
+        assertEquals(DEF_CELL, mechanicTest.getWorkListCells().get(1).getState());
+        assertEquals(X2LETTER, mechanicTest.getWorkListCells().get(3).getState());
+        assertEquals(X2WORD, mechanicTest.getWorkListCells().get(16).getState());
+        assertEquals(X3LETTER, mechanicTest.getWorkListCells().get(20).getState());
+        assertEquals(START_POSITION, mechanicTest.getWorkListCells().get(112).getState());
     }
 
     @Test

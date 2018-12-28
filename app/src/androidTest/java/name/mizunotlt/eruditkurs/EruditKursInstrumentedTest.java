@@ -55,19 +55,19 @@ public class EruditKursInstrumentedTest {
         onView(ViewMatchers.withId(R.id.nextTurn)).perform(ViewActions.click());
         setupLetter();
         onView(ViewMatchers.withId(R.id.nextTurn)).perform(ViewActions.click());
-        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(100, 1900));
+        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(100, 2000));
         onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(20, 100));
-        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(200, 1900));
+        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(200, 2000));
         onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(520, 590));
         onView(ViewMatchers.withId(R.id.newWord)).perform(ViewActions.click());
         onView(ViewMatchers.withId(R.id.namePlayer)).check(matches(withText("")));
-        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(200, 1900));
-        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(520, 590));
-        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(100, 1900));
+        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(100, 2000));
         onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(450, 590));
-        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(300, 1900));
+        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(210, 2000));
+        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(520, 590));
+        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(320, 2000));
         onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(590, 590));
-        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(400, 1900));
+        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(430, 2000));
         onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(660, 590));
         onView(ViewMatchers.withId(R.id.newWord)).perform(ViewActions.click());
         onView(ViewMatchers.withId(R.id.namePlayer)).check(matches(withText("БАЙК")));
@@ -93,7 +93,7 @@ public class EruditKursInstrumentedTest {
         setupLetter();
         //char oldLetter = testGameActivity.gameField.getGames().getListCellLetter()
         onView(ViewMatchers.withId(R.id.nextTurn)).perform(ViewActions.click());
-        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(100, 1900));
+        onView(ViewMatchers.withId(R.id.frameGame)).perform(clickOnBoard(100, 2000));
         onView(ViewMatchers.withId(R.id.recylce)).perform(ViewActions.click());
 
     }

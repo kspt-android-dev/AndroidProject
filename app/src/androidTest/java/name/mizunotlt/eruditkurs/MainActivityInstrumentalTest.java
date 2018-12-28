@@ -13,6 +13,9 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 //Тестирование главного меню
 @RunWith(AndroidJUnit4.class)
@@ -29,12 +32,13 @@ public class MainActivityInstrumentalTest {
     @Test
     @SmallTest
     public void testNewGame(){
-        onView(ViewMatchers.withId(R.id.newGame)).perform(ViewActions.click());
+        onView(withId(R.id.newGame)).perform(ViewActions.click());
     }
 
     @Test
     @SmallTest
     public void testAbout(){
-        onView(ViewMatchers.withId(R.id.aboutButton)).perform(ViewActions.click());
+        onView(withId(R.id.aboutButton)).perform(ViewActions.click());
+       onView(ViewMatchers.withId(R.id.textbout)).check(matches(withText("Игра эрудит!!Версия игры: 1.0 Автор: Архиреев Дмитрий P.S ОЧЕНЬ УСТАЛ")));
     }
 }

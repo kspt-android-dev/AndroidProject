@@ -9,36 +9,37 @@
 
     <Button
         android:id="@+id/rules"
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="244dp"
+        android:layout_width="@dimen/mButtonWidth"
+        android:layout_height="@dimen/mButtonHeight"
+        android:layout_marginBottom="@dimen/mLandMarginBottom"
+        android:layout_marginEnd="@dimen/mLandMarginEnd"
+        android:layout_marginStart="@dimen/mLandMarginStart"
+        android:layout_marginTop="@dimen/mLandMarginTop"
         android:background="@drawable/bot"
         android:onClick="onClickNewGame"
         android:text="@string/aboutButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.798"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.388"
+        app:layout_constraintStart_toEndOf="@+id/newGame"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.517" />
+        app:layout_constraintVertical_bias="0.914" />
 
     <Button
         android:id="@+id/newGame"
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="244dp"
+        android:layout_width="@dimen/mButtonWidth"
+        android:layout_height="@dimen/mButtonHeight"
+        android:layout_marginBottom="@dimen/mLandMarginBottom"
+        android:layout_marginEnd="@dimen/mLandMarginEnd"
+        android:layout_marginStart="@dimen/mLandMarginStart"
+        android:layout_marginTop="@dimen/mLandMarginTop"
         android:background="@drawable/bot"
         android:onClick="onClickNewGame"
         android:text="@string/newGame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.299"
+        app:layout_constraintHorizontal_bias="0.304"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.724" />
+        app:layout_constraintVertical_bias="0.914" />
 </android.support.constraint.ConstraintLayout>

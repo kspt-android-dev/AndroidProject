@@ -13,6 +13,7 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 
@@ -33,7 +34,7 @@ public class StartGameActivityInstrumentalTest {
         public void testStartGame(){
             onView(ViewMatchers.withId(R.id.firstPlayer)).perform(ViewActions.replaceText("Игрок 1"));
             onView(ViewMatchers.withId(R.id.secondPlayer)).perform(ViewActions.replaceText("Игрок 2"));
-            onView(ViewMatchers.withId(R.id.startGame)).perform(ViewActions.click());
+            onView(ViewMatchers.withId(R.id.startGame)).perform(ViewActions.click()).check(matches(isDisplayed()));
             onView(ViewMatchers.withId(R.id.startGame)).perform(ViewActions.click());
             onView(ViewMatchers.withId(R.id.namePlayer)).check(matches(withText("Игрок 1\n0")));
         }

@@ -3,7 +3,7 @@ package name.mizunotlt.eruditkurs;
 import android.graphics.Path;
 import android.graphics.Point;
 
-public class CellForLetter {
+class CellForLetter {
     private Point startPoint;
     private Path path;
     private int numCell;

@@ -1,6 +1,6 @@
 package name.mizunotlt.eruditkurs;
 
-public class Letter {
+class Letter {
 
     private char letter;
     private int countScore;

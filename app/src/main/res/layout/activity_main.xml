@@ -6,15 +6,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/back"
     tools:context=".MainActivity">
-
     <Button
         android:id="@+id/aboutButton"
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="@dimen/mButtonWidth"
+        android:layout_height="@dimen/mButtonHeight"
+        android:layout_marginBottom="@dimen/mMarginBottom"
+        android:layout_marginEnd="@dimen/mMarginEnd"
+        android:layout_marginStart="@dimen/mMarginStart"
+        android:layout_marginTop="@dimen/mMarginTop"
         android:background="@drawable/bot"
         android:onClick="onClickAbout"
         android:text="@string/aboutButton"
@@ -26,12 +25,12 @@
 
     <Button
         android:id="@+id/newGame"
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="@dimen/mButtonWidth"
+        android:layout_height="@dimen/mButtonHeight"
+        android:layout_marginBottom="@dimen/mMarginBottom"
+        android:layout_marginEnd="@dimen/mMarginEnd"
+        android:layout_marginStart="@dimen/mMarginStart"
+        android:layout_marginTop="@dimen/mMarginTop"
         android:background="@drawable/bot"
         android:onClick="onClickNewGame"
         android:text="@string/newGame"
@@ -40,6 +39,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.587" />
-
-
 </android.support.constraint.ConstraintLayout>
