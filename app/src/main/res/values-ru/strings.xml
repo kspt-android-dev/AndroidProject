@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Шашки</string>
+    <string name="Save">Сохранить</string>
+    <string name="notification_title">Chechers</string>
+    <string name="notification_text">Мы ждем тебя</string>
+    <string name="insturcion">Инструкции</string>
+    <string name = "new_game">Новая Игра</string>
+    <string name="html">
+        <![CDATA[
+        <p> «<b>Шашки</b>» – Очень интересная, динамичная, интеллектуальная игра.
+        <p><b>Its Главная цель</b> — срубить все шашки оппонента.
+                  Ты должен быть достаточно сообразителен и иметь опыт в игре</p>
+        <p><h2>Rules</h2></p>
+       Шашки ходят только на темные клетки и на одну клетку вперед по диагоналии,
+        назад шашки не ходят.<p>
+        ]]>
+    </string>
+</resources>
