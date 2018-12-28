@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gamewindow"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.example.pk.game15.Game"
+    android:baselineAligned="false">
+
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:orientation="vertical"
+        >
+
+        <Button
+            android:id="@+id/menu_button"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+
+            android:background="@drawable/buttonshape"
+            android:fontFamily="@font/armata"
+            android:shadowColor="#A8A8A8"
+            android:shadowRadius="10"
+            android:text="@string/menu"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/pause_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+
+            android:background="@drawable/buttonshape"
+            android:fontFamily="@font/armata"
+            android:shadowColor="#A8A8A8"
+            android:shadowRadius="10"
+            android:text="@string/pause"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp" />
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/abeezee"
+            android:paddingBottom="20dp"
+            android:textSize="30sp"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="8">
+
+        <GridLayout
+            android:id="@+id/field"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true">
+
+        </GridLayout>
+    </RelativeLayout>
+</LinearLayout>
