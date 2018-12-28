@@ -484,7 +484,7 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun updPlayerMoney(player: Player) {
+    fun updPlayerMoney(player: Player) {
         val playerMoneyId = resources.getIdentifier(ValuesData.playerMoney +
                 player.id, ValuesData.id, packageName)
         val playerMoney: TextView = findViewById(playerMoneyId)
