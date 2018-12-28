@@ -17,4 +17,10 @@
     <string name="exit">Выход</string>
     <string name="time">Время:</string>
     <string name="tipsCount">Подсказок:</string>
+    <string name="Congrats">Поздравляем!</string>
+    <string name="NameEnter">Введите имя игрока:</string>
+    <string name="Ready">Готово</string>
+    <string name="Player">[Игрок]</string>
+    <string name="EmptyCells">Не все поля заполнены!</string>
+    <string name="WrongAnswer">Не все поля корректные!</string>
 </resources>

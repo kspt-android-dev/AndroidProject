@@ -12,22 +12,23 @@ import static polytech.vladislava.sudoku.DBHelper.*;
 
 class DBConnector {
 
-    public static void addRecord(Context context, Record record) {
-        DBHelper helper = new DBHelper(context);
-        SQLiteDatabase database = helper.getWritableDatabase();
+    private DBHelper helper;
+    private SQLiteDatabase database;
+
+    DBConnector(Context context) {
+        helper = new DBHelper(context);
+        database = helper.getWritableDatabase();
+    }
+
+    public void addRecord(Record record) {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, record.getName());
         values.put(KEY_TIME, record.getTime());
         values.put(KEY_TIPS, record.getTips());
         database.insert(TABLE_NAME, null, values);
-        database.close();
-        helper.close();
     }
 
-    public static List<Record> getAllRecords(Context context) {
-        DBHelper helper = new DBHelper(context);
-        SQLiteDatabase database = helper.getReadableDatabase();
-
+    public List<Record> getAllRecords() {
         Cursor cursor = database.query(TABLE_NAME, null, null, null, null, null, KEY_TIME + " DESC");
         int indexName = cursor.getColumnIndex(KEY_NAME);
         int indexTime = cursor.getColumnIndex(KEY_TIME);
@@ -42,14 +43,15 @@ class DBConnector {
                         cursor.getInt(indexTips)
                 ));
             } while (cursor.moveToNext());
-            database.close();
-            helper.close();
+            cursor.close();
             return records;
         }
-        database.close();
-        helper.close();
         cursor.close();
         return null;
     }
 
+    void close() {
+        helper.close();
+        database.close();
+    }
 }

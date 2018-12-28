@@ -12,39 +12,42 @@ public class Sudoku implements Serializable {
     private final boolean[][] initial;    // If true, the cell was opened at begining
     private boolean[][] check;      // Holder for checking validity of game.
     private final boolean help;           // Help turned on or off.
-
+    private final static int FIELD_SIZE = 9;
+    private final static int HELP_SIZE = 3;
+    private final static int BLOCK_SIZE1 = 3;
+    private final static int BLOCK_SIZE2 = 6;
 
     public Sudoku() {
-        check = new boolean[9][9];
-        helped = new boolean[9][9];
-        initial = new boolean[9][9];
+        check = new boolean[FIELD_SIZE][FIELD_SIZE];
+        helped = new boolean[FIELD_SIZE][FIELD_SIZE];
+        initial = new boolean[FIELD_SIZE][FIELD_SIZE];
         newGame();
-        helped[3][3] = false;
+        helped[HELP_SIZE][HELP_SIZE] = false;
         help = true;
     }
 
     public Sudoku(int[][] solution, int[][]game) {
         this.solution = solution;
         this.game = game;
-        helped = new boolean[9][9];
-        initial = new boolean[9][9];
-        helped[3][3] = false;
+        helped = new boolean[FIELD_SIZE][FIELD_SIZE];
+        initial = new boolean[FIELD_SIZE][FIELD_SIZE];
+        helped[HELP_SIZE][HELP_SIZE] = false;
         help = true;
     }
 
     private void newGame() {
-        solution = generateSolution(new int[9][9], 0);
+        solution = generateSolution(new int[FIELD_SIZE][FIELD_SIZE], 0);
         game = generateGame(copy(solution));
-        for (int i = 0; i < 81; i++){
-            if (game[i % 9][i / 9] != 0)
-                initial[i % 9][i / 9] = true;
+        for (int i = 0; i < FIELD_SIZE * FIELD_SIZE; i++){
+            if (game[i % FIELD_SIZE][i / FIELD_SIZE] != 0)
+                initial[i % FIELD_SIZE][i / FIELD_SIZE] = true;
         }
     }
 
 
     private void checkGame() {
-        for (int y = 0; y < 9; y++) {
-            for (int x = 0; x < 9; x++)
+        for (int y = 0; y < FIELD_SIZE; y++) {
+            for (int x = 0; x < FIELD_SIZE; x++)
                 check[y][x] = game[y][x] == solution[y][x];
         }
     }
@@ -74,7 +77,7 @@ public class Sudoku implements Serializable {
 
 
     boolean isPossibleX(int[][] game, int y, int number) {
-        for (int x = 0; x < 9; x++) {
+        for (int x = 0; x < FIELD_SIZE; x++) {
             if (game[y][x] == number)
                 return false;
         }
@@ -83,7 +86,7 @@ public class Sudoku implements Serializable {
 
 
     boolean isPossibleY(int[][] game, int x, int number) {
-        for (int y = 0; y < 9; y++) {
+        for (int y = 0; y < FIELD_SIZE; y++) {
             if (game[y][x] == number)
                 return false;
         }
@@ -92,10 +95,10 @@ public class Sudoku implements Serializable {
 
 
     boolean isPossibleBlock(int[][] game, int x, int y, int number) {
-        int x1 = x < 3 ? 0 : x < 6 ? 3 : 6;
-        int y1 = y < 3 ? 0 : y < 6 ? 3 : 6;
-        for (int yy = y1; yy < y1 + 3; yy++) {
-            for (int xx = x1; xx < x1 + 3; xx++) {
+        int x1 = x < BLOCK_SIZE1 ? 0 : x < BLOCK_SIZE2 ? BLOCK_SIZE1 : BLOCK_SIZE2;
+        int y1 = y < BLOCK_SIZE1 ? 0 : y < BLOCK_SIZE2 ? BLOCK_SIZE1 : BLOCK_SIZE2;
+        for (int yy = y1; yy < y1 + BLOCK_SIZE1; yy++) {
+            for (int xx = x1; xx < x1 + BLOCK_SIZE1; xx++) {
                 if (game[yy][xx] == number)
                     return false;
             }
@@ -115,14 +118,14 @@ public class Sudoku implements Serializable {
 
 
     private int[][] generateSolution(int[][] game, int index) {
-        if (index > 80)
+        if (index > FIELD_SIZE * FIELD_SIZE - 1)
             return game;
 
-        int x = index % 9;
-        int y = index / 9;
+        int x = index % FIELD_SIZE;
+        int y = index / FIELD_SIZE;
 
         List<Integer> numbers = new ArrayList<>();
-        for (int i = 1; i <= 9; i++) numbers.add(i);
+        for (int i = 1; i <= FIELD_SIZE; i++) numbers.add(i);
         Collections.shuffle(numbers);
 
         while (numbers.size() > 0) {
@@ -143,7 +146,7 @@ public class Sudoku implements Serializable {
 
     private int[][] generateGame(int[][] game) {
         List<Integer> positions = new ArrayList<>();
-        for (int i = 0; i < 81; i++)
+        for (int i = 0; i < FIELD_SIZE * FIELD_SIZE; i++)
             positions.add(i);
         Collections.shuffle(positions);
         return generateGame(game, positions);
@@ -153,8 +156,8 @@ public class Sudoku implements Serializable {
     private int[][] generateGame(int[][] game, List<Integer> positions) {
         while (positions.size() > 0) {
             int position = positions.remove(0);
-            int x = position % 9;
-            int y = position / 9;
+            int x = position % FIELD_SIZE;
+            int y = position / FIELD_SIZE;
             int temp = game[y][x];
             game[y][x] = 0;
 
@@ -172,15 +175,15 @@ public class Sudoku implements Serializable {
 
 
     private boolean isValid(int[][] game, int index, int[] numberOfSolutions) {
-        if (index > 80)
+        if (index > FIELD_SIZE * FIELD_SIZE - 1)
             return ++numberOfSolutions[0] == 1;
 
-        int x = index % 9;
-        int y = index / 9;
+        int x = index % FIELD_SIZE;
+        int y = index / FIELD_SIZE;
 
         if (game[y][x] == 0) {
             List<Integer> numbers = new ArrayList<>();
-            for (int i = 1; i <= 9; i++)
+            for (int i = 1; i <= FIELD_SIZE; i++)
                 numbers.add(i);
 
             while (numbers.size() > 0) {
@@ -202,9 +205,9 @@ public class Sudoku implements Serializable {
 
 
     private int[][] copy(int[][] game) {
-        int[][] copy = new int[9][9];
+        int[][] copy = new int[FIELD_SIZE][FIELD_SIZE];
         for (int y = 0; y < 9; y++) {
-            System.arraycopy(game[y], 0, copy[y], 0, 9);
+            System.arraycopy(game[y], 0, copy[y], 0, FIELD_SIZE);
         }
         return copy;
     }
@@ -218,8 +221,8 @@ public class Sudoku implements Serializable {
 
     private void print(int[][] game) {
         System.out.println();
-        for (int y = 0; y < 9; y++) {
-            for (int x = 0; x < 9; x++)
+        for (int y = 0; y < FIELD_SIZE; y++) {
+            for (int x = 0; x < FIELD_SIZE; x++)
                 System.out.print(" " + game[y][x]);
             System.out.println();
         }

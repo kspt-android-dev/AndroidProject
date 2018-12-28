@@ -25,6 +25,7 @@ import java.util.List;
  */
 public class GameActivity extends AppCompatActivity {
 
+    private DBConnector connector;
     private boolean loaded = false;
     private Chronometer chronometer;
     private List<SudokuButton> gameButtons;
@@ -33,6 +34,9 @@ public class GameActivity extends AppCompatActivity {
     private Button help;
     private int tips = 0;
     private GridLayout gameGrid;
+    private static final int FIELD_SIZE = 9;
+    private static final int MARGINS = 20;
+    private static final int DURATION = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class GameActivity extends AppCompatActivity {
         gameGrid = findViewById(R.id.a_game_sudokuGrid);
         chronometer = findViewById(R.id.a_game_chrono);
         chronometer.stop();
+        connector = new DBConnector(getApplicationContext());
 
         LinearLayout loading = findViewById(R.id.a_game_loadingScreen);
 
@@ -84,8 +89,8 @@ public class GameActivity extends AppCompatActivity {
 
     private void help() {
         List<Integer> notFinished = new ArrayList<>();
-        for (int i = 0; i < 81; i++) {
-            if (game.getNumber(i % 9, i / 9) == 0) {
+        for (int i = 0; i < FIELD_SIZE * FIELD_SIZE; i++) {
+            if (game.getNumber(i % FIELD_SIZE, i / FIELD_SIZE) == 0) {
                 notFinished.add(i);
             }
         }
@@ -93,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
             return;
         Collections.shuffle(notFinished);
         int helpingIndex = notFinished.get(0);
-        int solution = game.getSolutionForHelp(helpingIndex % 9, helpingIndex / 9);
+        int solution = game.getSolutionForHelp(helpingIndex % FIELD_SIZE, helpingIndex / FIELD_SIZE);
         gameButtons.get(helpingIndex).setHepled(solution);
         tips++;
     }
@@ -121,8 +126,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void checkGame() {
-        for (int i = 0; i < 81; i++) {
-            if (!checkPoint(i % 9, i / 9))
+        for (int i = 0; i < FIELD_SIZE * FIELD_SIZE; i++) {
+            if (!checkPoint(i % FIELD_SIZE, i / FIELD_SIZE))
                 return;
         }
         win();
@@ -131,21 +136,21 @@ public class GameActivity extends AppCompatActivity {
     private void win() {
         chronometer.stop();
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Поздравляем!");
-        alertDialog.setMessage("Введите имя игрока:");
+        alertDialog.setTitle(R.string.Congrats);
+        alertDialog.setMessage(R.string.NameEnter);
         final EditText input = new EditText(this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
-        lp.setMargins(20, 20, 20, 20);
+        lp.setMargins(MARGINS, MARGINS, MARGINS, MARGINS);
         input.setLayoutParams(lp);
         alertDialog.setView(input);
-        alertDialog.setPositiveButton("Готово", (dialog, which) -> {
+        alertDialog.setPositiveButton(R.string.Ready, (dialog, which) -> {
             int tips = this.tips;
-            String name = input.getText().length() == 0 ? "[Игрок]" : String.valueOf(input.getText());
+            String name = input.getText().length() == 0 ? getString(R.string.Player) : String.valueOf(input.getText());
             String time = String.valueOf(chronometer.getText());
             Record record = new Record(name, time, tips);
-            DBConnector.addRecord(getApplicationContext(), record);
+            connector.addRecord(record);
             finish();
         });
         alertDialog.show();
@@ -153,11 +158,11 @@ public class GameActivity extends AppCompatActivity {
 
     private boolean checkPoint(int x, int y) {
         if (game.getNumber(x, y) == 0) {
-            makeToast("Не все поля заполнены!");
+            makeToast(getString(R.string.EmptyCells));
             return false;
         }
         if (!game.isCheckValid(x, y)) {
-            makeToast("Не все поля корректные!");
+            makeToast(getString(R.string.WrongAnswer));
             return false;
         }
         return true;
@@ -170,18 +175,18 @@ public class GameActivity extends AppCompatActivity {
     private void fillGrid() {
 
         gameButtons = new ArrayList<>();
-        gameGrid.setColumnCount(11);
+        gameGrid.setColumnCount(FIELD_SIZE + 2);
 
         int counter = 0;
         int second_counter = 0;
 
-        for (int i = 0; i < 81; i++) {
+        for (int i = 0; i < FIELD_SIZE * FIELD_SIZE; i++) {
             SudokuButton button = new SudokuButton(this, i, 0);
-            int actualy = game.getNumber(i % 9, i / 9);
+            int actualy = game.getNumber(i % FIELD_SIZE, i / FIELD_SIZE);
             if (actualy != 0) {
-                if (game.isHelped(i % 9, i / 9))
+                if (game.isHelped(i % FIELD_SIZE, i / FIELD_SIZE))
                     button.setHepled(actualy);
-                else if (game.isInitial(i % 9, i / 9)) {
+                else if (game.isInitial(i % FIELD_SIZE, i / FIELD_SIZE)) {
                     button.setContent(actualy);
                     button.makeStatic();
                 } else
@@ -192,7 +197,7 @@ public class GameActivity extends AppCompatActivity {
             counter++;
             second_counter++;
             if (second_counter == 27 && !(i > 60)) {
-                for (int j = 0; j < 11; j++) {
+                for (int j = 0; j < FIELD_SIZE + 2; j++) {
                     Space space = new Space(this);
                     GridLayout.LayoutParams doubleLayoutParams = new GridLayout.LayoutParams();
                     doubleLayoutParams.width = 0;
@@ -215,7 +220,7 @@ public class GameActivity extends AppCompatActivity {
                 space.setLayoutParams(doubleLayoutParams);
                 gameGrid.addView(space);
             }
-            if (counter == 9)
+            if (counter == FIELD_SIZE)
                 counter = 0;
         }
     }
@@ -225,7 +230,7 @@ public class GameActivity extends AppCompatActivity {
         fillGrid();
         LinearLayout loading = findViewById(R.id.a_game_loadingScreen);
         Animation fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setDuration(1000);
+        fadeOut.setDuration(DURATION);
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -246,5 +251,11 @@ public class GameActivity extends AppCompatActivity {
         fadeOut.start();
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        connector.close();
+        super.onDestroy();
     }
 }

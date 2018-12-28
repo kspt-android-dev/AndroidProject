@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/list_element"
-    android:padding="10dp"
+    android:padding="@dimen/LinearPadding"
     android:orientation="vertical"
     android:scaleX="0.9"
     android:scaleY="0.9"
@@ -14,8 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="50sp"
-        android:layout_margin="10dp"
+        android:textSize="@dimen/TitleTextSize"
+        android:layout_margin="@dimen/TextMargin"
         android:layout_gravity="center">
     </TextView>
     <LinearLayout
@@ -24,15 +24,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="@dimen/NormalTextSize"
             android:text="@string/time"
-            android:layout_margin="3dp">
+            android:layout_margin="@dimen/ListItemTextMargin">
         </TextView>
         <TextView
             android:id="@+id/recordTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="@dimen/NormalTextSize"
             android:text="">
         </TextView>
     </LinearLayout>
@@ -43,15 +43,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="@dimen/NormalTextSize"
             android:text="@string/tipsCount"
-            android:layout_margin="3dp">
+            android:layout_margin="@dimen/ListItemTextMargin">
         </TextView>
         <TextView
             android:id="@+id/recordTips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="@dimen/NormalTextSize"
             android:text="">
         </TextView>
     </LinearLayout>

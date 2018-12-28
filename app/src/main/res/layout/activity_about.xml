@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="top|center_horizontal"
-    android:background="#0099cc"
+    android:background="@color/Background"
     android:orientation="vertical"
     tools:context=".AboutActivity"
     android:id="@+id/activity_about">
@@ -18,17 +18,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/TextMargin"
             android:text="@string/aboutAuthor"
             android:textAlignment="center"
-            android:textSize="50sp" />
+            android:textSize="@dimen/TitleTextSize" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/TextMargin"
             android:text="@string/aboutActivityContent"
             android:textAlignment="center"
-            android:textSize="30sp" />
+            android:textSize="@dimen/NormalTextSize" />
     </LinearLayout>
 </ScrollView>

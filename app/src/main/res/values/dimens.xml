@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ProgressBarHeight">250dp</dimen>
+    <dimen name="ProgressBarWidth">150dp</dimen>
+    <dimen name="LoadingTextSize">40sp</dimen>
+    <dimen name="TextMargin">15dp</dimen>
+    <dimen name="ButtonTextSize">20sp</dimen>
+    <dimen name="LandButtonMargin">20dp</dimen>
+    <dimen name="ChronoTextSize">30sp</dimen>
+    <dimen name="ChronoMargin">30dp</dimen>
+    <dimen name="GridLayoutMargin">10dp</dimen>
+    <dimen name="LandGridWidth">350dp</dimen>
+    <dimen name="ButtonMargin">10dp</dimen>
+    <dimen name="TitleTextSize">50sp</dimen>
+    <dimen name="NormalTextSize">25sp</dimen>
+    <dimen name="MainMenuButtonWidth">180dp</dimen>
+    <dimen name="MainMenuButtonHeight">60dp</dimen>
+    <dimen name="MainMenuMargin">7dp</dimen>
+    <dimen name="LinearPadding">10dp</dimen>
+    <dimen name="ListItemTextMargin">3dp</dimen>
+</resources>

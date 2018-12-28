@@ -19,23 +19,25 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:id="@+id/a_game_sudokuGrid"
-            android:layout_margin="10dp">
+            android:layout_margin="@dimen/GridLayoutMargin"
+            android:layout_weight="10">
         </GridLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_weight="1">
             <Button
                 android:id="@+id/a_game_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+                android:layout_margin="@dimen/ButtonMargin"
                 android:backgroundTint="@android:color/holo_orange_light"
                 android:fontFamily="sans-serif-condensed"
                 android:layout_weight="2"
                 android:text="@string/checkButton"
-                android:textSize="20sp" />
+                android:textSize="@dimen/ButtonTextSize" />
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,7 +45,7 @@
             <Chronometer
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="@dimen/ChronoTextSize"
                 android:textColor="@android:color/white"
                 android:id="@+id/a_game_chrono"
                 android:layout_weight="0"
@@ -56,12 +58,12 @@
                 android:id="@+id/a_game_help"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+                android:layout_margin="@dimen/ButtonMargin"
                 android:backgroundTint="@android:color/holo_green_light"
                 android:fontFamily="sans-serif-condensed"
                 android:layout_weight="2"
                 android:text="@string/tip"
-                android:textSize="20sp"/>
+                android:textSize="@dimen/ButtonTextSize"/>
         </LinearLayout>
 
 
@@ -81,13 +83,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/load"
-            android:textSize="40sp"
+            android:textSize="@dimen/LoadingTextSize"
             android:fontFamily="monospace"
             android:textColor="@color/loading_text"
-            android:layout_margin="15dp"/>
+            android:layout_margin="@dimen/TextMargin"/>
         <ProgressBar
-            android:layout_width="150dp"
-            android:layout_height="250dp" />
+            android:layout_width="@dimen/ProgressBarWidth"
+            android:layout_height="@dimen/ProgressBarHeight" />
     </LinearLayout>
 
 </FrameLayout>
