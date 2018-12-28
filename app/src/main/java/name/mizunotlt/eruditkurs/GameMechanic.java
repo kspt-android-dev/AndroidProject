@@ -34,7 +34,7 @@ public class GameMechanic {
     private int incPointY;
     private Point startPoint;
     private Point startBorderLetterPoint;
-    public String tc ="";
+    private String wordAfterCheck ="";
 
 
     public GameMechanic(Player player1, Player player2){
@@ -85,8 +85,8 @@ public class GameMechanic {
 
     public void newWord(ArrayList<Character> tempListLetter, ArrayList<Integer> tempListNumCells){
         if((nextTurn)&&(tempListLetter.size() !=0 )){
-            this.tc =rule.checkWord(firstPlayer, workListCells);
-            if(tc.equals("")){
+            this.wordAfterCheck =rule.checkWord(firstPlayer, workListCells);
+            if(wordAfterCheck.equals("")){
                 int index = 0;
                 while (tempListLetter.size() != 0){
                     if (firstPlayer.getListLetter().get(index) == ' '){
@@ -105,8 +105,8 @@ public class GameMechanic {
         }
         else{
             if (tempListLetter.size() != 0) {
-                this.tc = rule.checkWord(secondPlayer, workListCells);
-                if (tc.equals("")) {
+                this.wordAfterCheck = rule.checkWord(secondPlayer, workListCells);
+                if (wordAfterCheck.equals("")) {
                     int index = 0;
                     while (tempListLetter.size() != 0) {
                         if (secondPlayer.getListLetter().get(index) == ' ') {
@@ -149,19 +149,14 @@ public class GameMechanic {
             }
         }
         if (nextTurn){
-            rule.recycleLetter(firstPlayer, listSelectLetter);
-            nextTurn = false;
+                rule.recycleLetter(firstPlayer, listSelectLetter);
+                nextTurn = false;
         }
         else{
-            rule.recycleLetter(secondPlayer, listSelectLetter);
-            nextTurn = true;
+                rule.recycleLetter(secondPlayer, listSelectLetter);
+                nextTurn = true;
         }
-        if (listSelectLetter.size() != 0)
-            for(Integer index: listSelectLetter){
-                if (listCellLetter.get(index).isSelect()){
-                    listCellLetter.get(index).changeSelect();
-                }
-            }
+        listSelectLetter.clear();
     }
 
     public Player getFirstPlayer(){
@@ -706,7 +701,12 @@ public class GameMechanic {
         }
         return 33;
     }
-
+    public String getWordAfterCheck(){
+        return wordAfterCheck;
+    }
+    public void setWordAfterCheck(){
+        this.wordAfterCheck = "";
+    }
     public boolean getFirstTurn(){
 
         return firstTurn;

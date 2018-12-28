@@ -144,7 +144,8 @@ public class Game extends Activity {
 
     public void onClickNewWord(View view) {
         gameField.newWord();
-        textView.setText(gameField.getGames().tc);
+        textView.setText(gameField.getGames().getWordAfterCheck());
+        gameField.getGames().setWordAfterCheck();
     }
 
     public void onClickStartGame(View view) {

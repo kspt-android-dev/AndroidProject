@@ -225,12 +225,14 @@ public class GameField extends View {
         invalidate();
     }
     public void changeTurn(){
-        games.changeTurn();
+        if (tempListLetter.isEmpty())
+            games.changeTurn();
         invalidate();
     }
     public void changeTurnResetLetter(){
-        if (tempListNumCells.isEmpty())
+        if (tempListNumCells.isEmpty()){
             games.changeTurnResetLetter();
+        }
         invalidate();
     }
     public GameField(Context context, Player player1, Player player2, int sizeCell) {
