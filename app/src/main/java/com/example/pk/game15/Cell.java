@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.GridLayout;
 
 class Cell extends android.support.v7.widget.AppCompatButton {
-
+    //описание кнопки/клетки
     Cell (Activity activity, final Logic logic, final Graphic graphic){
         super(activity, null);
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
@@ -25,7 +25,7 @@ class Cell extends android.support.v7.widget.AppCompatButton {
             }
         });
     }
-
+    //задание стиля не пустой кнопки
     public void normalStyle(){
         setBackgroundResource(R.drawable.scaleshape);
         setTextAppearance(R.style.normalStyle);

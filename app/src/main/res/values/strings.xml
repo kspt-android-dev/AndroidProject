@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Game15</string>
+    <string name="play">Play</string>
+    <string name="rules">Rules</string>
+    <string name="easy">easy</string>
+    <string name="medium">medium</string>
+    <string name="hard">hard</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="menu">Menu</string>
+    <string name="pause">Pause</string>
 </resources>
