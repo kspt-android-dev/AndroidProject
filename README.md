@@ -6,6 +6,9 @@ Project name: "Beast Master 64: Revelation"
 
 It's an turn-based RPG-game in proceduraly generated world.
 
+!!REPORT:
+https://drive.google.com/open?id=11dqXWuPH6e4qMRU3cwbwJfD4-GhbjNE6
+
 Ideas and Concepts:
 https://docs.google.com/document/d/1ohHqUCpPz8UiCHtTsEWzDkkzD0Xf7tBmve0Gcix9Jqk/edit
 
