@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background = "@drawable/backdef"
+    android:orientation="horizontal"
+    android:layout_height="match_parent" >
+
+
+    <TextView
+        android:id="@+id/namePlayer"
+        android:layout_width="@dimen/gameLandTextViewWidthHeight"
+        android:layout_height="@dimen/gameLandTextViewWidthHeight"
+        android:layout_marginBottom="@dimen/gameLandTextViewMarginBottom"
+        android:layout_marginEnd="@dimen/gameLandTextViewMarginEndStart"
+        android:layout_marginStart="@dimen/gameLandTextViewMarginEndStart"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.676"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/recylce"
+        android:layout_width="@dimen/gameLandButtonRecycleWidth"
+        android:layout_height="@dimen/gameLandButtonRecycleHeight"
+        android:layout_marginBottom="@dimen/gameLandMarginBottomRecycle"
+        android:layout_marginEnd="@dimen/gameLandMarginEndRecycle"
+        android:layout_marginStart="@dimen/gameLandMarginStartRecycle"
+        android:background="@drawable/recycle"
+        android:onClick="onClickRecycle"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.677"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/nextTurn"
+        android:layout_width="@dimen/gameLandButtonWidth"
+        android:layout_height="@dimen/gameLandButtonHeight"
+        android:layout_marginBottom="@dimen/gameLandMarginBottomNextTurn"
+        android:layout_marginEnd="@dimen/gameLandMarginEndNextTurn"
+        android:layout_marginStart="@dimen/gameLandMarginStartNextTurn"
+        android:background="@drawable/bot"
+        android:onClick="onClickNextTurn"
+        android:text = "@string/nextTurn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.957"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/startGame"
+        android:layout_width="@dimen/gameLandButtonWidth"
+        android:layout_height="@dimen/gameLandButtonHeight"
+        android:layout_marginBottom="@dimen/gameLandMarginBottomStartGame"
+        android:layout_marginEnd="@dimen/gameLandMarginEndStartGame"
+        android:layout_marginStart="@dimen/gameLandMarginStartStartGame"
+        android:background="@drawable/bot"
+        android:onClick="onClickStartGame"
+        android:text = "@string/startGame"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.957"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/newWord"
+        android:layout_width="@dimen/gameLandButtonWidth"
+        android:layout_height="@dimen/gameLandButtonHeight"
+        android:layout_marginBottom="@dimen/gameLandMarginBottomNewWord"
+        android:layout_marginEnd="@dimen/gameLandMarginEndNewWord"
+        android:layout_marginStart="@dimen/gameLandMarginStartNewWord"
+        android:background="@drawable/bot"
+        android:onClick="onClickNewWord"
+        android:text="@string/newWord"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.981"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frameGame"
+        android:layout_width="661dp"
+        android:layout_height="711dp"
+        android:layout_marginBottom="302dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+</android.support.constraint.ConstraintLayout>
