@@ -1,5 +1,6 @@
 package ru.polytech.course.pashnik.lines.Activities;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -76,5 +77,10 @@ public class RecordsActivity extends AppCompatActivity {
         super.onDestroy();
         db.close();
         cursor.close();
+    }
+
+    public void onClickBack(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

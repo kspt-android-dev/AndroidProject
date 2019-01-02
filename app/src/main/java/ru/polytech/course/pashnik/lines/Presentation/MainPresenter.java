@@ -42,10 +42,10 @@ public class MainPresenter implements MainContract.Presenter {
         Cell definedCell = defineCell(x, y);
         if (isPressed) {
             if (model.haveCell(definedCell)) {
-                view.stopBlinkingAnimation();
+                view.stopUpDownAnimation();
                 view.drawBallOnBoard(pressedCell, model.getColor(pressedCell));
                 pressedCell = definedCell;
-                view.makeBlinkingAnimation(pressedCell, model.getColor(pressedCell));
+                view.makeUpDownAnimation(pressedCell, model.getColor(pressedCell));
             } else {
                 view.drawBallOnBoard(definedCell, model.getColor(pressedCell));
                 model.addCell(definedCell, model.getColor(pressedCell));
@@ -60,7 +60,7 @@ public class MainPresenter implements MainContract.Presenter {
                     clearWinLines(winLines);
                     view.setScore(String.valueOf(score));
                 }
-                view.stopBlinkingAnimation();
+                view.stopUpDownAnimation();
                 drawThreeBalls();
                 fillQueue();
                 drawNextBallsOnScoreView();
@@ -70,7 +70,7 @@ public class MainPresenter implements MainContract.Presenter {
             if (model.haveCell(definedCell)) {
                 isPressed = true;
                 pressedCell = definedCell;
-                view.makeBlinkingAnimation(pressedCell, model.getColor(pressedCell));
+                view.makeUpDownAnimation(pressedCell, model.getColor(pressedCell));
             }
         }
     }
@@ -122,7 +122,7 @@ public class MainPresenter implements MainContract.Presenter {
                 view.createDialog();
                 break;
             }
-            view.drawBallOnBoard(nextCell, colorType);
+            view.makeAppearanceAnimation(nextCell, colorType);
             model.addCell(nextCell, colorType);
         }
     }
@@ -169,7 +169,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     private ArrayList<Integer> getColors() {
         ArrayList<Integer> colors = new ArrayList<>();
-        int counter = 0;
+        int counter = -1;
         Cell right = new Cell(1, 0);
         Cell down = new Cell(0, 1);
         Cell start = new Cell(-1, 0);
@@ -177,28 +177,28 @@ public class MainPresenter implements MainContract.Presenter {
         for (int i = 0; i < MAX_BALLS; i++) {
             current = current.plus(right);
             colors.add(ColorType.getIndex(model.getColor(current)));
+            counter++;
             if (counter == NEXT_LINE) {
                 start = start.plus(down);
                 current = start;
-                counter = 0;
+                counter = -1;
             }
-            counter++;
         }
         return colors;
     }
 
     private void restoreModel(ArrayList<Integer> arrayList) {
-        int x = 0;
+        int x = -1;
         int y = 0;
-        int counter = 0;
         for (int i = 0; i < arrayList.size(); i++) {
+            x++;
             if (arrayList.get(i) != -1) {
                 model.addCell(new Cell(x, y), ColorType.getColorType(arrayList.get(i)));
             }
-            x++;
-            counter++;
-            if (i % NEXT_LINE == 0 && i != 0) x = 0;
-            if (counter % NEXT_LINE == 0 && counter != 0) y++;
+            if (x == NEXT_LINE) {
+                y++;
+                x = -1;
+            }
         }
     }
 

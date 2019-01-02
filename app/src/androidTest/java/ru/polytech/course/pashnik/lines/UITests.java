@@ -28,7 +28,7 @@ public class UITests {
     public void clicks() {
         onView(withId(R.id.exit))
                 .check(matches(isDisplayed()));
-        onView(withId(R.id.recordds))
+        onView(withId(R.id.recordsBtn))
                 .check(matches(isDisplayed()));
         onView(withId(R.id.startBtn))
                 .check(matches(isDisplayed()));

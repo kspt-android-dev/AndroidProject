@@ -7,4 +7,6 @@
     <string name="start_game">Start Game</string>
     <string name="enter_name">Enter your name</string>
     <string name="save">Save</string>
+    <string name="back">Back</string>
+
 </resources>

@@ -23,23 +23,33 @@ public class GameView extends View implements View.OnTouchListener {
 
     public static final int CELL_NUMBER = 9;
     private static final float LINE_THICKNESS = 5f;
+    private static final float ANIMATION_COEFFICIENT = 0.37f;
     private static int cellSize;
-    private static final float START_ANIMATION = 0.15f;
-    private static final float END_ANIMATION = 0.3f;
-    private static final int DURATION = 1000;
+
+    private ValueAnimator upDownAnimator;
+    private static float UP_DOWN_START; // depends on a cell size
+    private static float UP_DOWN_END;
+    private static final int UP_DOWN_DURATION = 400;
+    private boolean upDownFlag;
+    private Cell upDownCell;
+    private ColorType upDownColor;
+    private float currentDx;
+
+
+    private static final float APPEARANCE_START = 0.15f;
+    private static final float APPEARANCE_END = 0.3f;
+    private static final int APPEARANCE_DURATION = 300;
+    private boolean appearanceFlag;
+    private Cell appearanceCell;
+    private ColorType appearanceColor;
+    private float currentRadius;
+
 
     private Paint bitmapPaint = new Paint();
     private Bitmap bitmap;
     private Canvas canvas;
     private MainContract.Presenter presenter;
     private Bundle savedState;
-    private ValueAnimator blinkingAnimator;
-
-    private boolean clearBall;
-    private Cell clearCell;
-    private ColorType clearColor;
-    private float currentRadius;
-
 
     private boolean initFlag = true;
 
@@ -79,6 +89,8 @@ public class GameView extends View implements View.OnTouchListener {
             bitmap = Bitmap.createBitmap(viewSize, viewSize, Bitmap.Config.ARGB_8888);
 
             cellSize = viewSize / CELL_NUMBER;
+            UP_DOWN_START = cellSize * ANIMATION_COEFFICIENT;
+            UP_DOWN_END = cellSize * (1 - ANIMATION_COEFFICIENT);
             this.canvas = new Canvas(bitmap);
             //drawing a board
             drawGameView();
@@ -87,7 +99,9 @@ public class GameView extends View implements View.OnTouchListener {
             else presenter.restoreModel(savedState);
         }
         canvas.drawBitmap(bitmap, 0, 0, bitmapPaint);
-        if (clearBall) new Ball(clearCell, clearColor, currentRadius).drawBall(canvas);
+        if (upDownFlag) new Ball(upDownCell, upDownColor, currentDx, 1).drawBall(canvas);
+        if (appearanceFlag)
+            new Ball(appearanceCell, appearanceColor, currentRadius).drawBall(canvas);
         invalidate();
     }
 
@@ -111,33 +125,54 @@ public class GameView extends View implements View.OnTouchListener {
         this.setLayoutParams(params);
     }
 
-    public void setBlinkingAnimation(final Cell cell, final ColorType colorType) {
-        clearBall = true;
-        clearCell = cell;
-        clearColor = colorType;
-        new Ball(cell, clearColor).clearBall(canvas);
+    public void setUpDownAnimation(final Cell cell, final ColorType colorType) {
+        upDownFlag = true;
+        upDownCell = cell;
+        upDownColor = colorType;
+        new Ball(cell, upDownColor).clearBall(canvas);
+        upDownAnimator = ValueAnimator.ofFloat(UP_DOWN_START, UP_DOWN_END);
+        upDownAnimator.setDuration(UP_DOWN_DURATION);
+        upDownAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        upDownAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        upDownAnimator.setEvaluator(new FloatEvaluator());
+        upDownAnimator.setInterpolator(new LinearInterpolator());
+        upDownAnimator.start();
 
-        blinkingAnimator = ValueAnimator.ofFloat(START_ANIMATION, END_ANIMATION);
-        blinkingAnimator.setDuration(DURATION);
-        blinkingAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        blinkingAnimator.setRepeatMode(ValueAnimator.REVERSE);
-        blinkingAnimator.setEvaluator(new FloatEvaluator());
-        blinkingAnimator.setInterpolator(new LinearInterpolator());
-        blinkingAnimator.start();
-
-        blinkingAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        upDownAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
-                currentRadius = value;
-                new Ball(cell, colorType, value).clearBall(canvas);
+                currentDx = value;
+                new Ball(cell, colorType, value, 1).clearBall(canvas);
             }
         });
     }
 
-    public void stopBlinkingAnimation() {
-        blinkingAnimator.cancel();
-        clearBall = false;
+    public void setAppearanceAnimation(final Cell cell, final ColorType color) {
+        // попробовать использовать ровно один раз.
+        appearanceFlag = true;
+        appearanceCell = cell;
+        appearanceColor = color;
+        new Ball(cell, upDownColor).clearBall(canvas);
+        ValueAnimator appearanceAnimator = ValueAnimator.ofFloat(APPEARANCE_START, APPEARANCE_END);
+        appearanceAnimator.setDuration(APPEARANCE_DURATION);
+        appearanceAnimator.setEvaluator(new FloatEvaluator());
+        appearanceAnimator.setInterpolator(new LinearInterpolator());
+        appearanceAnimator.start();
+
+        appearanceAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (float) animation.getAnimatedValue();
+                currentRadius = value;
+                new Ball(cell, color, value).drawBall(canvas);
+            }
+        });
+    }
+
+    public void stopUpDownAnimation() {
+        upDownAnimator.cancel();
+        upDownFlag = false;
     }
 
     @Override

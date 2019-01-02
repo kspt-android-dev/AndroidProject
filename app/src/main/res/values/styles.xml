@@ -8,9 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="menuButton" parent="@style/Widget.AppCompat.Button.Colored">
-        <item name="android:background">@drawable/tougle</item>
-        <item name="android:stateListAnimator">@drawable/animator</item>
+    <style name="menuButton" parent="@style/Widget.AppCompat.Button">
+
     </style>
 
 

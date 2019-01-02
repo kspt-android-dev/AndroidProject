@@ -20,9 +20,11 @@ public interface MainContract {
 
         void createDialog();
 
-        void makeBlinkingAnimation(Cell cell, ColorType color);
+        void makeUpDownAnimation(Cell cell, ColorType color);
 
-        void stopBlinkingAnimation();
+        void makeAppearanceAnimation(Cell cell, ColorType color);
+
+        void stopUpDownAnimation();
     }
 
     interface Presenter {

@@ -8,4 +8,5 @@
     <string name="start_game">Начать игру</string>
     <string name="enter_name">Введите ваше имя</string>
     <string name="save">Сохранить</string>
+    <string name="back">Назад</string>
 </resources>

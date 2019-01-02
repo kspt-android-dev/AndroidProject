@@ -15,13 +15,20 @@ public class Ball {
     private final float x;
     private final float y;
     private final ColorType color;
+    private final int cellSize = GameView.getCellSize();
 
     public Ball(int x, int y, ColorType color, float radius) {
-        int cellSize = GameView.getCellSize();
         this.x = cellSize / 2 + x * cellSize;
         this.y = cellSize / 2 + y * cellSize;
         this.color = color;
         this.radius = cellSize * radius;
+    }
+
+    public Ball(Cell cell, ColorType color, float dy, float dx) {
+        this.x = cellSize / 2 + cell.getX() * cellSize;
+        this.y = dy + cell.getY() * cellSize;
+        this.color = color;
+        this.radius = cellSize * RADIUS_COEFFICIENT;
     }
 
     public Ball(Cell cell, ColorType color) {

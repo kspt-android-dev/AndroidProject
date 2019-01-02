@@ -3,6 +3,7 @@ package ru.polytech.course.pashnik.lines.Activities;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -76,6 +77,7 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
     public void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
+        final Intent intent = new Intent(this, RecordsActivity.class);
         final EditText valueKey = view.findViewById(R.id.edit_text);
         builder.setTitle(R.string.enter_name)
                 .setView(view)
@@ -86,19 +88,25 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
                                 final String name = String.valueOf(valueKey.getText());
                                 dataBaseHandler.addContact(new Contact(name, presenter.getScore()));
                                 dialog.dismiss();
+                                startActivity(intent);
                             }
                         });
         builder.show();
     }
 
     @Override
-    public void makeBlinkingAnimation(final Cell pressedCell, final ColorType color) {
-        gameView.setBlinkingAnimation(pressedCell, color);
+    public void makeUpDownAnimation(final Cell pressedCell, final ColorType color) {
+        gameView.setUpDownAnimation(pressedCell, color);
     }
 
     @Override
-    public void stopBlinkingAnimation() {
-        gameView.stopBlinkingAnimation();
+    public void makeAppearanceAnimation(final Cell cell, final ColorType color) {
+        gameView.setAppearanceAnimation(cell, color);
+    }
+
+    @Override
+    public void stopUpDownAnimation() {
+        gameView.stopUpDownAnimation();
     }
 
     @Override

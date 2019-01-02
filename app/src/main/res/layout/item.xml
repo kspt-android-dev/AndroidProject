@@ -1,16 +1,13 @@
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:columnCount="2"
-    android:rowCount="4">
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_columnWeight="1"
-        android:gravity="center"
+        android:layout_marginStart="@dimen/start_size"
         android:textSize="@dimen/size_text"
         android:textStyle="bold" />
 
@@ -18,9 +15,7 @@
         android:id="@+id/item_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_columnWeight="1"
         android:layout_marginStart="@dimen/start_item"
-        android:gravity="center"
         android:textSize="@dimen/size_text" />
 
-</GridLayout>
+</LinearLayout>

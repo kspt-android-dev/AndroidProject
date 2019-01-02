@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/records"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ListView
+        android:id="@+id/list_records"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+    </ListView>
 
-        <ListView
-            android:id="@+id/list_records"
-            android:layout_width="wrap_content"
-            android:layout_gravity="clip_vertical"
-            android:layout_height="wrap_content">
-        </ListView>
-    </LinearLayout>
+    <Button
+        android:id="@+id/back"
+        style="@style/menuButton"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:onClick="onClickBack"
+        android:text="@string/back" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
+
+
