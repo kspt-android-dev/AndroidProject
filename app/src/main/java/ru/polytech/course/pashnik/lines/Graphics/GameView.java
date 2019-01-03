@@ -36,6 +36,7 @@ public class GameView extends View implements View.OnTouchListener {
     private float currentDx;
 
 
+    private ValueAnimator appearanceAnimator;
     private static final float APPEARANCE_START = 0.15f;
     private static final float APPEARANCE_END = 0.3f;
     private static final int APPEARANCE_DURATION = 300;
@@ -126,10 +127,11 @@ public class GameView extends View implements View.OnTouchListener {
     }
 
     public void setUpDownAnimation(final Cell cell, final ColorType colorType) {
+        stopAppearanceAnimation();
         upDownFlag = true;
         upDownCell = cell;
         upDownColor = colorType;
-        new Ball(cell, upDownColor).clearBall(canvas);
+        new Ball(cell).clearBall(canvas);
         upDownAnimator = ValueAnimator.ofFloat(UP_DOWN_START, UP_DOWN_END);
         upDownAnimator.setDuration(UP_DOWN_DURATION);
         upDownAnimator.setRepeatCount(ValueAnimator.INFINITE);
@@ -149,12 +151,10 @@ public class GameView extends View implements View.OnTouchListener {
     }
 
     public void setAppearanceAnimation(final Cell cell, final ColorType color) {
-        // попробовать использовать ровно один раз.
         appearanceFlag = true;
         appearanceCell = cell;
         appearanceColor = color;
-        new Ball(cell, upDownColor).clearBall(canvas);
-        ValueAnimator appearanceAnimator = ValueAnimator.ofFloat(APPEARANCE_START, APPEARANCE_END);
+        appearanceAnimator = ValueAnimator.ofFloat(APPEARANCE_START, APPEARANCE_END);
         appearanceAnimator.setDuration(APPEARANCE_DURATION);
         appearanceAnimator.setEvaluator(new FloatEvaluator());
         appearanceAnimator.setInterpolator(new LinearInterpolator());
@@ -173,6 +173,11 @@ public class GameView extends View implements View.OnTouchListener {
     public void stopUpDownAnimation() {
         upDownAnimator.cancel();
         upDownFlag = false;
+    }
+
+    public void stopAppearanceAnimation() {
+        appearanceAnimator.cancel();
+        appearanceFlag = false;
     }
 
     @Override
