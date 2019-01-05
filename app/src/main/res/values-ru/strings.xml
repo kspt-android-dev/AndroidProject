@@ -9,4 +9,8 @@
     <string name="enter_name">Введите ваше имя</string>
     <string name="save">Сохранить</string>
     <string name="back">Назад</string>
+    <string name="new_game">Новая игра</string>
+    <string name="continue_game">Продолжить игру</string>
+    <string name="which_mode">Вы хотите продолжить прошлую игру?</string>
+    <string name="cancel">Отмена</string>
 </resources>

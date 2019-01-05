@@ -1,9 +1,11 @@
 package ru.polytech.course.pashnik.lines.Presentation;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -11,6 +13,7 @@ import ru.polytech.course.pashnik.lines.Core.Board;
 import ru.polytech.course.pashnik.lines.Core.Cell;
 import ru.polytech.course.pashnik.lines.Core.ColorType;
 import ru.polytech.course.pashnik.lines.Core.Intellect;
+import ru.polytech.course.pashnik.lines.Core.JSONHandler;
 import ru.polytech.course.pashnik.lines.Core.Line;
 import ru.polytech.course.pashnik.lines.Core.WinLines;
 import ru.polytech.course.pashnik.lines.Graphics.GameView;
@@ -25,6 +28,8 @@ public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.Model model;
     private MainContract.ViewInterface view;
+    private JSONHandler jsonHandler = new JSONHandler();
+
 
     private boolean isPressed;
     private Cell pressedCell;
@@ -112,6 +117,22 @@ public class MainPresenter implements MainContract.Presenter {
         saveState.putIntegerArrayList("colors", getColors());
         saveState.putInt("score", score);
         saveState.putIntegerArrayList("score_colors", getScoreColors());
+    }
+
+    @Override
+    public void exportData(Context context) {
+        if (!jsonHandler.exportToJSON(context, model.getModel())) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void restoreLastGame(Context context) {
+        HashMap<Cell, ColorType> map = jsonHandler.importFromJSON(context);
+        clearMap(model);
+        model.setMap(map);
+        drawMap(model);
     }
 
     private void drawThreeBalls() {
@@ -208,5 +229,17 @@ public class MainPresenter implements MainContract.Presenter {
             arrayList.add(ColorType.getIndex(queue.poll()));
         }
         return arrayList;
+    }
+
+    private void drawMap(MainContract.Model model) {
+        for (Object cell : model.getModel().keySet()) {
+            view.drawBallOnBoard((Cell) cell, model.getColor((Cell) cell));
+        }
+    }
+
+    private void clearMap(MainContract.Model model) {
+        for (Object cell : model.getModel().keySet()) {
+            view.clearBallOnBoard((Cell) cell);
+        }
     }
 }

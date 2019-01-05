@@ -8,5 +8,8 @@
     <string name="enter_name">Enter your name</string>
     <string name="save">Save</string>
     <string name="back">Back</string>
-
+    <string name="new_game">New Game</string>
+    <string name="continue_game">Continue game</string>
+    <string name="which_mode">Do you want to continue last game?</string>
+    <string name="cancel">Cancel</string>
 </resources>

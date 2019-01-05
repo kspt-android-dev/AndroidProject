@@ -13,6 +13,7 @@ public class Board implements MainContract.Model {
     private final WinLines winLines = new WinLines();
 
     private final Cell[] DIRECTIONS = {
+
             new Cell(1, 0), // x-axis
             new Cell(0, 1), // y-axis
             new Cell(-1, 1), // main diagonal
@@ -78,8 +79,13 @@ public class Board implements MainContract.Model {
     }
 
     @Override
-    public HashMap getModel() {
+    public HashMap<Cell, ColorType> getModel() {
         return map;
+    }
+
+    @Override
+    public void setMap(HashMap<Cell, ColorType> map) {
+        this.map = map;
     }
 
     private boolean isWinLength(int currentLength) {

@@ -39,6 +39,7 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
         LinearLayout linearLayout = findViewById(R.id.main_layout);
 
         ScoreView scoreView = new ScoreView(this);
@@ -62,8 +63,18 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
         textView.setLayoutParams(lpView);
         linearLayout.addView(textView);
 
-        if (savedInstanceState != null)
+        if (savedInstanceState != null) {
             gameView.makeInit(false);
+            gameView.setRotateFlag(true);
+        } else {
+            whichModeDialog();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        presenter.exportData(this);
     }
 
     @Override
@@ -137,4 +148,24 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
     public static void setScoreViewCanvas(Canvas canvas) {
         scoreViewCanvas = canvas;
     }
+
+    private void whichModeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setNegativeButton(R.string.continue_game, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                presenter.restoreLastGame(getApplicationContext());
+            }
+        });
+        builder.setPositiveButton(R.string.new_game, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setMessage(R.string.which_mode);
+        builder.show();
+    }
+
+
 }

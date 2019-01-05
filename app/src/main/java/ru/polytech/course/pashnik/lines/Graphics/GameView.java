@@ -53,6 +53,7 @@ public class GameView extends View implements View.OnTouchListener {
     private Bundle savedState;
 
     private boolean initFlag = true;
+    private boolean rotateFlag = false;
 
     public GameView(Context context) {
         super(context);
@@ -176,7 +177,8 @@ public class GameView extends View implements View.OnTouchListener {
     }
 
     public void stopAppearanceAnimation() {
-        appearanceAnimator.cancel();
+        if (!rotateFlag)
+            appearanceAnimator.cancel();
         appearanceFlag = false;
     }
 
@@ -196,5 +198,9 @@ public class GameView extends View implements View.OnTouchListener {
 
     public void setBundle(Bundle bundle) {
         this.savedState = bundle;
+    }
+
+    public void setRotateFlag(boolean rotateFlag) {
+        this.rotateFlag = rotateFlag;
     }
 }

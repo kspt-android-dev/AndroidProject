@@ -1,9 +1,11 @@
 package ru.polytech.course.pashnik.lines.Presentation;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import java.util.HashMap;
 
+import ru.polytech.course.pashnik.lines.Core.Board;
 import ru.polytech.course.pashnik.lines.Core.Cell;
 import ru.polytech.course.pashnik.lines.Core.ColorType;
 import ru.polytech.course.pashnik.lines.Core.WinLines;
@@ -37,6 +39,10 @@ public interface MainContract {
         void restoreModel(Bundle savedState);
 
         void saveModel(Bundle saveState);
+
+        void exportData(Context context);
+
+        void restoreLastGame(Context context);
     }
 
     interface Model {
@@ -54,7 +60,9 @@ public interface MainContract {
 
         boolean isFull();
 
-        HashMap getModel();
+        HashMap<Cell, ColorType> getModel();
+
+        void setMap(HashMap<Cell, ColorType> hashMap);
     }
 
 }
