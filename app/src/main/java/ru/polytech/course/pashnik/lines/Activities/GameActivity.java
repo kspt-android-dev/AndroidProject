@@ -67,7 +67,7 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
             gameView.makeInit(false);
             gameView.setRotateFlag(true);
         } else {
-            whichModeDialog();
+            if (presenter.fileExist(this)) whichModeDialog();
         }
     }
 

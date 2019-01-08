@@ -3,22 +3,33 @@ package ru.polytech.course.pashnik.lines.Core;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.util.HashMap;
+import java.util.Map;
 
 public class JSONHandler {
 
     private static final String FILE_NAME = "data.json";
+    private final Gson gson;
+    private final Type type;
 
-    public boolean exportToJSON(Context context, HashMap<Cell, ColorType> model) {
-        Gson gson = new Gson();
-        String jsonString = gson.toJson(model);
+    public JSONHandler() {
+        type = new TypeToken<Map<Cell, ColorType>>() {
+        }.getType();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(type, new MapConverter());
+        gson = gsonBuilder.setPrettyPrinting().create();
+    }
+
+    public boolean exportToJSON(Context context, Map<Cell, ColorType> model) {
+        String jsonString = gson.toJson(model, type);
         FileOutputStream fileOutputStream = null;
         try {
             fileOutputStream = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
@@ -38,16 +49,18 @@ public class JSONHandler {
         return false;
     }
 
-    public HashMap<Cell, ColorType> importFromJSON(Context context) {
+    public Map<Cell, ColorType> importFromJSON(Context context) {
         InputStreamReader streamReader = null;
         FileInputStream fileInputStream = null;
         try {
             fileInputStream = context.openFileInput(FILE_NAME);
             streamReader = new InputStreamReader(fileInputStream);
-            Gson gson = new Gson();
-            Type type = new TypeToken<HashMap<Cell, ColorType>>() {
-            }.getType();
-            return gson.fromJson(streamReader, type);
+            int ch;
+            StringBuilder sb = new StringBuilder();
+            while ((ch = streamReader.read()) != -1) {
+                sb.append((char) (ch));
+            }
+            return gson.fromJson(sb.toString(), type);
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
@@ -68,4 +81,11 @@ public class JSONHandler {
         }
         return null;
     }
+
+    public boolean ifExists(Context context) {
+        File file = new File(context.getFilesDir().getPath() + "/" + FILE_NAME);
+        return file.exists();
+    }
+
+
 }

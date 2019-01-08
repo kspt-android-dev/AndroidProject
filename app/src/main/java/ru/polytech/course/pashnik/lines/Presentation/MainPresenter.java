@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -28,7 +28,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.Model model;
     private MainContract.ViewInterface view;
-    private JSONHandler jsonHandler = new JSONHandler();
+    private JSONHandler JSONHandler = new JSONHandler();
 
 
     private boolean isPressed;
@@ -121,7 +121,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void exportData(Context context) {
-        if (!jsonHandler.exportToJSON(context, model.getModel())) {
+        if (!JSONHandler.exportToJSON(context, model.getModel())) {
             throw new IllegalArgumentException();
         }
     }
@@ -129,10 +129,15 @@ public class MainPresenter implements MainContract.Presenter {
     @SuppressWarnings("unchecked")
     @Override
     public void restoreLastGame(Context context) {
-        HashMap<Cell, ColorType> map = jsonHandler.importFromJSON(context);
+        Map<Cell, ColorType> map = JSONHandler.importFromJSON(context);
         clearMap(model);
         model.setMap(map);
         drawMap(model);
+    }
+
+    @Override
+    public boolean fileExist(Context context) {
+        return JSONHandler.ifExists(context);
     }
 
     private void drawThreeBalls() {

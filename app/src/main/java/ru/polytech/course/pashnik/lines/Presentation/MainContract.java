@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import ru.polytech.course.pashnik.lines.Core.Board;
 import ru.polytech.course.pashnik.lines.Core.Cell;
@@ -43,6 +44,8 @@ public interface MainContract {
         void exportData(Context context);
 
         void restoreLastGame(Context context);
+
+        boolean fileExist(Context context);
     }
 
     interface Model {
@@ -60,9 +63,9 @@ public interface MainContract {
 
         boolean isFull();
 
-        HashMap<Cell, ColorType> getModel();
+        Map<Cell, ColorType> getModel();
 
-        void setMap(HashMap<Cell, ColorType> hashMap);
+        void setMap(Map<Cell, ColorType> hashMap);
     }
 
 }

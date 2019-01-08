@@ -1,6 +1,7 @@
 package ru.polytech.course.pashnik.lines.Core;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import ru.polytech.course.pashnik.lines.Presentation.MainContract;
 
@@ -9,7 +10,7 @@ public class Board implements MainContract.Model {
     private static final int MIN_FULL_SIZE = 79;
     private static final int WIN_LENGTH = 5;
 
-    private HashMap<Cell, ColorType> map = new HashMap<>();
+    private Map<Cell, ColorType> map = new HashMap<>();
     private final WinLines winLines = new WinLines();
 
     private final Cell[] DIRECTIONS = {
@@ -79,12 +80,12 @@ public class Board implements MainContract.Model {
     }
 
     @Override
-    public HashMap<Cell, ColorType> getModel() {
+    public Map<Cell, ColorType> getModel() {
         return map;
     }
 
     @Override
-    public void setMap(HashMap<Cell, ColorType> map) {
+    public void setMap(Map<Cell, ColorType> map) {
         this.map = map;
     }
 
