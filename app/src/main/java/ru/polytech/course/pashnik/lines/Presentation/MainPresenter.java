@@ -126,12 +126,12 @@ public class MainPresenter implements MainContract.Presenter {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void restoreLastGame(Context context) {
         Map<Cell, ColorType> map = JSONHandler.importFromJSON(context);
         clearMap(model);
         model.setMap(map);
+        view.stopAppearanceAnimation();
         drawMap(model);
     }
 

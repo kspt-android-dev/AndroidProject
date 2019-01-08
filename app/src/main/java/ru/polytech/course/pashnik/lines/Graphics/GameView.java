@@ -35,16 +35,19 @@ public class GameView extends View implements View.OnTouchListener {
     private ColorType upDownColor;
     private float currentDx;
 
-
     private ValueAnimator appearanceAnimator;
     private static final float APPEARANCE_START = 0.15f;
     private static final float APPEARANCE_END = 0.3f;
     private static final int APPEARANCE_DURATION = 300;
+
+    public void setAppearanceFlag(boolean appearanceFlag) {
+        this.appearanceFlag = appearanceFlag;
+    }
+
     private boolean appearanceFlag;
     private Cell appearanceCell;
     private ColorType appearanceColor;
     private float currentRadius;
-
 
     private Paint bitmapPaint = new Paint();
     private Bitmap bitmap;

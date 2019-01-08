@@ -68,6 +68,7 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
             gameView.setRotateFlag(true);
         } else {
             if (presenter.fileExist(this)) whichModeDialog();
+
         }
     }
 
@@ -118,6 +119,11 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void stopUpDownAnimation() {
         gameView.stopUpDownAnimation();
+    }
+
+    @Override
+    public void stopAppearanceAnimation() {
+        gameView.setAppearanceFlag(false);
     }
 
     @Override

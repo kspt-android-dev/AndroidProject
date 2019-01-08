@@ -28,6 +28,8 @@ public interface MainContract {
         void makeAppearanceAnimation(Cell cell, ColorType color);
 
         void stopUpDownAnimation();
+
+        void stopAppearanceAnimation();
     }
 
     interface Presenter {
