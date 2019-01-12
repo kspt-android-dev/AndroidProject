@@ -67,7 +67,6 @@ public class MainPresenter implements MainContract.Presenter {
                     drawThreeBalls();
                     fillQueue();
                     drawNextBallsOnScoreView();
-                    checkIfIsWin(cells);
                     isPressed = false;
                 }
             }
@@ -157,20 +156,12 @@ public class MainPresenter implements MainContract.Presenter {
         clearWinLines(winLines);
     }
 
-    private void checkIfIsWin(Queue<Cell> cells) {
-        for (Cell cell : cells) {
-            if (model.isWin(cell)) {
-                clearLines();
-            }
-        }
-    }
-
     private void drawThreeBalls() {
         while (!queue.isEmpty()) {
             ColorType colorType = queue.poll();
             Cell nextCell = intellect.generateNextCell();
             cells.add(nextCell);
-            if (nextCell == Intellect.DEFAULT_CELL) {
+            if (nextCell.equals(Intellect.DEFAULT_CELL)) {
                 view.createDialog();
                 break;
             }

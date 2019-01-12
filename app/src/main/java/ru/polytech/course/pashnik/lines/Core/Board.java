@@ -1,6 +1,9 @@
 package ru.polytech.course.pashnik.lines.Core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import ru.polytech.course.pashnik.lines.Presentation.MainContract;
@@ -92,4 +95,36 @@ public class Board implements MainContract.Model {
     private boolean isWinLength(int currentLength) {
         return currentLength >= WIN_LENGTH;
     }
+
+    /*
+    A-STAR algorithm for finding a path from start Cell to clicked Cell
+     */
+
+    private boolean havePath(Cell start, Cell end) {
+        List<Cell> path = new LinkedList<>();
+        List<Cell> closed = new ArrayList<>(); // items we've already reviewed
+        List<Cell> opened = new ArrayList<>(); //items required for viewing
+
+        List<Double> g = new ArrayList<>();
+        List<Double> f = new ArrayList<>();
+
+        g.add(0.0);
+        f.add(distance(start, end));
+        opened.add(start);
+
+        return true;
+    }
+
+    private double distance(Cell start, Cell end) {
+        return Math.sqrt(Math.pow(start.getX() - end.getX(), 2)
+                + Math.pow(start.getY() - end.getY(), 2));
+    }
+
+    private boolean canMove(Cell cell) {
+        return !haveCell(cell);
+    }
+
+
+
+
 }

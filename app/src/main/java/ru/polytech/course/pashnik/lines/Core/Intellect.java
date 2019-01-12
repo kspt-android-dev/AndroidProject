@@ -29,7 +29,7 @@ public class Intellect {
                 int x = random.nextInt(cellNumber);
                 int y = random.nextInt(cellNumber);
                 Cell cell = new Cell(x, y);
-                if (!model.haveCell(cell)) return cell;
+                if (!model.haveCell(cell) && !model.isWin(cell)) return cell;
             }
         } else return DEFAULT_CELL;
     }
