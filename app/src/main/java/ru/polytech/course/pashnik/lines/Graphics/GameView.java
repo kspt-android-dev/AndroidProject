@@ -38,7 +38,7 @@ public class GameView extends View implements View.OnTouchListener {
     private ValueAnimator appearanceAnimator;
     private static final float APPEARANCE_START = 0.15f;
     private static final float APPEARANCE_END = 0.3f;
-    private static final int APPEARANCE_DURATION = 300;
+    private static final int APPEARANCE_DURATION = 350;
 
     public void setAppearanceFlag(boolean appearanceFlag) {
         this.appearanceFlag = appearanceFlag;

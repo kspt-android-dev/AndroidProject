@@ -34,6 +34,7 @@ public class MainPresenter implements MainContract.Presenter {
     private boolean isPressed;
     private Cell pressedCell;
     private Queue<ColorType> queue = new ArrayDeque<>();
+    private Queue<Cell> cells = new ArrayDeque<>();
     private Intellect intellect;
 
     public MainPresenter(MainContract.ViewInterface view) {
@@ -57,19 +58,18 @@ public class MainPresenter implements MainContract.Presenter {
                 view.clearBallOnBoard(pressedCell);
                 model.removeCell(pressedCell);
                 if (model.isWin(definedCell)) {
-                    WinLines winLines = model.getWinLines();
-                    for (int i = 0; i < winLines.getSize(); i++) {
-                        Line line = winLines.getWinLine(i);
-                        checkScore(line.getLength());
-                    }
-                    clearWinLines(winLines);
+                    clearLines();
                     view.setScore(String.valueOf(score));
+                    view.stopUpDownAnimation();
+                    isPressed = false;
+                } else {
+                    view.stopUpDownAnimation();
+                    drawThreeBalls();
+                    fillQueue();
+                    drawNextBallsOnScoreView();
+                    checkIfIsWin(cells);
+                    isPressed = false;
                 }
-                view.stopUpDownAnimation();
-                drawThreeBalls();
-                fillQueue();
-                drawNextBallsOnScoreView();
-                isPressed = false;
             }
         } else {
             if (model.haveCell(definedCell)) {
@@ -87,8 +87,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void initGameView() {
-        fillQueue();
-        drawThreeBalls();
+        drawFirstBalls();
         fillQueue();
         drawNextBallsOnScoreView();
     }
@@ -140,10 +139,37 @@ public class MainPresenter implements MainContract.Presenter {
         return JSONHandler.ifExists(context);
     }
 
+    private void drawFirstBalls() {
+        for (int i = 0; i < NEXT_BALLS_NUMBER; i++) {
+            ColorType colorType = intellect.generateNextColor();
+            Cell nextCell = intellect.generateNextCell();
+            view.makeAppearanceAnimation(nextCell, colorType);
+            model.addCell(nextCell, colorType);
+        }
+    }
+
+    private void clearLines() {
+        WinLines winLines = model.getWinLines();
+        for (int i = 0; i < winLines.getSize(); i++) {
+            Line line = winLines.getWinLine(i);
+            checkScore(line.getLength());
+        }
+        clearWinLines(winLines);
+    }
+
+    private void checkIfIsWin(Queue<Cell> cells) {
+        for (Cell cell : cells) {
+            if (model.isWin(cell)) {
+                clearLines();
+            }
+        }
+    }
+
     private void drawThreeBalls() {
         while (!queue.isEmpty()) {
             ColorType colorType = queue.poll();
             Cell nextCell = intellect.generateNextCell();
+            cells.add(nextCell);
             if (nextCell == Intellect.DEFAULT_CELL) {
                 view.createDialog();
                 break;

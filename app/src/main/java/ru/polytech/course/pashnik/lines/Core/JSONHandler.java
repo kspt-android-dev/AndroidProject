@@ -55,12 +55,7 @@ public class JSONHandler {
         try {
             fileInputStream = context.openFileInput(FILE_NAME);
             streamReader = new InputStreamReader(fileInputStream);
-            int ch;
-            StringBuilder sb = new StringBuilder();
-            while ((ch = streamReader.read()) != -1) {
-                sb.append((char) (ch));
-            }
-            return gson.fromJson(sb.toString(), type);
+            return gson.fromJson(streamReader, type);
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
