@@ -34,7 +34,6 @@ public class MainPresenter implements MainContract.Presenter {
     private boolean isPressed;
     private Cell pressedCell;
     private Queue<ColorType> queue = new ArrayDeque<>();
-    private Queue<Cell> cells = new ArrayDeque<>();
     private Intellect intellect;
 
     public MainPresenter(MainContract.ViewInterface view) {
@@ -53,21 +52,23 @@ public class MainPresenter implements MainContract.Presenter {
                 pressedCell = definedCell;
                 view.makeUpDownAnimation(pressedCell, model.getColor(pressedCell));
             } else {
-                view.drawBallOnBoard(definedCell, model.getColor(pressedCell));
-                model.addCell(definedCell, model.getColor(pressedCell));
-                view.clearBallOnBoard(pressedCell);
-                model.removeCell(pressedCell);
-                if (model.isWin(definedCell)) {
-                    clearLines();
-                    view.setScore(String.valueOf(score));
-                    view.stopUpDownAnimation();
-                    isPressed = false;
-                } else {
-                    view.stopUpDownAnimation();
-                    drawThreeBalls();
-                    fillQueue();
-                    drawNextBallsOnScoreView();
-                    isPressed = false;
+                if (model.havePath(pressedCell, definedCell)) {
+                    view.drawBallOnBoard(definedCell, model.getColor(pressedCell));
+                    model.addCell(definedCell, model.getColor(pressedCell));
+                    view.clearBallOnBoard(pressedCell);
+                    model.removeCell(pressedCell);
+                    if (model.isWin(definedCell)) {
+                        clearLines();
+                        view.setScore(String.valueOf(score));
+                        view.stopUpDownAnimation();
+                        isPressed = false;
+                    } else {
+                        view.stopUpDownAnimation();
+                        drawThreeBalls();
+                        fillQueue();
+                        drawNextBallsOnScoreView();
+                        isPressed = false;
+                    }
                 }
             }
         } else {
@@ -122,6 +123,7 @@ public class MainPresenter implements MainContract.Presenter {
         if (!JSONHandler.exportToJSON(context, model.getModel())) {
             throw new IllegalArgumentException();
         }
+
     }
 
     @Override
@@ -136,6 +138,11 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public boolean fileExist(Context context) {
         return JSONHandler.ifExists(context);
+    }
+
+    @Override
+    public void finishGame(Context context) {
+        JSONHandler.deleteFile(context);
     }
 
     private void drawFirstBalls() {
@@ -160,7 +167,6 @@ public class MainPresenter implements MainContract.Presenter {
         while (!queue.isEmpty()) {
             ColorType colorType = queue.poll();
             Cell nextCell = intellect.generateNextCell();
-            cells.add(nextCell);
             if (nextCell.equals(Intellect.DEFAULT_CELL)) {
                 view.createDialog();
                 break;

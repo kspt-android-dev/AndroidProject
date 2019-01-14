@@ -31,6 +31,7 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
     private static Canvas gameViewCanvas;
     private static Canvas scoreViewCanvas;
     private MainContract.Presenter presenter;
+    private boolean gameIsFinished;
     private DataBaseHandler dataBaseHandler = new DataBaseHandler(this);
     private TextView textView;
     private GameView gameView;
@@ -68,14 +69,15 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
             gameView.setRotateFlag(true);
         } else {
             if (presenter.fileExist(this)) whichModeDialog();
-
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        presenter.exportData(this);
+        if (!gameIsFinished) {
+            presenter.exportData(this);
+        }
     }
 
     @Override
@@ -100,6 +102,8 @@ public class GameActivity extends AppCompatActivity implements MainContract.View
                                 final String name = String.valueOf(valueKey.getText());
                                 dataBaseHandler.addContact(new Contact(name, presenter.getScore()));
                                 dialog.dismiss();
+                                presenter.finishGame(getApplicationContext());
+                                gameIsFinished = true;
                                 startActivity(intent);
                             }
                         });

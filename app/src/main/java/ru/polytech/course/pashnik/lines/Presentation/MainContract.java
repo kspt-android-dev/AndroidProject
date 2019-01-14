@@ -48,9 +48,14 @@ public interface MainContract {
         void restoreLastGame(Context context);
 
         boolean fileExist(Context context);
+
+        void finishGame(Context context);
     }
 
     interface Model {
+
+        boolean havePath(Cell start, Cell end);
+
         boolean isWin(Cell currentCell);
 
         boolean haveCell(Cell cell);

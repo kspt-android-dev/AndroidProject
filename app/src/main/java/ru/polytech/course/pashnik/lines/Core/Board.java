@@ -1,6 +1,7 @@
 package ru.polytech.course.pashnik.lines.Core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +22,15 @@ public class Board implements MainContract.Model {
             new Cell(1, 0), // x-axis
             new Cell(0, 1), // y-axis
             new Cell(-1, 1), // main diagonal
-            new Cell(1, 1)}; // secondary diagonal
+            new Cell(1, 1)   // secondary diagonal
+    };
+
+    private final Cell[] NEIGHBOURS_DIRECTIONS = {
+            new Cell(1, 0),
+            new Cell(-1, 0),
+            new Cell(0, 1),
+            new Cell(0, -1)
+    };
 
     @Override
     public ColorType getColor(Cell cell) {
@@ -100,19 +109,46 @@ public class Board implements MainContract.Model {
     A-STAR algorithm for finding a path from start Cell to clicked Cell
      */
 
-    private boolean havePath(Cell start, Cell end) {
-        List<Cell> path = new LinkedList<>();
+    @Override
+    public boolean havePath(Cell start, Cell end) {
+        List<Cell> path = new ArrayList<>();
         List<Cell> closed = new ArrayList<>(); // items we've already reviewed
         List<Cell> opened = new ArrayList<>(); //items required for viewing
 
         List<Double> g = new ArrayList<>();
         List<Double> f = new ArrayList<>();
 
+        start.setId(0);
+        int id = 1;
         g.add(0.0);
         f.add(distance(start, end));
         opened.add(start);
 
-        return true;
+        while (!opened.isEmpty()) {
+            int minIndex = getMinIndex(opened, f);
+            Cell current = opened.remove(minIndex);
+            if (current.equals(end)) {
+                path.add(current);
+                Collections.reverse(path);
+                return true;
+            }
+            closed.add(current);
+            List<Cell> neighbours = getNeighbours(current);
+            for (Cell cell : neighbours) {
+                if (!closed.contains(cell) && canMove(cell)) {
+                    double temp = g.get(current.getId()) + distance(current, cell);
+                    if (!opened.contains(cell) || temp < g.get(cell.getId())) {
+                        cell.setId(id);
+                        path.add(current);
+                        g.add(cell.getId(), temp);
+                        f.add(cell.getId(), g.get(cell.getId()) + distance(cell, end));
+                        id++;
+                    }
+                    if (!opened.contains(cell)) opened.add(cell);
+                }
+            }
+        }
+        return false;
     }
 
     private double distance(Cell start, Cell end) {
@@ -124,7 +160,29 @@ public class Board implements MainContract.Model {
         return !haveCell(cell);
     }
 
+    private int getMinIndex(List<Cell> opened, List<Double> f) {
+        double minValue = 100;
+        int index = 0;
+        int counter = 0;
+        for (Cell cell : opened) {
+            if (f.get(cell.getId()) < minValue) {
+                minValue = f.get(cell.getId());
+                index = counter;
+            }
+            counter++;
+        }
+        return index;
+    }
 
-
-
+    private List<Cell> getNeighbours(Cell cell) {
+        List<Cell> list = new ArrayList<>();
+        for (Cell direction : NEIGHBOURS_DIRECTIONS) {
+            if (cell.plus(direction).isCorrect()) {
+                if (!haveCell(cell.plus(direction))) {
+                    list.add(cell.plus(direction));
+                }
+            }
+        }
+        return list;
+    }
 }

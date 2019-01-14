@@ -17,6 +17,7 @@ import java.util.Map;
 public class JSONHandler {
 
     private static final String FILE_NAME = "data.json";
+
     private final Gson gson;
     private final Type type;
 
@@ -82,5 +83,8 @@ public class JSONHandler {
         return file.exists();
     }
 
+    public void deleteFile(Context context) {
+        context.deleteFile(FILE_NAME);
+    }
 
 }
