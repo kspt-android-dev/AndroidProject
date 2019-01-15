@@ -3,7 +3,6 @@ package ru.polytech.course.pashnik.lines.Core;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,19 +12,20 @@ public class Board implements MainContract.Model {
 
     private static final int MIN_FULL_SIZE = 79;
     private static final int WIN_LENGTH = 5;
+    private static final double MIN_VALUE = 100;
 
     private Map<Cell, ColorType> map = new HashMap<>();
     private final WinLines winLines = new WinLines();
     private List<Cell> reestablishedPath = new ArrayList<>();
 
-    private final Cell[] DIRECTIONS = {
+    private static final Cell[] DIRECTIONS = {
             new Cell(1, 0), // x-axis
             new Cell(0, 1), // y-axis
             new Cell(-1, 1), // main diagonal
             new Cell(1, 1)   // secondary diagonal
     };
 
-    private final Cell[] NEIGHBOURS_DIRECTIONS = {
+    private static final Cell[] NEIGHBOURS_DIRECTIONS = {
             new Cell(1, 0),
             new Cell(-1, 0),
             new Cell(0, 1),
@@ -165,7 +165,7 @@ public class Board implements MainContract.Model {
     }
 
     private int getMinIndex(List<Cell> opened, List<Double> f) {
-        double minValue = 100;
+        double minValue = MIN_VALUE;
         int index = 0;
         int counter = 0;
         for (Cell cell : opened) {

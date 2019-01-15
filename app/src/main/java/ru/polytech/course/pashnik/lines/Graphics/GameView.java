@@ -39,15 +39,17 @@ public class GameView extends View implements View.OnTouchListener {
     private static final float APPEARANCE_START = 0.15f;
     private static final float APPEARANCE_END = 0.3f;
     private static final int APPEARANCE_DURATION = 250;
-
-    public void setAppearanceFlag(boolean appearanceFlag) {
-        this.appearanceFlag = appearanceFlag;
-    }
-
     private boolean appearanceFlag;
     private Cell appearanceCell;
     private ColorType appearanceColor;
     private float currentRadius;
+
+    private ValueAnimator movingAnimator;
+    private boolean movingFlag;
+    private Cell movingCell;
+    private ColorType movingColor;
+    private float movingDx;
+
 
     private Paint bitmapPaint = new Paint();
     private Bitmap bitmap;
@@ -174,6 +176,11 @@ public class GameView extends View implements View.OnTouchListener {
         });
     }
 
+    public void setMovingAnimation(final Cell start, final Cell end) {
+        // define which direction should go a ball
+
+    }
+
     public void stopUpDownAnimation() {
         upDownAnimator.cancel();
         upDownFlag = false;
@@ -205,5 +212,9 @@ public class GameView extends View implements View.OnTouchListener {
 
     public void setRotateFlag(boolean rotateFlag) {
         this.rotateFlag = rotateFlag;
+    }
+
+    public void setAppearanceFlag(boolean appearanceFlag) {
+        this.appearanceFlag = appearanceFlag;
     }
 }
