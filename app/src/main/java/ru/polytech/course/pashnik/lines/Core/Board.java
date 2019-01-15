@@ -16,9 +16,9 @@ public class Board implements MainContract.Model {
 
     private Map<Cell, ColorType> map = new HashMap<>();
     private final WinLines winLines = new WinLines();
+    private List<Cell> reestablishedPath = new ArrayList<>();
 
     private final Cell[] DIRECTIONS = {
-
             new Cell(1, 0), // x-axis
             new Cell(0, 1), // y-axis
             new Cell(-1, 1), // main diagonal
@@ -114,6 +114,7 @@ public class Board implements MainContract.Model {
         List<Cell> path = new ArrayList<>();
         List<Cell> closed = new ArrayList<>(); // items we've already reviewed
         List<Cell> opened = new ArrayList<>(); //items required for viewing
+        List<Cell> allCells = new ArrayList<>(); // all Cells with their id's
 
         List<Double> g = new ArrayList<>();
         List<Double> f = new ArrayList<>();
@@ -123,22 +124,25 @@ public class Board implements MainContract.Model {
         g.add(0.0);
         f.add(distance(start, end));
         opened.add(start);
+        allCells.add(start);
 
         while (!opened.isEmpty()) {
             int minIndex = getMinIndex(opened, f);
             Cell current = opened.remove(minIndex);
             if (current.equals(end)) {
                 path.add(current);
-                Collections.reverse(path);
+                reestablishPath(path);
+                Collections.reverse(reestablishedPath);
                 return true;
             }
             closed.add(current);
-            List<Cell> neighbours = getNeighbours(current);
+            List<Cell> neighbours = getNeighbours(current, allCells);
             for (Cell cell : neighbours) {
                 if (!closed.contains(cell) && canMove(cell)) {
                     double temp = g.get(current.getId()) + distance(current, cell);
                     if (!opened.contains(cell) || temp < g.get(cell.getId())) {
                         cell.setId(id);
+                        allCells.add(cell);
                         path.add(current);
                         g.add(cell.getId(), temp);
                         f.add(cell.getId(), g.get(cell.getId()) + distance(cell, end));
@@ -174,15 +178,28 @@ public class Board implements MainContract.Model {
         return index;
     }
 
-    private List<Cell> getNeighbours(Cell cell) {
+    private List<Cell> getNeighbours(Cell cell, List<Cell> allCells) {
         List<Cell> list = new ArrayList<>();
         for (Cell direction : NEIGHBOURS_DIRECTIONS) {
-            if (cell.plus(direction).isCorrect()) {
-                if (!haveCell(cell.plus(direction))) {
+            Cell current = cell.plus(direction);
+            if (allCells.contains(current))
+                current.setId(allCells.get(allCells.indexOf(current)).getId());
+            if (current.isCorrect()) {
+                if (!haveCell(current)) {
                     list.add(cell.plus(direction));
                 }
             }
         }
         return list;
+    }
+
+    private void reestablishPath(List<Cell> path) {
+        int pathSize = path.size();
+        Cell current = path.get(pathSize - 1);
+        while (current.getId() != 0) {
+            reestablishedPath.add(current);
+            current = path.get(current.getId() - 1);
+        }
+        reestablishedPath.add(current);
     }
 }

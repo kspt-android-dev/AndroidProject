@@ -16,7 +16,7 @@ public class Cell {
     }
 
     public boolean isCorrect() {
-        return x <= GameView.CELL_NUMBER && x >= 0 && y <= GameView.CELL_NUMBER && y >= 0;
+        return x < GameView.CELL_NUMBER && x >= 0 && y < GameView.CELL_NUMBER && y >= 0;
     }
 
     public int getX() {
