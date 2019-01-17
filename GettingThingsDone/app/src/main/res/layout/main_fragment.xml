@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            app:contentInsetStart="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textSize="19sp"
+                    android:textColor="@android:color/black"
+                    android:text="Getting Things Done"
+            />
+
+            <ImageView
+                    android:id="@+id/ic_data_range"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_date_range"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+            />
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_marginTop="48dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_create_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_create_note_white"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@android:color/black"
+            app:layout_constraintStart_toStartOf="@id/fab_add"
+            app:layout_constraintEnd_toEndOf="@id/fab_add"
+            app:layout_constraintBottom_toTopOf="@id/fab_create_folder"
+            app:fabSize="mini"
+            android:elevation="4dp"
+            app:pressedTranslationZ="12dp"
+            android:visibility="invisible"
+    />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_create_folder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_create_folder_white"
+            android:backgroundTint="@android:color/black"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toStartOf="@id/fab_add"
+            app:layout_constraintEnd_toEndOf="@+id/fab_add"
+            app:layout_constraintBottom_toTopOf="@id/fab_add"
+            app:fabSize="mini"
+            android:elevation="4dp"
+            app:pressedTranslationZ="12dp"
+            android:visibility="invisible"
+    />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white"
+            android:backgroundTint="@android:color/black"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:fabSize="normal"
+            android:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
