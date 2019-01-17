@@ -20,7 +20,9 @@
         </activity>
         <activity android:name=".GameFieldActivity" />
         <activity android:name=".GameOverActivity" />
-        <activity android:name=".LeaderBoardActivity"></activity>
+        <activity android:name=".LeaderBoardActivity" />
+        <activity android:name=".SettingsActivity"
+            android:theme="@style/SettingsTheme"/>
     </application>
 
 </manifest>

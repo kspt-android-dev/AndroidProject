@@ -15,11 +15,12 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="40sp"
+        android:lineSpacingExtra="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintVertical_bias="0.4"/>
 
     <EditText
         android:id="@+id/user_name"
@@ -31,6 +32,7 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="24sp"
+        android:maxLength="12"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
