@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Checkers</string>
+    <string name="qqqw">thisww0</string>
+    <string name="start_game_8">Start Game 8x8</string>
+    <string name="start_game_10">Start Game 10x10</string>
+    <string name="appname">Checkers</string>
+    <string name="resume">Resume Last</string>
+</resources>
