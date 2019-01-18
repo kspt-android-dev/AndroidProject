@@ -99,6 +99,7 @@ class GameFieldActivity : AppCompatActivity() {
         soundPool.release()
         timerForUpdate.cancel()
         super.onDestroy()
+        //test
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
