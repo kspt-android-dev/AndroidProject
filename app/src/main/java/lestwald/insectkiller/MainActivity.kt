@@ -14,11 +14,17 @@ class MainActivity : AppCompatActivity() {
         val startButton = findViewById<ImageButton>(R.id.startButton)
         startButton.setOnClickListener {
             intent = Intent(this, GameFieldActivity::class.java)
-            startActivity(intent) }
+            startActivity(intent)
+        }
         val leaderBoardButton = findViewById<ImageButton>(R.id.leaderboardButton)
         leaderBoardButton.setOnClickListener {
             intent = Intent(this, LeaderBoardActivity::class.java)
-            startActivity(intent) }
+            startActivity(intent)
+        }
+        val settingsButton = findViewById<ImageButton>(R.id.settingsButton)
+        settingsButton.setOnClickListener {
+            intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+        }
     }
-
 }

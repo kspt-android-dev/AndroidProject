@@ -2,15 +2,16 @@ package lestwald.insectkiller
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MotionEvent
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -27,9 +28,10 @@ class GameFieldActivity : AppCompatActivity() {
     private lateinit var healthBar: ImageView
     private lateinit var pizza: ImageView
     private lateinit var pauseButton: ImageButton
-    private lateinit var soundPool: SoundPool
     private lateinit var bitmapForHealth: Bitmap
     private lateinit var bitmapForPizza: Bitmap
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var soundPool: SoundPool
     private val timerForUpdate = Timer()
     private var gameFieldWidth = 0
     private var gameFieldHeight = 0
@@ -39,10 +41,15 @@ class GameFieldActivity : AppCompatActivity() {
     private var pizzaRadius = 0
     private var pizzaRealRadius = 0
     private var isPaused = false
+    private var sound = true
+    private var difficulty = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_field)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        sound = sharedPreferences.getBoolean("sound", true)
+        difficulty = sharedPreferences.getString("difficulty", "2").toInt()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             soundPool = SoundPool.Builder().setMaxStreams(6).build()
@@ -136,7 +143,7 @@ class GameFieldActivity : AppCompatActivity() {
     private fun addInsect(insect: Insect) {
         insect.setOnTouchListener { it, event ->
             if (!isPaused && event.action == MotionEvent.ACTION_DOWN) {
-                soundPool.play(soundId, 0.8F, 0.8F, 1, 0, 1F)
+                if (sound) soundPool.play(soundId, 0.8F, 0.8F, 1, 0, 1F)
                 if (it is Insect) {
                     gameFieldLayout.removeView(it)
                     score += it.tapCost
@@ -173,6 +180,7 @@ class GameFieldActivity : AppCompatActivity() {
                 endY = centerY + (pizzaRealRadius + type.height * 0.25F) * sin(angle)
             }
             val insect = Insect(this, startX.toFloat(), startY.toFloat(), endX.toFloat(), endY.toFloat(), type)
+            insect.speed *= 1 + (difficulty - 1).toFloat() / 2
             addInsect(insect)
         }
     }
@@ -190,7 +198,8 @@ class GameFieldActivity : AppCompatActivity() {
 
     private fun update() {
         val content = this
-        var div = 3
+        var div = 4 - difficulty
+        var divGenerate = (4 - difficulty) * 50
         timerForUpdate.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 if (isPaused) {
@@ -203,7 +212,6 @@ class GameFieldActivity : AppCompatActivity() {
                 if (!isPaused) {
                     runOnUiThread {
                         var childCount = gameFieldLayout.childCount
-                        if (childCount < 30) generateInsects()
                         childCount = gameFieldLayout.childCount
                         for (k in 0 until childCount) {
                             val child = gameFieldLayout.getChildAt(k)
@@ -218,7 +226,12 @@ class GameFieldActivity : AppCompatActivity() {
                                     break
                                 }
                             }
-                            div = 3
+                            div = 4 - difficulty
+                        }
+                        divGenerate--
+                        if (divGenerate == 0) {
+                            generateInsects()
+                            divGenerate = (4 - difficulty) * 50
                         }
                         for (i in 0 until childCount) {
                             val child = gameFieldLayout.getChildAt(i)

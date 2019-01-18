@@ -14,6 +14,7 @@ class Insect(context: Context, startX: Float, startY: Float,
 
     val tapCost: Int
         get() = type.tapCost
+    var speed = type.speed
     var isAnimated = false
     private lateinit var animator: ObjectAnimator
 
