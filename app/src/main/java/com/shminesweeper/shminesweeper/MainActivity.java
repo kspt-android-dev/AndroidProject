@@ -18,23 +18,26 @@ import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int SETTINGS_ACTIVITY_REQUEST_CODE = 1;
-    PlayingField playingField;
-    FrameLayout frameLayout;
+    private static final int SETTINGS_ACTIVITY_REQUEST_CODE = 1;
+    private static final int DEFAULT_FIELD_HEIGHT = 10;
+    private static final int DEFAULT_FIELD_WIDTH = 10;
+    private static final int DEFAULT_NUMBER_OF_MINES = 30;
+    private PlayingField playingField;
+    private FrameLayout frameLayout;
 
-    ImageButton flagButton;
-    ImageButton questionButton;
-    ImageButton touchButton;
+    private ImageButton flagButton;
+    private ImageButton questionButton;
+    private ImageButton touchButton;
 
-    View.OnClickListener buttonsOnClickListner;
+    private View.OnClickListener buttonsOnClickListener;
 
-    Intent startServiceIntent ;
+    private Intent startServiceIntent ;
 
-    FieldLogic fieldLogic;
+    private FieldLogic fieldLogic;
 
-    SharedPreferences preferences;
+    private SharedPreferences preferences;
 
-    SharedViewModel viewModel;
+    private SharedViewModel viewModel;
 
     enum ShownDialog {GREETING, DEFEAT, NONE}
     private ShownDialog shownDialog;
@@ -79,10 +82,11 @@ public class MainActivity extends AppCompatActivity {
                         (int) getResources().getDimension(R.dimen.hexagonal_cell_width) :
                         (int) getResources().getDimension(R.dimen.square_cell_size)
         ));
+        updateFieldParamsInViewModel();
     }
 
     private void setFieldLogic() {
-        fieldLogic = new FieldLogic(this, preferences);
+        fieldLogic = new FieldLogic(this);
         fieldLogic.update(viewModel);
     }
 
@@ -133,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
     // определение onClickListener'a для кнопок touch, flag, question
     private void setButtonsOnClickListener(){
-        buttonsOnClickListner = new View.OnClickListener() {
+        buttonsOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (view.getId()){
@@ -154,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivityForResult(openSettings, SETTINGS_ACTIVITY_REQUEST_CODE);
                         break;
                     case R.id.reload_button:
-                        fieldLogic.startNewGame();
+                        fieldLogic.startNewGame(viewModel);
                         playingField.startNewGame();
                         setActiveButtonColor(touchButton, flagButton, questionButton);
                         break;
@@ -165,11 +169,11 @@ public class MainActivity extends AppCompatActivity {
 
     // добавление onClickListener'a кнопкам touch, question, flag
     private void addOnClickListenerToButtons() {
-        flagButton.setOnClickListener(buttonsOnClickListner);
-        questionButton.setOnClickListener(buttonsOnClickListner);
-        touchButton.setOnClickListener(buttonsOnClickListner);
-        findViewById(R.id.settings_button).setOnClickListener(buttonsOnClickListner);
-        findViewById(R.id.reload_button).setOnClickListener(buttonsOnClickListner);
+        flagButton.setOnClickListener(buttonsOnClickListener);
+        questionButton.setOnClickListener(buttonsOnClickListener);
+        touchButton.setOnClickListener(buttonsOnClickListener);
+        findViewById(R.id.settings_button).setOnClickListener(buttonsOnClickListener);
+        findViewById(R.id.reload_button).setOnClickListener(buttonsOnClickListener);
     }
 
     private void restoreDialog() {
@@ -187,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         shownDialog = ShownDialog.NONE;
-                        fieldLogic.startNewGame();
+                        fieldLogic.startNewGame(viewModel);
                         playingField.startNewGame();
                     }
                 })
@@ -212,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         shownDialog = ShownDialog.NONE;
-                        fieldLogic.startNewGame();
+                        fieldLogic.startNewGame(viewModel);
                         playingField.startNewGame();
                     }
                 })
@@ -254,18 +258,30 @@ public class MainActivity extends AppCompatActivity {
                 // если пользователь ихменил настройки, то создаётся новое поле
                 if (resultCode == RESULT_OK ) {
                     Log.i("Setting result code", "OK");
+                    updateFieldParamsInViewModel();
 
                     frameLayout.removeAllViews();
                     playingField = new PlayingField(this);
                     playingField.setFieldLogic(fieldLogic);
                     frameLayout.addView(playingField);
-                    fieldLogic.startNewGame();
+                    fieldLogic.startNewGame(viewModel);
                     playingField.startNewGame();
 
                     setActiveButtonColor(touchButton, flagButton, questionButton);
                 }
                 break;
         }
+    }
+
+    private void updateFieldParamsInViewModel() {
+        viewModel.setFieldHeight( (preferences == null) ? DEFAULT_FIELD_HEIGHT :
+                Integer.parseInt(preferences.getString("field_height", "10")) );
+        viewModel.setFieldWidth( (preferences == null) ? DEFAULT_FIELD_WIDTH :
+                Integer.parseInt(preferences.getString("field_width", "10")) );
+        viewModel.setNumberOfMines( (preferences == null) ? DEFAULT_NUMBER_OF_MINES :
+                Integer.parseInt(preferences.getString("number_of_mines", "30")) );
+        viewModel.setFieldMode( (preferences == null) ? FieldLogic.FieldMode.HEXAGONAL :
+                preferences.getInt("field_mode_index", 0) == 0 ? FieldLogic.FieldMode.HEXAGONAL : FieldLogic.FieldMode.SQUARE );
     }
 
     // для активной кнопки устанавливается белый цвет, для двух остальных - чёрный

@@ -14,7 +14,7 @@
     <string name="field_width">Width</string>
     <string name="set_field_width">Set field width</string>
     <string name="set_field_width_dialog">Set field width (2–25 mines)</string>
-    <string name="insturcion">Instruction</string>
+    <string name="instruction">Instruction</string>
     <string name="watch_instruction">Watch instruction</string>
     <string name="hexagonal">Hexagonal</string>
     <string name="square">Square</string>

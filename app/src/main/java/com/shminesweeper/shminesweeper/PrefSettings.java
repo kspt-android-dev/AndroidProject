@@ -9,6 +9,11 @@ import android.preference.PreferenceManager;
 
 public class PrefSettings extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private static final int MAX_FIELD_SIZE = 25;
+    private static final int MIN_FIELD_SIZE = 2;
+    private static final int MIN_NUMBER_OF_MINES = 2;
+    private static final int MAX_NUMBER_OF_MINES = 208;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +22,18 @@ public class PrefSettings extends PreferenceActivity implements SharedPreference
         setOnPreferenceListener();
 
         setResult(RESULT_CANCELED);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // unregister listener
+        Context context = getApplicationContext();
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
+
     }
 
     private void setOnPreferenceListener() {
@@ -31,28 +48,29 @@ public class PrefSettings extends PreferenceActivity implements SharedPreference
 
         // проверяем введённые данные на валидность
         SharedPreferences.Editor  editor = sharedPreferences.edit();
+
         switch (key) {
             case "field_width":
                 try {
-                    int fieldWidth = Integer.parseInt(sharedPreferences.getString(key, ""));
-                    if (fieldWidth < 2) fieldWidth = 2;
-                    if (fieldWidth > 25) fieldWidth = 25;
-                    editor.putString(key, String.valueOf(fieldWidth)).apply();
+                    int fieldWidth = Integer.parseInt(sharedPreferences.getString("field_width", ""));
+                    if (fieldWidth < MIN_FIELD_SIZE) fieldWidth = MIN_FIELD_SIZE;
+                    if (fieldWidth > MAX_FIELD_SIZE) fieldWidth = MAX_FIELD_SIZE;
+                    editor.putString("field_width", String.valueOf(fieldWidth)).apply();
                 } catch (Exception e) {
-                    editor.putString(key, "10").apply();
+                    editor.putString("field_width", "10").apply();
                 }
                 break;
             case "field_height":
                 try {
-                    int fieldHeight = Integer.parseInt(sharedPreferences.getString(key, ""));
-                    if (fieldHeight < 2) fieldHeight = 2;
-                    if (fieldHeight > 25) fieldHeight = 25;
-                    editor.putString(key, String.valueOf(fieldHeight)).apply();
+                    int fieldHeight = Integer.parseInt(sharedPreferences.getString("field_height", ""));
+                    if (fieldHeight < MIN_FIELD_SIZE) fieldHeight = MIN_FIELD_SIZE;
+                    if (fieldHeight > MAX_FIELD_SIZE) fieldHeight = MAX_FIELD_SIZE;
+                    editor.putString("field_height", String.valueOf(fieldHeight)).apply();
                 } catch (Exception e) {
-                    editor.putString(key, "10").apply();
+                    editor.putString("field_height", "10").apply();
                 }
                 break;
-            case "field_mode" :
+            case "field_mode":
                 ListPreference lp = (ListPreference) findPreference("field_mode");
                 int index = lp.findIndexOfValue(lp.getValue());
                 sharedPreferences.edit().putInt("field_mode_index", index).apply();
@@ -62,8 +80,8 @@ public class PrefSettings extends PreferenceActivity implements SharedPreference
         // кол-во мин всегда подстраивается под параметры поля
         try {
             int numberOfMines = Integer.parseInt(sharedPreferences.getString("number_of_mines", ""));
-            if (numberOfMines < 2) numberOfMines = 2;
-            if (numberOfMines > 208) numberOfMines = 208;
+            if (numberOfMines < MIN_NUMBER_OF_MINES) numberOfMines = MIN_NUMBER_OF_MINES;
+            if (numberOfMines > MAX_NUMBER_OF_MINES) numberOfMines = MAX_NUMBER_OF_MINES;
             if (numberOfMines >= Integer.parseInt(sharedPreferences.getString("field_width", "")) *
                     Integer.parseInt(sharedPreferences.getString("field_height", "")) )
                 numberOfMines = Integer.parseInt(sharedPreferences.getString("field_width", "")) *

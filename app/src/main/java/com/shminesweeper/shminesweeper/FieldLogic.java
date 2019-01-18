@@ -1,8 +1,6 @@
 package com.shminesweeper.shminesweeper;
 
-import android.content.SharedPreferences;
 import android.graphics.Point;
-import android.preference.ListPreference;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -10,14 +8,14 @@ import java.util.Random;
 
 public class FieldLogic {
 
-    enum GameCondition{LOST, WON, IN_POGRESS, NOT_MINED, OVERVIEW}
+    enum GameCondition{LOST, WON, IN_PROGRESS, NOT_MINED, OVERVIEW}
     private GameCondition gameCondition;
 
     private ArrayDeque<Cell> deque = new ArrayDeque<>();
 
     private ArrayList<Cell> cells;
 
-    private MainActivity mainActivity;
+    private final MainActivity mainActivity;
 
     private int totalOpenCells;
     private int fieldWidth;
@@ -29,17 +27,14 @@ public class FieldLogic {
     enum FieldMode {SQUARE, HEXAGONAL}
     private FieldMode fieldMode;
 
-    private SharedPreferences preferences;
-
-    public FieldLogic(MainActivity mainActivity, SharedPreferences sharedPreferences) {
+    public FieldLogic(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
-        this.preferences = sharedPreferences;
         cells = new ArrayList<>();
     }
 
-    public void startNewGame() {
+    public void startNewGame(SharedViewModel viewModel) {
 
-        updateFieldSettings();
+        updateFieldSettings(viewModel);
         cells = (fieldMode.equals(FieldMode.HEXAGONAL)) ?
                 setHexagonalFieldCells() : setSquareFieldCells();
         totalOpenCells = 0;
@@ -47,10 +42,9 @@ public class FieldLogic {
     }
 
     public void update(SharedViewModel viewModel) {
-        updateFieldSettings();
+        updateFieldSettings(viewModel);
         this.gameCondition = viewModel.getGameCondition();
         this.totalOpenCells = viewModel.getTotalOpenedCells();
-        this.fieldMode = viewModel.getFieldMode();
         this.cellWidth = viewModel.getCellWidth();
         this.cellHeight = viewModel.getCellHeight();
 
@@ -175,13 +169,11 @@ public class FieldLogic {
 
 
     // обновление параметров игрового поля
-    private void updateFieldSettings() {
-        fieldHeight = (preferences == null) ? 10 : Integer.parseInt(preferences.getString("field_height", "10"));
-        fieldWidth = (preferences == null) ? 10 : Integer.parseInt(preferences.getString("field_width", "10"));
-        fieldMines = (preferences == null) ? 30 : Integer.parseInt(preferences.getString("number_of_mines", "30"));
-        fieldMode = (preferences == null) ? FieldMode.HEXAGONAL :
-                preferences.getInt("field_mode_index", 0) == 0 ? FieldMode.HEXAGONAL : FieldMode.SQUARE;
-
+    private void updateFieldSettings(SharedViewModel viewModel) {
+        this.fieldHeight = viewModel.getFieldHeight();
+        this.fieldWidth = viewModel.getFieldWidth();
+        this.fieldMines = viewModel.getNumberOfMines();
+        this.fieldMode = viewModel.getFieldMode();
     }
 
     // открытие ячейки, если возможно
@@ -195,7 +187,7 @@ public class FieldLogic {
 
                 if (gameCondition.equals(GameCondition.NOT_MINED)) {
                     mining();
-                    gameCondition = GameCondition.IN_POGRESS;
+                    gameCondition = GameCondition.IN_PROGRESS;
                 }
 
                 if (cell.getMinesBeside() == 0) openBrothers(cell);

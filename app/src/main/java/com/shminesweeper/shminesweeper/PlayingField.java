@@ -7,9 +7,9 @@ import android.widget.FrameLayout;
 
 public class PlayingField extends View {
 
-    FieldLogic fieldLogic;
+    private FieldLogic fieldLogic;
 
-    private Paint paint = new Paint();
+    private final Paint paint = new Paint();
 
     enum CheckedButton {FLAG, TOUCH, QUESTION}
 
@@ -24,8 +24,10 @@ public class PlayingField extends View {
     private Bitmap numb4;
     private Bitmap numb5;
     private Bitmap numb6;
+    private Bitmap numb7;
+    private Bitmap numb8;
 
-    Matrix matrix;
+    private Matrix matrix;
 
     public PlayingField(Context context) {
         super(context);
@@ -39,7 +41,7 @@ public class PlayingField extends View {
 
         // for listner
         this.setClickable(true);
-        this.setOnTouchListener(new PlayingFieldListner(this));
+        this.setOnTouchListener(new PlayingFieldListener(this));
 
         matrix = new Matrix();
 
@@ -63,6 +65,8 @@ public class PlayingField extends View {
         numb4 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.numb4), IMAGE_SIZE, IMAGE_SIZE, false);
         numb5 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.numb5), IMAGE_SIZE, IMAGE_SIZE, false);
         numb6 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.numb6), IMAGE_SIZE, IMAGE_SIZE, false);
+        numb7 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.numb7), IMAGE_SIZE, IMAGE_SIZE, false);
+        numb8 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.numb8), IMAGE_SIZE, IMAGE_SIZE, false);
     }
 
     public void startNewGame() {
@@ -90,6 +94,11 @@ public class PlayingField extends View {
         super.onDraw(canvas);
 
         for (Cell cell : fieldLogic.getCells()) {
+            final int flagXOffset = 5;
+            final int flagYOffset = 8;
+            final int numbersXOffset = 5;
+            final int numbersHexagonalYOffset = 13;
+            final int nambersSquareYOffset = 8;
 
             //cell
             if (cell.isOpen()) paint.setColor(getResources().getColor(R.color.openCell));
@@ -105,11 +114,11 @@ public class PlayingField extends View {
 
 
             if (fieldLogic.getFieldMode().equals(FieldLogic.FieldMode.HEXAGONAL))
-                matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/5,
+                matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/flagXOffset,
                         cell.getStartPoint().y);
             else
-                matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/5,
-                        cell.getStartPoint().y + fieldLogic.getCellHeight()/8);
+                matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/flagXOffset,
+                        cell.getStartPoint().y + fieldLogic.getCellHeight()/flagYOffset);
             if (!cell.isOpen()) {
                 if (cell.isContainsFlag())
                     canvas.drawBitmap(flag, matrix, paint);
@@ -126,29 +135,29 @@ public class PlayingField extends View {
             if (cell.isOpen() && !cell.isContainsMine()) {
                 if (cell.getMinesBeside() == 1) {
                     if (fieldLogic.getFieldMode().equals(FieldLogic.FieldMode.HEXAGONAL))
-                        matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/5,
-                                cell.getStartPoint().y - fieldLogic.getCellHeight()/13);
+                        matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/numbersXOffset,
+                                cell.getStartPoint().y - fieldLogic.getCellHeight()/numbersHexagonalYOffset);
                     else
-                        matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/5,
-                                cell.getStartPoint().y + fieldLogic.getCellHeight()/8);
+                        matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/numbersXOffset,
+                                cell.getStartPoint().y + fieldLogic.getCellHeight()/nambersSquareYOffset);
                     canvas.drawBitmap(numb1, matrix, paint);
                 }
                 if (cell.getMinesBeside() == 2) {
                     if (fieldLogic.getFieldMode().equals(FieldLogic.FieldMode.HEXAGONAL))
-                        matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/5,
-                                cell.getStartPoint().y - fieldLogic.getCellHeight()/13);
+                        matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/numbersXOffset,
+                                cell.getStartPoint().y - fieldLogic.getCellHeight()/numbersHexagonalYOffset);
                     else
-                        matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/5,
-                                cell.getStartPoint().y + fieldLogic.getCellHeight()/8);
+                        matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/numbersXOffset,
+                                cell.getStartPoint().y + fieldLogic.getCellHeight()/nambersSquareYOffset);
                     canvas.drawBitmap(numb2, matrix, paint);
                 }
                 if (cell.getMinesBeside() == 3) {
                     if (fieldLogic.getFieldMode().equals(FieldLogic.FieldMode.HEXAGONAL))
-                        matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/5,
-                                cell.getStartPoint().y - fieldLogic.getCellHeight()/13);
+                        matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/numbersXOffset,
+                                cell.getStartPoint().y - fieldLogic.getCellHeight()/numbersHexagonalYOffset);
                     else
-                        matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/5,
-                                cell.getStartPoint().y + fieldLogic.getCellHeight()/8);
+                        matrix.setTranslate(cell.getStartPoint().x + fieldLogic.getCellWidth()/numbersXOffset,
+                                cell.getStartPoint().y + fieldLogic.getCellHeight()/nambersSquareYOffset);
                     canvas.drawBitmap(numb3, matrix, paint);
                 }
                 if (cell.getMinesBeside() == 4)
@@ -157,6 +166,10 @@ public class PlayingField extends View {
                     canvas.drawBitmap(numb5, matrix, paint);
                 if (cell.getMinesBeside() == 6)
                     canvas.drawBitmap(numb6, matrix, paint);
+                if (cell.getMinesBeside() == 7)
+                    canvas.drawBitmap(numb7, matrix, paint);
+                if (cell.getMinesBeside() == 8)
+                    canvas.drawBitmap(numb8, matrix, paint);
             }
         }
     }

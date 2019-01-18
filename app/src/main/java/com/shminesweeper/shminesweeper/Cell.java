@@ -1,28 +1,26 @@
 package com.shminesweeper.shminesweeper;
 
-import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
-import android.util.Log;
 
 import java.util.ArrayList;
 
 public class Cell {
 
-    private FieldLogic.FieldMode fieldMode;
+    private final FieldLogic.FieldMode fieldMode;
 
-    private Point startPoint;
+    private final Point startPoint;
 
     enum CellCondition {FLAG, QUESTION, OPEN, CLOSED_EMPTY}
     private CellCondition condition;
 
     private boolean containsMine;
 
-    private ArrayList<Cell> brothers;
+    private final ArrayList<Cell> brothers;
 
     private Path path;
 
-    private int offset;
+    private final int offset;
 
     public Cell(Point point,int offset, FieldLogic.FieldMode fieldMode) {
 
@@ -40,8 +38,6 @@ public class Cell {
 
         this.offset = offset;
 
-//        if (fieldMode.equals(FieldLogic.FieldMode.HEXAGONAL)) this.setHexagonalPath();
-//        else this.setSquarePath();
     }
 
     // построение пути, по которому на игровом поле будет нарисована данная ячейка
@@ -90,22 +86,22 @@ public class Cell {
         //top-left triangle
         if ((point.x <= startPoint.x + offset) && (point.y <= startPoint.y)) {
             return ((((startPoint.x + offset) - point.x) * offset / 2) +
-                    ((startPoint.y - point.y) * offset / 2) <= offset);
+                    ((startPoint.y - point.y) * offset / 2) <= offset*offset/2);
         }
         //top-right triangle
         if ((point.x >= startPoint.x + offset) && (point.y <= startPoint.y)) {
             return (((point.x - (startPoint.x + offset)) * offset / 2) +
-                    ((startPoint.y - point.y) * offset / 2) <= offset);
+                    ((startPoint.y - point.y) * offset / 2) <= offset*offset/2);
         }
         //bottom-left triangle
         if ((point.x <= startPoint.x + offset) && (point.y >= startPoint.y + offset)) {
             return ((((startPoint.x + offset) - point.x) * offset / 2) +
-                    ((point.y - (startPoint.y + offset)) * offset / 2) <= offset);
+                    ((point.y - (startPoint.y + offset)) * offset / 2) <= offset*offset/2);
         }
         //bottom-right triangle
         if (point.x >= startPoint.x + offset && point.y >= startPoint.y + offset) {
             return ((point.x - (startPoint.x + offset)) * offset / 2 +
-                    (point.y - (startPoint.y + offset)) * offset / 2 <= offset);
+                    (point.y - (startPoint.y + offset)) * offset / 2 <= offset*offset/2);
         }
         //cube
         return (point.x >= startPoint.x && point.x <= startPoint.x + offset * 2 &&
@@ -113,7 +109,7 @@ public class Cell {
     }
 
     // определение принадлежности координат, полученных с экрана, данной ячейке
-    public boolean isContainsPointForSquare(Point point) {
+    private boolean isContainsPointForSquare(Point point) {
         return (point.x >= startPoint.x && point.x <= startPoint.x + offset) &&
                 (point.y >= startPoint.y && point.y <= startPoint.y + offset);
     }

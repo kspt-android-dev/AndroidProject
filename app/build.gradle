@@ -6,6 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 28
+    android.defaultConfig.vectorDrawables.useSupportLibrary = true
     defaultConfig {
         applicationId "com.shminesweeper.shminesweeper"
         minSdkVersion 18

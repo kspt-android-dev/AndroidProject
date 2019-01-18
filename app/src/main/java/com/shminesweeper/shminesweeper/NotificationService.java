@@ -17,14 +17,14 @@ import java.util.TimerTask;
 public class NotificationService extends Service {
 
     // период уведомления 6 часов
-    public static final int PERIOD = 1000*60*60*6;  // 1000 мс = 1 с
-    Timer timer;
+    private static final int PERIOD = 1000*60*60*6;  // 1000 мс = 1 с
+    private Timer timer;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        Log.i("service", "statred");
+        Log.i("service", "stated");
 
     }
 

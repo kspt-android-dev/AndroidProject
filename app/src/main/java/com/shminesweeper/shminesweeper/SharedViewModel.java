@@ -17,6 +17,9 @@ public class SharedViewModel extends ViewModel {
     private MainActivity.ShownDialog shownDialog;
     private int cellWidth;
     private int cellHeight;
+    private Integer numberOfMines;
+    private Integer fieldWidth;
+    private Integer fieldHeight;
 
     //-------------------   getters  ----------------------
 
@@ -91,6 +94,21 @@ public class SharedViewModel extends ViewModel {
         return cellHeight;
     }
 
+    public int getNumberOfMines() {
+        if (numberOfMines == null) return 30;
+        return numberOfMines;
+    }
+
+    public int getFieldWidth() {
+        if (fieldWidth == null) return 10;
+        return fieldWidth;
+    }
+
+    public int getFieldHeight() {
+        if (fieldHeight == null) return 10;
+        return fieldHeight;
+    }
+
     // ------------------ setters  ---------------------------
 
     public void setGameCondition(FieldLogic.GameCondition gameCondition) { this.gameCondition = gameCondition; }
@@ -117,5 +135,17 @@ public class SharedViewModel extends ViewModel {
 
     public void setCellHeight(int cellHeight) {
         this.cellHeight = cellHeight;
+    }
+
+    public void setNumberOfMines(int numberOfMines) {
+        this.numberOfMines = numberOfMines;
+    }
+
+    public void setFieldWidth(int fieldWidth) {
+        this.fieldWidth = fieldWidth;
+    }
+
+    public void setFieldHeight(int fieldHeight) {
+        this.fieldHeight = fieldHeight;
     }
 }

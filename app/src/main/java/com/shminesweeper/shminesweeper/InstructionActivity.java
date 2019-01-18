@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.Spanned;
-import android.view.View;
 import android.widget.TextView;
 
 public class InstructionActivity extends Activity {
@@ -24,7 +23,7 @@ public class InstructionActivity extends Activity {
     private void setText() {
         String htmlAsString = getString(R.string.html);
         Spanned htmlAsSpanned = Html.fromHtml(htmlAsString);
-        TextView textView = (TextView) findViewById(R.id.textView);
+        TextView textView = findViewById(R.id.textView);
         textView.setText(htmlAsSpanned);
     }
 }
