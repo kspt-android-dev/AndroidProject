@@ -8,16 +8,28 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private static SoundPool soundPool;
     private ImageButton button_start;
     private ImageButton button_settings;
     private ImageButton button_score;
-    private SoundPool soundPool;
     private int sound;
-
+public static void createSound(){
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        soundPool = new SoundPool.Builder()
+                .setMaxStreams(1)
+                .setAudioAttributes(audioAttributes)
+                .build();
+    } else soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,17 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         button_score = (ImageButton) findViewById(R.id.imageScore);
         button_score.setOnClickListener(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-        AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build();
-        soundPool = new SoundPool.Builder()
-                .setMaxStreams(1)
-                .setAudioAttributes(audioAttributes)
-                .build();
-        } else soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-
+        createSound();
         sound = soundPool.load(this, R.raw.cowstart, 1);
     }
 
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.imageStart:
                 Intent intent1 = new Intent(this, GameActivity.class);
-                soundPool.play(sound, 0,1,1, 0, 1);
+                soundPool.play(sound, 1,1,1, 0, 1);
                 startActivity(intent1);
                 break;
             case R.id.imageSettings:

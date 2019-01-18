@@ -5,6 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ScoreActivity"
-    android:background="#ff6347">
+    android:background="@color/colorBackground">
 
+    <TextView
+        android:id="@+id/textViewRule1"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="@string/rules"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewRule2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textViewRule2"
+        android:layout_width="match_parent"
+        android:layout_height="287dp"
+        android:gravity="center_horizontal"
+        android:text="@string/rulesText"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRule1"
+        tools:ignore="MissingConstraints" />
 </android.support.constraint.ConstraintLayout>
