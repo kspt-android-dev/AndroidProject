@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 public class SharedViewModel extends ViewModel {
 
+    private static final int DEFAUL_NUMBER_OF_MINES = 30;
+    private static final int DEFAULT_FIELD_WIDTH = 10;
+    private static final int DEFAULT_FIELD_HEIGHT = 10;
+
     private FieldLogic.GameCondition gameCondition;
     private Integer totalOpenedCells;
     private FieldLogic.FieldMode fieldMode;
@@ -95,17 +99,17 @@ public class SharedViewModel extends ViewModel {
     }
 
     public int getNumberOfMines() {
-        if (numberOfMines == null) return 30;
+        if (numberOfMines == null) return DEFAUL_NUMBER_OF_MINES;
         return numberOfMines;
     }
 
     public int getFieldWidth() {
-        if (fieldWidth == null) return 10;
+        if (fieldWidth == null) return DEFAULT_FIELD_WIDTH;
         return fieldWidth;
     }
 
     public int getFieldHeight() {
-        if (fieldHeight == null) return 10;
+        if (fieldHeight == null) return DEFAULT_FIELD_HEIGHT;
         return fieldHeight;
     }
 
