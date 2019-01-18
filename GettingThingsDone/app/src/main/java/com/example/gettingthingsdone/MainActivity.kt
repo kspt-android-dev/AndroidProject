@@ -14,7 +14,8 @@ class MainActivity : AppCompatActivity() {
 
     var root: Long = 0
 
-    lateinit var mainFragment: MainFragment
+    private lateinit var mainFragment: MainFragment
+    private lateinit var noteFragment: NoteFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +25,15 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.container, mainFragment)
             .commit()
         app = application as CustomApplication
+    }
+
+    fun openNote(file: File?) {
+        noteFragment = NoteFragment()
+        noteFragment.setNote(file)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, noteFragment)
+            .addToBackStack("note_fragment")
+            .commit()
     }
 
     suspend fun insertNote(note: File) = withContext(Dispatchers.IO) {
@@ -51,9 +61,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-            if (root != 0L) {
+        if (root != 0L) {
+            if (!noteFragment.onBackPressed())
                 mainFragment.onBackPressed()
-            } else
+
+        } else
+            if (!noteFragment.onBackPressed())
                 super.onBackPressed()
     }
 }

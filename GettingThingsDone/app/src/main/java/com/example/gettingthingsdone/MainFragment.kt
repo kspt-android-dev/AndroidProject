@@ -21,8 +21,8 @@ import kotlinx.coroutines.launch
 class MainFragment : Fragment() {
 
     private lateinit var mainActivity: MainActivity
-    private var isOpen = false
 
+    private var isOpen = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.main_fragment, container, false)
@@ -70,20 +70,11 @@ class MainFragment : Fragment() {
             }
         }
         fab_create_note.setOnClickListener {
-            openNote(null)
+            mainActivity.openNote(null)
         }
         fab_create_folder.setOnClickListener {
             showDialog()
         }
-    }
-
-    fun openNote(file: File?) {
-        val noteFragment = NoteFragment()
-        noteFragment.setNote(file)
-        fragmentManager!!.beginTransaction()
-            .replace(R.id.container, noteFragment)
-            .addToBackStack("note_fragment")
-            .commit()
     }
 
     fun openFolder(file: File) {
@@ -96,7 +87,6 @@ class MainFragment : Fragment() {
                             "id = " + f.id.toString() + " text = " + f.text.toString() + " parentId = " + f.idParent
                 )
             adapter.setFiles(files)
-
         }
     }
 
@@ -130,12 +120,16 @@ class MainFragment : Fragment() {
         dialog.show()
     }
 
-    fun onBackPressed() {
+    fun onBackPressed(){
         GlobalScope.launch(Dispatchers.Main) {
             val parent = mainActivity.getParentByChild()
             mainActivity.root = parent.first().idParent
             val files =  mainActivity.getAllByParent()
             adapter.setFiles(files)
         }
+    }
+
+    fun openNote(file: File) {
+        mainActivity.openNote(file)
     }
 }

@@ -1,5 +1,6 @@
 package com.example.gettingthingsdone
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.gettingthingsdone.db.entity.File
@@ -85,5 +87,32 @@ class NoteFragment : Fragment() {
 
     fun setNote(file: File?) {
         this.file = file
+    }
+
+    fun onBackPressed(): Boolean {
+        return if (isDetached){
+            false
+        }else{
+            showCancelDialog()
+            true
+        }
+
+    }
+
+    private fun showCancelDialog(){
+        val builder = AlertDialog.Builder(context)
+        val dialogView = layoutInflater.inflate(R.layout.custom_card_view, null)
+        builder.setView(dialogView)
+        val btnPos = dialogView.findViewById<Button>(R.id.dialog_positive_btn)
+        val btnNeg = dialogView.findViewById<Button>(R.id.dialog_negative_btn)
+        val dialog = builder.create()
+        btnPos.setOnClickListener {
+            dialog.cancel()
+            close("", file)
+        }
+        btnNeg.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 }
