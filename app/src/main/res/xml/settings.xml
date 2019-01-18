@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:title="@string/instruction">
+        <Preference
+                android:title="@string/watch_instruction">
+            <intent
+                    android:targetPackage="com.shminesweeper.shminesweeper"
+                    android:targetClass="com.shminesweeper.shminesweeper.InstructionActivity"/>
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+    android:title="@string/field">
+
+        <EditTextPreference
+
+                android:key="field_width"
+                android:title="@string/field_width"
+                android:summary="@string/set_field_width"
+                android:defaultValue="10"
+                android:dialogTitle="@string/set_field_width_dialog"/>
+
+        <EditTextPreference
+                android:key="field_height"
+                android:title="@string/field_height"
+                android:summary="@string/set_field_height"
+                android:defaultValue="10"
+                android:dialogTitle="@string/set_field_height_dialog"/>
+
+        <EditTextPreference
+                android:key="number_of_mines"
+                android:title="@string/number_of_mines"
+                android:summary="@string/set_number_of_mines"
+                android:defaultValue="30"
+                android:dialogTitle="@string/set_mines_dialog"/>
+
+        <ListPreference
+                android:key="field_mode"
+                android:title="@string/field_mode"
+                android:summary="@string/choose_field_mode"
+                android:defaultValue="0"
+                android:entries="@array/field_mode"
+                android:entryValues="@array/field_mode"
+                android:dialogTitle="@string/choose_field_mode"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

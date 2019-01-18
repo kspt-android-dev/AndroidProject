@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- -->
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="gray400" info="cell_border">#BDBDBD</color>
+    <color name="gray300" info="fieldBack">#E0E0E0</color>
+    <color name="openCell" info="open_cell">#00000000</color>
+    <color name="closeCell" info="close_cell">#797979</color>
+    <color name="cell_border" info="border_of_cells">#252525</color>
+
+</resources>
