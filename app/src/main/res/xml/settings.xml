@@ -3,7 +3,7 @@
 
     <CheckBoxPreference
         android:key="sound"
-        android:title="Sound"
+        android:title="@string/sound"
         android:defaultValue="true">
     </CheckBoxPreference>
 
@@ -11,7 +11,7 @@
         android:entries="@array/difficultyEntries"
         android:entryValues="@array/difficultyEntryValues"
         android:key="difficulty"
-        android:title="Difficulty"
+        android:title="@string/difficulty"
         android:defaultValue="2">
     </ListPreference>
 

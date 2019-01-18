@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Insect Killer</string>
+    <string name="start_game">Начать игру</string>
+    <string name="settings">Настройки</string>
+    <string name="logo">Логотип</string>
+    <string name="health_bar">Уровень здоровья</string>
+    <string name="pizza">Пицца</string>
+    <string name="your_score">ВАШ СЧЕТ</string>
+    <string name="save_result">Сохранить результат</string>
+    <string name="enter_your_name">Введите свое имя</string>
+    <string name="easy">Легкий</string>
+    <string name="medium">Средний</string>
+    <string name="hard">Сложный</string>
+    <string name="difficulty">Уровень сложности</string>
+    <string name="sound">Звук</string>
+</resources>

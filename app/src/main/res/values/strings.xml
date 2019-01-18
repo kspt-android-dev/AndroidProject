@@ -5,10 +5,12 @@
     <string name="logo">Logo</string>
     <string name="health_bar">Health Bar</string>
     <string name="pizza">Pizza</string>
+    <string name="your_score">YOUR SCORE</string>
     <string name="save_result">Save Result</string>
     <string name="enter_your_name">Enter your name</string>
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
     <string name="difficulty">Difficulty</string>
+    <string name="sound">Sound</string>
 </resources>
