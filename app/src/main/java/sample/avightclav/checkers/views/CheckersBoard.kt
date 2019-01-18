@@ -1,4 +1,4 @@
-package sample.avightclav.checkers
+package sample.avightclav.checkers.views
 
 import android.content.Context
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -6,6 +6,11 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.ViewGroup
+import sample.avightclav.checkers.R
+import sample.avightclav.checkers.gamelogic.Color
+import sample.avightclav.checkers.gamelogic.Coordinate
+import sample.avightclav.checkers.gamelogic.FieldSize
+import sample.avightclav.checkers.gamelogic.Gameboard
 
 class CheckersBoard : ViewGroup{
 
@@ -15,24 +20,31 @@ class CheckersBoard : ViewGroup{
     private var from: Coordinate? = null
 
     private constructor(context: Context) : super(context) {
-        this.checkerboard = Gameboard(fieldSize = FieldSize.RUSSIAN)
+        this.checkerboard =
+                Gameboard(fieldSize = FieldSize.RUSSIAN)
         startPos = -1
         fieldSize = 8
     }
 
     private constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        this.checkerboard = Gameboard(fieldSize = FieldSize.RUSSIAN)
-        startPos = context.theme.obtainStyledAttributes(attrs, R.styleable.CheckersBoard, 0, 0)
+        this.checkerboard =
+                Gameboard(fieldSize = FieldSize.RUSSIAN)
+        startPos = context.theme.obtainStyledAttributes(attrs,
+            R.styleable.CheckersBoard, 0, 0)
             .getInt(R.styleable.CheckersBoard_start_line, -1)
-        fieldSize = context.theme.obtainStyledAttributes(attrs, R.styleable.CheckersBoard, 0, 0)
+        fieldSize = context.theme.obtainStyledAttributes(attrs,
+            R.styleable.CheckersBoard, 0, 0)
             .getInteger(R.styleable.CheckersBoard_field_size, 8)
     }
 
     private constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        this.checkerboard = Gameboard(fieldSize = FieldSize.RUSSIAN)
-        startPos = context.theme.obtainStyledAttributes(attrs, R.styleable.CheckersBoard, 0, 0)
+        this.checkerboard =
+                Gameboard(fieldSize = FieldSize.RUSSIAN)
+        startPos = context.theme.obtainStyledAttributes(attrs,
+            R.styleable.CheckersBoard, 0, 0)
             .getInt(R.styleable.CheckersBoard_start_line, -1)
-        fieldSize = context.theme.obtainStyledAttributes(attrs, R.styleable.CheckersBoard, 0, 0)
+        fieldSize = context.theme.obtainStyledAttributes(attrs,
+            R.styleable.CheckersBoard, 0, 0)
             .getInteger(R.styleable.CheckersBoard_field_size, 8)
     }
 
@@ -66,7 +78,7 @@ class CheckersBoard : ViewGroup{
                 val child = this.getChildAt(row * this.fieldSize + column)
                 if (checker != null) {
                     if (child is ConstraintLayout) {
-                        if (checker.color == sample.avightclav.checkers.Color.BLACK)
+                        if (checker.color == Color.BLACK)
                             child.setBackgroundResource(R.drawable.checker_black)
                         else
                             child.setBackgroundResource(R.drawable.king_white)
@@ -113,9 +125,9 @@ class CheckersBoard : ViewGroup{
                 }
         } else {
             checkerboard.possibleMovements.keys.forEach { it ->
-                val cell = this.getChildAt(it.coordinate.y * fieldSize + it.coordinate.x)
-                if (cell is ConstraintLayout)
-                    cell.isActivated = true
+                val cell1 = this.getChildAt(it.coordinate.y * fieldSize + it.coordinate.x)
+                if (cell1 is ConstraintLayout)
+                    cell1.isActivated = true
             }
         }
     }

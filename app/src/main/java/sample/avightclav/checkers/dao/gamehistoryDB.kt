@@ -1,7 +1,8 @@
-package sample.avightclav.checkers
+package sample.avightclav.checkers.dao
 
 import androidx.room.*
 import android.content.Context
+import sample.avightclav.checkers.gamelogic.Gameboard
 import java.io.*
 
 
@@ -9,7 +10,7 @@ class GameboardDBConverters {
 
     @TypeConverter
     fun fromGameboard(gameboard: Gameboard): ByteArray {
-        val byteArrayOutputStream = ByteArrayOutputStream();
+        val byteArrayOutputStream = ByteArrayOutputStream()
         val objectOutputStream = ObjectOutputStream(byteArrayOutputStream)
         objectOutputStream.writeObject(gameboard)
         objectOutputStream.flush()
@@ -25,7 +26,8 @@ class GameboardDBConverters {
 @Entity
 data class GameboardDBEntity(
     @PrimaryKey(autoGenerate = true) var id: Long?,
-    @ColumnInfo var gameboard: Gameboard)
+    @ColumnInfo var gameboard: Gameboard
+)
 
 @Dao
 interface GameboardDAO {
@@ -52,13 +54,16 @@ abstract class AppDatabase: RoomDatabase() {
         @Synchronized
         fun get(context: Context): AppDatabase {
             if (appDatabase_INSTANCE == null)
-                appDatabase_INSTANCE = create(context)
+                appDatabase_INSTANCE =
+                        create(context)
 
             return appDatabase_INSTANCE as AppDatabase
         }
 
         private fun create(context: Context): AppDatabase {
-            val b = Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
+            val b = Room.databaseBuilder(context, AppDatabase::class.java,
+                DB_NAME
+            )
             b.allowMainThreadQueries()
             return b.build()
         }

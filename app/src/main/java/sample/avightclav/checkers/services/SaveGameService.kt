@@ -1,10 +1,13 @@
-package sample.avightclav.checkers
+package sample.avightclav.checkers.services
 
 import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import sample.avightclav.checkers.dao.AppDatabase
+import sample.avightclav.checkers.dao.GameboardDBEntity
+import sample.avightclav.checkers.gamelogic.Gameboard
 import java.util.concurrent.TimeUnit
 
 class SaveGameService: Service() {
@@ -48,15 +51,23 @@ class SaveGameService: Service() {
     }
 
     fun broadcastCurrentState() {
-        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(broadcastTag).putExtra(state, if (pendingThreads == 0) NO_SAVING_PENDED else SAVING_PENDED))
+        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(broadcastTag).putExtra(
+            state, if (pendingThreads == 0) NO_SAVING_PENDED else SAVING_PENDED
+        ))
     }
 
     private fun broadcastSaving() {
-        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(broadcastTag).putExtra(state, SAVING_PENDED))
+        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(broadcastTag).putExtra(
+            state,
+            SAVING_PENDED
+        ))
     }
 
     private fun broadcastNoSaving() {
-        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(broadcastTag).putExtra(state, NO_SAVING_PENDED))
+        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(broadcastTag).putExtra(
+            state,
+            NO_SAVING_PENDED
+        ))
     }
 
     private fun saveCurrentField(gameboard: Gameboard) {

@@ -1,4 +1,4 @@
-package sample.avightclav.checkers
+package sample.avightclav.checkers.gamelogic
 
 import java.io.Serializable
 

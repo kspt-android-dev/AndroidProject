@@ -1,4 +1,4 @@
-package sample.avightclav.checkers
+package sample.avightclav.checkers.activities
 
 
 import android.content.Intent
@@ -6,6 +6,12 @@ import android.os.Bundle
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import sample.avightclav.checkers.dao.AppDatabase
+import sample.avightclav.checkers.views.CheckersBoard
+import sample.avightclav.checkers.R
+import sample.avightclav.checkers.services.SaveGameService
+import sample.avightclav.checkers.gamelogic.FieldSize
+import sample.avightclav.checkers.gamelogic.Gameboard
 
 class GameActivity : AppCompatActivity() {
 
@@ -39,7 +45,7 @@ class GameActivity : AppCompatActivity() {
         super.onStart()
         Log.d("GameActivity", "Started")
         val rootView = findViewById<ConstraintLayout>(R.id.field_layout)
-        var checkersBoard = CheckersBoard(this, -1, checkersboard)
+        val checkersBoard = CheckersBoard(this, -1, checkersboard)
         checkersBoard.start()
         rootView.addView(checkersBoard)
     }

@@ -1,4 +1,4 @@
-package sample.avightclav.checkers
+package sample.avightclav.checkers.gamelogic
 
 import java.io.Serializable
 
@@ -99,13 +99,25 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
                 if (moveForward2InBounds && board[rowForward2][columnLeft2] == null) {
                     val cell = board[rowForward1][columnLeft1]
                     if (cell is Checker && cell.color == checker.color.opposite())
-                        moves.add(Move(checker.coordinate, Coordinate(rowForward2, columnLeft2), cell))
+                        moves.add(
+                            Move(
+                                checker.coordinate,
+                                Coordinate(rowForward2, columnLeft2),
+                                cell
+                            )
+                        )
                 }
 
                 if (moveBack2InBounds && board[rowBack2][columnLeft2] == null) {
                     val cell = board[rowBack1][columnLeft1]
                     if (cell is Checker && cell.color == checker.color.opposite())
-                        moves.add(Move(checker.coordinate, Coordinate(rowBack2, columnLeft2), cell))
+                        moves.add(
+                            Move(
+                                checker.coordinate,
+                                Coordinate(rowBack2, columnLeft2),
+                                cell
+                            )
+                        )
                 }
             }
 
@@ -114,13 +126,25 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
                 if (moveForward2InBounds && board[rowForward2][columnRight2] == null) {
                     val cell = board[rowForward1][columnRight1]
                     if (cell is Checker && cell.color == checker.color.opposite())
-                        moves.add(Move(checker.coordinate, Coordinate(rowForward2, columnRight2), cell))
+                        moves.add(
+                            Move(
+                                checker.coordinate,
+                                Coordinate(rowForward2, columnRight2),
+                                cell
+                            )
+                        )
                 }
 
                 if (moveBack2InBounds && board[rowBack2][columnRight2] == null) {
                     val cell = board[rowBack1][columnRight1]
                     if (cell is Checker && cell.color == checker.color.opposite())
-                        moves.add(Move(checker.coordinate, Coordinate(rowBack2, columnRight2), cell))
+                        moves.add(
+                            Move(
+                                checker.coordinate,
+                                Coordinate(rowBack2, columnRight2),
+                                cell
+                            )
+                        )
                 }
             }
         }
@@ -133,7 +157,7 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
             var columnInBounds = column < fieldSize.size && column >= 0
             var metOpposite = false
             var cell: Checker? = null
-            var metFree = false
+            var metFree: Boolean
 
             // Checking left forward diagonal
             while (rowInBounds && columnInBounds && !metOpposite) {
@@ -155,7 +179,13 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
                 metFree = board[row][column] == null
 
                 while (metFree && rowInBounds && columnInBounds) {
-                    moves.add(Move(checker.coordinate, Coordinate(row, column), cell))
+                    moves.add(
+                        Move(
+                            checker.coordinate,
+                            Coordinate(row, column),
+                            cell
+                        )
+                    )
 
                     row += 1 * checker.color.shift
                     column -= 1
@@ -192,7 +222,13 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
                 metFree = board[row][column] == null
 
                 while (metFree && rowInBounds && columnInBounds) {
-                    moves.add(Move(checker.coordinate, Coordinate(row, column), cell))
+                    moves.add(
+                        Move(
+                            checker.coordinate,
+                            Coordinate(row, column),
+                            cell
+                        )
+                    )
 
                     row += 1 * -checker.color.shift
                     column -= 1
@@ -229,7 +265,13 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
                 metFree = board[row][column] == null
 
                 while (metFree && rowInBounds && columnInBounds) {
-                    moves.add(Move(checker.coordinate, Coordinate(row, column), cell))
+                    moves.add(
+                        Move(
+                            checker.coordinate,
+                            Coordinate(row, column),
+                            cell
+                        )
+                    )
 
                     row += 1 * checker.color.shift
                     column += 1
@@ -266,7 +308,13 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
                 metFree = board[row][column] == null
 
                 while (metFree && rowInBounds && columnInBounds) {
-                    moves.add(Move(checker.coordinate, Coordinate(row, column), cell))
+                    moves.add(
+                        Move(
+                            checker.coordinate,
+                            Coordinate(row, column),
+                            cell
+                        )
+                    )
 
                     row += 1 * -checker.color.shift
                     column += 1
@@ -292,10 +340,22 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
             val moveRight1InBounds = columnRight1 < fieldSize.size && columnRight1 >= 0
 
             if (moveLeft1InBounds && board[rowForward1][columnLeft1] == null)
-                moves.add(Move(checker.coordinate, Coordinate(rowForward1, columnLeft1), null))
+                moves.add(
+                    Move(
+                        checker.coordinate,
+                        Coordinate(rowForward1, columnLeft1),
+                        null
+                    )
+                )
 
             if (moveRight1InBounds && board[rowForward1][columnRight1] == null)
-                moves.add(Move(checker.coordinate, Coordinate(rowForward1, columnRight1), null))
+                moves.add(
+                    Move(
+                        checker.coordinate,
+                        Coordinate(rowForward1, columnRight1),
+                        null
+                    )
+                )
         }
 
         if (checker.type == CheckerType.KING) {
@@ -311,7 +371,13 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
                 metFree = board[row][column] == null
 
                 if (metFree)
-                    moves.add(Move(checker.coordinate, Coordinate(row, column), null))
+                    moves.add(
+                        Move(
+                            checker.coordinate,
+                            Coordinate(row, column),
+                            null
+                        )
+                    )
 
                 row += 1 * checker.color.shift
                 column -= 1
@@ -330,7 +396,13 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
                 metFree = board[row][column] == null
 
                 if (metFree)
-                    moves.add(Move(checker.coordinate, Coordinate(row, column), null))
+                    moves.add(
+                        Move(
+                            checker.coordinate,
+                            Coordinate(row, column),
+                            null
+                        )
+                    )
 
                 row -= 1 * checker.color.shift
                 column += 1
@@ -349,7 +421,13 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
                 metFree = board[row][column] == null
 
                 if (metFree)
-                    moves.add(Move(checker.coordinate, Coordinate(row, column), null))
+                    moves.add(
+                        Move(
+                            checker.coordinate,
+                            Coordinate(row, column),
+                            null
+                        )
+                    )
 
                 row += 1 * checker.color.shift
                 column += 1
@@ -368,7 +446,13 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
                 metFree = board[row][column] == null
 
                 if (metFree)
-                    moves.add(Move(checker.coordinate, Coordinate(row, column), null))
+                    moves.add(
+                        Move(
+                            checker.coordinate,
+                            Coordinate(row, column),
+                            null
+                        )
+                    )
 
                 row -= 1 * checker.color.shift
                 column -= 1
@@ -406,7 +490,7 @@ class Gameboard(val fieldSize: FieldSize) : Serializable {
             .filterValues { it -> it.isNotEmpty() }
 
         if (strokeMovesList.isEmpty()) {
-            strokeMove = false;
+            strokeMove = false
             val movesList = checkList.associate { checker -> Pair(checker, makeMoves(checker)) }
                 .filterValues { it -> it.isNotEmpty() }
             return movesList

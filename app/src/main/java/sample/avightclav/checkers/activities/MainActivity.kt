@@ -1,4 +1,4 @@
-package sample.avightclav.checkers
+package sample.avightclav.checkers.activities
 
 import android.content.*
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,9 @@ import android.os.IBinder
 import android.util.Log
 import android.widget.Button
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import sample.avightclav.checkers.R
+import sample.avightclav.checkers.services.SaveGameService
+import sample.avightclav.checkers.gamelogic.FieldSize
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            var binder = service as SaveGameService.SaveGameBinder
+            val binder = service as SaveGameService.SaveGameBinder
             saveGameService = binder.getService()
             bound = true
         }
@@ -57,6 +60,11 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.start_game_10).setOnClickListener { it ->
             val intent = Intent(this, GameActivity::class.java)
             intent.putExtra("FIELD_SIZE", FieldSize.WORLDWIDE)
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.start_custom).setOnClickListener { it ->
+            val intent = Intent(this, CreateCustomFieldActivity::class.java)
             startActivity(intent)
         }
 
