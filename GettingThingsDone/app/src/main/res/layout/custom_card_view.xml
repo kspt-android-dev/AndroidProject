@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
                 android:text="#НАЗВАНИЕ_ПАПКИ_1"
+                android:layout_marginStart="8dp"
                 android:textColor="@android:color/black"
                 app:layout_constraintStart_toEndOf="@id/ic_folder"
                 app:layout_constraintTop_toTopOf="@id/ic_folder"

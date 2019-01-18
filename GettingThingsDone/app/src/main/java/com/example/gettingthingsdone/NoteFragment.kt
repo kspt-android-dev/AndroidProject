@@ -39,7 +39,7 @@ class NoteFragment : Fragment() {
         setTextWatcher()
     }
 
-    fun close(text: String, file: File?) {
+    private fun close(text: String, file: File?) {
         GlobalScope.launch(Dispatchers.Main) {
             if (file != null) {
                 if (text.isEmpty())
