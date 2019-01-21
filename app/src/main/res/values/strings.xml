@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Nim</string>
+
+    <string name="turn_player">Ход за игроком:</string>
+    <string name="singl_button">одиночная игра</string>
+    <string name="duo_button">парная игра</string>
+    <string name="rename_button">изменить имя</string>
+    <string name="info_button">о приложении</string>
+    <string name="exit_button">выход</string>
+    <string name="enter_name">Введите имя</string>
+    <string name="player_1">игрок 1</string>
+    <string name="player_2">игрок 2</string>
+    <string name="player_3">компьютер</string>
+    <string name="return_menu">вернуться в меню</string>
+    <string name="course_work">курсовая работа</string>
+    <string name="group">группа</string>
+    <string name="group_number">№ 33531/2</string>
+    <string name="student">студент</string>
+    <string name="student_name">Сергеев А.А.</string>
+    <string name="teacher">преподаватель</string>
+    <string name="teacher_name">Алексюк А.О.</string>
+
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

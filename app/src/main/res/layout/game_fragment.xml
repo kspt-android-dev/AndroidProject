@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/up_liner"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorBackground">
+    <TextView
+            app:layout_constraintTop_toBottomOf="@id/main_liner"
+            android:text="@string/turn_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"/>
+
+    <LinearLayout
+            android:id="@+id/main_liner"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_0"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_1"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_2"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_3"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>
+
