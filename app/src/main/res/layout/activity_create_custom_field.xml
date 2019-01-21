@@ -6,6 +6,6 @@
 
     <fragment
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:name="sample.avightclav.checkers.fragments.CreateFieldFragment"
+            android:layout_height="wrap_content" android:name="sample.avightclav.checkers.fragments.PlayCheckersFragment"
             android:id="@+id/fragment"/>
 </LinearLayout>

@@ -5,5 +5,7 @@
     <string name="start_game_10">Start Game 10x10</string>
     <string name="appname">Checkers</string>
     <string name="resume">Resume Last</string>
-    <string name="button">Create Custom</string>
+    <string name="button">Start Fragment</string>
+    <string name="dummyCheckersBoardTAG">dummyCheckerBoard</string>
+    <string name="create_custom">Create Custom</string>
 </resources>

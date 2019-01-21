@@ -79,14 +79,14 @@ class CheckersBoard : ViewGroup{
                 if (checker != null) {
                     if (child is ConstraintLayout) {
                         if (checker.color == Color.BLACK)
-                            child.setBackgroundResource(R.drawable.checker_black)
+                            child.setBackgroundResource(R.drawable.checker_man_black)
                         else
-                            child.setBackgroundResource(R.drawable.king_white)
+                            child.setBackgroundResource(R.drawable.checker_man_white)
                     }
                 } else if ((row + column) % 2 == 1)
-                    child.setBackgroundResource(R.drawable.cell_selected)
+                    child.setBackgroundResource(R.drawable.cell_black)
                 else {
-                    child.setBackgroundResource(R.drawable.ic_white_cell)
+                    child.setBackgroundResource(R.drawable.cell_white)
                 }
             }
         }
@@ -138,8 +138,8 @@ class CheckersBoard : ViewGroup{
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val parentHeight = MeasureSpec.getSize(widthMeasureSpec)
-        val parentWidth = MeasureSpec.getSize(heightMeasureSpec)
+        val parentHeight = MeasureSpec.getSize(heightMeasureSpec)
+        val parentWidth = MeasureSpec.getSize(widthMeasureSpec)
         Log.d("Gameboard", "Re-measuring parentHeight="+parentHeight+"parentWidth="+parentWidth+"\n")
         val minSpec = Math.min(parentHeight, parentWidth)
         val childCount = this.childCount

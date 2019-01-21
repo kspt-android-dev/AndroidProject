@@ -63,8 +63,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        findViewById<Button>(R.id.start_custom).setOnClickListener { it ->
-            val intent = Intent(this, CreateCustomFieldActivity::class.java)
+        findViewById<Button>(R.id.start_fragment).setOnClickListener { it ->
+            val intent = Intent(this, GameFragmentActivity::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.create_custom).setOnClickListener { it ->
+            val intent = Intent(this, CreateCustomActivity::class.java)
             startActivity(intent)
         }
 

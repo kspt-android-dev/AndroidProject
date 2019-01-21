@@ -20,7 +20,8 @@
 
         <activity android:name=".activities.GameActivity" android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
-        <activity android:name=".activities.CreateCustomFieldActivity"/>
+        <activity android:name=".activities.GameFragmentActivity"/>
+        <activity android:name=".activities.CreateCustomActivity"/>
 
         <service android:name=".services.SaveGameService" />
 

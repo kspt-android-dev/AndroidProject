@@ -1,7 +1,6 @@
 package sample.avightclav.checkers.views
 
 import android.content.Context
-import android.graphics.Canvas
 import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.AttributeSet
 import android.util.Log
@@ -13,50 +12,46 @@ class DummyCheckersBoard @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ViewGroup(context, attrs, defStyleAttr) {
 
-    var fieldSize = 8
+    var fieldSize = 0
         set(value) {
-            if (this.childCount <= value * value)
-                for (i in this.childCount..(value * value))
+            when {
+                this.childCount < value * value -> for (i in this.childCount..(value * value))
                     this.addView(ConstraintLayout(context))
-            else
-                for (i in (this.childCount - 1)..(value * value))
+                this.childCount > value * value -> for (i in (this.childCount - 1)..(value * value))
                     this.removeViewAt(i)
-            this.invalidateListeners()
-            this.invalidate()
+                else -> return
+            }
             field = value
+            this.cleanBoard()
+            this.invalidateListeners()
         }
 
     var startPos: Int
     var cellClickedListener: CellClickedListener? = null
 
     init {
-        this.setWillNotDraw(false)
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.CheckersBoard,
             0, 0
         ).apply {
             try {
-                fieldSize = getInteger(R.styleable.CheckersBoard_field_size, 8)
                 startPos = getInteger(R.styleable.CheckersBoard_start_line, -1)
+                fieldSize = getInteger(R.styleable.CheckersBoard_field_size, 8)
             } finally {
                 recycle()
             }
         }
 
-        for (i in 0 until fieldSize * fieldSize) {
-            this.addView(ConstraintLayout(context))
-        }
-        this.invalidateListeners()
     }
 
     interface CellClickedListener {
         fun onCellClicked(coordinate: Coordinate)
     }
 
-    fun invalidateListeners() {
+    private fun invalidateListeners() {
         for (i in 0 until this.childCount) {
-            this.getChildAt(i).setOnClickListener {_ ->
+            this.getChildAt(i).setOnClickListener { _ ->
                 if (cellClickedListener != null)
                     cellClickedListener!!.onCellClicked(indexToCoordinate(i))
             }
@@ -94,19 +89,41 @@ class DummyCheckersBoard @JvmOverloads constructor(
         }
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-        Log.d("Gameboard", "On Draw")
+    fun cleanBoard() {
+        Log.d(resources.getString(R.string.dummyCheckersBoardTAG), "Cleaning board")
         for (i in 0 until this.childCount) {
             val cell = this.getChildAt(i)
             if (isPlaceable(indexToCoordinate(i)))
-                cell.setBackgroundResource(R.drawable.cell_selected)
+                cell.setBackgroundResource(R.drawable.cell_black)
             else
-                cell.setBackgroundResource(R.drawable.ic_white_cell)
+                cell.setBackgroundResource(R.drawable.cell_white)
         }
     }
 
-    fun isPlaceable(coordinate: Coordinate): Boolean = ((coordinate.x + coordinate.y) % 2 == 1)
+    fun placeChecker(coordinate: Coordinate, color: sample.avightclav.checkers.gamelogic.Color) {
+        this.getChildAt(coordinateToIndex(coordinate))
+            .setBackgroundResource(if (color == sample.avightclav.checkers.gamelogic.Color.WHITE) R.drawable.checker_man_white else R.drawable.checker_man_black)
+    }
 
-    fun indexToCoordinate(index: Int): Coordinate = Coordinate(index / fieldSize, index % fieldSize)
+    fun clean(coordinate: Coordinate) {
+        val cell = this.getChildAt(coordinateToIndex(coordinate))
+        if (isPlaceable(coordinate))
+            cell.setBackgroundResource(R.drawable.cell_black)
+        else
+            cell.setBackgroundResource(R.drawable.cell_white)
+    }
+
+    fun activate(coordinate: Coordinate) {
+        this.getChildAt(coordinateToIndex(coordinate)).isActivated = true
+    }
+
+    fun inactivateAll() {
+        for (i in 0 until this.childCount)
+            this.getChildAt(i).isActivated = false
+    }
+
+    private fun isPlaceable(coordinate: Coordinate): Boolean = ((coordinate.x + coordinate.y) % 2 == 1)
+    private fun indexToCoordinate(index: Int): Coordinate = Coordinate(index / fieldSize, index % fieldSize)
+
+    fun coordinateToIndex(coordinate: Coordinate) = coordinate.y * fieldSize + coordinate.x
 }
