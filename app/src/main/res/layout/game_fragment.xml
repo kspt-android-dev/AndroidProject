@@ -12,7 +12,7 @@
             android:text="@string/turn_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"/>
+            android:id="@+id/current_player_text_view"/>
 
     <LinearLayout
             android:id="@+id/main_liner"

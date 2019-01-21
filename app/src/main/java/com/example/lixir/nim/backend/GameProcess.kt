@@ -1,15 +1,13 @@
 package com.example.lixir.nim.backend
 
-import com.example.lixir.nim.GameFragment
-
 object GameProcess {
     val rows = Constants.MAIN_LIST.toMutableList()
     val player1 = Player(Constants.PLAYER_1_NAME)
     val player2 = Player(Constants.PLAYER_2_NAME)
-    var currentPlayer = player1
-        private set
     val bot = Bot(Constants.BOT_NAME)
     var gameWithBot = true
+    var currentPlayer = player1
+        private set
     var endGame = false
         private set
     var winner = player1
@@ -36,7 +34,7 @@ object GameProcess {
     }
 
     fun newGame() {
-        for (i in 0 until rows.size) rows[i] = Constants.MAX_COLUMNS - i * 2
+        for (i in 0 until rows.size) rows[i] = Constants.MAIN_LIST[i]
         endGame = false
     }
 
@@ -53,5 +51,4 @@ object GameProcess {
         }
         if (rows == mutableListOf(0, 0, 0, 0)) endGame(true)
     }
-
 }

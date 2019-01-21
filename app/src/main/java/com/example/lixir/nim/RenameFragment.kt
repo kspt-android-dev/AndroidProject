@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import com.example.lixir.nim.Utils.nextFragment
 import com.example.lixir.nim.backend.GameProcess
+import kotlinx.android.synthetic.main.fragment_rename.*
+import kotlinx.android.synthetic.main.fragment_rename.view.*
 
 
 class RenameFragment : Fragment(), View.OnKeyListener, View.OnClickListener {
@@ -24,12 +27,12 @@ class RenameFragment : Fragment(), View.OnKeyListener, View.OnClickListener {
 
     override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
         if (event!!.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-            when (v!!.id) {
-                R.id.enter_name_player_1 -> if (enterNameForPlayer1.text.toString() != "") GameProcess.player1.name =
+            when (v!!) {
+                enter_name_player_1 -> if (enterNameForPlayer1.text.toString() != "") GameProcess.player1.name =
                         enterNameForPlayer1.text.toString()
-                R.id.enter_name_player_2 -> if (enterNameForPlayer2.text.toString() != "") GameProcess.player2.name =
+                enter_name_player_2 -> if (enterNameForPlayer2.text.toString() != "") GameProcess.player2.name =
                         enterNameForPlayer2.text.toString()
-                R.id.enter_name_bot -> if (enterNameForBot.text.toString() != "") GameProcess.bot.name =
+                enter_name_bot -> if (enterNameForBot.text.toString() != "") GameProcess.bot.name =
                         enterNameForBot.text.toString()
             }
             return true
@@ -47,10 +50,10 @@ class RenameFragment : Fragment(), View.OnKeyListener, View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val temp = inflater.inflate(R.layout.fragment_rename, container, false)
-        enterNameForPlayer1 = temp.findViewById(R.id.enter_name_player_1)
-        enterNameForPlayer2 = temp.findViewById(R.id.enter_name_player_2)
-        enterNameForBot = temp.findViewById(R.id.enter_name_bot)
-        button = temp.findViewById(R.id.return_menu)
+        enterNameForPlayer1 = temp.enter_name_player_1
+        enterNameForPlayer2 = temp.enter_name_player_2
+        enterNameForBot = temp.enter_name_bot
+        button = temp.return_menu
         return temp
     }
 

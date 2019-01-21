@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import com.example.lixir.nim.R.id.match_image_button
 import com.example.lixir.nim.R.layout.match_list_item
 import com.example.lixir.nim.R.string.return_menu
 import com.example.lixir.nim.R.string.turn_player
+import com.example.lixir.nim.Utils.nextFragment
 import com.example.lixir.nim.backend.Constants
 import com.example.lixir.nim.backend.GameProcess
+import kotlinx.android.synthetic.main.match_list_item.view.*
 
 class MatchAdapter(
     var fragment: GameFragment,
@@ -22,7 +23,7 @@ class MatchAdapter(
     var layout: Int = resource
 
     class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
-        var button: ImageButton = view!!.findViewById(match_image_button) as ImageButton
+        var button: ImageButton = view!!.match_image_button
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder =
@@ -35,8 +36,7 @@ class MatchAdapter(
             fragment.synchronize()
             GameProcess.play(row, position)
             fragment.synchronize()
-            fragment.textView.text =
-                    ("${fragment.context!!.getString(turn_player)} ${GameProcess.currentPlayer.name}")
+            fragment.textView.text = ("${fragment.context!!.getString(turn_player)} ${GameProcess.currentPlayer.name}")
             if (GameProcess.endGame) {
                 val alertDialog =
                     AlertDialog.Builder(fragment.activity!!).setMessage("${Constants.WIN} ${GameProcess.winner.name}")

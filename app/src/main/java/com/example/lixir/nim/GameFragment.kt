@@ -11,9 +11,9 @@ import android.widget.TextView
 import com.example.lixir.nim.backend.Constants
 import com.example.lixir.nim.backend.GameProcess
 import kotlinx.android.synthetic.main.game_fragment.*
+import kotlinx.android.synthetic.main.game_fragment.view.*
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
-import java.lang.IllegalArgumentException
 
 class GameFragment : Fragment() {
     private lateinit var adapter: Array<MatchAdapter>
@@ -32,7 +32,7 @@ class GameFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val temp = inflater.inflate(R.layout.game_fragment, container, false)
-        textView = temp.findViewById(R.id.textView) as TextView
+        textView = temp.current_player_text_view
         return temp
     }
 
@@ -55,5 +55,4 @@ class GameFragment : Fragment() {
     fun synchronize(){
         GameProcess.rows.forEachIndexed { index, i -> removeAtPosition(i, index) }
     }
-
 }
