@@ -13,6 +13,7 @@ import android.support.test.rule.ActivityTestRule
 import android.support.v7.widget.RecyclerView
 import com.example.lixir.nim.R.id.*
 import com.example.lixir.nim.R.string.turn_player
+import com.example.lixir.nim.backend.Constants
 import com.example.lixir.nim.backend.Constants.WIN
 import org.junit.Rule
 import org.junit.Test
@@ -130,5 +131,18 @@ class MainTest {
         orientationLandscape()
         orientationPortrait()
         makePressBack()
+    }
+
+    @Test
+    fun rvTest(){
+        makeClick(duo_game_button)
+        for (i in (0 until Constants.MAIN_LIST[0]).reversed())
+            makeClickRV(rv_0, i)
+        for (i in (0 until Constants.MAIN_LIST[1]).reversed())
+            makeClickRV(rv_1, i)
+        for (i in (0 until Constants.MAIN_LIST[2]).reversed())
+            makeClickRV(rv_2, i)
+        for (i in (0 until Constants.MAIN_LIST[3]).reversed())
+            makeClickRV(rv_3, i)
     }
 }
