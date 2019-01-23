@@ -1,11 +1,7 @@
 package com.example.gettingthingsdone
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.gettingthingsdone.GTDApplication
-import com.example.gettingthingsdone.MainFragment
-import com.example.gettingthingsdone.NoteFragment
 import com.example.gettingthingsdone.db.entity.File
 
 
@@ -30,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         createMainFragment()
     }
 
-    fun createMainFragment() {
+    private fun createMainFragment() {
         mainFragment = MainFragment()
         supportFragmentManager.beginTransaction()
             .add(R.id.container, mainFragment)

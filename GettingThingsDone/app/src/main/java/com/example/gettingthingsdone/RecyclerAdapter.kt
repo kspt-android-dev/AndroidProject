@@ -81,7 +81,7 @@ class RecyclerAdapter(private val fragment: MainFragment) : RecyclerView.Adapter
             val builder = AlertDialog.Builder(context)
             val dialogView = fragment.layoutInflater.inflate(R.layout.custom_cancel_dialog, null)
             val text = dialogView.findViewById<TextView>(R.id.alarm)
-            text.text = "You wanna move this file to current folder?"
+            text.text = "Move the file to current folder?"
             builder.setView(dialogView)
             val btnPos = dialogView.findViewById<Button>(R.id.dialog_pos_btn)
             val btnNeg = dialogView.findViewById<Button>(R.id.dialog_neg_btn)
@@ -106,24 +106,18 @@ class RecyclerAdapter(private val fragment: MainFragment) : RecyclerView.Adapter
             popup.setOnMenuItemClickListener {
                 when (it!!.itemId) {
                     menu_rename -> {
-                        Toast.makeText(context, "Rename", Toast.LENGTH_SHORT).show()
                         GlobalScope.launch(Dispatchers.Main) {
                             fragment.renameFolder(files[position])
                         }
                         true
                     }
-                    menu_copy -> {
-                        Toast.makeText(context, "Copy", Toast.LENGTH_SHORT).show()
-                        true
-                    }
                     menu_move -> {
-                        Toast.makeText(context, "Move", Toast.LENGTH_SHORT).show()
                         movingFile = files[position]
                         fragment.moveFile(movingFile!!)
                         true
                     }
                     menu_delete -> {
-                        Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show()
                         GlobalScope.launch(Dispatchers.Main) {
                             fragment.delete(files[position])
                             files.removeAt(position)

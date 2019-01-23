@@ -1,13 +1,14 @@
 package com.example.gettingthingsdone
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -28,6 +29,14 @@ class NoteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        note_edit_text.postDelayed({
+            run()
+            {
+                note_edit_text.requestFocus()
+                imm!!.showSoftInput(note_edit_text, 0)
+            }
+        }, 100)
         ic_done.setOnClickListener {
             close(note_edit_text.text.toString(), file, false)
         }
@@ -39,7 +48,7 @@ class NoteFragment : Fragment() {
         setTextWatcher()
     }
 
-    fun close(text: String, file: File?, isClose: Boolean) {
+    private fun close(text: String, file: File?, isClose: Boolean) {
         GlobalScope.launch(Dispatchers.Main) {
             if (file != null) {
                 if (!isClose) {
@@ -86,16 +95,16 @@ class NoteFragment : Fragment() {
     }
 
     fun onBackPressed(): Boolean {
-        return if (isDetached || context == null){
+        return if (isDetached || context == null) {
             false
-        }else{
+        } else {
             showCancelDialog()
             true
         }
 
     }
 
-    private fun showCancelDialog(){
+    private fun showCancelDialog() {
         val builder = AlertDialog.Builder(context)
         val dialogView = layoutInflater.inflate(R.layout.custom_cancel_dialog, null)
         builder.setView(dialogView)
