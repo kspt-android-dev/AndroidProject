@@ -29,41 +29,37 @@ class NoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         ic_done.setOnClickListener {
-            close(note_edit_text.text.toString(), file)
+            close(note_edit_text.text.toString(), file, false)
         }
         ic_arrow_back.setOnClickListener {
-            close("", file)
+            showCancelDialog()
         }
         mainActivity = activity as MainActivity
         if (file != null) note_edit_text.setText(file!!.text)
         setTextWatcher()
     }
 
-    private fun close(text: String, file: File?) {
+    fun close(text: String, file: File?, isClose: Boolean) {
         GlobalScope.launch(Dispatchers.Main) {
             if (file != null) {
-                if (text.isEmpty())
-                    mainActivity.deleteNote(file)
-                else
-                    file.text = text
-                mainActivity.updateNote(file)
+                if (!isClose) {
+                    if (text.isEmpty())
+                        mainActivity.sqlEngine.deleteFile(file)
+                    else
+                        file.text = text
+                    mainActivity.sqlEngine.updateFile(file)
+                }
 
-            } else if (text.isNotEmpty()) {
+            } else if (text.isNotEmpty() && !isClose) {
                 val note = File()
                 note.text = text
-                note.idParent = mainActivity.root
+                note.idParent = mainActivity.rootId
                 note.isFolder = false
                 note.timeCreating = System.currentTimeMillis()
-                mainActivity.insertNote(note)
+                mainActivity.sqlEngine.insertFile(note)
             }
-
-            val files = mainActivity.getAll()
             fragmentManager!!.popBackStack("note_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            for (i in files)
-                Log.i(
-                    "MY_TAG",
-                    "id = " + i.id.toString() + " text = " + i.text.toString() + "parentId = " + i.idParent
-                )
+
         }
     }
 
@@ -90,7 +86,7 @@ class NoteFragment : Fragment() {
     }
 
     fun onBackPressed(): Boolean {
-        return if (isDetached){
+        return if (isDetached || context == null){
             false
         }else{
             showCancelDialog()
@@ -101,14 +97,14 @@ class NoteFragment : Fragment() {
 
     private fun showCancelDialog(){
         val builder = AlertDialog.Builder(context)
-        val dialogView = layoutInflater.inflate(R.layout.custom_card_view, null)
+        val dialogView = layoutInflater.inflate(R.layout.custom_cancel_dialog, null)
         builder.setView(dialogView)
-        val btnPos = dialogView.findViewById<Button>(R.id.dialog_positive_btn)
-        val btnNeg = dialogView.findViewById<Button>(R.id.dialog_negative_btn)
+        val btnPos = dialogView.findViewById<Button>(R.id.dialog_pos_btn)
+        val btnNeg = dialogView.findViewById<Button>(R.id.dialog_neg_btn)
         val dialog = builder.create()
         btnPos.setOnClickListener {
             dialog.cancel()
-            close("", file)
+            close(note_edit_text.text.toString(), file, true)
         }
         btnNeg.setOnClickListener {
             dialog.dismiss()

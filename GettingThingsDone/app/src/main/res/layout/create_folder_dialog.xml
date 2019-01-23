@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:hint="Input name folder"
             android:textSize="17sp"
+            android:maxLength="30"
             android:textCursorDrawable="@null"
             android:textColor="@android:color/black"
             android:backgroundTint="@android:color/transparent"

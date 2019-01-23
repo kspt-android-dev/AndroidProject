@@ -36,16 +36,15 @@ class MainFragment : Fragment() {
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(context)
         GlobalScope.launch(Dispatchers.Main) {
-            val files = mainActivity.getAllByParent()
-            for (file in files)
-                Log.i(
-                    "MY_TAG", "PARENT !!! " +
-                            "id = " + file.id.toString() + " text = " + file.text.toString() + " parentId = " + file.idParent
-                )
+            val files = mainActivity.sqlEngine.getAllByParent(mainActivity.rootId)
+            val parent = mainActivity.sqlEngine.getParentByChild(mainActivity.rootId)
+            if(parent.isEmpty())toolbar_text.text = "Getting Things Done"
+            else toolbar_text.text = parent.first().text
             adapter.setFiles(files)
         }
         fab()
     }
+
 
     private fun fab() {
         val fabOpen = AnimationUtils.loadAnimation(context, R.anim.fab_open)
@@ -70,27 +69,23 @@ class MainFragment : Fragment() {
             }
         }
         fab_create_note.setOnClickListener {
-            mainActivity.openNote(null)
+            mainActivity.createNoteFragment(null)
         }
         fab_create_folder.setOnClickListener {
-            showDialog()
+            showDialog(null)
         }
     }
 
     fun openFolder(file: File) {
         GlobalScope.launch(Dispatchers.Main) {
-            mainActivity.root = file.id
-            val files = mainActivity.getAllByParent()
-            for (f in files)
-                Log.i(
-                    "MY_TAG", "subFolder " +
-                            "id = " + f.id.toString() + " text = " + f.text.toString() + " parentId = " + f.idParent
-                )
+            mainActivity.rootId = file.id
+            val files = mainActivity.sqlEngine.getAllByParent(mainActivity.rootId)
             adapter.setFiles(files)
+            toolbar_text.text = file.text
         }
     }
 
-    private fun showDialog() {
+    private fun showDialog(file: File?) {
         val builder = AlertDialog.Builder(context)
         val dialogView = layoutInflater.inflate(R.layout.create_folder_dialog, null)
         builder.setView(dialogView)
@@ -98,19 +93,30 @@ class MainFragment : Fragment() {
         val btnNeg = dialogView.findViewById<Button>(R.id.dialog_negative_btn)
         val nameFolder = dialogView.findViewById<EditText>(R.id.folder_name_et)
         val dialog = builder.create()
+        if (file != null) {
+            nameFolder.setText(file.text)
+        }
         btnPos.setOnClickListener {
             dialog.cancel()
             val name = nameFolder.text.toString()
             if (name.isNotEmpty()) {
                 GlobalScope.launch(Dispatchers.Main) {
-                    val note = File()
-                    note.text = name
-                    note.idParent = mainActivity.root
-                    note.isFolder = true
-                    note.timeCreating = System.currentTimeMillis()
-                    mainActivity.insertNote(note)
-                    val files = mainActivity.getAllByParent()
-                    adapter.setFiles(files)
+                    val engine = mainActivity.sqlEngine
+                    val root = mainActivity.rootId
+                    if (file == null) {
+                        val note = File()
+                        note.text = name
+                        note.idParent = root
+                        note.isFolder = true
+                        note.timeCreating = System.currentTimeMillis()
+                        engine.insertFile(note)
+                        val files = engine.getAllByParent(root)
+                        adapter.setFiles(files)
+                    } else {
+                        file.text = name
+                        mainActivity.sqlEngine.updateFile(file)
+                        adapter.notifyFile(file)
+                    }
                 }
             }
         }
@@ -120,16 +126,97 @@ class MainFragment : Fragment() {
         dialog.show()
     }
 
-    fun onBackPressed(){
-        GlobalScope.launch(Dispatchers.Main) {
-            val parent = mainActivity.getParentByChild()
-            mainActivity.root = parent.first().idParent
-            val files =  mainActivity.getAllByParent()
-            adapter.setFiles(files)
+    fun onBackPressed(): Boolean {
+        val root = mainActivity.rootId
+        val engine = mainActivity.sqlEngine
+        return if (root != 0L) {
+            GlobalScope.launch(Dispatchers.Main) {
+                val parent = engine.getParentByChild(root)
+                mainActivity.rootId = parent.first().idParent
+                if (mainActivity.rootId == 0L)
+                    toolbar_text.text = "Getting Things Done"
+                else {
+                    toolbar_text.text = parent.first().text
+                }
+                val files = engine.getAllByParent(mainActivity.rootId)
+                adapter.setFiles(files)
+            }
+            true
+        } else {
+            false
         }
     }
 
     fun openNote(file: File) {
-        mainActivity.openNote(file)
+        mainActivity.createNoteFragment(file)
+    }
+
+    suspend fun delete(file: File) {
+        if (!file.isFolder)
+            mainActivity.sqlEngine.deleteFile(file)
+        else {
+            deleteFolder(file)
+        }
+    }
+
+    private suspend fun deleteFolder(file: File) {
+        val list = mainActivity.sqlEngine.getAllByParent(file.id)
+        for (item in list) {
+            if (!item.isFolder)
+                mainActivity.sqlEngine.deleteFile(item)
+            else {
+                deleteFolder(item)
+            }
+        }
+        mainActivity.sqlEngine.deleteFile(file)
+    }
+
+    fun renameFolder(file: File) {
+        showDialog(file)
+    }
+
+    fun moveFile(file: File) {
+        GlobalScope.launch(Dispatchers.Main) {
+            listSubFolder = mutableSetOf()
+            listSubFolder.add(findFolder(file))
+            for (i in listSubFolder) {
+                Log.i("MY_TAD", i.toString())
+            }
+            val listAllFolder = mainActivity.sqlEngine.getAll()
+            for (i in listAllFolder) {
+                Log.i("MY_TAD", "All = " + i.id.toString())
+            }
+            val listFolders = listAllFolder.filter { it.isFolder }
+            val filteredList = listFolders.filter { !listSubFolder.contains(it.id) }
+            val rootFile = File()
+            rootFile.id = 0
+            rootFile.idParent = 0
+            rootFile.text = "."
+            rootFile.isFolder = true
+            val list = filteredList.toMutableSet()
+            list.add(rootFile)
+            for (i in list) {
+                Log.i("MY_TAD", "After = " + i.id.toString())
+            }
+            adapter.setFiles(list.toList())
+        }
+    }
+
+    private lateinit var listSubFolder: MutableSet<Long>
+
+    private suspend fun findFolder(file: File): Long {
+        val list = mainActivity.sqlEngine.getAllByParent(file.id)
+        for (item in list) {
+            if (item.isFolder) {
+                listSubFolder.add(findFolder(item))
+            }
+        }
+        return file.id
+    }
+
+    suspend fun updateMoving(movingFile: File) {
+        mainActivity.sqlEngine.updateFile(movingFile)
+        val files = mainActivity.sqlEngine.getAllByParent(mainActivity.rootId)
+        adapter.setFiles(files)
     }
 }

@@ -10,7 +10,7 @@
         tools:context=".MainActivity"
 >
     <TextView
-            android:id="@+id/folder_name_et"
+            android:id="@+id/alarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="17sp"
@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
     />
     <Button
-            android:id="@+id/dialog_negative_btn"
+            android:id="@+id/dialog_neg_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
@@ -33,7 +33,7 @@
             style="?android:attr/borderlessButtonStyle"
     />
     <Button
-            android:id="@+id/dialog_positive_btn"
+            android:id="@+id/dialog_pos_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ok"

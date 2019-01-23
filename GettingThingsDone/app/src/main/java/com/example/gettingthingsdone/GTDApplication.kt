@@ -1,9 +1,10 @@
-package com.example.gettingthingsdone.db
+package com.example.gettingthingsdone
 
 import android.app.Application
 import androidx.room.Room
+import com.example.gettingthingsdone.db.AppDatabase
 
-class CustomApplication : Application() {
+class GTDApplication : Application() {
 
     lateinit var db: AppDatabase
 
