@@ -45,6 +45,7 @@ class MatchAdapter(
                         ) { dialog, which ->
                             (fragment.activity as MainActivity).nextFragment(MenuFragment())
                         }.create()
+                alertDialog.setCancelable(false)
                 alertDialog.show()
             }
         }
