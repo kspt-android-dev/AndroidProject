@@ -12,8 +12,7 @@
             android:theme="@style/AppTheme">
         <provider android:authorities="com.example.gettingthingsdone"
                   android:name=".CustomContentProvider"/>
-        <activity android:name=".MainActivity"
-                  android:screenOrientation="portrait">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gettingthingsdone.R.id.*
@@ -46,7 +45,6 @@ class RecyclerAdapter(private val fragment: MainFragment) : RecyclerView.Adapter
 
         private val img = view.findViewById<ImageView>(R.id.ic_folder)
         private val textView = view.findViewById<TextView>(R.id.text)!!
-        private val onclickAnim = AnimationUtils.loadAnimation(context, R.anim.onclick)
 
         fun onBind(position: Int) {
             val file = files[position]
@@ -60,7 +58,6 @@ class RecyclerAdapter(private val fragment: MainFragment) : RecyclerView.Adapter
                 else
                     img.setImageResource(R.drawable.ic_note)
                 itemView.setOnLongClickListener {
-                    //                    itemView.startAnimation(onclickAnim)
                     showPopup(itemView, position)
                     return@setOnLongClickListener true
                 }
