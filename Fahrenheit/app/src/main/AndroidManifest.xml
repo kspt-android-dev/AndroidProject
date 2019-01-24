@@ -9,16 +9,23 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".ProgressActivity">
+        </activity>
+        <activity android:name=".SettingsActivity">
+        </activity>
+
         <service
-
-                android:name=".MyService"
-
-                android:enabled="true"
-
-                android:exported="true">
-
+                android:name=".MusicService"
+                android:enabled="true">
         </service>
-        <activity android:name=".MainActivity">
+
+        <activity
+                android:name=".MainActivity"
+                android:configChanges="orientation|screenSize">
+        </activity>
+        <activity
+                android:name=".MenuActivity"
+                android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
