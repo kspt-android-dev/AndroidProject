@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="blackChecker">#4F59A0</color>
+    <color name="whiteChecker">#A2413E</color>
+    <color name="cellBackground">#CEE8F6</color>
+    <color name="activeStrokeWhite">#F7BD00</color>
+    <color name="activeStrokeBlack">#1B1464</color>
+</resources>
