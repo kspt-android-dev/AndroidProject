@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Solitaire</string>
+    <string name="newGame">New game</string>
+    <string name="rules">Rules</string>
+    <string name="text">Klondike is played with a standard 52-card deck, without Jokers.
+        After shuffling, seven piles of cards are laid from left to right.
+        Each pile begins with one upturned card. From left to right, each pile contains one more card than the last.
+        The four foundations are built up by suit from Ace to King.
+        Every face-up card in a partial pile, or a complete pile, can be moved, as a unit, to another talon pile on the basis of their highest card.
+        Any empty piles can be filled with a King, or a pile of cards with a King.
+        The aim of the game is to build up four stacks of cards starting with Ace and ending with King, all of the same suit, on one of the four foundations, at which time the player would have won.
+        If the player can no longer move any reasonable cards, the game is considered lost. At this point, winning is impossible.</string>
+    <string name="title">Rules of the game</string>
+    <string name="back">Back</string>
+    <string name="quit">Exit</string>
+    <string name="congratulations">You won!</string>
+    <string name="menu">Menu</string>
+    <string name="steps">Steps</string>
+    <string name="time">Time:</string>
+    <string name="countSteps">Number of steps:</string>
+</resources>
