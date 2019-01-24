@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Solitaire</string>
+    <string name="newGame">Nouveau jeu</string>
+    <string name="rules">Les règles</string>
+    <string name="text">Le solitaire, appel\é aussi \«la Ru\ée vers l\'O\r»  est un jeu de cartes \à un seul joueur.
+                        Reconstituer quatre piles de cartes dans chacune des couleurs, du roi \à l\'as — on pose en premier le roi, puis la reine, le valet et les cartes: 10, 9, 8, 7, 6, 5, 4, 3, 2, et enfin l\'as.
+                        D\ès qu\'une \«famill\e» a \ét\é reconstituée, elle est mise de côté.
+                        La partie se termine lorsque tout un \«groupe\» a été reconstitu\é.</string>
+    <string name="title">Règles du jeu</string>
+    <string name="back">Retour</string>
+    <string name="quit">Sortie</string>
+    <string name="congratulations">Tu as gagné!</string>
+    <string name="menu">Menu</string>
+    <string name="steps">Se déplace</string>
+    <string name="time">Le temps:</string>
+    <string name="countSteps">Nombre de coups:</string>
+</resources>

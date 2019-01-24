@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Solitaire</string>
+    <string name="newGame">Nuovo gioco</string>
+    <string name="rules">Regole</string>
+    <string name="text">Klondike è un solitario fatto con le carte spesso chiamato semplicemente Solitario.
+        Si gioca con un mazzo di carte francesi, ovvero 52 carte (esclusi i Jolly), disponi le carte coperte a sinistra del tavolo, prendine sette e disponile da sinistra a destra senza rovesciarle.
+        Alla fine ruota la prima carte di ogni fila. In alto sono presenti quattro case che servono per mettere le carte dal\'Asso al Re.
+        Le carte si devono pescare dal mazzo in alto a destra e impilarle con colori alternati.
+        Queste colonne possono essere parzialmente o completamente spostate sempre seguendo la regola dei colori alternati.
+        Una colonna vuota può essere riempita solo con il Re o con una pila di carte con il Re in cima.</string>
+    <string name="title">Regole del gioco</string>
+    <string name="back">Fa</string>
+    <string name="quit">Uscita</string>
+    <string name="congratulations">Hai vinto!</string>
+    <string name="menu">Menu</string>
+    <string name="steps">Si muove</string>
+    <string name="time">Tempo:</string>
+    <string name="countSteps">Numero di mosse:</string>
+</resources>
