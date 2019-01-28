@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Game_2048</string>
+    <string name="new_game">Начать игру</string>
+    <string name="rules">Об игре</string>
+    <string name="exit">Выход</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="dialogTitle">Игра окончена</string>
+    <string name="victoryMessage">Ура! Вы победили!\n %1$s </string>
+    <string name="failMessage">Обидное поражение:(\n %1$s </string>
+    <string name="result">Счет: %1$d</string>
+    <string name="newGame">Начать заново</string>
+    <string name="backToMenu">Вернуться на главный экран</string>
+    <string name="welcomeText">Добро пожаловать! \n
+        Эта игра создана специально для поклонников биатлона.\n
+        Если даже складывать плитки не так интересно, пока на них не изображены любимые спортсмены,
+        то эта игра специально для Вас. Правила те же: объединяйте числа,дойдите до квадратика 2048
+        и узнайте, кто лицо биатлонного мира. Удачи! \n
+        P.S. кто проиграет - идет на штрафной круг;)</string>
+</resources>
