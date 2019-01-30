@@ -21,8 +21,8 @@ class SQLEngine(val app : GTDApplication) {
         app.db.fileDao().getAllByParent(root)
     }
 
-    suspend fun getParentByChild(root: Long) = withContext(Dispatchers.IO) {
-        app.db.fileDao().getParentByChild(root)
+    suspend fun getFileById(root: Long) = withContext(Dispatchers.IO) {
+        app.db.fileDao().getFileById(root)
     }
 
     suspend fun getAll() = withContext(Dispatchers.IO) {

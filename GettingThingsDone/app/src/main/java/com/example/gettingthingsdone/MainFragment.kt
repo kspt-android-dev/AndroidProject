@@ -2,7 +2,6 @@ package com.example.gettingthingsdone
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,61 +36,86 @@ class MainFragment : Fragment() {
         recycler_view.layoutManager = LinearLayoutManager(context)
         GlobalScope.launch(Dispatchers.Main) {
             val files = mainActivity.sqlEngine.getAllByParent(mainActivity.rootId)
-            val parent = mainActivity.sqlEngine.getParentByChild(mainActivity.rootId)
-            if(parent.isEmpty())toolbar_text.text = "Getting Things Done"
+            val parent = mainActivity.sqlEngine.getFileById(mainActivity.rootId)
+            if (parent.isEmpty()) toolbar_text.text = getString(R.string.app_name)
             else toolbar_text.text = parent.first().text
             adapter.setFiles(files)
         }
+        ic_arrow_back.setOnClickListener {
+            onBackPressed()
+        }
         fab()
+        if (mainActivity.rootId != 0L)
+            ic_arrow_back.visibility = View.VISIBLE
+        else
+            ic_arrow_back.visibility = View.GONE
+
     }
 
+    fun showCall() {
+        empty_recycler_text_view.visibility = View.VISIBLE
+    }
+
+    fun hideCall() {
+        empty_recycler_text_view.visibility = View.GONE
+    }
 
     private fun fab() {
-        val fabOpen = AnimationUtils.loadAnimation(context, R.anim.fab_open)
-        val fabClose = AnimationUtils.loadAnimation(context, R.anim.fab_close)
-        val fabClockwise = AnimationUtils.loadAnimation(context, R.anim.rotate_clockwise)
-        val fabAntiClockwise = AnimationUtils.loadAnimation(context, R.anim.rotate_anticlockwise)
         fab_add.setOnClickListener {
             isOpen = if (isOpen) {
-                fab_add.startAnimation(fabAntiClockwise)
-                fab_create_folder.startAnimation(fabClose)
-                fab_create_note.startAnimation(fabClose)
-                fab_create_folder.visibility
-                fab_create_note.visibility
+                closeFab()
                 false
             } else {
-                fab_add.startAnimation(fabClockwise)
-                fab_create_folder.startAnimation(fabOpen)
-                fab_create_note.startAnimation(fabOpen)
-                fab_create_folder.visibility
-                fab_create_note.visibility
+                openFab()
                 true
             }
         }
         fab_create_note.setOnClickListener {
+            closeIfPossible()
             mainActivity.createNoteFragment(null)
         }
         fab_create_folder.setOnClickListener {
+            closeIfPossible()
             showDialog(null)
         }
+    }
+
+    private fun closeFab() {
+        val fabClose = AnimationUtils.loadAnimation(context, R.anim.fab_close)
+        val fabAntiClockwise = AnimationUtils.loadAnimation(context, R.anim.rotate_anticlockwise)
+        fab_add.startAnimation(fabAntiClockwise)
+        fab_create_folder.startAnimation(fabClose)
+        fab_create_note.startAnimation(fabClose)
+    }
+
+    private fun openFab() {
+        val fabClockwise = AnimationUtils.loadAnimation(context, R.anim.rotate_clockwise)
+        val fabOpen = AnimationUtils.loadAnimation(context, R.anim.fab_open)
+        fab_add.startAnimation(fabClockwise)
+        fab_create_folder.startAnimation(fabOpen)
+        fab_create_note.startAnimation(fabOpen)
+
     }
 
     fun openFolder(file: File) {
         GlobalScope.launch(Dispatchers.Main) {
             mainActivity.rootId = file.id
             val files = mainActivity.sqlEngine.getAllByParent(mainActivity.rootId)
+            ic_arrow_back.visibility = View.VISIBLE
             adapter.setFiles(files)
+            closeIfPossible()
             toolbar_text.text = file.text
         }
     }
 
     private fun showDialog(file: File?) {
         val builder = AlertDialog.Builder(context)
-        val dialogView = layoutInflater.inflate(R.layout.create_folder_dialog, null)
+        val dialogView = View.inflate(context, R.layout.create_folder_dialog, null)
         builder.setView(dialogView)
         val btnPos = dialogView.findViewById<Button>(R.id.dialog_positive_btn)
         val btnNeg = dialogView.findViewById<Button>(R.id.dialog_negative_btn)
         val nameFolder = dialogView.findViewById<EditText>(R.id.folder_name_et)
+
         val dialog = builder.create()
         if (file != null) {
             nameFolder.setText(file.text)
@@ -112,6 +136,7 @@ class MainFragment : Fragment() {
                         engine.insertFile(note)
                         val files = engine.getAllByParent(root)
                         adapter.setFiles(files)
+                        closeIfPossible()
                     } else {
                         file.text = name
                         mainActivity.sqlEngine.updateFile(file)
@@ -126,19 +151,27 @@ class MainFragment : Fragment() {
         dialog.show()
     }
 
+    fun hideBackButton() {
+        ic_arrow_back.visibility = View.GONE
+    }
+
     fun onBackPressed(): Boolean {
+        adapter.movingFile = null
         val root = mainActivity.rootId
         val engine = mainActivity.sqlEngine
         return if (root != 0L) {
             GlobalScope.launch(Dispatchers.Main) {
-                val parent = engine.getParentByChild(root)
-                mainActivity.rootId = parent.first().idParent
-                if (mainActivity.rootId == 0L)
-                    toolbar_text.text = "Getting Things Done"
-                else {
+                val here = engine.getFileById(root)
+                mainActivity.rootId = here.first().idParent
+                val parent = engine.getFileById(mainActivity.rootId)
+                if (mainActivity.rootId == 0L) {
+                    toolbar_text.text = getString(R.string.app_name)
+                    hideBackButton()
+                } else {
                     toolbar_text.text = parent.first().text
                 }
                 val files = engine.getAllByParent(mainActivity.rootId)
+                closeIfPossible()
                 adapter.setFiles(files)
             }
             true
@@ -148,6 +181,7 @@ class MainFragment : Fragment() {
     }
 
     fun openNote(file: File) {
+        closeIfPossible()
         mainActivity.createNoteFragment(file)
     }
 
@@ -168,7 +202,9 @@ class MainFragment : Fragment() {
                 deleteFolder(item)
             }
         }
+
         mainActivity.sqlEngine.deleteFile(file)
+
     }
 
     fun renameFolder(file: File) {
@@ -179,13 +215,7 @@ class MainFragment : Fragment() {
         GlobalScope.launch(Dispatchers.Main) {
             listSubFolder = mutableSetOf()
             listSubFolder.add(findFolder(file))
-            for (i in listSubFolder) {
-                Log.i("MY_TAD", i.toString())
-            }
             val listAllFolder = mainActivity.sqlEngine.getAll()
-            for (i in listAllFolder) {
-                Log.i("MY_TAD", "All = " + i.id.toString())
-            }
             val listFolders = listAllFolder.filter { it.isFolder }
             val filteredList = listFolders.filter { !listSubFolder.contains(it.id) }
             val rootFile = File()
@@ -195,9 +225,7 @@ class MainFragment : Fragment() {
             rootFile.isFolder = true
             val list = filteredList.toMutableSet()
             list.add(rootFile)
-            for (i in list) {
-                Log.i("MY_TAD", "After = " + i.id.toString())
-            }
+            closeIfPossible()
             adapter.setFiles(list.toList())
         }
     }
@@ -217,6 +245,15 @@ class MainFragment : Fragment() {
     suspend fun updateMoving(movingFile: File) {
         mainActivity.sqlEngine.updateFile(movingFile)
         val files = mainActivity.sqlEngine.getAllByParent(mainActivity.rootId)
+        closeIfPossible()
+        ic_arrow_back.visibility = View.VISIBLE
         adapter.setFiles(files)
+    }
+
+    fun closeIfPossible() {
+        if (isOpen) {
+            closeFab()
+            isOpen = false
+        }
     }
 }

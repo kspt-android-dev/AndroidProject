@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">GettingThingsDone</string>
+    <string name="image_folder">ImageFolder</string>
+    <string name="back_button">BackButton</string>
+    <string name="save_note_button">SaveNoteButton</string>
+    <string name="write_a_note">Write a note</string>
+    <string name="note">Note</string>
+    <string name="create_a_note_or_folder">Create a note or folder</string>
+    <string name="input_name_folder">Input name folder</string>
+    <string name="ok">OK</string>
+    <string name="click_ok_to_cancel_changes">Click OK to cancel changes</string>
+    <string name="rename">Rename</string>
+    <string name="move">Move</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="move_file_into_current_folder">Move the file to current folder?</string>
 </resources>

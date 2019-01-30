@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.gettingthingsdone.db.entity.File
 
 
-
 class MainActivity : AppCompatActivity() {
 
     private var app: GTDApplication? = null

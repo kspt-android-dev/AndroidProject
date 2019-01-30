@@ -26,19 +26,20 @@ repositories{
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'com.google.android.material:material:1.1.0-alpha02'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.30.2-eap13'
+
     implementation 'com.google.code.gson:gson:2.8.4'
-    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    implementation "android.arch.persistence.room:runtime:1.1.1"
     kapt "android.arch.persistence.room:compiler:1.1.1"
+
     kotlin {
         experimental {
             coroutines "enable"
         }
     }
-    implementation 'androidx.test.espresso:espresso-core:3.1.1'
 }

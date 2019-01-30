@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class RecyclerAdapter(private val fragment: MainFragment) : RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder>() {
 
-    private var movingFile: File? = null
+    var movingFile: File? = null
     private var files: MutableList<File> = mutableListOf()
     private val context = fragment.context
 
@@ -31,6 +31,8 @@ class RecyclerAdapter(private val fragment: MainFragment) : RecyclerView.Adapter
     }
 
     fun setFiles(filesSetting: List<File>) {
+        if (filesSetting.isEmpty()) fragment.showCall()
+        else fragment.hideCall()
         files = filesSetting.toMutableList()
         this.notifyDataSetChanged()
     }
@@ -62,6 +64,7 @@ class RecyclerAdapter(private val fragment: MainFragment) : RecyclerView.Adapter
                     return@setOnLongClickListener true
                 }
                 itemView.setOnClickListener {
+                    fragment.closeIfPossible()
                     if (file.isFolder) {
                         fragment.openFolder(file)
                     } else {
@@ -69,6 +72,7 @@ class RecyclerAdapter(private val fragment: MainFragment) : RecyclerView.Adapter
                     }
                 }
             } else {
+                fragment.hideBackButton()
                 img.setImageResource(R.drawable.ic_folder_black)
                 textView.text = noteText
                 itemView.setOnClickListener {
@@ -79,9 +83,9 @@ class RecyclerAdapter(private val fragment: MainFragment) : RecyclerView.Adapter
 
         private fun showConfirmDialog(file: File) {
             val builder = AlertDialog.Builder(context)
-            val dialogView = fragment.layoutInflater.inflate(R.layout.custom_cancel_dialog, null)
+            val dialogView = View.inflate(context, R.layout.custom_cancel_dialog, null)
             val text = dialogView.findViewById<TextView>(R.id.alarm)
-            text.text = "Move the file to current folder?"
+            text.text = fragment.getString(R.string.move_file_into_current_folder)
             builder.setView(dialogView)
             val btnPos = dialogView.findViewById<Button>(R.id.dialog_pos_btn)
             val btnNeg = dialogView.findViewById<Button>(R.id.dialog_neg_btn)
@@ -91,7 +95,7 @@ class RecyclerAdapter(private val fragment: MainFragment) : RecyclerView.Adapter
                 GlobalScope.launch(Dispatchers.Main) {
                     movingFile!!.idParent = file.id
                     fragment.updateMoving(movingFile!!)
-
+                    fragment.hideBackButton()
                     movingFile = null
                 }
             }

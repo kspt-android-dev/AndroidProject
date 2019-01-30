@@ -31,17 +31,14 @@ class NoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         note_edit_text.postDelayed({
-            run()
-            {
-                note_edit_text.requestFocus()
-                imm!!.showSoftInput(note_edit_text, 0)
-            }
-        }, 100)
+            note_edit_text.requestFocus()
+            imm!!.showSoftInput(note_edit_text, 0)
+        }, 50)
         ic_done.setOnClickListener {
             close(note_edit_text.text.toString(), file, false)
         }
         ic_arrow_back.setOnClickListener {
-            showCancelDialog()
+            showCancelDialogIfPossible()
         }
         mainActivity = activity as MainActivity
         if (file != null) note_edit_text.setText(file!!.text)
@@ -98,15 +95,34 @@ class NoteFragment : Fragment() {
         return if (isDetached || context == null) {
             false
         } else {
-            showCancelDialog()
+            showCancelDialogIfPossible()
             true
         }
 
     }
 
-    private fun showCancelDialog() {
+    private fun showCancelDialogIfPossible() {
+        if (file!= null){
+            if (note_edit_text.text.toString() != file!!.text){
+                showCancelDialog()
+            }
+            else{
+                close(note_edit_text.text.toString(), file, true)
+            }
+        }else{
+            if(note_edit_text.text.isNotEmpty()){
+                showCancelDialog()
+            }
+            else{
+                close(note_edit_text.text.toString(), file, true)
+            }
+        }
+
+    }
+
+    private fun showCancelDialog(){
         val builder = AlertDialog.Builder(context)
-        val dialogView = layoutInflater.inflate(R.layout.custom_cancel_dialog, null)
+        val dialogView = View.inflate(context, R.layout.custom_cancel_dialog, null)
         builder.setView(dialogView)
         val btnPos = dialogView.findViewById<Button>(R.id.dialog_pos_btn)
         val btnNeg = dialogView.findViewById<Button>(R.id.dialog_neg_btn)
@@ -120,4 +136,6 @@ class NoteFragment : Fragment() {
         }
         dialog.show()
     }
+
+
 }

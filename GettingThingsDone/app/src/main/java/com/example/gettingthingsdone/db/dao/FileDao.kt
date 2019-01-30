@@ -20,9 +20,9 @@ interface FileDao {
     fun delete(file: File)
 
     @Update
-    fun update(file: File)
+    fun update(file:File)
 
     @Query("SELECT * FROM file WHERE id IN (:id)")
-    fun getParentByChild(id:Long):List<File>
+    fun getFileById(id:Long):List<File>
 
 }
