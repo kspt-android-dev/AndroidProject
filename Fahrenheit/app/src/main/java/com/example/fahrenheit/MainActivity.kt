@@ -1,6 +1,8 @@
 package com.example.fahrenheit
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var scheduledExecutorService: ScheduledExecutorService
 
     private lateinit var intentMusicService: Intent
+    var isLight = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +32,9 @@ class MainActivity : AppCompatActivity() {
         adapter = CustomRecyclerAdapter(this)
         recycler_view.adapter = adapter
         recycler_view.layoutManager = LinearLayoutManager(baseContext)
-        val stream = assets.open("game/game.txt")
-        val game = parseFile(stream)
         intentMusicService = Intent(this, MusicService::class.java)
-        scheduledExecutorService = Executors.newScheduledThreadPool(1)
-        myTimerTask = MyTimerTask(game)
-        scheduledExecutorService.schedule(myTimerTask, 0, TimeUnit.SECONDS)
+        intentMusicService.putExtra("MUSIC", R.raw.main_theme)
+        createGame()
     }
 
     fun bridgeStep(targetId: Int) {
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getNext() {
         count++
-        scheduledExecutorService.schedule(myTimerTask, 10, TimeUnit.SECONDS)
+        scheduledExecutorService.schedule(myTimerTask, 7, TimeUnit.SECONDS)
     }
 
     fun getFastNext() {
@@ -69,6 +69,30 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         startService(intentMusicService)
+        val pref = getSharedPreferences("LIGHT_MOD", Context.MODE_PRIVATE)
+        isLight = pref.getBoolean("LIGHT", false)
+        isLightMode()
+    }
+
+    private fun createGame() {
+        val pref = getSharedPreferences("LIGHT_MOD", Context.MODE_PRIVATE)
+        val isCans = pref.getBoolean("CENSORSHIP", false)
+        val stream = if (isCans)
+            assets.open("game/game_no_censure.txt")
+        else
+            assets.open("game/game.txt")
+        val game = parseFile(stream)
+        scheduledExecutorService = Executors.newScheduledThreadPool(1)
+        myTimerTask = MyTimerTask(game)
+        scheduledExecutorService.schedule(myTimerTask, 0, TimeUnit.SECONDS)
+    }
+
+    private fun isLightMode() {
+        if (isLight) {
+            recycler_view.setBackgroundColor(Color.WHITE)
+        } else {
+            recycler_view.setBackgroundColor(Color.BLACK)
+        }
     }
 
     override fun onPause() {
@@ -82,8 +106,10 @@ class MainActivity : AppCompatActivity() {
                 val gameCase = game[count]
                 if (gameCase == null) getFastNext()
                 else {
-                    adapter.push(gameCase)
-                    recycler_view.smoothScrollToPosition(adapter.itemCount - 1)
+                    if (gameCase.type != TypeCase.PROGRAM_LOGIC && gameCase.type != TypeCase.BRIDGE) {
+                        adapter.push(gameCase)
+                        recycler_view.smoothScrollToPosition(adapter.itemCount - 1)
+                    }
                     when (gameCase.type) {
                         TypeCase.BRIDGE -> {
                             val bridgeCase = gameCase as BridgeCase
@@ -91,13 +117,27 @@ class MainActivity : AppCompatActivity() {
                         }
                         TypeCase.PROGRAM_LOGIC -> {
                             val programCase = gameCase as ProgramCase
-                            programLogic(programCase.programEvents)
+                            when (programCase.eventType) {
+                                ProgramType.QUIT -> {
+
+                                }
+                                ProgramType.MUSIC -> {
+                                    stopService(intentMusicService)
+                                    intentMusicService.putExtra("MUSIC", R.raw.anxious_theme)
+                                    startService(intentMusicService)
+                                    getFastNext()
+                                }
+                                else -> {
+                                    programLogic(programCase.programEvents!!)
+                                    getFastNext()
+                                }
+                            }
                         }
                         TypeCase.QUESTION -> {
                             getFastNext()
                         }
                         TypeCase.BUTTON_TEXT -> {
-
+                            recycler_view.smoothScrollToPosition(adapter.itemCount)
                         }
                         else -> getNext()
                     }

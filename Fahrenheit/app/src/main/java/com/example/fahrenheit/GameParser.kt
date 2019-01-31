@@ -2,9 +2,8 @@ package com.example.fahrenheit
 
 import android.util.Log
 import java.io.InputStream
-import java.lang.Exception
 
-fun parseFile(inputStream: InputStream):List<GameCase?> {
+fun parseFile(inputStream: InputStream): List<GameCase?> {
     val inputAsString = inputStream.bufferedReader().use { it.readText() }
     val stringList = inputAsString.split("\n")
     val gameCaseList = mutableListOf<GameCase?>()
@@ -14,17 +13,24 @@ fun parseFile(inputStream: InputStream):List<GameCase?> {
             string.first() == '~' -> gameCaseList.add(QuestionCase(string.substring(1), TypeCase.QUESTION, i))
             string.first() == '@' -> gameCaseList.add(BridgeCase(string.substring(1).toInt(), TypeCase.BRIDGE, i))
             string.first() == '#' -> {
-                if (i < stringList.size - 1) {
-                    val nextString = stringList[i + 1].trim()
-                    val caseLinks = nextString.split('%')
-                    val links = mutableListOf<Int>()
-                    for (link in caseLinks) {
-                        links.add(link.toInt())
+                val utilString = string.substring(1).trim()
+                when (utilString) {
+                    "QUIT" -> {
+                        gameCaseList.add(ProgramCase(ProgramType.QUIT, null, TypeCase.PROGRAM_LOGIC, i))
                     }
-                    gameCaseList.add(ProgramCase(links, TypeCase.PROGRAM_LOGIC, i))
-                } else {
-                    throw Exception("Uncorrected using programmatically case")
+                    "MUSIC" -> {
+                        gameCaseList.add(ProgramCase(ProgramType.MUSIC, null, TypeCase.PROGRAM_LOGIC, i))
+                    }
+                    else -> {
+                        val caseLinks = utilString.split('%')
+                        val links = mutableListOf<Int>()
+                        for (link in caseLinks) {
+                            links.add(link.toInt())
+                        }
+                        gameCaseList.add(ProgramCase(ProgramType.DIFFERENT, links, TypeCase.PROGRAM_LOGIC, i))
+                    }
                 }
+
             }
             string.contains('|') -> {
                 if (i < stringList.size - 1) {
@@ -36,7 +42,7 @@ fun parseFile(inputStream: InputStream):List<GameCase?> {
                         links.add(link.toInt())
                     }
                     val result = mutableListOf<Pair<String, Int>>()
-                    for (c in 0 until caseQuests.size){
+                    for (c in 0 until caseQuests.size) {
                         result.add(Pair(caseQuests[c], links[c]))
                     }
                     gameCaseList.add(ButtonCase(result, TypeCase.BUTTON_TEXT, i))

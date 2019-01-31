@@ -1,11 +1,14 @@
 package com.example.fahrenheit
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
 class CustomRecyclerAdapter(val mainActivity: MainActivity) :
@@ -28,15 +31,18 @@ class CustomRecyclerAdapter(val mainActivity: MainActivity) :
 
     fun push(gameCase: GameCase) {
         list.add(gameCase)
-        notifyItemChanged(list.size - 1)
+        notifyDataSetChanged()
     }
 
     inner class CustomViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
+        private val cardView = view.findViewById<CardView>(R.id.card_view)
+        private val constraint = view.findViewById<ConstraintLayout>(R.id.constraint_custom_card_view)
         private val textView = view.findViewById<TextView>(R.id.textLabel)!!
         private val answer1 = view.findViewById<TextView>(R.id.answer_1)
         private val answer2 = view.findViewById<TextView>(R.id.answer_2)
         private val answer3 = view.findViewById<TextView>(R.id.answer_3)
         fun onBind(position: Int) {
+            isLightMode()
             val anim = AlphaAnimation(0.4f, 1.0f)
             anim.duration = 1000
             anim.startOffset = 20
@@ -72,6 +78,11 @@ class CustomRecyclerAdapter(val mainActivity: MainActivity) :
                                 mainActivity.event(buttonCase.buttonEvents[2].second)
                             }
                         }
+                    } else {
+                        textView.visibility = View.GONE
+                        answer1.visibility = View.GONE
+                        answer2.visibility = View.GONE
+                        answer3.visibility = View.GONE
                     }
                 }
                 TypeCase.QUESTION -> {
@@ -90,6 +101,26 @@ class CustomRecyclerAdapter(val mainActivity: MainActivity) :
                 }
                 else -> {
                 }
+            }
+        }
+
+        private fun isLightMode() {
+            if (mainActivity.isLight) {
+                cardView.setBackgroundColor(Color.WHITE)
+                constraint.setBackgroundColor(Color.WHITE)
+                textView.setBackgroundColor(Color.WHITE)
+                textView.setTextColor(Color.BLACK)
+                answer1.setTextColor(Color.BLACK)
+                answer2.setTextColor(Color.BLACK)
+                answer3.setTextColor(Color.BLACK)
+            } else {
+                cardView.setBackgroundColor(Color.BLACK)
+                constraint.setBackgroundColor(Color.BLACK)
+                textView.setBackgroundColor(Color.BLACK)
+                textView.setTextColor(Color.WHITE)
+                answer1.setTextColor(Color.WHITE)
+                answer2.setTextColor(Color.WHITE)
+                answer3.setTextColor(Color.WHITE)
             }
         }
 

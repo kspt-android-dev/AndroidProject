@@ -6,14 +6,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/black"
         tools:context=".SettingsActivity">
 
     <TextView
             android:id="@+id/switch_style_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Светлый стиль"
+            android:text="@string/light_style"
             android:textColor="@android:color/white"
             android:padding="17dp"
             android:textSize="19sp"
@@ -27,7 +26,7 @@
             android:id="@+id/on_off_music_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Выключить музыку"
+            android:text="@string/music_on"
             android:textColor="@android:color/white"
             android:padding="17dp"
             android:textSize="19sp"
@@ -42,7 +41,7 @@
             android:id="@+id/on_off_censor_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Включить цензуру"
+            android:text="@string/censor_on"
             android:textColor="@android:color/white"
             android:padding="17dp"
             android:textSize="19sp"
