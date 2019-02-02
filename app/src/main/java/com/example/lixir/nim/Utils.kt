@@ -14,8 +14,12 @@ object Utils {
         SaveLastFragmentForReCreation.currentFragment = fragment
     }
 
-    fun Activity.nextActivity(javaClass: Class<*>) {
-        finish()
+    fun Activity.nextActivity(javaClass: Class<*>){
+        this.nextActivity(javaClass, false)
+    }
+
+    fun Activity.nextActivity(javaClass: Class<*>, finish: Boolean) {
+        if (finish) finish()
         val intent = Intent(this, javaClass)
         startActivity(intent)
     }

@@ -3,13 +3,12 @@ package com.example.lixir.nim
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.example.lixir.nim.Utils.nextActivity
 import kotlinx.android.synthetic.main.activity_info.*
 
 class InfoActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
-        nextActivity(MainActivity().javaClass)
+        finish()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +19,6 @@ class InfoActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onBackPressed() {
-        nextActivity(MainActivity().javaClass)
+        finish()
     }
 }
