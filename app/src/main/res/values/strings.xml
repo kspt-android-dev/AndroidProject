@@ -2,7 +2,7 @@
     <string name="app_name">Nim</string>
 
     <string name="turn_player">Ход за игроком:</string>
-    <string name="singl_button">одиночная игра</string>
+    <string name="single_button">одиночная игра</string>
     <string name="duo_button">парная игра</string>
     <string name="rename_button">изменить имя</string>
     <string name="info_button">о приложении</string>
