@@ -5,16 +5,15 @@ import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseArray;
-import android.view.Window;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    SparseArray<Fragment> fragmentMap;
+    private SparseArray<Fragment> fragmentMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fragmentMap = new SparseArray<>(3);
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .setCustomAnimations(R.animator.appearing, R.animator.hiding, R.animator.appearing, R.animator.hiding)
                 .replace(R.id.fragments_container, fragment)
-//                .addToBackStack(null)
                 .commit();
         return true;
     }
