@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         if (fragment == null) return false;
         getSupportFragmentManager()
                 .beginTransaction()
-                .setTransition(3)
                 .setCustomAnimations(R.animator.appearing, R.animator.hiding, R.animator.appearing, R.animator.hiding)
                 .replace(R.id.fragments_container, fragment)
 //                .addToBackStack(null)
