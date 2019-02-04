@@ -14,7 +14,7 @@ public class GameActivity extends Activity {
     Matrix matr;
     GridView gridView = null;
     TextView scoreView ;
-    private Integer score;
+    public Integer score;
     private final int CELLS_NUMBER = 4;
     private final int INIT_CELLS = 2;
     private static final String KEY_COUNT = "COUNT";
@@ -24,6 +24,8 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        Intent serviceIntent = new Intent(GameActivity.this, MusicService.class);
+        startService(serviceIntent);
         gridView = (GridView) findViewById(R.id.gridview);
         scoreView = (TextView) findViewById(R.id.scoreView);
         score = 0;
@@ -80,6 +82,18 @@ public class GameActivity extends Activity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startService(new Intent(GameActivity.this, MusicService.class));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopService(new Intent(GameActivity.this, MusicService.class));
     }
 
     void drawOnView(Integer[] picsArray) {

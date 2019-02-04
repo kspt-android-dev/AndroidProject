@@ -209,6 +209,40 @@ public class Matrix {
 
         return newLine;
     }
+
+
+    //сдвиг без добавления нового числа (для тестирования)
+    void up() {
+        for( int i=0; i<m.length; i++) {
+            int[] arg = getColumn(i);
+            int[] result= moveLine(arg);
+            setColumn(i,result);
+        }
+        allList.clear(); // чистим одномерный массив
+        for( int i=0; i<m.length; i++) // записываем новые значения
+            for( int j=0; j<m[i].length; j++ )
+                setAllList(i,j,m[i][j]);
+    }
+    void right() {
+        for( int i=0; i<m.length; i++) {
+            int[] arg = getRow(i);
+            int[] rab= new int[arg.length];
+            for(int a=0; a<rab.length;a++){
+                rab[a]=arg[rab.length-a-1];
+            }
+            arg=rab;
+            int[] result= moveLine(arg);
+            for(int a=0; a<rab.length;a++){
+                rab[a]=result[rab.length-a-1];
+            }
+            result=rab;
+            setRow(i,result);
+        }
+        allList.clear(); // чистим одномерный массив
+        for( int i=0; i<m.length; i++) // записываем новые значения
+            for( int j=0; j<m[i].length; j++ )
+                setAllList(i,j,m[i][j]);
+    }
 }
 
 
