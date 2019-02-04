@@ -1,21 +1,17 @@
 package com.example.lixir.nim
 
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import com.example.lixir.nim.R.layout.match_list_item
-import com.example.lixir.nim.R.string.return_menu
 import com.example.lixir.nim.R.string.turn_player
-import com.example.lixir.nim.Utils.nextFragment
-import com.example.lixir.nim.backend.Constants
 import com.example.lixir.nim.backend.GameProcess
 import kotlinx.android.synthetic.main.match_list_item.view.*
 
 class MatchAdapter(
-    var fragment: GameFragment,
+    private var fragment: GameFragment,
     resource: Int,
     var row: Int
 ) : RecyclerView.Adapter<MatchAdapter.ViewHolder>() {
@@ -38,15 +34,8 @@ class MatchAdapter(
             fragment.synchronize()
             fragment.textView.text = ("${fragment.context!!.getString(turn_player)} ${GameProcess.currentPlayer.name}")
             if (GameProcess.endGame) {
-                val alertDialog =
-                    AlertDialog.Builder(fragment.activity!!).setMessage("${Constants.WIN} ${GameProcess.winner.name}")
-                        .setPositiveButton(
-                            fragment.context!!.getString(return_menu)
-                        ) { dialog, which ->
-                            (fragment.activity as MainActivity).nextFragment(MenuFragment())
-                        }.create()
-                alertDialog.setCancelable(false)
-                alertDialog.show()
+                val endGameDialogFragment = EndGameDialogFragment()
+                endGameDialogFragment.show(fragment.activity!!.supportFragmentManager, "dialog")
             }
         }
     }

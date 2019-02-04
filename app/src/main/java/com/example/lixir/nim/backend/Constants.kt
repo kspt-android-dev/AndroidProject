@@ -6,4 +6,5 @@ object Constants {
     const val PLAYER_1_NAME = "Player1"
     const val PLAYER_2_NAME = "Player2"
     const val BOT_NAME = "Alex"
+    const val NEW_GAME = "новая игра"
 }
