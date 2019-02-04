@@ -4,6 +4,9 @@ import android.content.Context
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.view.*
+import android.widget.ImageButton
+import android.widget.SeekBar
+import android.widget.TextView
 import com.google.android.exoplayer2.ui.PlayerView
 import khoroshkov.androidproject.*
 import org.jetbrains.anko.*
@@ -14,6 +17,16 @@ class MainActivityUI : AnkoComponent<MainActivity> {
     companion object {
         /* Maybe it is not a good way but it works */
         var PLAYER_VIEW: PlayerView by Delegates.notNull()
+        var SEEK_BAR: SeekBar by Delegates.notNull()
+        var CURRENT_TIME: TextView by Delegates.notNull()
+        var DURATION: TextView by Delegates.notNull()
+        var TRACK: TextView by Delegates.notNull()
+        var ARTIST: TextView by Delegates.notNull()
+        var PREVIOUS_BUTTON: ImageButton by Delegates.notNull()
+        var PLAY_BUTTON: ImageButton by Delegates.notNull()
+        var NEXT_BUTTON: ImageButton by Delegates.notNull()
+        var SHUFFLE_BUTTON: ImageButton by Delegates.notNull()
+        var REPEAT_BUTTON: ImageButton by Delegates.notNull()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -38,8 +51,7 @@ class MainActivityUI : AnkoComponent<MainActivity> {
                 weight = 200F
             }
             relativeLayout {
-                seekBar {
-                }.lparams {
+                SEEK_BAR = seekBar().lparams {
                     rightPadding = dip(EDGE_PADDING)
                     leftPadding = dip(EDGE_PADDING)
                     width = matchParent
@@ -49,7 +61,7 @@ class MainActivityUI : AnkoComponent<MainActivity> {
                 width = matchParent
             }
             relativeLayout {
-                textView {
+                CURRENT_TIME = textView {
                     text = START_TIME_DEFAULT
                     textSize = 15F
                     textColor = resources.getColor(R.color.secondColor, null)
@@ -57,7 +69,7 @@ class MainActivityUI : AnkoComponent<MainActivity> {
                     alignParentLeft()
                     leftPadding = dip(EDGE_PADDING)
                 }
-                textView {
+                DURATION = textView {
                     text = END_TIME_DEFAULT
                     textSize = 15F
                     textColor = resources.getColor(R.color.secondColor, null)
@@ -69,7 +81,7 @@ class MainActivityUI : AnkoComponent<MainActivity> {
                 weight = 1F
             }
             relativeLayout {
-                textView {
+                TRACK = textView {
                     text = TRACK_NAME_DEFAULT
                     textSize = 28F
                     textColor = resources.getColor(R.color.firstColor, null)
@@ -81,7 +93,7 @@ class MainActivityUI : AnkoComponent<MainActivity> {
                 weight = 5F
             }
             relativeLayout {
-                textView {
+                ARTIST = textView {
                     text = AUTHOR_NAME_DEFAULT
                     textSize = 20F
                     textColor = resources.getColor(R.color.secondColor, null)
@@ -93,32 +105,34 @@ class MainActivityUI : AnkoComponent<MainActivity> {
                 weight = 2F
             }
             relativeLayout {
-                imageButton {
+                PREVIOUS_BUTTON = imageButton {
                     imageResource = R.drawable.ic_previous
                     backgroundColor = 0
-                    rightPadding = dip(160)
-                }.lparams {
-                    centerInParent()
+                }.lparams(width = wrapContent, height = wrapContent) {
+                    leftMargin = dip(BUTTON_PADDING)
+                    centerVertically()
+                    alignParentLeft()
                 }
-                imageButton {
+                PLAY_BUTTON = imageButton {
                     imageResource = R.drawable.ic_play
                     backgroundColor = 0
-                }.lparams {
+                }.lparams(width = wrapContent, height = wrapContent) {
                     centerInParent()
                 }
-                imageButton {
+                NEXT_BUTTON = imageButton {
                     imageResource = R.drawable.ic_next
                     backgroundColor = 0
-                    leftPadding = dip(160)
-                }.lparams {
-                    centerInParent()
+                }.lparams(width = wrapContent, height = wrapContent) {
+                    rightMargin = dip(BUTTON_PADDING)
+                    centerVertically()
+                    alignParentRight()
                 }
             }.lparams {
                 width = matchParent
                 weight = 5F
             }
             relativeLayout {
-                imageButton {
+                SHUFFLE_BUTTON = imageButton {
                     imageResource = R.drawable.ic_shuffle
                     backgroundColor = 0
                     leftPadding = dip(EDGE_PADDING)
@@ -126,7 +140,7 @@ class MainActivityUI : AnkoComponent<MainActivity> {
                     alignParentStart()
                     centerVertically()
                 }
-                imageButton {
+                REPEAT_BUTTON = imageButton {
                     imageResource = R.drawable.ic_repeat
                     backgroundColor = 0
                     rightPadding = dip(EDGE_PADDING)
@@ -141,5 +155,4 @@ class MainActivityUI : AnkoComponent<MainActivity> {
     }
 
     private fun ViewManager.playerView(context: Context) = PlayerView(context)
-
 }
