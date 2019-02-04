@@ -1,4 +1,4 @@
-package com.example.lixir.nim
+package com.example.lixir.nim.fragments.rename
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import com.example.lixir.nim.MainActivity
+import com.example.lixir.nim.R
 import com.example.lixir.nim.Utils.nextFragment
 import com.example.lixir.nim.backend.GameProcess
+import com.example.lixir.nim.fragments.menu.MenuFragment
 import kotlinx.android.synthetic.main.fragment_rename.*
 import kotlinx.android.synthetic.main.fragment_rename.view.*
 

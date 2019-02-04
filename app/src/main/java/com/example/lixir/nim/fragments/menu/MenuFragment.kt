@@ -1,4 +1,4 @@
-package com.example.lixir.nim
+package com.example.lixir.nim.fragments.menu
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,9 +7,14 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.Button
+import com.example.lixir.nim.MainActivity
+import com.example.lixir.nim.R
 import com.example.lixir.nim.Utils.nextActivity
 import com.example.lixir.nim.Utils.nextFragment
 import com.example.lixir.nim.backend.GameProcess
+import com.example.lixir.nim.fragments.rename.RenameFragment
+import com.example.lixir.nim.fragments.game.GameFragment
+import com.example.lixir.nim.fragments.info.InfoActivity
 import kotlinx.android.synthetic.main.main_menu.*
 import kotlinx.android.synthetic.main.main_menu.view.*
 

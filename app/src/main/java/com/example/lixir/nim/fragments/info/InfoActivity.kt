@@ -1,8 +1,9 @@
-package com.example.lixir.nim
+package com.example.lixir.nim.fragments.info
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.example.lixir.nim.R
 import kotlinx.android.synthetic.main.activity_info.*
 
 class InfoActivity : AppCompatActivity(), View.OnClickListener {

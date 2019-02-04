@@ -1,4 +1,4 @@
-package com.example.lixir.nim
+package com.example.lixir.nim.fragments.game
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.lixir.nim.R
 import com.example.lixir.nim.backend.Constants
 import com.example.lixir.nim.backend.GameProcess
 import kotlinx.android.synthetic.main.game_fragment.*
@@ -39,7 +40,13 @@ class GameFragment : Fragment() {
     override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         views = arrayOf(rv_0, rv_1, rv_2, rv_3)
-        adapter = Array(Constants.MAIN_LIST.size){MatchAdapter(this, R.layout.match_list_item, 0)}
+        adapter = Array(Constants.MAIN_LIST.size){
+            MatchAdapter(
+                this,
+                R.layout.match_list_item,
+                0
+            )
+        }
         for (i in 0 until adapter.size) {
             adapter[i].row = i
             views[i].adapter = adapter[i]

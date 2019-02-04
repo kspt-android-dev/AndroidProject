@@ -1,4 +1,4 @@
-package com.example.lixir.nim
+package com.example.lixir.nim.fragments.game
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -23,7 +23,13 @@ class MatchAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder =
-        ViewHolder(LayoutInflater.from(parent.context).inflate(match_list_item, parent, false))
+        ViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                match_list_item,
+                parent,
+                false
+            )
+        )
 
     override fun getItemCount(): Int = GameProcess.rows[row]
 

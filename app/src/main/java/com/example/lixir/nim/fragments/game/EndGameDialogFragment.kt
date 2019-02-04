@@ -1,4 +1,4 @@
-package com.example.lixir.nim
+package com.example.lixir.nim.fragments.game
 
 import android.app.Dialog
 import android.os.Bundle
@@ -7,6 +7,9 @@ import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.lixir.nim.MainActivity
+import com.example.lixir.nim.fragments.menu.MenuFragment
+import com.example.lixir.nim.R
 import com.example.lixir.nim.Utils.nextFragment
 import com.example.lixir.nim.backend.Constants
 import com.example.lixir.nim.backend.GameProcess

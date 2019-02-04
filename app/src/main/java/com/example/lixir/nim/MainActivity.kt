@@ -3,6 +3,7 @@ package com.example.lixir.nim
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.lixir.nim.Utils.nextFragment
+import com.example.lixir.nim.fragments.menu.MenuFragment
 
 class MainActivity : AppCompatActivity() {
 
