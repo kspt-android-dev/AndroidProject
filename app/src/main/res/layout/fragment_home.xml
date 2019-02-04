@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    android:tag="FRAGMENT_HOME">
+    android:tag="FRAGMENT_HOME"
+    android:id="@+id/fragment_home">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"

@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:tag="FRAGMENT_WORDS"
+    android:id="@+id/fragment_words"
     >
 
     <TextView
