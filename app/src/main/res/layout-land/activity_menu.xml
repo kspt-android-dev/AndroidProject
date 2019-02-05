@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|top"
+    android:orientation="vertical"
+    tools:context=".MenuActivity">
+
+    <TextView
+        android:id="@+id/activity_menu_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/menu_title_margin_bottom_land"
+        android:gravity="center"
+        android:text="@string/title_game"
+        android:textSize="@dimen/menu_title_text_size" />
+
+    <Button
+        android:id="@+id/activity_menu_play"
+        android:layout_width="@dimen/menu_btn_width"
+        android:layout_height="@dimen/menu_btn_height"
+        android:layout_marginBottom="@dimen/menu_btn_margin_bottom"
+        android:text="@string/menu_btn_play" />
+
+    <Button
+        android:id="@+id/activity_menu_records"
+        android:layout_width="@dimen/menu_btn_width"
+        android:layout_height="@dimen/menu_btn_height"
+        android:layout_marginBottom="@dimen/menu_btn_margin_bottom"
+        android:text="@string/menu_btn_records" />
+
+    <Button
+        android:id="@+id/activity_menu_exit"
+        android:layout_width="@dimen/menu_btn_width"
+        android:layout_height="@dimen/menu_btn_height"
+        android:text="@string/menu_btn_exit" />
+
+</LinearLayout>

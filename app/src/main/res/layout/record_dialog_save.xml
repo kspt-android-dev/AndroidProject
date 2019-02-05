@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/record_dialog_save_padding_horizontal"
+    android:paddingEnd="@dimen/record_dialog_save_padding_horizontal">
+
+    <EditText
+        android:id="@+id/record_dialog_save_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:maxLines="1"
+        android:textSize="@dimen/text_size"
+        android:padding="@dimen/text_padding"
+        android:background="@drawable/back_edit_text"/>
+
+</LinearLayout>
