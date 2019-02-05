@@ -12,6 +12,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.easyeng.easyeng.db.MyDatabase;
 import org.easyeng.easyeng.db.entities.Word;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +21,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 public class WordSetViewActivity extends AppCompatActivity {
     private Item item;
-    private List<Word> words;
+
     private MyDatabase myDatabase;
     private WordViewModel wordViewModel;
 
@@ -40,19 +42,22 @@ public class WordSetViewActivity extends AppCompatActivity {
         CollectionReference collectionReference = FirebaseFirestore.getInstance()
                 .collection("Words");
 
-        for (Integer index : indices) {
-            collectionReference.whereEqualTo("id", index);
-        }
+        //Synchronized list needed because we add words asynchronous
+        final List<Word> words = Collections.synchronizedList(new ArrayList<>());
 
-        collectionReference.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                QuerySnapshot result = task.getResult();
-                if (result == null) return;
-                this.words = result.toObjects(Word.class);
-                button.setOnClickListener(v -> {
-                    wordViewModel.insert(this.words);
-                });
-            }
+        for (Integer index : indices) {
+            collectionReference.whereEqualTo("id", index)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot result = task.getResult();
+                            if (result == null) return;
+                            words.add(result.toObjects(Word.class).get(0));
+                        }
+                    });
+        }
+        button.setOnClickListener(v -> {
+            wordViewModel.insert(words);
         });
     }
 
