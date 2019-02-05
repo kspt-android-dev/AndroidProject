@@ -1,6 +1,9 @@
 package org.easyeng.easyeng;
 
-public class Item {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Item implements Parcelable {
     private int id;
     private String title;
     private int level;
@@ -19,6 +22,27 @@ public class Item {
         this.tags = tags;
         this.words = words;
     }
+
+    public Item(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        level = in.readInt();
+        text = in.readString();
+        tags = in.readString();
+        words = in.readString();
+    }
+
+    public static final Creator<Item> CREATOR = new Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel in) {
+            return new Item(in);
+        }
+
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -42,5 +66,20 @@ public class Item {
 
     public String getWords() {
         return words;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeInt(level);
+        dest.writeString(text);
+        dest.writeString(tags);
+        dest.writeString(words);
     }
 }
