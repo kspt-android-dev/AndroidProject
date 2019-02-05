@@ -11,46 +11,44 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorTopBar">
+        android:layout_height="@dimen/top_bar_height"
+        android:background="@color/colorPrimary">
 
         <ImageButton
             android:id="@+id/pause_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_height="@dimen/pause_button_size"
+            android:layout_width="@dimen/pause_button_size"
+            android:layout_margin="@dimen/top_bar_margin"
             android:background="@drawable/pause_button"
             android:contentDescription="@string/health_bar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
-        <ImageView
+        <ProgressBar
             android:id="@+id/health_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/health_bar"
+            android:layout_height="@dimen/health_bar_height"
+            android:layout_width="@dimen/health_bar_width"
+            android:layout_margin="@dimen/top_bar_margin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/pause_button"
-            android:contentDescription="@string/health_bar" />
+            android:indeterminate="false"
+            android:progress="100"/>
 
         <TextView
             android:id="@+id/score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="@dimen/score_text_size"
             android:fontFamily="@font/muller_bold"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_margin="@dimen/top_bar_margin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -62,9 +60,10 @@
 
         <ImageView
             android:id="@+id/pizza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/pizza_size"
+            android:layout_height="@dimen/pizza_size"
             android:contentDescription="@string/pizza"
+            android:src="@drawable/pizza_levels"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

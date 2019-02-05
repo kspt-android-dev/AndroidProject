@@ -12,11 +12,11 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:fontFamily="@font/muller_medium"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
+        android:paddingStart="@dimen/names_scores_text_view_padding"
+        android:paddingEnd="@dimen/names_scores_text_view_padding"
         android:textColor="@color/white"
-        android:textSize="28sp"
-        android:lineSpacingExtra="10dp"/>
+        android:textSize="@dimen/names_scores_text_view_text_size"
+        android:lineSpacingExtra="@dimen/names_scores_text_view_line_spacing_extra"/>
 
     <TextView
         android:id="@+id/scoresTextView"
@@ -25,10 +25,10 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:fontFamily="@font/muller_medium"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
+        android:paddingStart="@dimen/names_scores_text_view_padding"
+        android:paddingEnd="@dimen/names_scores_text_view_padding"
         android:textColor="@color/white"
-        android:textSize="28sp"
-        android:lineSpacingExtra="10dp"/>
+        android:textSize="@dimen/names_scores_text_view_text_size"
+        android:lineSpacingExtra="@dimen/names_scores_text_view_line_spacing_extra"/>
 
 </LinearLayout>

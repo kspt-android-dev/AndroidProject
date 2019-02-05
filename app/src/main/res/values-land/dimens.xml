@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //activity_main
+    <dimen name="logo_height">180dp</dimen>
+    <dimen name="logo_vertical_bias">0.2</dimen>
+    <dimen name="start_button_vertical_bias">0.2</dimen>
+    <dimen name="settings_leaderboard_button_vertical_bias">0.2</dimen>
+
+    //activity_game_over
+    <dimen name="final_score_vertical_bias">0.3</dimen>
+
+    //fragment_page
+    <dimen name="names_scores_text_view_text_size">18sp</dimen>
+    <dimen name="names_scores_text_view_line_spacing_extra">5dp</dimen>
+
+</resources>

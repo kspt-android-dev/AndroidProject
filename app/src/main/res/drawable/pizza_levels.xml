@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_pizza0"
+        android:maxLevel="100"
+        android:minLevel="91">
+    </item>
+    <item
+        android:drawable="@drawable/ic_pizza1"
+        android:maxLevel="90"
+        android:minLevel="81">
+    </item>
+    <item
+        android:drawable="@drawable/ic_pizza2"
+        android:maxLevel="80"
+        android:minLevel="71">
+    </item>
+    <item
+        android:drawable="@drawable/ic_pizza3"
+        android:maxLevel="70"
+        android:minLevel="61">
+    </item>
+    <item
+        android:drawable="@drawable/ic_pizza4"
+        android:maxLevel="60"
+        android:minLevel="51">
+    </item>
+    <item
+        android:drawable="@drawable/ic_pizza5"
+        android:maxLevel="50"
+        android:minLevel="41">
+    </item>
+    <item
+        android:drawable="@drawable/ic_pizza6"
+        android:maxLevel="40"
+        android:minLevel="31">
+    </item>
+    <item
+        android:drawable="@drawable/ic_pizza7"
+        android:maxLevel="30"
+        android:minLevel="21">
+    </item>
+    <item
+        android:drawable="@drawable/ic_pizza8"
+        android:maxLevel="20"
+        android:minLevel="11">
+    </item>
+    <item
+        android:drawable="@drawable/ic_pizza9"
+        android:maxLevel="10">
+    </item>
+
+</level-list>
