@@ -3,18 +3,21 @@ package org.easyeng.easyeng;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Item implements Parcelable {
     private int id;
     private String title;
     private int level;
     private String text;
-    private String tags;
-    private String words;
+    private List<String> tags = new ArrayList<>();
+    private List<Integer> words = new ArrayList<>(); //Words ids
 
     public Item() {
     }
 
-    public Item(String title, int id, String text, int level, String tags, String words) {
+    public Item(String title, int id, String text, int level, List<String> tags, List<Integer> words) {
         this.title = title;
         this.id = id;
         this.text = text;
@@ -28,8 +31,8 @@ public class Item implements Parcelable {
         title = in.readString();
         level = in.readInt();
         text = in.readString();
-        tags = in.readString();
-        words = in.readString();
+        in.readList(tags, List.class.getClassLoader());
+        in.readList(words, List.class.getClassLoader());
     }
 
     public static final Creator<Item> CREATOR = new Creator<Item>() {
@@ -60,11 +63,11 @@ public class Item implements Parcelable {
         return level;
     }
 
-    public String getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    public String getWords() {
+    public List<Integer> getWords() {
         return words;
     }
 
@@ -79,7 +82,7 @@ public class Item implements Parcelable {
         dest.writeString(title);
         dest.writeInt(level);
         dest.writeString(text);
-        dest.writeString(tags);
-        dest.writeString(words);
+        dest.writeList(tags);
+        dest.writeList(words);
     }
 }
