@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PageFragment">
+
+    <TextView
+        android:id="@+id/namesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:fontFamily="@font/muller_medium"
+        android:paddingStart="@dimen/names_scores_text_view_padding"
+        android:paddingEnd="@dimen/names_scores_text_view_padding"
+        android:textColor="@color/white"
+        android:textSize="@dimen/names_scores_text_view_text_size"
+        android:lineSpacingExtra="@dimen/names_scores_text_view_line_spacing_extra"/>
+
+    <TextView
+        android:id="@+id/scoresTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:fontFamily="@font/muller_medium"
+        android:paddingStart="@dimen/names_scores_text_view_padding"
+        android:paddingEnd="@dimen/names_scores_text_view_padding"
+        android:textColor="@color/white"
+        android:textSize="@dimen/names_scores_text_view_text_size"
+        android:lineSpacingExtra="@dimen/names_scores_text_view_line_spacing_extra"/>
+
+</LinearLayout>

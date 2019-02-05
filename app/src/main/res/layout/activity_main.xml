@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/logo_height"
+        android:layout_marginStart="@dimen/logo_margin"
+        android:layout_marginEnd="@dimen/logo_margin"
+        android:src="@drawable/logo"
+        android:contentDescription="@string/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="@dimen/logo_vertical_bias" />
+
+    <ImageButton
+        android:id="@+id/startButton"
+        android:layout_width="@dimen/start_button_size"
+        android:layout_height="@dimen/start_button_size"
+        android:background="@drawable/start_button"
+        android:contentDescription="@string/start_game"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="@dimen/start_button_vertical_bias" />
+
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="@dimen/settings_leaderboard_button_size"
+        android:layout_height="@dimen/settings_leaderboard_button_size"
+        android:background="@drawable/settings_button"
+        android:contentDescription="@string/settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/startButton"
+        app:layout_constraintHorizontal_bias="@dimen/settings_button_horizontal_bias"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="@dimen/settings_leaderboard_button_vertical_bias" />
+
+    <ImageButton
+        android:id="@+id/leaderboardButton"
+        android:layout_width="@dimen/settings_leaderboard_button_size"
+        android:layout_height="@dimen/settings_leaderboard_button_size"
+        android:background="@drawable/leaderboard_button"
+        android:contentDescription="@string/settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/startButton"
+        app:layout_constraintHorizontal_bias="@dimen/leaderboard_button_horizontal_bias"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="@dimen/settings_leaderboard_button_vertical_bias" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    tools:context=".GameFieldActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_height"
+        android:background="@color/colorPrimary">
+
+        <ImageButton
+            android:id="@+id/pause_button"
+            android:layout_height="@dimen/pause_button_size"
+            android:layout_width="@dimen/pause_button_size"
+            android:layout_margin="@dimen/top_bar_margin"
+            android:background="@drawable/pause_button"
+            android:contentDescription="@string/health_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ProgressBar
+            android:id="@+id/health_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/health_bar"
+            android:layout_height="@dimen/health_bar_height"
+            android:layout_width="@dimen/health_bar_width"
+            android:layout_margin="@dimen/top_bar_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pause_button"
+            android:indeterminate="false"
+            android:progress="100"/>
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/score_text_size"
+            android:fontFamily="@font/muller_bold"
+            android:layout_margin="@dimen/top_bar_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/game_field"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
+
+        <ImageView
+            android:id="@+id/pizza"
+            android:layout_width="@dimen/pizza_size"
+            android:layout_height="@dimen/pizza_size"
+            android:contentDescription="@string/pizza"
+            android:src="@drawable/pizza_levels"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
