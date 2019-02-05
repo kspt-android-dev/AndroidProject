@@ -3,4 +3,5 @@
     <string name="text_home">Домой</string>
     <string name="text_puzzles">Пазлы</string>
     <string name="text_words">Слова</string>
+    <string name="cart_extra_name">card</string>
 </resources>
