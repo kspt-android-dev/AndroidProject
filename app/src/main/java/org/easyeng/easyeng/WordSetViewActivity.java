@@ -1,10 +1,12 @@
 package org.easyeng.easyeng;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -33,19 +35,26 @@ public class WordSetViewActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.title)).setText(item.getTitle());
         ((WebView) findViewById(R.id.web_view)).loadData(item.getText(), "text/html", "utf-8");
 
+        final List<Integer> indices = item.getWords();
         final Button button = findViewById(R.id.add_words);
-        FirebaseFirestore.getInstance().collection("Words")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot result = task.getResult();
-                        if (result == null) return;
-                        words = result.toObjects(Word.class);
-                        button.setOnClickListener(v -> {
-                            asyncDBManager.saveWords(words);
-                        });
-                    }
+
+        CollectionReference collectionReference = FirebaseFirestore.getInstance()
+                .collection("Words");
+
+        for (Integer index : indices) {
+            collectionReference.whereEqualTo("id", index);
+        }
+
+        collectionReference.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot result = task.getResult();
+                if (result == null) return;
+                this.words = result.toObjects(Word.class);
+                button.setOnClickListener(v -> {
+                    asyncDBManager.saveWords(this.words);
                 });
+            }
+        });
     }
 
     @Override
