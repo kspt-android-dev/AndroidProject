@@ -1,7 +1,9 @@
 package com.example.lixir.nim.fragments.game
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -33,8 +35,11 @@ class MatchAdapter(
 
     override fun getItemCount(): Int = GameProcess.rows[row]
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.button.setOnClickListener {
+        viewHolder.button.setOnTouchListener flag@ { v, event ->
+            if (event.getPointerId(event.actionIndex) != 0 || event.actionMasked != MotionEvent.ACTION_UP)
+                return@flag true
             fragment.synchronize()
             GameProcess.play(row, position)
             fragment.synchronize()
@@ -43,6 +48,7 @@ class MatchAdapter(
                 val endGameDialogFragment = EndGameDialogFragment()
                 endGameDialogFragment.show(fragment.activity!!.supportFragmentManager, "dialog")
             }
+            return@flag true
         }
     }
 
