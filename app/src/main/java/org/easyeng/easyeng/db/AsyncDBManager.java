@@ -41,6 +41,10 @@ public class AsyncDBManager {
         new InsertWordAsync().execute(words.toArray(new Word[0]));
     }
 
+    public void delete(int id) {
+        new DeleteWordAsync().execute(id);
+    }
+
     public LiveData<List<Word>> getAllWords() {
         return allWords;
     }
@@ -50,6 +54,14 @@ public class AsyncDBManager {
         @Override
         protected Void doInBackground(Word... words) {
             wordDAO.insertWords(words);
+            return null;
+        }
+    }
+
+    private static class DeleteWordAsync extends AsyncTask<Integer, Integer, Void> {
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            wordDAO.delete(integers[0]);
             return null;
         }
     }

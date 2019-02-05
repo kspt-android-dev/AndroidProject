@@ -42,6 +42,16 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordHolder> {
         notifyDataSetChanged();
     }
 
+    public Word getWord(int position) {
+        if (position > getItemCount()) throw new IllegalArgumentException();
+        return words.get(position);
+    }
+
+    public void deleteWord(int position) {
+        words.remove(position);
+        notifyDataSetChanged();
+    }
+
     class WordHolder extends RecyclerView.ViewHolder {
         private TextView original;
         private TextView translation;

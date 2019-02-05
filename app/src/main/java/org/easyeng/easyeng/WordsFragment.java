@@ -14,12 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class WordsFragment extends Fragment {
 
-    private AsyncDBManager asyncDBManager;
     private MyDatabase myDatabase;
     private RecyclerView recyclerView;
     private WordAdapter adapter;
@@ -47,5 +47,20 @@ public class WordsFragment extends Fragment {
         model.getAllWords().observe(this, words -> {
             adapter.setWords(words);
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT
+        ) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                model.delete(adapter.getWord(viewHolder.getAdapterPosition()).getId());
+                adapter.deleteWord(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(recyclerView);
     }
 }

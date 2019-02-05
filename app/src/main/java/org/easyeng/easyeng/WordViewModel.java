@@ -33,6 +33,10 @@ public class WordViewModel extends AndroidViewModel {
         asyncDBManager.insert(words);
     }
 
+    public void delete(int id) {
+        asyncDBManager.delete(id);
+    }
+
     public LiveData<List<Word>> getAllWords() {
         return asyncDBManager.getAllWords();
     }
