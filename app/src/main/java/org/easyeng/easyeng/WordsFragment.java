@@ -7,9 +7,6 @@ import android.view.ViewGroup;
 
 import com.google.firebase.database.annotations.NotNull;
 
-import org.easyeng.easyeng.db.AsyncDBManager;
-import org.easyeng.easyeng.db.MyDatabase;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -20,8 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class WordsFragment extends Fragment {
 
-    private MyDatabase myDatabase;
-    private RecyclerView recyclerView;
     private WordAdapter adapter;
 
     @Nullable
