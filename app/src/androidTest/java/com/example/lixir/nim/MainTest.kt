@@ -96,6 +96,7 @@ class MainTest {
         makeClickDialog(R.string.return_menu)
         makeClick(single_game_button)
         makeClickRV(rv_0, 0)
+        makeClickRV(rv_1, 0)
         makeClickRV(rv_2, 0)
         checkTextDialog("$WIN $TestNameBot")
         makeClickDialog(R.string.return_menu)
