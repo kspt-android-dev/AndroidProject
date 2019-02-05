@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Пятнашки</string>
+    <string name="error">Ошибка</string>
+    <string name="dialog_restart_message">
+        Вы действительно хотите начать новую игру?
+    </string>
+    <string name="dialog_yes">Да</string>
+    <string name="dialog_no">Нет</string>
+    <string name="dialog_save">Сохранить</string>
+    <string name="title_game">Пятнашки</string>
+    <string name="menu_btn_play">Играть</string>
+    <string name="menu_btn_exit">Выйти</string>
+    <string name="menu_btn_records">Рекорды</string>
+    <string name="title_records">Рекорды</string>
+    <string name="records_dialog_delete_message">
+        Вы действительно хотите очистить таблицу рекордов?
+    </string>
+    <string name="dialog_win">Вы решили головоломку. Введите имя:</string>
+    <string name="dialog_win_title">Поздравляем!</string>
+    <string name="info">
+        Цель игры — перемещая костяшки по коробке, добиться упорядочивания их по
+        номерам, желательно сделав как можно меньше перемещений.\n\n
+        Игра в 15, пятнашки, такен — популярная головоломка, придуманная в 1878 году Ноем Чепмэном.
+        Представляет собой набор одинаковых квадратных костяшек с нанесёнными числами,
+        заключённых в квадратную коробку. Длина стороны коробки в четыре раза больше длины стороны
+        костяшек для набора из 15 элементов, соответственно в коробке остаётся незаполненным одно
+        квадратное поле.
+    </string>
+    <string name="game_dialog_info_title">Немного информации</string>
+    <string name="game_dialog_save_no_active">
+        Игра сохраняется автоматически. Эта кнопка будет активна,
+        если вдруг окошко сохранения результата успешной попытки каким-либо образом исчезнет:)
+    </string>
+</resources>

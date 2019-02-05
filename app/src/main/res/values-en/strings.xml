@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Barley-break</string>
+    <string name="error">Error</string>
+    <string name="dialog_restart_message">Do you want to start a new game?</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_save">Save</string>
+    <string name="title_game">Barley-break</string>
+    <string name="menu_btn_play">Play</string>
+    <string name="menu_btn_exit">Exit</string>
+    <string name="menu_btn_records">Records</string>
+    <string name="title_records">Records</string>
+    <string name="records_dialog_delete_message">
+        Do you want to clear the high score table?
+    </string>
+    <string name="dialog_win_title">Congratulations!</string>
+    <string name="dialog_win">You solved the puzzle. Enter name:</string>
+    <string name="info">
+        The goal of the game is to move the knuckles around the box,
+        to arrange them by number, preferably making as few moves as possible.\n\n
+        The game of 15, tag, taken - a popular puzzle, invented in 1878 by Noah Chapman.
+        It is a set of identical square knuckles with printed numbers enclosed in a square box.
+        The length of the side of the box is four times the length of the side of the knuckles
+        for a set of 15 elements; accordingly, one square box is left empty in the box.
+    </string>
+    <string name="game_dialog_info_title">Information</string>
+    <string name="game_dialog_save_no_active">
+        The game is saved automatically.
+        This button will be active if the window of saving the result of a successful attempt somehow disappears:)
+    </string>
+</resources>

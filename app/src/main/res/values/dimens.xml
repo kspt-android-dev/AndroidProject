@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="records_title_text_size">30sp</dimen>
+    <dimen name="text_padding">10dp</dimen>
+    <dimen name="text_size">20sp</dimen>
+
+    <dimen name="menu_btn_width">100dp</dimen>
+    <dimen name="menu_btn_height">56dp</dimen>
+    <dimen name="menu_btn_margin_bottom">10dp</dimen>
+    <dimen name="menu_title_margin_top">100dp</dimen>
+    <dimen name="menu_title_margin_bottom">50dp</dimen>
+    <dimen name="menu_title_text_size">60sp</dimen>
+    <dimen name="menu_title_margin_bottom_land">20dp</dimen>
+
+    <dimen name="record_dialog_save_padding_horizontal">20dp</dimen>
+
+    <dimen name="game_counter_text_size">30sp</dimen>
+
+    <dimen name="square_btn_size">40dp</dimen>
+</resources>
