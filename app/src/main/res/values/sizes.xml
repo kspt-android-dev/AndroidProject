@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cell_size">45dp</dimen>
+    <dimen name="number_size">20sp</dimen>
+    <dimen name="number_offset_y">30dp</dimen>
+</resources>
