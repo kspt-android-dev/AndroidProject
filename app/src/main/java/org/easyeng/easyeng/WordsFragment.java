@@ -1,17 +1,51 @@
 package org.easyeng.easyeng;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.annotations.NotNull;
+
+import org.easyeng.easyeng.db.AsyncDBManager;
+import org.easyeng.easyeng.db.MyDatabase;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class WordsFragment extends Fragment {
+
+    private AsyncDBManager asyncDBManager;
+    private MyDatabase myDatabase;
+    private RecyclerView recyclerView;
+    private WordAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_words, null);
+        View view = inflater.inflate(R.layout.fragment_words, null);
+        setUpRecyclerView(view);
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    private void setUpRecyclerView(@NotNull View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.words_rv);
+        adapter = new WordAdapter();
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        WordViewModel model = ViewModelProviders.of(this).get(WordViewModel.class);
+        model.getAllWords().observe(this, words -> {
+            adapter.setWords(words);
+        });
     }
 }

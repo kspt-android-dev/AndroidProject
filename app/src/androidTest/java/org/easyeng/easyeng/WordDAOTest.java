@@ -1,7 +1,6 @@
 package org.easyeng.easyeng;
 
 import org.easyeng.easyeng.db.MyDatabase;
-import org.easyeng.easyeng.db.entities.ExampleDAO;
 import org.easyeng.easyeng.db.entities.Word;
 import org.easyeng.easyeng.db.entities.WordDAO;
 import org.junit.After;
@@ -14,6 +13,7 @@ import org.junit.runner.RunWith;
 import java.util.Calendar;
 import java.util.List;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -21,6 +21,9 @@ import androidx.test.runner.AndroidJUnit4;
 
 @RunWith(AndroidJUnit4.class)
 public class WordDAOTest {
+
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
@@ -44,9 +47,10 @@ public class WordDAOTest {
 
         word1.setProgress(10);
 
-        List<Word> words = wordDAO.getAllWords();
-        Assert.assertFalse(words.contains(word1));
-        Assert.assertTrue(words.contains(word2));
+        wordDAO.getAllWords().observe(mActivityRule.getActivity(), words -> {
+            Assert.assertFalse(words.contains(word1));
+            Assert.assertTrue(words.contains(word2));
+        });
     }
 
     @Test
@@ -58,7 +62,7 @@ public class WordDAOTest {
     @Test
     public void getWordRepeatedBeforeTest() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2018, 10,10);
+        calendar.set(2018, 10, 10);
         word1.setLastTraining(calendar.getTime());
         calendar.add(Calendar.DAY_OF_MONTH, 5);
 
@@ -93,29 +97,33 @@ public class WordDAOTest {
     public void deleteTest() {
         wordDAO.insertWords(word1, word2);
 
-        List<Word> words = wordDAO.getAllWords();
-        Assert.assertTrue(words.contains(word1));
-        Assert.assertTrue(words.contains(word2));
+        wordDAO.getAllWords().observe(mActivityRule.getActivity(), words -> {
+            Assert.assertTrue(words.contains(word1));
+            Assert.assertTrue(words.contains(word2));
+        });
 
         wordDAO.delete(word2.getId());
 
-        List<Word> words2 = wordDAO.getAllWords();
-        Assert.assertTrue(words2.contains(word1));
-        Assert.assertFalse(words2.contains(word2));
+        wordDAO.getAllWords().observe(mActivityRule.getActivity(), words -> {
+            Assert.assertTrue(words.contains(word1));
+            Assert.assertFalse(words.contains(word2));
+        });
     }
 
     @Test
     public void deleteAllTest() {
         wordDAO.insertWords(word1, word2);
 
-        List<Word> words = wordDAO.getAllWords();
-        Assert.assertTrue(words.contains(word1));
-        Assert.assertTrue(words.contains(word2));
+        wordDAO.getAllWords().observe(mActivityRule.getActivity(), words -> {
+            Assert.assertTrue(words.contains(word1));
+            Assert.assertTrue(words.contains(word2));
+        });
 
         wordDAO.deleteAll();
 
-        List<Word> words2 = wordDAO.getAllWords();
-        Assert.assertTrue(words2.isEmpty());
+        wordDAO.getAllWords().observe(mActivityRule.getActivity(), words -> {
+            Assert.assertTrue(words.isEmpty());
+        });
     }
 
     @After

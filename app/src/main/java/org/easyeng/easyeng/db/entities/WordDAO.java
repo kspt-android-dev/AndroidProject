@@ -3,6 +3,7 @@ package org.easyeng.easyeng.db.entities;
 import java.util.Date;
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -19,7 +20,7 @@ public interface WordDAO {
     List<Word> getWordsRepeatedBefore(Date date);
 
     @Query("SELECT * FROM words")
-    List<Word> getAllWords();
+    LiveData<List<Word>> getAllWords();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertWords(Word... word);
