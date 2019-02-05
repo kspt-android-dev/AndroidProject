@@ -2,6 +2,7 @@ package khoroshkov.androidproject
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ExtractorMediaSource
@@ -16,11 +17,13 @@ import com.google.android.exoplayer2.util.Log
 import java.util.concurrent.TimeUnit
 import com.google.android.exoplayer2.Player
 import org.jetbrains.anko.sdk27.coroutines.onClick
+import android.widget.SeekBar
 
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
     private var player: SimpleExoPlayer by Delegates.notNull()
+    private val mHandler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +34,12 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         player = ExoPlayerFactory.newSimpleInstance(this, DefaultTrackSelector())
         MainActivityUI.PLAYER_VIEW.player = player
-        val dataSourceFactory = DefaultDataSourceFactory(this,
-            Util.getUserAgent(this, resources.getString(R.string.app_name)))
+        val dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, resources.getString(R.string.app_name)))
         val mediaSource = ExtractorMediaSource.Factory(dataSourceFactory)
             .createMediaSource(RawResourceDataSource.buildRawResourceUri(R.raw.zombie))
+        toPlayButton()
+        toRepeatInactiveButton()
+        toShuffleInactiveButton()
         player.prepare(mediaSource)
         player.playWhenReady = true
         player.addListener(object : Player.EventListener {
@@ -43,14 +48,40 @@ class MainActivity : AppCompatActivity() {
                     Log.i(TAG, "Audio is playing")
                     initTrackInfo()
                     toPauseButton()
-                } else if (playWhenReady) {
-                    // might be idle (plays after prepare()),
-                    // buffering (plays when data available)
-                    // or ended (plays when seek away from end)
                 } else {
                     Log.i(TAG, "Audio is paused")
                     toPlayButton()
                 }
+            }
+
+            override fun onRepeatModeChanged(repeatMode: Int) {
+                when(repeatMode) {
+                    Player.REPEAT_MODE_OFF -> toRepeatInactiveButton()
+                    Player.REPEAT_MODE_ONE -> toRepeatOneButton()
+                    Player.REPEAT_MODE_ALL -> toRepeatAllButton()
+                }
+            }
+
+            override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {
+                if (shuffleModeEnabled) {
+                    toShuffleButton()
+                } else {
+                    toShuffleInactiveButton()
+                }
+            }
+        })
+        MainActivityUI.SEEK_BAR.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {}
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                mHandler.removeCallbacks(updateTimeTask)
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                mHandler.removeCallbacks(updateTimeTask)
+                val currentPosition = MainActivityUI.SEEK_BAR.progress.toLong()
+                player.seekTo(currentPosition)
+                startUpdatingProgressBar()
             }
         })
     }
@@ -62,16 +93,17 @@ class MainActivity : AppCompatActivity() {
         // player = null // in the video from IO18 but I use Delegates.NotNull
     }
 
-    fun initTrackInfo() {
+    private fun initTrackInfo() {
         val duration = player.duration
         Log.i(TAG, "Duration: $duration")
-        MainActivityUI.SEEK_BAR.max = duration.toInt()
+        MainActivityUI.SEEK_BAR.max = duration.toInt() + 1
         MainActivityUI.DURATION.text = duration.toTime()
+        startUpdatingProgressBar()
         MainActivityUI.ARTIST.text
         MainActivityUI.TRACK.text
     }
 
-    fun toPauseButton() {
+    private fun toPauseButton() {
         Log.i(TAG, "toPauseButton()")
         MainActivityUI.PLAY_BUTTON.imageResource = R.drawable.ic_pause
         MainActivityUI.PLAY_BUTTON.onClick {
@@ -80,12 +112,65 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun toPlayButton() {
+    private fun toPlayButton() {
         Log.i(TAG, "toPlayButton()")
         MainActivityUI.PLAY_BUTTON.imageResource = R.drawable.ic_play
         MainActivityUI.PLAY_BUTTON.onClick {
             Log.i(TAG, "Play button clicked")
             player.playWhenReady = true
+        }
+    }
+
+    private fun toShuffleButton() {
+        Log.i(TAG, "toShuffleButton()")
+        MainActivityUI.SHUFFLE_BUTTON.onClick {
+            player.shuffleModeEnabled = false
+        }
+        MainActivityUI.SHUFFLE_BUTTON.imageResource = R.drawable.ic_shuffle
+    }
+
+    private fun toShuffleInactiveButton() {
+        Log.i(TAG, "toShuffleInactiveButton()")
+        MainActivityUI.SHUFFLE_BUTTON.onClick {
+            player.shuffleModeEnabled = true
+        }
+        MainActivityUI.SHUFFLE_BUTTON.imageResource = R.drawable.ic_shuffle_off
+    }
+
+    private fun toRepeatAllButton() {
+        Log.i(TAG, "toRepeatAllButton()")
+        MainActivityUI.REPEAT_BUTTON.onClick {
+            player.repeatMode = Player.REPEAT_MODE_OFF
+        }
+        MainActivityUI.REPEAT_BUTTON.imageResource = R.drawable.ic_repeat_all
+    }
+
+    private fun toRepeatOneButton() {
+        Log.i(TAG, "toRepeatOneButton()")
+        MainActivityUI.REPEAT_BUTTON.onClick {
+            player.repeatMode = Player.REPEAT_MODE_ALL
+        }
+        MainActivityUI.REPEAT_BUTTON.imageResource = R.drawable.ic_repeat_one
+    }
+
+    private fun toRepeatInactiveButton() {
+        Log.i(TAG, "toRepeatInactiveButton()")
+        MainActivityUI.REPEAT_BUTTON.onClick {
+            player.repeatMode = Player.REPEAT_MODE_ONE
+        }
+        MainActivityUI.REPEAT_BUTTON.imageResource = R.drawable.ic_repeat_off
+    }
+
+    private fun startUpdatingProgressBar() {
+        mHandler.postDelayed(updateTimeTask, 100)
+    }
+
+    private val updateTimeTask = object : Runnable {
+        override fun run() {
+            val progress = player.currentPosition
+            MainActivityUI.CURRENT_TIME.text = progress.toTime()
+            MainActivityUI.SEEK_BAR.progress = progress.toInt()
+            mHandler.postDelayed(this, 100)
         }
     }
 

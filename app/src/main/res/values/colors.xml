@@ -3,7 +3,8 @@
     <color name="colorPrimary">#313335</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="firstColor">#FFF</color>
-    <color name="secondColor">#0eacfd</color>
-    <color name="backgroundColor">#2b2b2b</color>
+    <color name="colorMainElement">#FFF</color>
+    <color name="colorActive">#0eacfd</color>
+    <color name="colorInactive">#000001</color>
+    <color name="colorBackground">#2b2b2b</color>
 </resources>

@@ -2,12 +2,12 @@ package khoroshkov.androidproject
 
 const val EDGE_PADDING = 20
 
-const val START_TIME_DEFAULT = "x:xx"
+const val CURRENT_TIME_DEFAULT = "x:xx"
 
-const val END_TIME_DEFAULT = "x:xx"
+const val DURATION_DEFAULT = "x:xx"
 
-const val TRACK_NAME_DEFAULT = "xxxxx"
+const val TRACK_DEFAULT = "xxxxx"
 
-const val AUTHOR_NAME_DEFAULT = "xxxxxx"
+const val ARTIST_DEFAULT = "xxxxxx"
 
 const val BUTTON_PADDING = 80
