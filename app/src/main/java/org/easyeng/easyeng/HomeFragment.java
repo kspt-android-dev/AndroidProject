@@ -1,5 +1,6 @@
 package org.easyeng.easyeng;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,5 +57,12 @@ public class HomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnClickLIstener((snapshot, position) -> {
+            final Item item = snapshot.toObject(Item.class);
+            Intent intent = new Intent(view.getContext(), WordSetViewActivity.class);
+            intent.putExtra("card", item);
+            startActivity(intent);
+        });
     }
 }
