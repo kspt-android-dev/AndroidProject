@@ -1,5 +1,4 @@
-package lizka.reminder;
-
+package lizka.reminder.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,23 +8,21 @@ import android.view.ViewGroup;
 
 import lizka.reminder.R;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DoneTaskFragment extends Fragment {
+public class CurrentTaskFragment extends Fragment {
 
 
-    public DoneTaskFragment() {
+    public CurrentTaskFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_done_task, container, false);
+        return inflater.inflate(R.layout.fragment_current_task, container, false);
     }
 
 }

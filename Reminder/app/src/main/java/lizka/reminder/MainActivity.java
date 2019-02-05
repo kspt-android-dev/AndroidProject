@@ -1,5 +1,8 @@
 package lizka.reminder;
 
+import android.app.TimePickerDialog;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -8,9 +11,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Toast;
+
+import lizka.reminder.dialog.AddingTaskDialogFragment;
+import lizka.reminder.fragment.SplashFragment;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddingTaskDialogFragment.AddingTaskListener {
 
     FragmentManager fragmentManager;
 
@@ -73,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     private void setUI(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null){
-            toolbar.setTitleTextColor(getColor(R.color.colorPrimaryDark));
+            toolbar.setTitleTextColor(getColor(R.color.white));
             setSupportActionBar(toolbar);
         }
 
@@ -104,8 +112,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        // вешаем на него слушателя
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment addingTaskDialogFragment = new AddingTaskDialogFragment();
+                addingTaskDialogFragment.show(fragmentManager, "AddingTaskDialogFragment");
+            }
+        });
 
     }
 
+    // вешаем Toast'ы для обратной связи
+    @Override
+    public void onTaskAdded() {
+        Toast.makeText(this, "Task added", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onTaskAddingCancel() {
+        Toast.makeText(this, "Task adding cancel", Toast.LENGTH_LONG).show();
+    }
 }

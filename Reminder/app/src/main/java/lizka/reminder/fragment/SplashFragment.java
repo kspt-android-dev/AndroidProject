@@ -1,4 +1,4 @@
-package lizka.reminder;
+package lizka.reminder.fragment;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.concurrent.TimeUnit;
+
+import lizka.reminder.R;
 
 /**
  * A simple {@link Fragment} subclass.

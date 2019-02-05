@@ -4,6 +4,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import lizka.reminder.fragment.CurrentTaskFragment;
+import lizka.reminder.fragment.DoneTaskFragment;
+
 public class TabAdapter extends FragmentStatePagerAdapter {
 
     private int numberOfTabs;
