@@ -19,8 +19,8 @@ class Insect(context: Context, startX: Float, startY: Float,
     private lateinit var animator: ObjectAnimator
 
     enum class InsectType(val speed: Float, val tapCost: Int, val width: Int, val height: Int, val image: Int) {
-        BUG(0.2F, 2, 87, 130, R.drawable.bug),
-        LADYBUG(0.12F, -5, 81, 100, R.drawable.ladybug)
+        BUG(BUG_SPEED, BUG_TAP_COST, BUG_WIDTH, BUG_HEIGHT, R.drawable.bug),
+        LADYBUG(LADYBUG_SPEED, LADYBUG_TAP_COST, LADYBUG_WIDTH, LADYBUG_HEIGHT, R.drawable.ladybug)
     }
 
     init {
@@ -32,6 +32,7 @@ class Insect(context: Context, startX: Float, startY: Float,
     }
 
     fun animateInsect() {
+        rotation = (180 - Math.atan2((endX - x).toDouble(), (endY - y).toDouble()) * 180 / Math.PI).toFloat()
         val transX = PropertyValuesHolder.ofFloat("x", endX)
         val transY = PropertyValuesHolder.ofFloat("y", endY)
         animator = ObjectAnimator.ofPropertyValuesHolder(this, transX, transY)
@@ -52,4 +53,14 @@ class Insect(context: Context, startX: Float, startY: Float,
         }
     }
 
+    companion object {
+        const val BUG_SPEED = 0.2F
+        const val LADYBUG_SPEED = 0.12F
+        const val BUG_TAP_COST = 1
+        const val LADYBUG_TAP_COST = -5
+        const val BUG_WIDTH = 87
+        const val LADYBUG_WIDTH = 81
+        const val BUG_HEIGHT = 130
+        const val LADYBUG_HEIGHT = 100
+    }
 }
