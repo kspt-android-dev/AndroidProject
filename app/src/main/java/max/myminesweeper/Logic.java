@@ -269,6 +269,10 @@ public class Logic {
         return condition;
     }
 
+    public void setCondition(Condition cond) {
+        this.condition = cond;
+    }
+
     public int getCellSide() {
         return cellSide;
     }
