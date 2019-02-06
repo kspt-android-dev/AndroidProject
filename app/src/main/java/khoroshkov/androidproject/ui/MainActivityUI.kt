@@ -10,6 +10,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.google.android.exoplayer2.ui.PlayerView
 import khoroshkov.androidproject.*
+import khoroshkov.androidproject.utils.*
 import org.jetbrains.anko.*
 import kotlin.properties.Delegates
 
@@ -19,14 +20,15 @@ class MainActivityUI : AnkoComponent<MainActivity> {
         /* Maybe it is not a good way but it works */
         var PLAYER_VIEW: PlayerView by Delegates.notNull()
         var SEEK_BAR: SeekBar by Delegates.notNull()
-        var CURRENT_TIME: TextView by Delegates.notNull()
+        var TIME_POSITION: TextView by Delegates.notNull()
         var DURATION: TextView by Delegates.notNull()
-        var TRACK: TextView by Delegates.notNull()
+        var TITLE: TextView by Delegates.notNull()
         var ARTIST: TextView by Delegates.notNull()
         var PREVIOUS_BUTTON: ImageButton by Delegates.notNull()
         var PLAY_BUTTON: ImageButton by Delegates.notNull()
         var NEXT_BUTTON: ImageButton by Delegates.notNull()
         var SHUFFLE_BUTTON: ImageButton by Delegates.notNull()
+        var LIST_BUTTON: ImageButton by Delegates.notNull()
         var REPEAT_BUTTON: ImageButton by Delegates.notNull()
     }
 
@@ -68,8 +70,8 @@ class MainActivityUI : AnkoComponent<MainActivity> {
                 width = matchParent
             }
             relativeLayout {
-                CURRENT_TIME = textView {
-                    text = CURRENT_TIME_DEFAULT
+                TIME_POSITION = textView {
+                    text = TIME_POSITION_DEFAULT
                     textSize = 15F
                     textColor = ContextCompat.getColor(context, R.color.colorActive)
                 }.lparams {
@@ -88,8 +90,8 @@ class MainActivityUI : AnkoComponent<MainActivity> {
                 weight = 1F
             }
             relativeLayout {
-                TRACK = textView {
-                    text = TRACK_DEFAULT
+                TITLE = textView {
+                    text = TITLE_DEFAULT
                     textSize = 28F
                     textColor = ContextCompat.getColor(context, R.color.colorMainElement)
                 }.lparams {
@@ -146,6 +148,12 @@ class MainActivityUI : AnkoComponent<MainActivity> {
                 }.lparams {
                     alignParentStart()
                     centerVertically()
+                }
+                LIST_BUTTON = imageButton {
+                    imageResource = R.drawable.ic_format_list_bulleted
+                    backgroundColor = 0
+                }.lparams {
+                    centerInParent()
                 }
                 REPEAT_BUTTON = imageButton {
                     imageResource = R.drawable.ic_repeat_off

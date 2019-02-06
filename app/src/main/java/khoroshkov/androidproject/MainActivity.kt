@@ -14,24 +14,26 @@ import org.jetbrains.anko.*
 import kotlin.properties.Delegates
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import com.google.android.exoplayer2.util.Log
-import java.util.concurrent.TimeUnit
 import com.google.android.exoplayer2.Player
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import android.widget.SeekBar
+import khoroshkov.androidproject.utils.*
 
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
     private var player: SimpleExoPlayer by Delegates.notNull()
-    private val mHandler = Handler()
+    private val handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i(TAG, "onCreate()")
         MainActivityUI().setContentView(this)
     }
 
     override fun onStart() {
         super.onStart()
+        Log.i(TAG, "onStart()")
         player = ExoPlayerFactory.newSimpleInstance(this, DefaultTrackSelector())
         MainActivityUI.PLAYER_VIEW.player = player
         val dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, resources.getString(R.string.app_name)))
@@ -40,6 +42,9 @@ class MainActivity : AppCompatActivity() {
         toPlayButton()
         toRepeatInactiveButton()
         toShuffleInactiveButton()
+        MainActivityUI.PREVIOUS_BUTTON.onClick { player.previous() }
+        MainActivityUI.NEXT_BUTTON.onClick { player.next() }
+        MainActivityUI.LIST_BUTTON.onClick { startActivity<PlaylistActivity>() }
         player.prepare(mediaSource)
         player.playWhenReady = true
         player.addListener(object : Player.EventListener {
@@ -74,11 +79,11 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {}
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                mHandler.removeCallbacks(updateTimeTask)
+                handler.removeCallbacks(updateTimeTask)
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                mHandler.removeCallbacks(updateTimeTask)
+                handler.removeCallbacks(updateTimeTask)
                 val currentPosition = MainActivityUI.SEEK_BAR.progress.toLong()
                 player.seekTo(currentPosition)
                 startUpdatingProgressBar()
@@ -88,6 +93,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        Log.i(TAG, "onStop()")
         //playerView.player = null
         player.release()
         // player = null // in the video from IO18 but I use Delegates.NotNull
@@ -96,11 +102,11 @@ class MainActivity : AppCompatActivity() {
     private fun initTrackInfo() {
         val duration = player.duration
         Log.i(TAG, "Duration: $duration")
-        MainActivityUI.SEEK_BAR.max = duration.toInt() + 1
+        MainActivityUI.SEEK_BAR.max = duration.toInt()
         MainActivityUI.DURATION.text = duration.toTime()
         startUpdatingProgressBar()
         MainActivityUI.ARTIST.text
-        MainActivityUI.TRACK.text
+        MainActivityUI.TITLE.text
     }
 
     private fun toPauseButton() {
@@ -162,26 +168,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startUpdatingProgressBar() {
-        mHandler.postDelayed(updateTimeTask, 100)
+        handler.postDelayed(updateTimeTask, 100)
     }
 
     private val updateTimeTask = object : Runnable {
         override fun run() {
             val progress = player.currentPosition
-            MainActivityUI.CURRENT_TIME.text = progress.toTime()
+            MainActivityUI.TIME_POSITION.text = progress.toTime()
             MainActivityUI.SEEK_BAR.progress = progress.toInt()
-            mHandler.postDelayed(this, 100)
-        }
-    }
-
-    private fun Long.toTime(): String {
-        val hours = TimeUnit.MILLISECONDS.toHours(this)
-        val minutes = TimeUnit.MILLISECONDS.toMinutes(this) % 60
-        val seconds = TimeUnit.MILLISECONDS.toSeconds(this)  % 60
-        return if (hours > 0) {
-            String.format("%02d:%02d:%02d", hours, minutes, seconds)
-        } else {
-            String.format("%02d:%02d", minutes, seconds)
+            handler.postDelayed(this, 100)
         }
     }
 }

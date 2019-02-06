@@ -156,7 +156,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/snap/android-studio/70/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_repeat_one_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/snap/android-studio/70/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_format_list_bulleted_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -166,7 +166,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_repeat_one" />
+                            <entry key="outputName" value="ic_format_list_bulleted" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="$USER_HOME$" />
                           </map>
