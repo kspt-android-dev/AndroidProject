@@ -1,7 +1,6 @@
 package com.example.eugenia.game_2048;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -23,40 +22,40 @@ public class ExampleUnitTest {
 //    }
 
     @Test
-    public void matrix_up() {
+    public void upMatrix() {
         Matrix matrix = new Matrix();
         matrix.m =new int[][]  {    {0, 0, 0, 0 },
                 {0, 2, 0, 0 },
                 {0, 2, 2, 0 },
                 {0, 0, 0, 0 } };
-        int[][] expected_up;
-        expected_up = new int[][]{    {0, 4, 2, 0 },
+        int[][] expectedUp;
+        expectedUp = new int[][]{    {0, 4, 2, 0 },
                 {0, 0, 0, 0 },
                 {0, 0, 0, 0 },
                 {0, 0, 0, 0 } };
 
         matrix.up();
         System.out.println();
-        assertArrayEquals(expected_up,matrix.m);
+        assertArrayEquals(expectedUp,matrix.m);
 
     }
     @Test
-    public void matrix_right() {
+    public void rightMatrix() {
         Matrix matrix = new Matrix();
         matrix.m =new int[][]  {    {0, 0, 0, 0 },
                 {0, 2, 0, 0 },
                 {0, 2, 2, 0 },
                 {0, 0, 0, 0 } };
 
-        int[][]expected_right;
-        expected_right = new int[][]{    {0, 0, 0, 0 },
+        int[][]expectedRight;
+        expectedRight = new int[][]{    {0, 0, 0, 0 },
                 {0, 0, 0, 2 },
                 {0, 0, 0, 4},
                 {0, 0, 0, 0 } };
 
         matrix.right();
         System.out.println();
-        assertArrayEquals(expected_right,matrix.m);
+        assertArrayEquals(expectedRight,matrix.m);
 
     }
 

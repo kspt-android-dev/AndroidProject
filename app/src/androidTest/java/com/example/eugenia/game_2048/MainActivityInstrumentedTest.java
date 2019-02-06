@@ -27,7 +27,7 @@ public class MainActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
     @Test
-    public void is_itemShowed() {
+    public void isItemShowed() {
         onView(withId(R.id.welcomeSign)).check(matches(isDisplayed()));
         onView(withId(R.id.startButton)).check(matches(isDisplayed()));
         onView(withId(R.id.exitButton)).check(matches(isDisplayed()));

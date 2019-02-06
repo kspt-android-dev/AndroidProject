@@ -35,12 +35,12 @@ public class GameActivity extends Activity {
         }
         score = matr.score;
         scoreView.setText(getString(R.string.result, score));
-        drawOnView(fill_tab());
+        drawOnView(fillTab());
         gridView.setOnTouchListener(new OnSwipeTouchListener(GameActivity.this){
             @Override
             public void onSwipeTop() {
-                if(matr.m_up()) {
-                    drawOnView(fill_tab());
+                if(matr.matrixUp()) {
+                    drawOnView(fillTab());
                     score = matr.score;
                    scoreView.setText(getString(R.string.result, score));
                    if (matr.victory) showEndGame();
@@ -50,8 +50,8 @@ public class GameActivity extends Activity {
 
             @Override
             public void onSwipeBottom() {
-                if(matr.m_down()) {
-                    drawOnView(fill_tab());
+                if(matr.matrixDown()) {
+                    drawOnView(fillTab());
                     score = matr.score;
                     scoreView.setText(getString(R.string.result, score));
                     if (matr.victory) showEndGame();
@@ -61,8 +61,8 @@ public class GameActivity extends Activity {
 
             @Override
             public void onSwipeLeft() {
-                if(matr.m_left()) {
-                    drawOnView(fill_tab());
+                if(matr.matrixLeft()) {
+                    drawOnView(fillTab());
                     score = matr.score;
                     scoreView.setText(getString(R.string.result, score));
                     if (matr.victory) showEndGame();
@@ -72,8 +72,8 @@ public class GameActivity extends Activity {
 
             @Override
             public void onSwipeRight() {
-                if(matr.m_right()) {
-                    drawOnView(fill_tab());
+                if(matr.matrixRight()) {
+                    drawOnView(fillTab());
                     score = matr.score;
                     scoreView.setText(getString(R.string.result, score));
                     if (matr.victory) showEndGame();
@@ -126,7 +126,7 @@ public class GameActivity extends Activity {
                 picId = R.drawable.pic32;
                 break;
             case 64:
-                picId = R.drawable.pic4;
+                picId = R.drawable.pic64;
                 break;
             case 128:
                 picId = R.drawable.pic128;
@@ -150,7 +150,7 @@ public class GameActivity extends Activity {
     }
 
     //заполняем массив id картинок для передачи в адптер
-    Integer[] fill_tab() {
+    Integer[] fillTab() {
         Integer[] picsId = new Integer[CELLS_NUMBER * CELLS_NUMBER];
         int c = 0;
         for (int i = 0; i < CELLS_NUMBER; i++) {
@@ -209,7 +209,7 @@ public class GameActivity extends Activity {
                 matr.m[i][j]=matr.allList.get(c);
                 c++;
             }
-            drawOnView(fill_tab());
+            drawOnView(fillTab());
 
         }
     }
