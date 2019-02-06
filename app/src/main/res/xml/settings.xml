@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/instruction">
+        <Preference android:title="@string/watch_instruction">
+            <intent
+                android:targetClass="max.myminesweeper.Instruction"
+                android:targetPackage="max.myminesweeper" />
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/field">
+
+        <EditTextPreference
+
+            android:defaultValue="10"
+            android:dialogTitle="@string/set_field_width_dialog"
+            android:key="field_width"
+            android:summary="@string/set_field_width"
+            android:title="@string/field_width" />
+
+        <EditTextPreference
+            android:defaultValue="10"
+            android:dialogTitle="@string/set_field_height_dialog"
+            android:key="field_height"
+            android:summary="@string/set_field_height"
+            android:title="@string/field_height" />
+
+        <EditTextPreference
+            android:defaultValue="30"
+            android:dialogTitle="@string/set_mines_dialog"
+            android:key="number_of_mines"
+            android:summary="@string/set_number_of_mines"
+            android:title="@string/number_of_mines" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

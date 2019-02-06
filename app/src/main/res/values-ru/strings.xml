@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="number_of_mines">КОЛИЧЕСТВО МИН</string>
+    <string name="you_lose">ВЫ ПРОИГРАЛИ.</string>
+    <string name="you_won">ВЫ ВЫИГРАЛИ!</string>
+    <string name="new_game">НОВАЯ ИГРА</string>
+    <string name="overview">ОБЗОР</string>
+    <string name="instruction">ИНСТРУКЦИЯ</string>
+    <string name="watch_instruction">Открыть инструкцию</string>
+    <string name="html">
+        <![CDATA[
+        <p> «<b>Сапер</b>» – несложная игра, которая, тем не менее, развивает внимание, память и логику.
+        <p><b>Основная ее цель</b> — найти и открыть все клетки, в которых нет мин.
+            Нужно быть очень осторожным: как только вы открываете на клетку, под которой спрятан взрывоопасный сюрприз, игра окончена.
+            Сапер ошибается только один раз. </p>
+        <p><h2>Поле</h2>
+        <p>Поле разделено на смежные ячейки, некоторые из которых "заминированы".
+        <br>Игрок должен открывать ячейки, стараясь не открыть ячейку с миной (открыв ячейку с миной, он проигрывает).
+        <br>Мины расставляются после первого хода, поэтому проиграть на первом ходу невозможно.
+        <p><h2>Ячейки</h2>
+        <p>Если под открытой ячейкой нет мины, то в ней появляется число, показывающее, сколько мин скрыто вокруг данной ячейки (это число поможет понять вам где находятся безопасные ячейки, а где находятся бомбы).
+        <br>Если под соседними ячейками тоже нет мин, то открывается некоторая «не заминированная» область до ячеек, в которых есть цифры.
+        ]]>
+    </string>
+    <string name="notification_title">Сапёр</string>
+    <string name="notification_text">Вы не заходили в игру долгое время. Нам нужен сапёр!</string>
+    <string name="set_field_width_dialog">Установите ширину поля</string>
+    <string name="set_field_width">Установите ширину поля</string>
+    <string name="field_width">ШИРИНА</string>
+    <string name="set_field_height_dialog">Установите высоту поля</string>
+    <string name="set_field_height">Установите высоту поля</string>
+    <string name="field_height">ВЫСОТА</string>
+    <string name="set_mines_dialog">Установите количество мин (2–200)</string>
+    <string name="set_number_of_mines">Установите количество мин</string>
+    <string name="field">ИГРОВОЕ ПОЛЕ</string>
+</resources>

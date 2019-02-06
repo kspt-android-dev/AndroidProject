@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name" translatable="false">MINESWEEPER</string>
+    <string name="reset">RESET</string>
+    <string name="settings">SETTINGS</string>
+
+    <!-- Settings -->
+    <string name="field">FIELD</string>
+    <string name="number_of_mines">NUMBER OF MINES</string>
+    <string name="set_number_of_mines">Set number of mines</string>
+    <string name="set_mines_dialog">Set number of mines (2–200)</string>
+    <string name="field_height">HEIGHT</string>
+    <string name="set_field_height">Set field height</string>
+    <string name="set_field_height_dialog">Set field height (2–25)</string>
+    <string name="field_width">WIDTH</string>
+    <string name="set_field_width">Set field width</string>
+    <string name="set_field_width_dialog">Set field width (2–25)</string>
+    <string name="instruction">INSTRUCTION</string>
+    <string name="watch_instruction">Watch instruction</string>
+
+    <string name="html">
+        <![CDATA[
+        <p> «<b>Minesweeper</b>» – simple game that, nevertheless, develops attention, memory and logic.
+        <p><b>Its main goal</b> — find all cells without mines and open them.
+            You need to be very careful: as soon as you open the cage under which the mine is hidden, the game is over.
+            Minesweeper makes a mistake only once. </p>
+        <p><h2>Field</h2>
+        <p>The field is divided into adjacent cells, some of which are "mined".
+        <br>The player must open the cells, trying not to open the cell with a mine (by opening the cell with a mine, he loses).
+        <br>Mines are placed after the first move, so it’s impossible to lose on the first move..
+        <p><h2>Cells</h2>
+        <p>If there is no mine under the open cell, then a number appears in it indicating how many mines are hidden around this cell (this number will help you understand where the safe cells are and where the bombs are).
+        <br>If there are no mines under the neighboring cells too, then a certain “non-mined” area opens up to cells that contain numbers.
+        ]]>
+    </string>
+
+
+    <!-- Notification -->
+    <string name="notification_title">Minesweeper</string>
+    <string name="notification_text">You have not been in the game for a long time. We need you!</string>
+
+    <!-- Dialogs strings-->
+    <string name="overview">OVERVIEW</string>
+    <string name="you_lose">YOU LOST.</string>
+    <string name="you_won">YOU WON!</string>
+    <string name="new_game">NEW GAME</string>
+
+    <string name="playing_field" translatable="false">playing_field</string>
+    <string name="title_activity_settings">SETTINGS</string>
+
+</resources>
