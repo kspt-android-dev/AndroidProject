@@ -26,5 +26,4 @@
         <activity android:name=".Rules"></activity>
 
     </application>
-
 </manifest>

@@ -7,18 +7,18 @@ public class Cell implements Serializable {
     private String color = "#ffffff";
     private State state = State.Color;
 
-    enum State{
+    enum State {
         NumColor, Color, Boundaries, ActiveColor;
     }
 
-    boolean TapCell(String activeColor, String activeText){
-        if(state == State.Color){
-            if(color.equals(activeColor))color = "#ffffff";
+    boolean TapCell(String activeColor, String activeText) {
+        if (state == State.Color) {
+            if (color.equals(activeColor)) color = "#ffffff";
             else color = activeColor;
-            if(num.equals(activeText)) num = " ";
+            if (num.equals(activeText)) num = " ";
             else num = activeText;
             return true;
-        }else return false;
+        } else return false;
     }
 
     public void setNum(String num) {

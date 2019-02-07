@@ -18,7 +18,7 @@ public class Gameboard extends AppCompatActivity {
     GridView gridView;
     StringBuilder result;
     FileParser parser = new FileParser();
-    private static final String TAG = "My_tag";
+    private static final String TAG = "MY_tag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +41,20 @@ public class Gameboard extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(fieldAdapter.cells[position].TapCell(colorButtonActive, textButtonActive))  Log.d(TAG, "Cell change");
+                if (fieldAdapter.cells[position].TapCell(colorButtonActive, textButtonActive))
+                    Log.d(TAG, "Cell change");
                 else Log.d(TAG, "Invalid cell pressed");
                 fieldAdapter.notifyDataSetChanged();
-                if(fieldAdapter.cells[position].getColor().equals(parser.getColor1())) result.setCharAt(position,'.');
-                else if(fieldAdapter.cells[position].getColor().equals(parser.getColor2())) result.setCharAt(position,'-');
-                else result.setCharAt(position,'X');
-                if(parser.getAnswer().equals(result.toString())) {
-                    try{
+                if (fieldAdapter.cells[position].getColor().equals(parser.getColor1()))
+                    result.setCharAt(position, '.');
+                else if (fieldAdapter.cells[position].getColor().equals(parser.getColor2()))
+                    result.setCharAt(position, '-');
+                else result.setCharAt(position, 'X');
+                if (parser.getAnswer().equals(result.toString())) {
+                    try {
                         Intent intent = new Intent(Gameboard.this, Gameover.class);
                         startActivity(intent);
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -60,7 +63,7 @@ public class Gameboard extends AppCompatActivity {
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.color1:
                         colorButtonActive = parser.getColor1();
                         textButtonActive = buttonColor1.getText().toString();
@@ -74,8 +77,8 @@ public class Gameboard extends AppCompatActivity {
                         textButtonActive = blockCell.getText().toString();
                         break;
                 }
-                for (Cell cell : masCell){
-                    if(cell.getState() == Cell.State.ActiveColor) cell.setColor(colorButtonActive);
+                for (Cell cell : masCell) {
+                    if (cell.getState() == Cell.State.ActiveColor) cell.setColor(colorButtonActive);
                     Log.d(TAG, "Change active color");
                 }
                 fieldAdapter.notifyDataSetChanged();
@@ -104,8 +107,8 @@ public class Gameboard extends AppCompatActivity {
         result = new StringBuilder(savedInstanceState.getString("result"));
         masCell = (Cell[]) savedInstanceState.getSerializable("masCell");
         fieldAdapter.cells = (Cell[]) savedInstanceState.getSerializable("masCell");
-        for (Cell cell : masCell){
-            if(cell.getState() == Cell.State.ActiveColor) cell.setColor(colorButtonActive);
+        for (Cell cell : masCell) {
+            if (cell.getState() == Cell.State.ActiveColor) cell.setColor(colorButtonActive);
         }
         fieldAdapter.notifyDataSetChanged();
         Log.d(TAG, "Restore saved instance of gameboard");

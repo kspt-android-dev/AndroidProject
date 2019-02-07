@@ -16,7 +16,6 @@ public class FileParserTest {
         assertEquals(13, pars.getColumns());
         assertEquals("#8B4513", pars.getColor1());
         assertEquals("#FF8C00", pars.getColor2());
-
         FileParser pars2 = new FileParser();
         pars2.init("nonograms15x15e1.txt");
         assertEquals(19, pars2.getColumns());

@@ -17,7 +17,7 @@ public class FieldAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
 
-    public FieldAdapter(Context context, Cell buttons[]){
+    public FieldAdapter(Context context, Cell buttons[]) {
         this.context = context;
         this.cells = buttons;
     }
@@ -41,12 +41,12 @@ public class FieldAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View gridView = convertView;
 
-        if(convertView == null){
+        if (convertView == null) {
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             gridView = inflater.inflate(R.layout.cell, null);
 
         }
-        TextView textView= gridView.findViewById(R.id.text_view);
+        TextView textView = gridView.findViewById(R.id.text_view);
         textView.setBackgroundColor(Color.parseColor(cells[position].getColor()));
         textView.setText(cells[position].getNum());
         return gridView;

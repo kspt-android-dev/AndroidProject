@@ -8,6 +8,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 public class Rules extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,7 +16,7 @@ public class Rules extends AppCompatActivity {
         TextView head_rules = findViewById(R.id.headline_rules);
         TextView rules = findViewById(R.id.rules_text);
         rules.setMovementMethod(new ScrollingMovementMethod());
-        Typeface typeFace=Typeface.createFromAsset(getAssets(),"EastAP.ttf");
+        Typeface typeFace = Typeface.createFromAsset(getAssets(), "EastAP.ttf");
         rules.setTypeface(typeFace);
         head_rules.setTypeface(typeFace);
     }
