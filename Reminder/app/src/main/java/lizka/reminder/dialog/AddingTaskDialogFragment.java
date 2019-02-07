@@ -12,14 +12,9 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
-
-import java.util.Calendar;
 
 import lizka.reminder.R;
-import lizka.reminder.Utils;
 
 public class AddingTaskDialogFragment extends DialogFragment {
 
@@ -68,56 +63,27 @@ public class AddingTaskDialogFragment extends DialogFragment {
 
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            @SuppressWarnings("ValidFragment")
             public void onClick(View v) {
 
-                // чтобы анимация не накладывалась
-                if (etDate.length() == 0){
-                    etDate.setText(" ");
-                }
-
-                 new DatePickerFragment(){
-
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar dateCalendar = Calendar.getInstance();
-                        dateCalendar.set(year, monthOfYear, dayOfMonth);
-                        etDate.setText(Utils.getDate(dateCalendar.getTimeInMillis()));
-
-                    }
-
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        etDate.setText(null);
-                    }
-                }.show(getActivity().getSupportFragmentManager(), "DataPickerFragment");
+                if (etTime.length() == 0){
+                etTime.setText(" ");
+            }
+                 DatePickerFragment datePickerFragment = new DatePickerFragment();
+                datePickerFragment.setDate(etDate);
+                datePickerFragment.show(getActivity().getSupportFragmentManager(), "DataPickerFragment");
             }
         });
 
         etTime.setOnClickListener(new View.OnClickListener() {
             @Override
-            @SuppressWarnings("ValidFragment")
             public void onClick(View v) {
 
                 if (etTime.length() == 0){
                     etTime.setText(" ");
                 }
 
-                TimePickerFragment timePickerFragment = new TimePickerFragment(){
-
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar timeCalendar = Calendar.getInstance();
-                        timeCalendar.set(0, 0, 0, hourOfDay, minute);
-                        etTime.setText(Utils.getTime(timeCalendar.getTimeInMillis()));
-                    }
-
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        etTime.setText(null);
-                    }
-                };
-
+                TimePickerFragment timePickerFragment = new TimePickerFragment();
+                timePickerFragment.setTime(etTime);
                 timePickerFragment.show(getActivity().getSupportFragmentManager(), "TimePickerFragment");
             }
         });

@@ -2,17 +2,24 @@ package lizka.reminder.dialog;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import java.util.Calendar;
 
-import lizka.reminder.R;
+import lizka.reminder.Utils;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+    private EditText etDate;
+
+    public void setDate (EditText etDate){
+        this.etDate = etDate;
+    }
 
     @NonNull
     @Override
@@ -27,7 +34,17 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        Calendar dateCalendar = Calendar.getInstance();
+        dateCalendar.set(year, monthOfYear, dayOfMonth);
 
+
+        etDate.setText(Utils.getDate(dateCalendar.getTimeInMillis()));
+
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        etDate.setText(null);
     }
 }
