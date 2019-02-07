@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/settings_background"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/button10x10"
+        style="@style/Button_ver"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/button_ver"
+        android:text="@string/size10x10"
+        android:textColor="#d30818"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/button15x15"
+        style="@style/Button_ver"
+        android:background="@drawable/button_ver"
+        android:text="@string/size15x15"
+        android:textColor="#d30818"
+        android:textSize="30sp" />
+
+</LinearLayout>

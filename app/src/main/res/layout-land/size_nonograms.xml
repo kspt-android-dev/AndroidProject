@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/settings_background">
+
+        <Button
+            android:id="@+id/button10x10"
+            style="@style/Button_hor"
+            android:background="@drawable/button_hor"
+            android:text="@string/size10x10"
+            android:textColor="#d30818"
+            android:textSize="30sp"/>
+
+        <Button
+            android:id="@+id/button15x15"
+            style="@style/Button_hor"
+            android:background="@drawable/button_hor"
+            android:text="@string/size15x15"
+            android:textColor="#d30818"
+            android:textSize="30sp" />
+
+</LinearLayout>
