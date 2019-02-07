@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Nonograms</string>
+    <string name="won">YOU WON!</string>
+    <string name="play">PLAY</string>
+    <string name="rules">RULES</string>
+    <string name="sound">SOUND</string>
+    <string name="exit">EXIT</string>
+    <string name="headline_rules">RULES OF THE GAME</string>
+    <string name="rules_text">Nonograms it is a logic puzzle that requires you to build a picture by solving clues.
+        The aim of the puzzle is to restore this picture in full.
+        Numbers, shown on the left and above the nonograms – describe the groups of painted squares (which go in sequence, no blanks) horizontally and vertically accordingly.
+        The order of these numbers describes the order of location of these groups.
+        Between the groups of one colour there should be at least one unpainted square (otherwise they would make one group). Between groups of different colour there can be no empty squares.</string>
+    <string name="size10x10">10 x 10</string>
+    <string name="size15x15">15 x 15</string>
+</resources>
