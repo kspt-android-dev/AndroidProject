@@ -2,11 +2,11 @@ package khoroshkov.androidproject
 
 import android.Manifest
 import android.app.Activity
+import android.content.*
 import android.os.Bundle
 import khoroshkov.androidproject.ui.PlaylistActivityUI
 import org.jetbrains.anko.*
 import khoroshkov.androidproject.utils.Song
-import android.content.Context
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -15,22 +15,42 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import khoroshkov.androidproject.ui.SongLayout
 import android.content.pm.PackageManager
+import android.os.IBinder
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
-import kotlin.properties.Delegates
+import org.jetbrains.anko.sdk27.coroutines.onClick
+import khoroshkov.androidproject.player.PlayerService
 
 private const val REQUEST_CODE_READ_EXTERNAL_STORAGE = 1
 private const val TAG = "PlaylistActivity"
 
 class PlaylistActivity : Activity() {
-    private var songsList: List<Song> by Delegates.notNull()
+    private lateinit var songsList: List<Song>
     private var isReadExternalStorageGranted = false
+    private var playerService: PlayerService? = null
+    private val playerConnection = object : ServiceConnection {
+
+        override fun onServiceConnected(name: ComponentName, service: IBinder) {
+            val binder = service as PlayerService.PlayerBinder
+            playerService = binder.service
+        }
+
+        override fun onServiceDisconnected(name: ComponentName) {
+            playerService = null
+        }
+    }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "onCreate()")
         PlaylistActivityUI().setContentView(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val playerIntent = Intent(this, PlayerService::class.java)
+        bindService(playerIntent, playerConnection, Context.BIND_AUTO_CREATE)
         songsList = getSongList()
         Log.i(TAG, "songList.size = " + songsList.size)
         Collections.sort(songsList, object : Comparator<Song> {
@@ -40,6 +60,15 @@ class PlaylistActivity : Activity() {
         })
         val songAdapter = SongAdapter(this, songsList)
         PlaylistActivityUI.LIST_VIEW.adapter = songAdapter
+        PlaylistActivityUI.PLAY_ALL_BUTTON.onClick {
+            playerService?.playlist = songsList
+            startActivity<MainActivity>()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unbindService(playerConnection)
     }
 
     private fun getSongList(): List<Song> {
@@ -107,10 +136,14 @@ class PlaylistActivity : Activity() {
             val songLayout = SongLayout(context)
             val titleView = songLayout.title
             val artistView = songLayout.artist
-            val (_, title, artist) = songs[position]
-            titleView.text = title
-            artistView.text = artist
+            val song = songs[position]
+            titleView.text = song.title
+            artistView.text = song.artist
             songLayout.tag = position
+            songLayout.onClick {
+                playerService?.playlist = listOf(song)
+                startActivity<MainActivity>()
+            }
             return songLayout
         }
     }

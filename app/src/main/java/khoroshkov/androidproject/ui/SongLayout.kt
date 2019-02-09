@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat
 import android.widget.LinearLayout
 import android.widget.TextView
 import khoroshkov.androidproject.R
+import khoroshkov.androidproject.utils.EDGE_PADDING
 import org.jetbrains.anko.*
 
 class SongLayout(context: Context) : LinearLayout(context) {
@@ -22,5 +23,7 @@ class SongLayout(context: Context) : LinearLayout(context) {
             textColor = ContextCompat.getColor(context, R.color.colorActive)
             textSize = 19F
         }
+        rightPadding = dip(EDGE_PADDING)
+        leftPadding = dip(EDGE_PADDING)
     }
 }

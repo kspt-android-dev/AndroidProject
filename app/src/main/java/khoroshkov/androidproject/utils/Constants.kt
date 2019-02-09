@@ -13,3 +13,5 @@ const val ARTIST_DEFAULT = "xxxxxx"
 const val PLAYLIST_TITLE = "Playlist"
 
 const val BUTTON_PADDING = 80
+
+const val PLAY_ALL = "Play all"
