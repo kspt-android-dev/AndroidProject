@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import khoroshkov.androidproject.ui.MainActivityUI
 import org.jetbrains.anko.*
-import com.google.android.exoplayer2.util.Log
 import com.google.android.exoplayer2.Player
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import android.widget.SeekBar
@@ -16,6 +15,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.IBinder
 import android.content.ServiceConnection
+import android.util.Log
 import com.google.android.exoplayer2.ExoPlaybackException
 
 private const val TAG = "MainActivity"
@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
             val binder = service as PlayerService.PlayerBinder
             playerService = binder.service
             mainActivityUI.playerView.player = playerService?.player
-            playerService?.player?.addListener(this@MainActivity)
             val player = playerService?.player
+            player?.addListener(this@MainActivity)
             if (player != null && player.playWhenReady && player.playbackState == Player.STATE_READY) {
                 toPauseButton()
                 initTrackInfo()
@@ -72,7 +72,6 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
 
         override fun onServiceDisconnected(name: ComponentName) {
             playerService = null
-            playerService?.player?.removeListener(this@MainActivity)
             mainActivityUI.playerView.player = null
             stopUpdatingProgressBar()
         }
@@ -98,7 +97,13 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
     override fun onStop() {
         super.onStop()
         Log.i(TAG, "onStop()")
+        playerService?.player?.removeListener(this@MainActivity)
         unbindService(playerConnection)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "onDestroy()")
     }
 
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
@@ -107,6 +112,10 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
             initTrackInfo()
             toPauseButton()
             startUpdatingProgressBar()
+        } else if (playbackState == Player.STATE_READY) {
+            Log.i(TAG, "Audio was changed")
+            initTrackInfo()
+            toPlayButton()
         } else {
             Log.i(TAG, "Audio is paused")
             toPlayButton()
@@ -121,8 +130,8 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
         }
     }
 
-    override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {
-        if (shuffleModeEnabled) {
+    override fun onShuffleModeEnabledChanged(isShuffleModeEnabled: Boolean) {
+        if (isShuffleModeEnabled) {
             toShuffleButton()
         } else {
             toShuffleInactiveButton()

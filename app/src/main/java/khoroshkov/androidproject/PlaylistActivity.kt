@@ -51,6 +51,7 @@ class PlaylistActivity : Activity() {
 
     override fun onStart() {
         super.onStart()
+        Log.i(TAG, "onStart()")
         val playerIntent = Intent(this, PlayerService::class.java)
         bindService(playerIntent, playerConnection, Context.BIND_AUTO_CREATE)
         songsList = getSongList()
@@ -70,6 +71,7 @@ class PlaylistActivity : Activity() {
 
     override fun onStop() {
         super.onStop()
+        Log.i(TAG, "onStop()")
         unbindService(playerConnection)
     }
 

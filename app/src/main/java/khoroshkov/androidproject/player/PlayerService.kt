@@ -16,19 +16,33 @@ import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.util.Log
 import khoroshkov.androidproject.R
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
+import java.lang.IllegalStateException
 
 private const val TAG = "PlayerService"
 
 class PlayerService : Service() {
-    private lateinit var exoPlayer: ExoPlayer
+
+    private companion object {
+        private var staticPlayer: ExoPlayer? = null
+            set(value) {
+                if (field != null) {
+                    throw IllegalStateException("The field is already initialized")
+                } else {
+                    field = value
+                }
+            }
+        private var staticPlaylist: List<Song> = listOf()
+    }
+
     val player
-        get() = exoPlayer
+        get() = staticPlayer
     private val playerBinder = PlayerBinder()
-    var playlist: List<Song> = listOf()
+    var playlist
+        get() = staticPlaylist
         set(value) {
             Log.i(TAG, "Set playlist")
-            field = value
-            val listOfURI = playlist.map {
+            staticPlaylist = value
+            val listOfURI = value.map {
                 ContentUris.withAppendedId(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, it.id)
             }
             val bandwidthMeter = DefaultBandwidthMeter()
@@ -47,26 +61,34 @@ class PlayerService : Service() {
                 concatenatedMediaSource.addMediaSource(mediaSource)
             }
             Log.i(TAG, "Preparing MediaSource")
-            exoPlayer.prepare(concatenatedMediaSource)
+            staticPlayer?.prepare(concatenatedMediaSource)
             Log.i(TAG, "Prepared MediaSource")
-            exoPlayer.playWhenReady = true
+            staticPlayer?.playWhenReady = true
         }
     val currentSong: Song?
         get() {
-            val index = exoPlayer.currentWindowIndex
-            Log.i(TAG, "exoPlayer.currentWindowIndex = $index")
-            Log.i(TAG, "playlist.size = ${playlist.size}")
-            return if (playlist.size > index) {
-                playlist[index]
+            val temporaryPlayer = staticPlayer
+            Log.i(TAG, "playlist.size = ${staticPlaylist.size}")
+            return if (temporaryPlayer != null && staticPlaylist.size > temporaryPlayer.currentWindowIndex) {
+                Log.i(TAG, "staticPlayer.currentWindowIndex = ${temporaryPlayer.currentWindowIndex}")
+                staticPlaylist[temporaryPlayer.currentWindowIndex]
             } else {
-                Log.e(TAG, "exoPlayer.currentWindowIndex >= playlist.size")
+                Log.e(TAG, "staticPlayer.currentWindowIndex >= playlist.size or staticPlayer is null")
                 null
             }
         }
 
     override fun onCreate() {
         super.onCreate()
-        exoPlayer = ExoPlayerFactory.newSimpleInstance(this, DefaultTrackSelector())
+        Log.i(TAG, "onCreate()")
+        if (staticPlayer == null) {
+            staticPlayer = ExoPlayerFactory.newSimpleInstance(this, DefaultTrackSelector())
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "onDestroy()")
     }
 
     override fun onBind(intent: Intent?): IBinder {
@@ -80,7 +102,7 @@ class PlayerService : Service() {
     }
 
     inner class PlayerBinder : Binder() {
-        internal val service: PlayerService
+        val service: PlayerService
             get() = this@PlayerService
     }
 }
