@@ -5,12 +5,12 @@ import android.support.v4.content.ContextCompat
 import android.widget.LinearLayout
 import android.widget.TextView
 import khoroshkov.androidproject.R
-import khoroshkov.androidproject.utils.EDGE_PADDING
 import org.jetbrains.anko.*
 
 class SongLayout(context: Context) : LinearLayout(context) {
     val artist = TextView(context)
     val title = TextView(context)
+
     init {
         this.addView(title)
         this.addView(artist)

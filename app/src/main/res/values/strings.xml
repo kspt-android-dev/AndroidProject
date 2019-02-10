@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">PlayerSample</string> //AndroidProject
+    <string name="app_name">PlayerSample</string>
+    <string name="time_position_default">x:xx</string>
+    <string name="duration_default">x:xx</string>
+    <string name="title_default">xxxxx</string>
+    <string name="artist_default">xxxxxx</string>
+    <string name="playlist_title">Playlist</string>
+    <string name="play_all">Play all</string>
 </resources>

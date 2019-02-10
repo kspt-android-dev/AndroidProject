@@ -21,6 +21,7 @@ import com.google.android.exoplayer2.ExoPlaybackException
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity(), Player.EventListener {
+    private lateinit var mainActivityUI: MainActivityUI
     private val handler = Handler()
     private var playerService: PlayerService? = null
     private val playerConnection = object : ServiceConnection {
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             val binder = service as PlayerService.PlayerBinder
             playerService = binder.service
-            MainActivityUI.PLAYER_VIEW.player = playerService?.player
+            mainActivityUI.playerView.player = playerService?.player
             playerService?.player?.addListener(this@MainActivity)
             val player = playerService?.player
             if (player != null && player.playWhenReady && player.playbackState == Player.STATE_READY) {
@@ -50,10 +51,10 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
                     toRepeatInactiveButton()
                 }
             }
-            MainActivityUI.PREVIOUS_BUTTON.onClick { playerService?.player?.previous() }
-            MainActivityUI.NEXT_BUTTON.onClick { playerService?.player?.next() }
-            MainActivityUI.LIST_BUTTON.onClick { startActivity<PlaylistActivity>() }
-            MainActivityUI.SEEK_BAR.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            mainActivityUI.previousButton.onClick { playerService?.player?.previous() }
+            mainActivityUI.nextButton.onClick { playerService?.player?.next() }
+            mainActivityUI.playlistButton.onClick { startActivity<PlaylistActivity>() }
+            mainActivityUI.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {}
 
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
-                    val currentPosition = MainActivityUI.SEEK_BAR.progress.toLong()
+                    val currentPosition = mainActivityUI.seekBar.progress.toLong()
                     playerService?.player?.seekTo(currentPosition)
                     startUpdatingProgressBar()
                 }
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
         override fun onServiceDisconnected(name: ComponentName) {
             playerService = null
             playerService?.player?.removeListener(this@MainActivity)
-            MainActivityUI.PLAYER_VIEW.player = null
+            mainActivityUI.playerView.player = null
             stopUpdatingProgressBar()
         }
     }
@@ -80,7 +81,8 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "onCreate()")
-        MainActivityUI().setContentView(this)
+        mainActivityUI = MainActivityUI()
+        mainActivityUI.setContentView(this)
     }
 
     override fun onStart() {
@@ -137,23 +139,23 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
         if (player != null) {
             val duration = player.duration
             Log.i(TAG, "Duration: $duration")
-            MainActivityUI.SEEK_BAR.max = duration.toInt()
-            MainActivityUI.DURATION.text = duration.toTime()
+            mainActivityUI.seekBar.max = duration.toInt()
+            mainActivityUI.songDuration.text = duration.toTime()
             val currentSong = playerService?.currentSong
             if (currentSong != null) {
-                MainActivityUI.ARTIST.text = currentSong.artist
-                MainActivityUI.TITLE.text = currentSong.title
+                mainActivityUI.songArtist.text = currentSong.artist
+                mainActivityUI.songTitle.text = currentSong.title
             } else {
-                MainActivityUI.ARTIST.text = ARTIST_DEFAULT
-                MainActivityUI.TITLE.text = TITLE_DEFAULT
+                mainActivityUI.songArtist.text = resources.getString(R.string.artist_default)
+                mainActivityUI.songTitle.text = resources.getString(R.string.title_default)
             }
         }
     }
 
     private fun toPauseButton() {
         Log.i(TAG, "toPauseButton()")
-        MainActivityUI.PLAY_BUTTON.imageResource = R.drawable.ic_pause
-        MainActivityUI.PLAY_BUTTON.onClick {
+        mainActivityUI.playButton.imageResource = R.drawable.ic_pause
+        mainActivityUI.playButton.onClick {
             Log.i(TAG, "Pause button clicked")
             playerService?.player?.playWhenReady = false
         }
@@ -161,8 +163,8 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
 
     private fun toPlayButton() {
         Log.i(TAG, "toPlayButton()")
-        MainActivityUI.PLAY_BUTTON.imageResource = R.drawable.ic_play
-        MainActivityUI.PLAY_BUTTON.onClick {
+        mainActivityUI.playButton.imageResource = R.drawable.ic_play
+        mainActivityUI.playButton.onClick {
             Log.i(TAG, "Play button clicked")
             val playlist = playerService?.playlist
             if (playlist != null && !playlist.isEmpty()) {
@@ -175,42 +177,42 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
 
     private fun toShuffleButton() {
         Log.i(TAG, "toShuffleButton()")
-        MainActivityUI.SHUFFLE_BUTTON.onClick {
+        mainActivityUI.shuffleButton.onClick {
             playerService?.player?.shuffleModeEnabled = false
         }
-        MainActivityUI.SHUFFLE_BUTTON.imageResource = R.drawable.ic_shuffle
+        mainActivityUI.shuffleButton.imageResource = R.drawable.ic_shuffle
     }
 
     private fun toShuffleInactiveButton() {
         Log.i(TAG, "toShuffleInactiveButton()")
-        MainActivityUI.SHUFFLE_BUTTON.onClick {
+        mainActivityUI.shuffleButton.onClick {
             playerService?.player?.shuffleModeEnabled = true
         }
-        MainActivityUI.SHUFFLE_BUTTON.imageResource = R.drawable.ic_shuffle_off
+        mainActivityUI.shuffleButton.imageResource = R.drawable.ic_shuffle_off
     }
 
     private fun toRepeatAllButton() {
         Log.i(TAG, "toRepeatAllButton()")
-        MainActivityUI.REPEAT_BUTTON.onClick {
+        mainActivityUI.repeatButton.onClick {
             playerService?.player?.repeatMode = Player.REPEAT_MODE_OFF
         }
-        MainActivityUI.REPEAT_BUTTON.imageResource = R.drawable.ic_repeat_all
+        mainActivityUI.repeatButton.imageResource = R.drawable.ic_repeat_all
     }
 
     private fun toRepeatOneButton() {
         Log.i(TAG, "toRepeatOneButton()")
-        MainActivityUI.REPEAT_BUTTON.onClick {
+        mainActivityUI.repeatButton.onClick {
             playerService?.player?.repeatMode = Player.REPEAT_MODE_ALL
         }
-        MainActivityUI.REPEAT_BUTTON.imageResource = R.drawable.ic_repeat_one
+        mainActivityUI.repeatButton.imageResource = R.drawable.ic_repeat_one
     }
 
     private fun toRepeatInactiveButton() {
         Log.i(TAG, "toRepeatInactiveButton()")
-        MainActivityUI.REPEAT_BUTTON.onClick {
+        mainActivityUI.repeatButton.onClick {
             playerService?.player?.repeatMode = Player.REPEAT_MODE_ONE
         }
-        MainActivityUI.REPEAT_BUTTON.imageResource = R.drawable.ic_repeat_off
+        mainActivityUI.repeatButton.imageResource = R.drawable.ic_repeat_off
     }
 
     private fun startUpdatingProgressBar() {
@@ -225,8 +227,8 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
         override fun run() {
             val progress = playerService?.player?.currentPosition
             if (progress != null) {
-                MainActivityUI.TIME_POSITION.text = progress.toTime()
-                MainActivityUI.SEEK_BAR.progress = progress.toInt()
+                mainActivityUI.songTimePosition.text = progress.toTime()
+                mainActivityUI.seekBar.progress = progress.toInt()
             }
             handler.postDelayed(this, 100)
         }

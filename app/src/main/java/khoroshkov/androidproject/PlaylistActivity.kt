@@ -6,7 +6,7 @@ import android.content.*
 import android.os.Bundle
 import khoroshkov.androidproject.ui.PlaylistActivityUI
 import org.jetbrains.anko.*
-import khoroshkov.androidproject.utils.Song
+import khoroshkov.androidproject.data.Song
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -26,6 +26,7 @@ private const val REQUEST_CODE_READ_EXTERNAL_STORAGE = 1
 private const val TAG = "PlaylistActivity"
 
 class PlaylistActivity : Activity() {
+    private lateinit var playlistActivityUI: PlaylistActivityUI
     private lateinit var songsList: List<Song>
     private var isReadExternalStorageGranted = false
     private var playerService: PlayerService? = null
@@ -44,7 +45,8 @@ class PlaylistActivity : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "onCreate()")
-        PlaylistActivityUI().setContentView(this)
+        playlistActivityUI = PlaylistActivityUI()
+        playlistActivityUI.setContentView(this)
     }
 
     override fun onStart() {
@@ -59,8 +61,8 @@ class PlaylistActivity : Activity() {
             }
         })
         val songAdapter = SongAdapter(this, songsList)
-        PlaylistActivityUI.LIST_VIEW.adapter = songAdapter
-        PlaylistActivityUI.PLAY_ALL_BUTTON.onClick {
+        playlistActivityUI.listView.adapter = songAdapter
+        playlistActivityUI.playAllButton.onClick {
             playerService?.playlist = songsList
             startActivity<MainActivity>()
         }

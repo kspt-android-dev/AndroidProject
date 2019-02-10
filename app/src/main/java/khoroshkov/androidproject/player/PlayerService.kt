@@ -9,20 +9,19 @@ import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import khoroshkov.androidproject.utils.Song
+import khoroshkov.androidproject.data.Song
 import android.os.Binder
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.util.Log
 import khoroshkov.androidproject.R
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 
 private const val TAG = "PlayerService"
 
 class PlayerService : Service() {
     private lateinit var exoPlayer: ExoPlayer
-    val player: ExoPlayer
+    val player
         get() = exoPlayer
     private val playerBinder = PlayerBinder()
     var playlist: List<Song> = listOf()
@@ -39,9 +38,9 @@ class PlayerService : Service() {
                     Util.getUserAgent(this, resources.getString(R.string.app_name)),
                     bandwidthMeter
                 )
-            val extractorsFactory = DefaultExtractorsFactory()
+            val mediaSourcesFactory = ExtractorMediaSource.Factory(dataSourceFactory)
             val mediaSources = listOfURI.map {
-                ExtractorMediaSource(it, dataSourceFactory, extractorsFactory, null, null)
+                mediaSourcesFactory.createMediaSource(it)
             }
             val concatenatedMediaSource = ConcatenatingMediaSource()
             for (mediaSource in mediaSources) {
@@ -77,8 +76,6 @@ class PlayerService : Service() {
 
     override fun onUnbind(intent: Intent): Boolean {
         Log.i(TAG, "Unbound")
-        exoPlayer.stop()
-        exoPlayer.release()
         return false
     }
 
