@@ -17,6 +17,8 @@ import android.os.IBinder
 import android.content.ServiceConnection
 import android.util.Log
 import com.google.android.exoplayer2.ExoPlaybackException
+import com.google.android.exoplayer2.source.TrackGroupArray
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 
 private const val TAG = "MainActivity"
 
@@ -112,14 +114,15 @@ class MainActivity : AppCompatActivity(), Player.EventListener {
             initTrackInfo()
             toPauseButton()
             startUpdatingProgressBar()
-        } else if (playbackState == Player.STATE_READY) {
-            Log.i(TAG, "Audio was changed")
-            initTrackInfo()
-            toPlayButton()
         } else {
             Log.i(TAG, "Audio is paused")
             toPlayButton()
         }
+    }
+
+    override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {
+        Log.i(TAG, "onTracksChanged()")
+        initTrackInfo()
     }
 
     override fun onRepeatModeChanged(repeatMode: Int) {
