@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
         fragmentManager = getSupportFragmentManager();
 
         runSplash();
-
         setUI();
     }
 
