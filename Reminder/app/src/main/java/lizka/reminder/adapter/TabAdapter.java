@@ -1,4 +1,4 @@
-package lizka.reminder;
+package lizka.reminder.adapter;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
@@ -10,6 +10,11 @@ import lizka.reminder.fragment.DoneTaskFragment;
 public class TabAdapter extends FragmentStatePagerAdapter {
 
     private int numberOfTabs;
+    public static final int CURRENT_TASK_FRAGMENT_POSITION = 0;
+    public static final int DONE_TASK_FRAGMENT_POSITION = 1;
+
+    private CurrentTaskFragment currentTaskFragment;
+    private DoneTaskFragment doneTaskFragment;
 
     /**
      * @param fm
@@ -18,6 +23,8 @@ public class TabAdapter extends FragmentStatePagerAdapter {
     public TabAdapter(FragmentManager fm, int numberOfTabs) {
         super(fm);
         this.numberOfTabs = numberOfTabs;
+        currentTaskFragment = new CurrentTaskFragment();
+        doneTaskFragment = new DoneTaskFragment();
     }
 
     @Override
@@ -31,10 +38,10 @@ public class TabAdapter extends FragmentStatePagerAdapter {
 
         switch (i){
             case 0:
-                return new CurrentTaskFragment();
+                return currentTaskFragment;
 
             case 1:
-                return new DoneTaskFragment();
+                return doneTaskFragment;
 
             default:
                 return null;

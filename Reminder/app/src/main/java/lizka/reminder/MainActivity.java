@@ -1,6 +1,5 @@
 package lizka.reminder;
 
-import android.app.TimePickerDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -14,15 +13,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import lizka.reminder.adapter.TabAdapter;
 import lizka.reminder.dialog.AddingTaskDialogFragment;
+import lizka.reminder.fragment.CurrentTaskFragment;
+import lizka.reminder.fragment.DoneTaskFragment;
 import lizka.reminder.fragment.SplashFragment;
+import lizka.reminder.model.ModelTask;
 
 
 public class MainActivity extends AppCompatActivity implements AddingTaskDialogFragment.AddingTaskListener {
 
     FragmentManager fragmentManager;
-
     PreferenceHelper preferenceHelper;
+    TabAdapter tabAdapter;
+    CurrentTaskFragment currentTaskFragment;
+    DoneTaskFragment doneTaskFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
         tabLayout.addTab(tabLayout.newTab().setText(R.string.done_task));
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        TabAdapter tabAdapter = new TabAdapter(fragmentManager, 2);
+        tabAdapter = new TabAdapter(fragmentManager, 2);
 
         viewPager.setAdapter(tabAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -103,14 +108,15 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
+
+        currentTaskFragment = (CurrentTaskFragment) tabAdapter.getItem(TabAdapter.CURRENT_TASK_FRAGMENT_POSITION);
+        doneTaskFragment = (DoneTaskFragment) tabAdapter.getItem(TabAdapter.DONE_TASK_FRAGMENT_POSITION);
 
         // вешаем на него слушателя
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -121,13 +127,11 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
                 addingTaskDialogFragment.show(fragmentManager, "AddingTaskDialogFragment");
             }
         });
-
     }
 
-    // вешаем Toast'ы для обратной связи
     @Override
-    public void onTaskAdded() {
-        Toast.makeText(this, "Task added", Toast.LENGTH_LONG).show();
+    public void onTaskAdded(ModelTask newTask) {
+        currentTaskFragment.addTask(newTask);
     }
 
     @Override
