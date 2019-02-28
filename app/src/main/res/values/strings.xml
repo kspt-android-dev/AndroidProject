@@ -16,5 +16,6 @@
     <string name="task_title">Title</string>
     <string name="task_date">Date</string>
     <string name="task_time">Time</string>
+    <string name="delete">Delete</string>
 
 </resources>

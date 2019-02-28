@@ -8,6 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+import lizka.reminder.MainActivity;
 import lizka.reminder.R;
 import lizka.reminder.adapter.CurrentTasksAdapter;
 import lizka.reminder.model.ModelTask;
@@ -17,13 +22,17 @@ import lizka.reminder.model.ModelTask;
  */
 public class CurrentTaskFragment extends Fragment {
 
-    private RecyclerView rvCurrentTasks;
-    private RecyclerView.LayoutManager layoutManager;
-
-    private CurrentTasksAdapter adapter;
+    protected RecyclerView recyclerView;
+    protected CurrentTasksAdapter adapter;
+    public MainActivity activity;
+    private LinearLayoutManager layoutManager;
 
     public CurrentTaskFragment() {
         // Required empty public constructor
+    }
+
+    public void addTask(ModelTask newTask){
+        adapter.addItem(newTask);
     }
 
     @Override
@@ -31,34 +40,27 @@ public class CurrentTaskFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_current_task, container, false);
-
-        rvCurrentTasks = rootView.findViewById(R.id.rvCurrentTasks);
+        activity = (MainActivity) getActivity();
+        recyclerView = rootView.findViewById(R.id.rvCurrentTasks);
 
         layoutManager = new LinearLayoutManager(getActivity());
-        rvCurrentTasks.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new CurrentTasksAdapter();
-        rvCurrentTasks.setAdapter(adapter);
+        activity.getAllCurrent(new Function1<List<ModelTask>, Unit>() {
+            @Override
+            public Unit invoke(List<ModelTask> modelTasks) {
+                adapterInit(modelTasks);
+                return null;
+            }
+        });
+
 
         // Inflate the layout for this fragment
         return rootView;
     }
 
-    // добавляем элементы по дате
-    public void addTask(ModelTask newTask){
-        int position = -1;
-        adapter.addItem(newTask);
-        adapter.notifyDataSetChanged();
-
-//        for (int i = 0; i < adapter.getItemCount(); i++){
-//            if (adapter.getItem(i).isTask()){
-//                ModelTask task = (ModelTask) adapter.getItem(i);
-//                if (newTask.getDate() < task.getDate()){
-//                    position = i;
-//                    break;
-//                }
-//            }
-//
-//        }
+    public void adapterInit(List<ModelTask> listCurrent){
+        adapter = new CurrentTasksAdapter(this, listCurrent);
+        recyclerView.setAdapter(adapter);
     }
 }

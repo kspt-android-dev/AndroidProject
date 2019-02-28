@@ -23,6 +23,17 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         this.etDate = etDate;
     }
 
+    OnDateSetLIstener lIstener;
+
+    public DatePickerFragment(OnDateSetLIstener onDateSetLIstener){
+        super();
+        lIstener = onDateSetLIstener;
+    }
+
+    public interface OnDateSetLIstener{
+        void onDateSet(Calendar dateCalendar);
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -39,9 +50,14 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         Calendar dateCalendar = getInstance();
-        dateCalendar.set(year, monthOfYear, dayOfMonth);
+
+        dateCalendar.set(Calendar.YEAR, year);
+        dateCalendar.set(Calendar.MONTH, monthOfYear);
+        dateCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
         etDate.setText(Utils.getDate(dateCalendar.getTimeInMillis()));
+
+        lIstener.onDateSet(dateCalendar);
     }
 
     @Override

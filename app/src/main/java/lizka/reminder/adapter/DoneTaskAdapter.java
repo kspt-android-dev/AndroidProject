@@ -1,6 +1,8 @@
 package lizka.reminder.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,50 +12,56 @@ import android.widget.PopupMenu;
 import java.util.List;
 
 import lizka.reminder.R;
-import lizka.reminder.fragment.CurrentTaskFragment;
+import lizka.reminder.fragment.DoneTaskFragment;
 import lizka.reminder.model.Item;
 import lizka.reminder.model.ModelTask;
 
-public class CurrentTasksAdapter extends RecyclerView.Adapter<TaskViewHolder> {
+public class DoneTaskAdapter extends RecyclerView.Adapter<TaskViewHolder> {
 
-    private List<ModelTask> currentItems;
-    private CurrentTaskFragment taskFragment;
+    private List<ModelTask> doneItems;
+    private DoneTaskFragment taskFragment;
 
-    public CurrentTasksAdapter(CurrentTaskFragment taskFragment, List<ModelTask> current) {
+    public DoneTaskAdapter(DoneTaskFragment taskFragment, List<ModelTask> done) {
         this.taskFragment = taskFragment;
-        currentItems = current;
+        doneItems = done;
     }
 
     public void addItem(Item item) {
         final ModelTask task = (ModelTask) item;
-        if (task.getStatus() != ModelTask.STATUS_DONE)
-            currentItems.add(task);
+        if (task.getStatus() == ModelTask.STATUS_DONE)
+            doneItems.add(task);
+        else
+            doneItems.add(task);
         notifyDataSetChanged();
     }
 
+
+    @NonNull
     @Override
-    public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.model_task, parent, false);
+    public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.model_task, viewGroup, false);
         return new TaskViewHolder(v);
     }
 
     @Override
     public int getItemCount() {
-        return currentItems.size();
+
+        Log.i("BUGG", "done Items!!! = " + doneItems.size());
+        return doneItems.size();
     }
 
     @Override
-    public void onBindViewHolder(TaskViewHolder holder, int position) {
-        final ModelTask item = currentItems.get(position);
-        if (item.getStatus() != ModelTask.STATUS_DONE)
+    public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
+        final ModelTask item = doneItems.get(position);
+        if (item.getStatus() == ModelTask.STATUS_DONE)
             holder.bind(item, new TaskViewHolder.MyCallBack() {
                 @Override
                 public void clickOnItem() {
-                    currentItems.remove(item);
-                    item.setStatus(ModelTask.STATUS_DONE);
+                    doneItems.remove(item);
+                    item.setStatus(ModelTask.STATUS_CURRENT);
                     notifyDataSetChanged();
-                    taskFragment.activity.addDoneTask(item);
+                    taskFragment.activity.addCurrentTask(item);
                 }
 
                 @Override
@@ -68,7 +76,7 @@ public class CurrentTasksAdapter extends RecyclerView.Adapter<TaskViewHolder> {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                currentItems.remove(task);
+                doneItems.remove(task);
                 taskFragment.activity.removeTask(task);
                 notifyDataSetChanged();
                 return false;

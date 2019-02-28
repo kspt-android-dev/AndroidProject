@@ -18,6 +18,17 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     private EditText etTime;
 
+    TimePickerFragment.OnTimeSetLIstener lIstener;
+
+    public TimePickerFragment(OnTimeSetLIstener onTimeSetLIstener){
+        super();
+        lIstener = onTimeSetLIstener;
+    }
+
+    public interface OnTimeSetLIstener{
+        void onTimeSet(Calendar timeCalendar);
+    }
+
     public void setTime(EditText etTime){
         this.etTime = etTime;
     }
@@ -38,6 +49,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         Calendar timeCalendar = Calendar.getInstance();
         timeCalendar.set(0, 0, 0, hourOfDay, minute);
         etTime.setText(Utils.getTime(timeCalendar.getTimeInMillis()));
+
+        lIstener.onTimeSet(timeCalendar);
     }
 
     @Override
