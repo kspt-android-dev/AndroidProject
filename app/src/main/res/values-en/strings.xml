@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">bulls and cows</string>
+    <string name ="dialog_title">Attention</string>
+    <string name ="winner_text">YOU ARE WIN</string>
+    <string name ="dialog_agreement">Ok, thanks</string>
+    <string name ="winner_string">bulls: 4 cows: 0</string>
+    <string name ="bulls">bulls:\u0020</string>
+    <string name ="cows">cows:\u0020</string>
+    <string name ="rules">RULES</string>
+
+    <string name ="rulesText">
+    The computer makes a four-digit number
+    without repeating numbers.
+    The player is trying to guess the number.
+    Attempt is a four-digit number.
+    The computer reports how many digits are guessed.
+    Bulls : number of digits
+    with coincidence of positions.
+    Cows : number of digits
+    without coincidence of positions.
+   </string>
+
+    <string name ="buttonVal1">1</string>
+    <string name ="buttonVal2">2</string>
+    <string name ="buttonVal3">3</string>
+    <string name ="buttonVal4">4</string>
+    <string name ="buttonVal5">5</string>
+    <string name ="buttonVal6">6</string>
+    <string name ="buttonVal7">7</string>
+    <string name ="buttonVal8">8</string>
+    <string name ="buttonVal9">9</string>
+    <string name ="buttonVal0">0</string>
+</resources>

@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">быки и коровы</string>
+    <string name ="dialog_title">Внимание</string>
+    <string name ="winner_text">ТЫ ПОБЕДИЛ</string>
+    <string name ="dialog_agreement">Ок, спасибо</string>
+    <string name ="winner_string">быки: 4 коровы: 0</string>
+    <string name ="bulls">быки:\u0020</string>
+    <string name ="cows">коровы:\u0020</string>
+    <string name ="rules">ПРАВИЛА</string>
+    <string name ="rulesText">
+    Компьютер загадывает четырехзначное число
+    с неповторяющимеся цифрами.
+    Игрок пытается отгадать число.
+    Попытка - это четырехзначное число.
+    Компьютер сообщает в ответ,
+    сколько угадано вплоть до позиции в тайном числе.
+    Количество цифр, угаданных с совпадением позиции - количество быков.
+    Количество цифр, угаданных без совпадения позиции - количество коров.</string>
+    <string name ="buttonVal1">1</string>
+    <string name ="buttonVal2">2</string>
+    <string name ="buttonVal3">3</string>
+    <string name ="buttonVal4">4</string>
+    <string name ="buttonVal5">5</string>
+    <string name ="buttonVal6">6</string>
+    <string name ="buttonVal7">7</string>
+    <string name ="buttonVal8">8</string>
+    <string name ="buttonVal9">9</string>
+    <string name ="buttonVal0">0</string>
+</resources>
+
